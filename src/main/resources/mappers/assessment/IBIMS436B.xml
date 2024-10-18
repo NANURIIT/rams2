@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS436BMapper">
+
+    <select id="getOvduDtls" parameterType="com.nanuri.rams.business.common.vo.IBIMS436BVO" resultType="com.nanuri.rams.business.common.vo.IBIMS436BVO">
+        SELECT 436b.DCSN_YN                   /* 확정여부 */
+             , 436b.AFCT_MNGM_NO              /* 사후관리번호 */
+             , 436b.DEAL_NO                   /* 딜번호 */
+             , 101b.DEAL_NM                   /* 딜명 */
+             , 436b.EXC_SEQ                   /* 실행순번 */
+             , 436b.OVDU_STTS_CD              /* 연체상태코드 */
+        , CASE 436b.OVDU_STTS_CD
+          WHEN '0' THEN	'정상' 
+          WHEN '1' THEN	'일반연체' 
+          WHEN '2' THEN	'기한이익상실' 
+           END AS OVDU_STTS_NM                /* 연체상태명 */
+             , 436b.CRDL_BLCE_AMT             /* 여신잔액금액 */
+             , 436b.OVDU_PRCA_AMT             /* 연체원금액 */
+             , 436b.OVDU_INTR_AMT             /* 연체이자금액 */
+             , 436b.FRS_PRNA_OVDU_OCRNC_DT    /* 최초원금연체발생일 */
+             , 436b.FRS_INTR_OVDU_OCRNC_DT    /* 최초이자연체발생일 */
+             , 436b.PRCA_OVDU_ACML_DNUM       /* 원금연체누적일수 */
+             , 436b.INT_OVDU_ACML_DNUM        /* 이자연체누적일수 */
+             , 436b.LAST_INTR_RDMP_DT         /* 최종이자상환일 */
+             , 436b.OVDU_RLSE_DT              /* 연체해제일 */
+             , 003b.DPRT_CD                   /* 거래조직번호 */
+             , 003b.DPRT_NM                   /* 조직명 */
+          FROM IBIMS436B 436b                 /* 연체내역 */
+          LEFT JOIN IBIMS101B 101b ON 436b.DEAL_NO = 101b.DEAL_NO AND 101b.LAST_YN = '1' /* 딜기본정보 */
+          LEFT JOIN IBIMS003B 003b ON 003b.EMPNO = 101b.CHRR_EMPNO /* 사원기본 */
+         WHERE 1=1
+        <if test="dealNo != ''">
+           AND 436b.DEAL_NO = #{dealNo}
+        </if>
+        <if test="excSeq != ''">
+           AND 436b.EXC_SEQ = #{excSeq}
+        </if>
+        <if test="startDt != ''">
+           AND (436b.FRS_PRNA_OVDU_OCRNC_DT <![CDATA[>=]]> #{startDt})
+        </if>
+        <if test="endDt != ''">
+           AND (436b.FRS_PRNA_OVDU_OCRNC_DT <![CDATA[<=]]> #{endDt})
+        </if>
+        <if test="dprtCd != ''">
+           AND 003b.DPRT_CD = #{dprtCd}
+        </if>
+        <if test="ovduRlseYn == 1">
+           AND 436b.OVDU_STTS_CD <![CDATA[>=]]> 1
+        </if>
+        <if test="ovduRlseYn == 2">
+           AND 436b.OVDU_STTS_CD = 0
+        </if>
+
+    </select>
+
+    <update id="saveDcsn" parameterType="com.nanuri.rams.business.common.vo.IBIMS436BVO">
+        UPDATE IBIMS436B
+           SET DCSN_YN = #{dcsnYn}
+         WHERE 1=1
+           AND AFCT_MNGM_NO = #{afctMngmNo}
+           AND DEAL_NO = #{dealNo}
+           AND EXC_SEQ = #{excSeq}
+    </update>
+</mapper>

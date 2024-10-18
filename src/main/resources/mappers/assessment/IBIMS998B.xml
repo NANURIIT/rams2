@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS998BMapper">
+
+  <!-- 마감기본 영업일 기준 단건 조회  -->
+	<select id="selectTB10720S" parameterType="com.nanuri.rams.business.common.dto.IBIMS998BDTO" resultType="com.nanuri.rams.business.common.dto.IBIMS998BDTO">
+		SELECT STDR_DT         /* 기준일자 */
+		     , JOB_OPNG_DTIME  /* 업무개시일시 */
+		     , JOB_CLSG_DTIME  /* 업무마감일시 */
+		     , CLSG_DVSN_CD    /* 마감구분코드 */
+		     , OPNG_STFNO      /* 개시직원번호 */
+		     , OPNG_ORGNO      /* 개시조직번호 */
+		     , HDWR_OPNG_YN    /* 수기개시여부 */
+		     , CLSG_STFNO      /* 마감직원번호 */
+		     , CLSG_ORGNO      /* 마감조직번호 */
+		     , HDWR_CLSG_YN    /* 수기마감여부 */
+		     , HND_DETL_DTM    /* 조작상세일시 */
+		     , HND_EMPNO       /* 조작사원번호 */
+		     , HND_TMNL_NO     /* 조작단말기번호 */
+		     , HND_TR_ID       /* 조작거래ID */
+		     , GUID            /* GUID */
+		  FROM IBIMS998B
+		 WHERE STDR_DT = #{stdrDt}
+  	</select>
+
+
+    <!-- 마감관리 개시/마감 실행  -->
+    <update id="openTB10720S" parameterType="com.nanuri.rams.business.common.dto.IBIMS998BDTO">
+		INSERT INTO
+		  IBIMS998B (
+		              STDR_DT         /* 기준일자 */
+		            , JOB_OPNG_DTIME  /* 업무개시일시 */
+		            , CLSG_DVSN_CD    /* 마감구분코드 */
+		            , OPNG_STFNO      /* 개시직원번호 */
+		            , OPNG_ORGNO      /* 개시조직번호 */
+		            , HDWR_OPNG_YN    /* 수기개시여부 */
+		            , HND_EMPNO       /* 조작사원번호 */
+		            , HND_TMNL_NO     /* 조작단말기번호 */
+		            , HND_TR_ID       /* 조작거래ID */
+		            , GUID            /* GUID */
+		            )
+		     VALUES (
+		              #{stdrDt}
+		            , #{jobOpngDtime}
+		            , #{clsgDvsnCd}
+		            , #{opngStfno}
+		            , #{opngOrgno}
+		            , #{hdwrOpngYn}
+		            , #{hndEmpno}
+		            , #{hndTmnlNo}
+		            , #{hndTrId}
+		            , #{guid}
+		            )
+		         ON DUPLICATE KEY
+		     UPDATE
+		            JOB_OPNG_DTIME = #{jobOpngDtime}  /* 업무개시일시 */
+		          , CLSG_DVSN_CD   = #{clsgDvsnCd}    /* 마감구분코드 */
+		          , OPNG_STFNO     = #{opngStfno}     /* 개시직원번호 */
+		          , OPNG_ORGNO     = #{opngOrgno}     /* 개시조직번호 */
+		          , HDWR_OPNG_YN   = #{hdwrOpngYn}    /* 수기개시여부 */
+		          , HND_EMPNO      = #{hndEmpno}      /* 조작사원번호 */
+		          , HND_TMNL_NO    = #{hndTmnlNo}     /* 조작단말기번호 */
+		          , HND_TR_ID      = #{hndTrId}       /* 조작거래ID */
+		          , GUID           = #{guid}          /* GUID */
+    </update>
+
+    <update id="closeTB10720S" parameterType="com.nanuri.rams.business.common.dto.IBIMS998BDTO">
+		INSERT INTO
+		  IBIMS998B (
+		              STDR_DT         /* 기준일자 */
+		            , JOB_CLSG_DTIME  /* 업무마감일시 */
+		            , CLSG_DVSN_CD    /* 마감구분코드 */
+		            , CLSG_STFNO      /* 마감직원번호 */
+		            , CLSG_ORGNO      /* 마감조직번호 */
+		            , HDWR_CLSG_YN    /* 수기마감여부 */
+		            , HND_EMPNO       /* 조작사원번호 */
+		            , HND_TMNL_NO     /* 조작단말기번호 */
+		            , HND_TR_ID       /* 조작거래ID */
+		            , GUID            /* GUID */
+		            )
+		     VALUES (
+		              #{stdrDt}
+		            , #{jobClsgDtime}
+		            , #{clsgDvsnCd}
+		            , #{clsgStfno}
+		            , #{clsgOrgno}
+		            , #{hdwrClsgYn}
+		            , #{hndEmpno}
+		            , #{hndTmnlNo}
+		            , #{hndTrId}
+		            , #{guid}
+		            )
+		         ON DUPLICATE KEY
+		     UPDATE
+		            JOB_CLSG_DTIME = #{jobClsgDtime}  /* 업무마감일시 */
+		          , CLSG_DVSN_CD   = #{clsgDvsnCd}    /* 마감구분코드 */
+		          , CLSG_STFNO     = #{clsgStfno}     /* 마감직원번호 */
+		          , CLSG_ORGNO     = #{clsgOrgno}     /* 마감조직번호 */
+		          , HDWR_CLSG_YN   = #{hdwrClsgYn}    /* 수기마감여부 */
+		          , HND_EMPNO      = #{hndEmpno}      /* 조작사원번호 */
+		          , HND_TMNL_NO    = #{hndTmnlNo}     /* 조작단말기번호 */
+		          , HND_TR_ID      = #{hndTrId}       /* 조작거래ID */
+		          , GUID           = #{guid}          /* GUID */
+    </update>
+
+</mapper>

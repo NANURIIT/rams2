@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS991BMapper">
+    <select id="getBsnDt" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS991BVO">
+		SELECT STDR_DT 
+			 ,
+			( 
+			    SELECT MAX(V.STDR_DT) AS MX_DT
+			       FROM IBIMS991B V
+				WHERE 1=1
+				AND TRIM(V.STDR_DT) &lt; A.STDR_DT
+				AND V.HOLIDAY = 0
+				AND V.STDR_DT BETWEEN DATE_FORMAT(ADD_MONTHS(STR_TO_DATE(A.STDR_DT,'%Y%m%d'), -1),'%Y%m%d') AND  A.STDR_DT
+			   ) AS BF_DT
+			,
+			( 
+			    SELECT MIN(V.STDR_DT) AS MX_DT
+			       FROM IBIMS991B V 
+				WHERE 1=1
+				AND TRIM(V.STDR_DT) &gt; A.STDR_DT
+				AND V.HOLIDAY = 0
+				AND V.STDR_DT BETWEEN A.STDR_DT AND DATE_FORMAT(ADD_MONTHS(STR_TO_DATE(A.STDR_DT,'%Y%m%d'), 1),'%Y%m%d')
+			   ) AS AF_DT
+			 , DAYOFWEEKS 
+			 , HOLIDAY 
+			 , CONTENT
+		  FROM IBIMS991B A 
+		 WHERE 1=1
+		   AND STDR_DT = #{stdrDt}
+    </select>       
+</mapper>

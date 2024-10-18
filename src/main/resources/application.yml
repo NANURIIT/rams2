@@ -1,0 +1,57 @@
+server:
+  port: 18090
+  servlet:
+    session:
+      timeout: 30m
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  ## redirection http 현상 제거 ##
+  tomcat:
+    remoteip:
+      protocol-header: x-forwarded-proto
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mappers/**/*.xml
+
+logging:
+  config: classpath:logback.xml
+spring:
+  application:
+    name: NANURI IT Corp Risk Management System
+  datasource:
+    driver-class-name: com.tmax.tibero.jdbc.TbDriver
+    url: jdbc:tibero:thin:@172.30.1.32:8629:tibero
+    username: RAMS
+    password: Nanuriwork1!
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 1
+  jpa:
+    database-platform: com.tmax.tibero.hibernate.dialect.TiberoDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle9Dialect 
+        # hbm2ddl.auto: update  # 스키마 자동 업데이트를 원하면 이 줄을 추가
+
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+      port: 35729
+      
+  servlet:
+    multipart:
+      maxFileSize: 1000MB
+      maxRequestSize: 2000MB
