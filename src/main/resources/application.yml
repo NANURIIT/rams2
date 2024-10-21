@@ -35,7 +35,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle9Dialect 
-        # hbm2ddl.auto: update  # 스키마 자동 업데이트를 원하면 이 줄을 추가
+        hbm2ddl.auto: update 
 
   mvc:
     hiddenmethod:
