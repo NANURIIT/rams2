@@ -59,7 +59,7 @@
     
     <!-- 여신기본정보 검증  -->
     <select id="chkIBIMS401BInfo" parameterType="string" resultType="string">
-        SELECT A.PRDT_CD                                                                <!-- 상품코드 -->
+        SELECT A.PRDT_CD                                                                /*상품코드*/
           FROM IBIMS401B A
          WHERE PRDT_CD = #{prdtCd}
     </select>
@@ -810,14 +810,14 @@
 
     <!-- 기업여신약정금액  -->
     <select id="getEprzCrdlCtrcAmt" parameterType="string" resultType="String">
-        SELECT (NVL(A.EPRZ_CRDL_CTRC_AMT,'0') - NVL(B.KRW_TRSL_EXC_AMT,0)) AS EPRZ_CRDL_CTRC_AMT <!-- 기업여신약정금액 - 원화환산실행금액 -->
+        SELECT (NVL(A.EPRZ_CRDL_CTRC_AMT,'0') - NVL(B.KRW_TRSL_EXC_AMT,0)) AS EPRZ_CRDL_CTRC_AMT /* 기업여신약정금액 - 원화환산실행금액 */
           FROM IBIMS401B A
              , IBIMS402B B 
          WHERE 1=1
          AND A.PRDT_CD = B.PRDT_CD(+) 
          AND B.EXC_SN(+) = 1
          AND A.PRDT_CD = #{prdtCd}
-         AND NVL(A.CTRC_CCLC_DCD,'0') = '1'	 <!-- 약정해지구분코드 1:약정,2:해지 -->
+         AND NVL(A.CTRC_CCLC_DCD,'0') = '1'	 /* 약정해지구분코드 1:약정,2:해지 */
     </select>
 
     <!--조건변경 -->

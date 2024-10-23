@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS511BMapper">
 	
-	/* 투자사업참가자내역조회  */
+	<!-- 투자사업참가자내역조회  -->
 	<select id="getBsnsPartInfo" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS511BVO"> 
 		SELECT DEAL_NO                                								/* 딜번호 */
          , SN                                      								/* 일련번호 */
@@ -26,7 +26,7 @@
        AND DEAL_NO = #{dealNo}   
 	</select>
 	
-	/* 투자사업참가자내역저장 */
+	<!-- 투자사업참가자내역저장 -->
 	<insert id="saveBsnsPartInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS511BVO">
 		INSERT INTO IBIMS511B 
                (

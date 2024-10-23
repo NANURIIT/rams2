@@ -161,14 +161,15 @@ function callPageTest(menuId, pageName) {
 
 function moveTab (menuId){
 
-    console.log("무브탭 오셨잖아");
-
     const url = window.location.pathname;
 
     if(url === "/" + menuId){
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
         return;
     }
+
+    $("#myTab li button").removeClass('active');
+    $(`#myTab li button[data-tabid="/${menuId}"]`).addClass('active');
 
     // 상단 타이틀요소 이동
     $(`div[data-titleId*="TB"]`).hide()
@@ -189,7 +190,6 @@ function removeTab (menuId) {
 
     if(url === "/" + menuId){
         history.pushState(null, '', '/' + menuId);
-        console.log("작동하셨잖아");
         // 탭 지우기
         $(`li[data-tabId="/${menuId}"]`).remove()
         // 현재화면의 탭을 삭제시 무브탭 발생

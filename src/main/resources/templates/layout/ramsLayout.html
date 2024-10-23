@@ -34,8 +34,8 @@
 			<!-- <div class="main-con" data-menuId="TB02010S"> -->
 			<!-- </div> -->
 			<!-- 상단 타이틀 -->
-			<div class="row wrapper white-bg page-heading">
-				<div class="col-lg-10">
+			<div class="row wrapper white-bg page-heading" id="title-top">
+				<div class="col-lg-10" th:data-titleId="${#httpServletRequest.requestURI}">
 					<h2 class="" th:text="|[${title.urlVrbCntn}] ${title.title}|"></h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
@@ -46,7 +46,6 @@
 						</li>
 					</ol>
 				</div>
-				<div class="col-lg-2"></div>
 			</div>
 
 			<!-- customContent -->

@@ -406,15 +406,24 @@ hr{ margin-top: 0.5rem;
 }
 
 .top-tabs-container .top-nav-tabs > li > button{font-weight: bold; opacity: 0.7;}
+
 .top-tabs-container .top-nav-tabs > li.main-tab > button,
 .top-tabs-container .top-nav-tabs > li > button.active,
-.top-tabs-container .top-nav-tabs > li > button:hover,
+/* .top-tabs-container .top-nav-tabs > li > button:hover, */
 .top-tabs-container .top-nav-tabs > li > button.active:focus {
 	/* color: #000; 
 	border: 1px solid #808080;
 	border-bottom-color: transparent; opacity: 1;
 	background-color: #fff; top: 1px; box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.4); */
 	/* 주석풀면 원본 */
+}
+
+.top-tabs-container > .top-nav-tabs > li:hover > button {
+	color: #1c84c6;
+	opacity: 1;
+}
+.top-tabs-container > .top-nav-tabs > li:hover {
+	box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.8);
 }
 
 /* .top-tabs-container .top-nav-tabs > li .fa-close {
