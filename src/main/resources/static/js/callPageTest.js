@@ -1,11 +1,30 @@
-
-
 function callPageTest(menuId, pageName) {
 
     const url = window.location.pathname;
     console.log(url);
 
     if(url === "/" + menuId){
+        // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
+        return;
+    }else 
+    // 이미 생성되었다가 지워진 탭이면 탭을 재생성
+    if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0){
+        $('#myTab').append(`
+            <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
+                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
+                    </button>
+                    <span class="ui-icon ui-icon-close" role="presentation" style="cursor: pointer;" onclick="removeTab('${menuId}')"></span>
+            </li>
+        `);
+        // 무브탭 실행
+        moveTab(menuId);
+        return;
+    }else 
+    // 화면에 띄워져있는 탭일경우 무브탭 실행
+    if($(`div[data-titleId="/${menuId}"]`).length != 0){
+        // 무브탭 실행
+        moveTab(menuId);
         return;
     }
 
@@ -23,27 +42,37 @@ function callPageTest(menuId, pageName) {
 
             let $this = $(response);
 
-            // if($(`div[data-menuId="${menuId}"]`).length > 0){
-            //     $(`#${menuId}`).css('visibility', 'visible')
-            //     return;
-            // }else {
-            // }
+            let $title = $(response).find(`div[data-titleId="/${menuId}"]`)
 
-            $('#myTab').append(`
-                    <li class="nav-item main-tab" role="presentation">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
-                                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}</button>
-                    </li>
-                `)
-
+            // 타이틀 숨기기
+            $('#title-top div[data-titleId*="TB"]').hide()
+            // 컨텐츠 숨기기
             $('#page-wrapper div[data-menuId*="TB"]').hide()
 
-            // $(`#page-wrapper`).append(`<div data-menuId="/${menuId}"></div>`);
+            // 새로운 타이틀 생성
+            $(`#title-top`).append($title);
+
+            // 새로운 탭 생성
+            $('#myTab').append(`
+                    <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
+                                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
+                            </button>
+                            <span class="fa fa-close" role="presentation" style="cursor: pointer;" onclick="removeTab('${menuId}')"></span>
+                    </li>
+                `);
+
+            // 새로운 컨텐츠 div 생성
             $(`div[data-menuId*="/TB"]`).last().after(`<div data-menuId="/${menuId}"></div>`);
 
+            // 컨텐츠 내용 생성
+            $(`div[data-menuId="/${menuId}"]`).html(customContent);
+
+            // 필요한 모달과 스크립트 전체선택
             const $modals = $('.modal.fade');
             const $script = $('script');
 
+            // html요소, script요소 중복제거 for문
             for(let i = 0; i < $this.length; i++) {
                 if($($this[i]).attr('class') === 'modal fade') {
                     let isDuplicateModal = false;
@@ -62,7 +91,58 @@ function callPageTest(menuId, pageName) {
                     let isDuplicateScript = false;
                     for(let j = 0; j < $script.length; j++){
                         if($($this[i]).attr('src') === $($script[j]).attr('src')){
-                            isDuplicateScript = true;
+                            // 공통 플러그인 중 중복실행되면 안되는것들 체크
+                            if(
+                                false
+
+                                // || $($script[j]).attr('src') === "js/common.js"
+
+                                || $($script[j]).attr('src') === "js/jquery-3.1.1.min.js"
+                                || $($script[j]).attr('src') === "js/plugins/popper/popper.min.js"
+                                || $($script[j]).attr('src') === "js/bootstrap.js"
+                                || $($script[j]).attr('src') === "js/plugins/metisMenu/jquery.metisMenu.js"
+
+                                || $($script[j]).attr('src') === "js/plugins/jqueryMask/jquery.mask.js"
+                                || $($script[j]).attr('src') === "js/plugins/jqueryMask/jquery.mask.min.js"
+
+                                || $($script[j]).attr('src') === "js/plugins/sweetalert/sweetalert.min.js"
+                                || $($script[j]).attr('src') === "js/plugins/sweetalert/sweetalert2.all.min.js"
+
+                                || $($script[j]).attr('src') === "css/plugins/jquery-ui-1.13.2/custum/jquery-ui.js"
+                                || $($script[j]).attr('src') === "css/plugins/paramquery-pro/jsZip-2.5.0/jszip.min.js"
+                                || $($script[j]).attr('src') === "css/plugins/paramquery-pro/pqgrid.min.js"
+                                
+                                || $($script[j]).attr('src') === "js/plugins/datepicker/bootstrap-datepicker.js"
+                                || $($script[j]).attr('src') === "js/plugins/datepicker/bootstrap-datepicker.ko.js"
+                                || $($script[j]).attr('src') === "js/plugins/footable/footable.all.js"
+                                || $($script[j]).attr('src') === "js/plugins/clockpicker/clockpicker.js"
+                                || $($script[j]).attr('src') === "js/chart.js"
+
+                                || $($script[j]).attr('src') === "js/plugins/excelexport/xlsx.full.min.js"
+                                || $($script[j]).attr('src') === "js/plugins/excelexport/FileSaver.min.js"
+                                
+                                || $($script[j]).attr('src') === "js/ramsLayout.js"
+
+                                || $($script[j]).attr('src') === "js/callPageTest.js"
+                                || $($script[j]).attr('src') === "js/plugins/slimscroll/jquery.slimscroll.min.js"
+                                || $($script[j]).attr('src') === "js/plugins/pace/pace.min.js"
+                            ){
+                                isDuplicateScript = true;
+                            }else
+                            // 나머지 공통 플러그인은 재실행
+                            if(($($script[j]).attr('src')).split('/')[1] != "business"){
+                                console.log($($this[i]).attr('src'));
+                            }
+                            /**
+                             * 나머지 스크립트
+                             */
+                            else{
+                                // 나머지 팝업함수 등등은 한번만 나오게 거름
+                                isDuplicateScript = true;
+                            }
+
+                            // isDuplicateScript = true;
+
                             break;
                         }
                     }
@@ -71,8 +151,6 @@ function callPageTest(menuId, pageName) {
                     }
                 }
             }
-
-            $(`div[data-menuId="/${menuId}"]`).html(customContent);
         },
         error: function () {
             console.error('페이지 로드 중 오류가 발생했습니다.');
@@ -82,70 +160,49 @@ function callPageTest(menuId, pageName) {
 }
 
 function moveTab (menuId){
+
+    console.log("무브탭 오셨잖아");
+
+    const url = window.location.pathname;
+
+    if(url === "/" + menuId){
+        // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
+        return;
+    }
+
+    // 상단 타이틀요소 이동
+    $(`div[data-titleId*="TB"]`).hide()
+    $(`div[data-titleId="/${menuId}"]`).show()
+
+    // 메인Content요소 이동
     $(`div[data-menuId*="TB"]`).hide()
     $(`div[data-menuId="/${menuId}"]`).show()
+
+    history.pushState(null, '', '/' + menuId);
+
 }
 
-// // $(function(){ 		
-// // 	alert("111");
-// // 	maintab = $( "#tabs" ).tabs({
-// //         add: function(e, ui) {
-// //             // append close thingy
-// //             $(ui.tab).parents('li:first')
-// //                 .append('<i class="fa fa-close" role="presentation"></i>')
-// //                 .find('i.fa-close')
-// //                 .click(function() {
-// //                     maintab.tabs('remove', $('li', maintab).index($(this).parents('li:first')[0]));
-// //                 });
-// //             // select just added tab
-// //             maintab.tabs('select', '#' + ui.panel.id);
-// //         }
-// //     });
-// // });
-// function loadMenuContent(url) {
-	
-// 	alert('222');
-//         $.ajax({
-//             url: url,
-//             type: 'GET',
-//             success: function(data) {
-//                 // 받아온 데이터를 이용하여 화면 업데이트
-//                 $('#content-container').html(data);
-//             },
-//             error: function() {
-//                 alert('데이터를 불러오는 중 오류가 발생했습니다.');
-//             }
-//         });
-//     }
-// function openNewTab(menuNum){
-// 	parent.add_menu_tab(menuNum);
-// }
- 
-//  function add_menu_tab(menuId){
-	
-// 	var menuUrl = "/" + menuId + "/" + userAuth;
-// 	var st = "#t"+tabCounter;
-// 	var menuName = " ";
-// 	//maintab.tabs('add',st, menuId.substring(2,6));
-// 	$.ajax({
-// 			type : 'POST',
-// 			url : 'searchMenuName',
-// 			data : { menuId : menuId } ,
-// 			async : false ,
-// 			success : function( data ){
-// 				if( data.result == responseCode.SUCCESS ){
-// 					menuName = data.menuName ;
-// 				}
-// 			}
-// 		});
-// 	maintab.tabs('add',st, menuName);
-// 	var innerHtml = '<iframe src="'+menuUrl+'" width="1550px" height="770px" scrolling="auto" frameborder="0" marginheight="0" marginwidth="0" hspace="0" vspace="0" onload="loadTabIframe(this);"></iframe>';
-// 	$(st,"#tabs").append(innerHtml);
-// 	maintab.tabs('select',st);
-// 	tabCounter ++ ;
-// 	$('.sub').hide();
-// }   
+function removeTab (menuId) {
 
-// function loadTabIframe(obj) {
-// 	obj.contentWindow.document.body.style.overflowX='hidden';
-// }
+    const url = window.location.pathname;
+    // let selectedMenuId = $(`div[data-titleId*="TB"]`).first().attr('data-titleId');   // 미정
+
+    if(url === "/" + menuId){
+        history.pushState(null, '', '/' + menuId);
+        console.log("작동하셨잖아");
+        // 탭 지우기
+        $(`li[data-tabId="/${menuId}"]`).remove()
+        // 현재화면의 탭을 삭제시 무브탭 발생
+        moveTab("TB02010S");
+    }else{
+        // 현재탭이 아닌 탭을 삭제시 탭만 지우고 컨텐츠는 숨기기
+        $(`li[data-tabId="/${menuId}"]`).remove()
+        $(`div[data-titleId="/${menuId}"]`).hide()
+        $(`div[data-menuId="/${menuId}"]`).hide()
+    }
+
+    if($("#myTab li").length === 1){
+        location.href = "/TB02010S"
+    }
+
+}

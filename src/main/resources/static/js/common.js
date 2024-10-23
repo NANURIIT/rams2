@@ -4,7 +4,7 @@
 /** onload **/
 $(function () {
 	// datepicker 초기화
-	var dpDate = $('.input-group.date').datepicker({
+	$('.input-group.date').datepicker({
 		format: "yyyy-mm-dd",
 		todayBtn: "linked",
 		keyboardNavigation: false,
@@ -13,7 +13,7 @@ $(function () {
 		autoclose: true,
 		language: "ko"
 	});
-	var dpMonth = $('.input-group.month').datepicker({
+	$('.input-group.month').datepicker({
 		format: "yyyy-mm",
 		keyboardNavigation: false,
 		forceParse: false,
@@ -23,7 +23,7 @@ $(function () {
 		minViewMode: "months",
 		startView: "months"
 	});
-	var cpTime = $('.input-group.clockpicker').clockpicker({
+	$('.input-group.clockpicker').clockpicker({
 	});
 });
 
@@ -1279,6 +1279,7 @@ function resetAll(p, arr = []) {
  * @returns 
  */
 function setPqGrid(pqGridObjs) {
+
 	pqGridObjs.forEach(pqGridObj => {
 		// basic
 		let height = pqGridObj.height;		// 높이
@@ -1464,3 +1465,116 @@ function getBasicValues(id) {
 	}
 }
 
+/**
+ * 인풋박스 초기화
+ * @param {$selector} selector 제이쿼리던 자바스크립트던 상관없음
+ * div ibox로 잡혀있을텐데 원하는 태그에 id값을 주고 셀렉터로 받아서 인풋값 초기화
+ */
+function resetInputValue (selector) {
+    $(`${selector} input`).val('');
+    $(`${selector} input[id*='Amt']
+      ,${selector} input[id*='Blce']
+      ,${selector} input[id*='Exrt']
+      ,${selector} input[id*='Mnum']
+      ,${selector} input[id*='Tmrd']`).val('0');
+}
+
+/**
+ * pqgrid instance 데이터 인풋박스에 뿌리기
+ * 사용처
+ * pqgrid dblClick 이벤트
+ * pqgrid rowClick 이벤트
+ * @param ui	pqgrid ui 요소
+ * @param { String } menuId
+ */
+function setInputboxFromPdata (ui, menuId){
+	const keys = Object.keys(ui.rowData);
+    for(let i = 0; i < keys.length; i++){
+    	$(`#${menuId}_${keys[i]}`).val(ui.rowData[keys[i]]);
+    }
+}
+
+/**
+ * 단건 select data뿌리기
+ * @param data	ajax 셀렉트 데이터
+ * @param { String } menuId
+ */
+function setInputDataFromSelectData (data, menuId) {
+	const keys = Object.keys(data);
+	for(let i = 0; i < keys.length; i++){
+		// 날짜 포맷
+		if(keys[i].includes('Dt')){
+			$(`#${menuId}_${keys[i]}`).val(formatDate(data[keys[i]]));
+		}
+		// 숫자 포맷
+		else if(
+			//	조건 시작
+			keys[i].includes('Amt')
+			|| keys[i].includes('Blce')
+			|| keys[i].includes('Exrt')
+			|| keys[i].includes('Mnum')
+			|| keys[i].includes('Tmrd')
+			//	조건 끝
+		){
+			$(`#${menuId}_${keys[i]}`).val(comma(data[keys[i]]));
+		}
+		// 나머지
+		else{
+			$(`#${menuId}_${keys[i]}`).val(data[keys[i]]);
+		}
+	}
+}
+
+/**
+ * @param {String} menuId  화면명
+ * @param {Object} gridFunctionObj	함수를담은 오브젝트
+ */
+function ramsTabHandler (menuId){
+
+	// let index = gridFunctionObj.keys();
+
+	// indexsdfasdf
+
+	console.log("계속 일하니?");
+
+	const $tabs = $(`#${menuId}_ramsTab`).children();
+
+	for(let i = 0; i < $tabs.length; i++){
+		$($tabs[i]).on('click', function(){
+			$tabs.removeClass('active');
+			$(this).addClass('active');
+			$('.tab-content div[role="tabpanel"]').removeClass('active');
+			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+			// if(i === ){
+
+			// }
+		})
+	}
+
+}
+
+
+// $(document).ajaxComplete(function (event, xhr, settings) {
+//     const $this = $(".input-group.date input[class='form-control']");
+// 	if(($this.val()).length === 8){
+		
+// 	}else{
+// 		$this.val(newFormatDate($this.val()));
+// 	}
+// });
+
+// // function formatData () {
+// // 	const $this = $(".input-group.date input[class='form-control']");
+// //     $this.val(formatDate($this.val()));
+// // }
+
+// function newFormatDate (date){
+
+// 	console.log(date);
+// 	let resultStr;
+// 	if(date.length === 8){
+// 		return formatDate(date);
+// 	}else{
+// 		return;
+// 	}
+// }

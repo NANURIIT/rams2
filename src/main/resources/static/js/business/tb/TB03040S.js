@@ -86,9 +86,9 @@ function movePage(e) {
   sessionStorage.setItem("dealNm", e.dealNm);
 
   if (inspctPrgrsStCd < 301) {
-    location.href = "/TB04010S";
+    callPageTest("TB04010S", "심사신청관리");
   } else {
-    location.href = "/TB05040S";
+    callPageTest('TB05040S', '협의체 현황 및 결과조회');
   }
 }
 

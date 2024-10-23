@@ -1,7 +1,5 @@
 $(document).ready(function() {
-	
 	selInfo();
-	
 });
 
 // 오늘의할일 조회
@@ -27,7 +25,8 @@ function selInfo() {
 
 				if (infoList.length > 0) {
 					$.each(infoList, function(key, value) {
-						html += '<tr ondblclick="sendPage(this);" style="cursor: pointer;">';
+						
+						html += `<tr ondblclick="sendPage('${value.menuId}','${value.workCtns}');" style="cursor: pointer;">`;
 						html += '<td>' + Number(key+1) + '</td>';							// 일련번호
 						html += '<td style="display:none;">' + value.workDcd + '</td>';		// 작업구분코드
 						html += '<td>' + value.workDcdNm + '</td>';							// 작업구분코드명
@@ -71,19 +70,21 @@ function selInfo() {
 			}
 			
 		});
-		
 	}
-	
-		
 }
 
-function sendPage(e) {
-	var tr = $(e);
-	var td = tr.children();
+/**
+ * 탭생성
+ * @param {String} menuId 
+ * @param {String} pageName 
+ */
+function sendPage(menuId, pageName) {
+
+	const getMenuId = menuId.split('/');
+	const getPageName = pageName.split(') ');
+	console.log(getMenuId[1]);
+	console.log(getPageName[1]);
 	
-	location.href = td.eq(10).text();
+	callPageTest(getMenuId[1], getPageName[1]);
+	
 }
-
-
-
-
