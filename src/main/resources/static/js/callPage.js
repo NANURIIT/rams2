@@ -1,4 +1,4 @@
-function callPageTest(menuId, pageName) {
+function callPage(menuId, pageName) {
 
     const url = window.location.pathname;
     console.log(url);
