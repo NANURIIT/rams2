@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS510BMapper">
 	
-	/* 조건변경이력 조회 */
+	<!-- 조건변경이력 조회 -->
 	<select id="getCchInfo" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS510BVO">
         SELECT DEAL_NO                                 /* 딜번호 */
              , SN                                      /* 일련번호 */
@@ -29,7 +29,7 @@
            AND DEAL_NO = #{dealNo}                                 
 	</select>
 	
-	/* 조건변경이력 저장 */
+	<!-- 조건변경이력 저장 -->
 	<insert id="saveCchInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS510BVO">
 		INSERT INTO IBIMS510B 
                (
@@ -71,7 +71,7 @@
         </foreach>
 	</insert>
 	
-	/* 조건변경이력 삭제 */
+	<!-- 조건변경이력 삭제 -->
 	<delete id="delCchInfo" parameterType="string">
 		DELETE 
 		  FROM IBIMS510B

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS515BMapper">
 
-	/* 사업주요일정 조회 */
+	<!-- 사업주요일정 조회 -->
 	<select id="selectAsstOrtnLst" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS515BVO">
 		SELECT DEAL_NO			/* 딜번호 */
 			 	 , SN						/* 일련번호 */
@@ -17,7 +17,7 @@
 		 WHERE DEAL_NO = #{dealNo}	                                   
 	</select>
 	
-	/* 사업주요일정 저장 */
+	<!-- 사업주요일정 저장 -->
 	<insert id="saveAsstOrtnInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS515BVO">
 			INSERT INTO IBIMS515B	/* 투자사후운용사관리내역 */
 									(
@@ -47,7 +47,7 @@
         </foreach>
 	</insert>
 	
-	/* 사업주요일정 삭제 */
+	<!-- 사업주요일정 삭제 -->
 	<delete id="delAsstOrtnInfo" parameterType="string">
 		DELETE 
 		  FROM IBIMS515B

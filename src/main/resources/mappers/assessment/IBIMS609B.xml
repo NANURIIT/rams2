@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS609BMapper">
 
-	/* 시효관리 조회 */
+	<!-- 시효관리 조회 -->
 	<select id="getEfctDetail" parameterType="com.nanuri.rams.business.common.dto.IBIMS609BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS609BVO">
 		SELECT A.DEAL_NO	  														AS IB_DEAL_NO						/* IBDEAL명 */
 		 	 	 , A.JDGM_DCD 	 														AS RISK_INSPCT_CCD 			/* 리스크심사구분코드*/
@@ -33,7 +33,7 @@
 		 		BY SQ DESC
 	</select>
 	
-	/* 시효관리 등록 */
+	<!-- 시효관리 등록 -->
 	<insert id="registEfctInfo" parameterType="com.nanuri.rams.business.common.dto.IBIMS609BDTO">
 		INSERT INTO IBIMS609B							/* 부실자산시효관리정보 */
 			   (
@@ -69,7 +69,7 @@
 	
 	</insert>
 	
-	/* 시효관리 수정 */
+	<!-- 시효관리 수정 -->
 	<update id="updateEfctInfo" parameterType="com.nanuri.rams.business.common.dto.IBIMS609BDTO">
 		UPDATE IBIMS609B					/* 부실자산시효관리정보 */
 		   SET EFCT_OCRNC_DT			= #{efctOcrncDt		}		/* 효력발생일자 */
@@ -84,7 +84,7 @@
 		   AND SQ 								= #{sq			 			}		/* 일련번호 */
 	</update>
 	
-	/* 시효관리 삭제 */
+	<!-- 시효관리 삭제 -->
 	<delete id="deleteEfctInfo" parameterType="com.nanuri.rams.business.common.dto.IBIMS609BDTO">
 		DELETE 
 			FROM IBIMS609B														/* 부실자산시효관리정보 */
@@ -95,7 +95,7 @@
 		
 	</delete>
 	
-	/* 시효관리 일련번호 조회 */
+	<!-- 시효관리 일련번호 조회 -->
 	<select id="getEfctSq" parameterType="com.nanuri.rams.business.common.dto.IBIMS609BDTO" resultType="com.nanuri.rams.business.common.dto.IBIMS609BDTO">
 		SELECT MAX(SQ)+1 				AS SQ								/* 일련번호 */
   	  FROM IBIMS609B														/* 부실자산시효관리이력정보 */

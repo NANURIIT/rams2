@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS608BMapper">
 
-	/* 법적절차 조회 */
+	<!-- 법적절차 조회 -->
 	<select id="getLglDetail" parameterType="com.nanuri.rams.business.common.dto.IBIMS608BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS608BVO">
 		SELECT A.DEAL_NO	  											AS IB_DEAL_NO						/* IBDEAL명 */
 		 	 	 , A.JDGM_DCD 	 											AS RISK_INSPCT_CCD 			/* 리스크심사구분코드*/
@@ -32,7 +32,7 @@
 		   AND A.MTR_DCD   						= #{mtrDcd}					/* 부수안건구분코드*/
 	</select>
 
-	/* 법적절차 등록 */
+	<!-- 법적절차 등록 -->
 	<insert id="registLglInfo" parameterType="com.nanuri.rams.business.common.dto.IBIMS608BDTO">
 		INSERT INTO IBIMS608B										/* 부실자산법적절차정보 */
 			   (
@@ -71,7 +71,7 @@
 			   	)
 	</insert>
 		
-	/* 법적절차 수정 */
+	<!-- 법적절차 수정 -->
 	<update id="updateLglInfo" parameterType="com.nanuri.rams.business.common.dto.IBIMS608BDTO">
 		UPDATE IBIMS608B											/* 부실자산재산조사정보 */
 		   SET LGL_PRCR_CCD					= #{lglPrcrCcd}			    /* 법적절차구분코드 */       
@@ -88,7 +88,7 @@
 		   AND SQ 								= #{sq}		    						/* 일련번호 */
 	</update>
 	
-	/* 법적절차 삭제 */
+	<!-- 법적절차 삭제 -->
 	<delete id="deleteLglInfo"  parameterType="com.nanuri.rams.business.common.dto.IBIMS608BDTO">
 		DELETE 
 			FROM IBIMS608B										/* 부실자산재산조사정보 */
@@ -98,7 +98,7 @@
 		   AND SQ						= #{sq}								/* 일련번호 */
 	</delete>
 	
-	/* 법적절차 일련번호 조회 */
+	<!-- 법적절차 일련번호 조회 -->
 	<select id="getLglSq" parameterType="com.nanuri.rams.business.common.dto.IBIMS608BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS608BVO">
 		SELECT MAX(SQ)+1 AS SQ									/* 일련번호 */
   	  FROM IBIMS608B										/* 부실자산사후관리이력정보 */

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS605BMapper">
 
-    /*   승인조건 사전관리 셀다운조회    */
+   <!-- 승인조건 사전관리 셀다운조회 -->
 	<select id="getPacmList" resultType="com.nanuri.rams.business.common.vo.IBIMS605BVO">
         SELECT (SELECT CD_VL_NM
                   FROM RAA91B
@@ -228,7 +228,7 @@
             , A.ITEM_SQ
     </select>
 
-    /*   승인조건 사전관리 진행상태코드조회    */
+    <!-- 승인조건 사전관리 진행상태코드조회 -->
     <select id="getRprPrgrsStCd">
         SELECT RPR_PRGRS_ST_CD
           FROM IBIMS605B
@@ -239,9 +239,9 @@
            AND OBLG_PFRM_CCD 	= #{oblgPfrmCcd}      /* 의무이행구분코드 */
     </select>
 
-    /*   승인조건 사전관리 이행계획내용 저장    */
+    <!--  승인조건 사전관리 이행계획내용 저장  -->
 
-    /*  36B테이블 레코드 조회    */
+    <!--  36B테이블 레코드 조회  -->
     <select id="selectOneRaa36b" parameterType="map" resultType="int">
         SELECT COUNT(*)
           FROM IBIMS605B
@@ -319,9 +319,9 @@
              , #{guid}                                   
              )
     </insert>
-    /*   승인조건 사전관리 이행계획내용 저장 END   */
+    <!--  승인조건 사전관리 이행계획내용 저장 END -->
 
-    /*   승인조건 사전관리 승인요청    */
+    <!--  승인조건 사전관리 승인요청  -->
     <update id="updateRcgRqs" parameterType="map">
         UPDATE IBIMS605B
            SET MTR_PRG_STTS_DCD  = '20'
@@ -339,7 +339,7 @@
            AND OBLG_PFRM_CCD = #{oblgPfrmCcd}   /* 의무이행구분코드 */
     </update>
 
-    /*   승인조건 사전관리 반송    */
+    <!--  승인조건 사전관리 반송  -->
     <update id="updateRcgRtvl" parameterType="map">
         UPDATE IBIMS605B
            SET MTR_PRG_STTS_DCD    = '11'
@@ -363,7 +363,7 @@
           AND OBLG_PFRM_CCD      = #{oblgPfrmCcd}   /* 의무이행구분코드 */
     </update>
 
-    /*   승인조건 사전관리 승인    */
+    <!--  승인조건 사전관리 승인 -->
     <update id="updateRcg" parameterType="map">
         UPDATE IBIMS605B
            SET MTR_PRG_STTS_DCD = '30'
@@ -381,7 +381,7 @@
            AND OBLG_PFRM_CCD 	= #{oblgPfrmCcd}    /* 의무이행구분코드 */
     </update>
 
-    /*   승인조건 사전관리 승인(대체투자관리부 부서장) -> 대체투자관리부 부서장은 바로 진행상태완료처리    */
+    <!--   승인조건 사전관리 승인(대체투자관리부 부서장) -> 대체투자관리부 부서장은 바로 진행상태완료처리   -->
     <update id="updateAnivstMngDprtRcg" parameterType="map">
         UPDATE IBIMS605B
            SET MTR_PRG_STTS_DCD    = '50'
@@ -403,7 +403,7 @@
            AND OBLG_PFRM_CCD 	   = #{oblgPfrmCcd}    /* 의무이행구분코드 */
     </update>
 
-    /*   승인조건 사전관리 심사역확인    */
+    <!--   승인조건 사전관리 심사역확인  -->
     <update id="updateExmntFnsh" parameterType="map">
         UPDATE IBIMS605B
            SET MTR_PRG_STTS_DCD    = '40'
@@ -421,7 +421,7 @@
            AND OBLG_PFRM_CCD 	   = #{oblgPfrmCcd}    /* 의무이행구분코드 */
     </update>
 
-    /*   승인조건 사전관리 심사부서장확인    */
+    <!--  승인조건 사전관리 심사부서장확인  -->
     <update id="updateDprtMngrFnsh" parameterType="map">
         UPDATE IBIMS605B
            SET MTR_PRG_STTS_DCD       = '50'

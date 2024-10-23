@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS509BMapper">
 	
-	/* 채권보전주요약정 조회 */
+	<!-- 채권보전주요약정 조회 -->
 	<select id="getBondProtInfo" parameterType="string" resultType="com.nanuri.rams.business.common.vo.IBIMS509BVO">
 		SELECT DEAL_NO                                 /* 딜번호 */
          , SN                                      /* 일련번호 */
@@ -28,7 +28,7 @@
 	</select>
 	
 	
-	/* 채권보전주요약정 저장 */
+	<!-- 채권보전주요약정 저장 -->
 	<insert id="saveBondProtInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS509BVO">
 		  INSERT INTO IBIMS509B 
                (
@@ -65,7 +65,7 @@
 	</insert>
 	
 	
-	/* 채권보전주요약정 삭제 */
+	<!-- 채권보전주요약정 삭제 -->
 	<delete id="delBondProtInfo" parameterType="string">
 		DELETE
 		  FROM IBIMS509B
