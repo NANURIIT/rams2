@@ -346,10 +346,10 @@
          AND D.CMNS_CD_GRP(+) = 'I011'
          AND B.LAST_YN = '1'
          <if test="rsltnDt != ''">
-         AND (A.TR_DT <![CDATA[>=]]> #{rsltnDt})
+         AND (A.TR_DT &gt;= #{rsltnDt})
          </if>
          <if test="rsltnEndDt != ''">
-         AND (A.TR_DT <![CDATA[<=]]> #{rsltnEndDt})
+         AND (A.TR_DT &lt;= #{rsltnEndDt})
          </if>
          <if test="orgno != ''">
          /*AND C.DPRT_CD = #{orgno}*/
@@ -366,7 +366,7 @@
        ORDER BY PRDT_CD, TR_SN DESC
     </select>
 
-	<select id="selectlastIBIMS410B" parameterType="com.nanuri.rams.business.common.dto.IBIMS410BDTO" resultType="com.nanuri.rams.business.common.dto.IBIMS410BDTO">
+	 <select id="selectlastIBIMS410B" parameterType="com.nanuri.rams.business.common.dto.IBIMS410BDTO" resultType="com.nanuri.rams.business.common.dto.IBIMS410BDTO">
 		SELECT 
 			  PRDT_CD					/* 상품코드             */
 			, TR_SN						/* 거래일련번호          */
@@ -467,178 +467,178 @@
     <insert id="saveDlTrList" parameterType="com.nanuri.rams.business.common.dto.IBIMS410BDTO">
         INSERT INTO IBIMS410B
                (
-                   PRDT_CD                   <!-- 상품코드 -->
-                  ,TR_SN                     <!-- 거래일련번호 -->
-                  ,EXC_SN                    <!-- 실행일련번호 -->
-                  ,TR_DT                     <!-- 거래일자 -->
-                  ,TR_STAT_CD                <!-- 거래상태코드 -->
-                  ,ETPR_CRDT_GRNT_TR_KIND_CD <!-- 거래종류코드 -->
-                  ,DEAL_TR_AMT               <!-- 딜거래금액 -->
-                  ,DEAL_TR_PRCA              <!-- 딜거래원금 -->
-                  ,TR_INT_AMT                <!-- 거래이자금액 -->
-                  ,DEAL_RDPT_OBJT_PRCA       <!-- 딜상환대상원금 -->
-                  ,DEAL_MRDP_PRCA            <!-- 딜중도상환원금 -->
-                  ,NRML_INT_AMT              <!-- 정상이자금액 -->
-                  ,CRDT_GRNT_OVDU_INT_AMT    <!-- 신용공여연체이자금액 -->
-                  ,CRDT_GRNT_RCVB_INT_AMT    <!-- 신용공여미수이자금액 -->
-                  ,PUCR_INT_AMT              <!-- 환출이자금액 -->
-                  ,TR_FEE_AMT                <!-- 거래수수료금액 -->
-                  ,COST_AMT                  <!-- 비용금액 -->
-                  ,TR_CRCY_CD                <!-- 거래통화코드 -->
-                  ,WCRC_TRSL_RT              <!-- 원화환산율 -->
-                  ,WCRC_TRSL_TR_PRCA         <!-- 원화환산거래원금 -->
-                  ,WCRC_TRSL_TR_INT_AMT      <!-- 원화환산거래이자금액 -->
-                  ,WCRC_TRSL_TR_FEE_AMT      <!-- 원화환산거래수수료금액 -->
-                  ,WCRC_TRSL_COST_AMT        <!-- 원화환산비용금액 -->
-                  ,ACTG_AFRS_CD              <!-- 회계업무코드 -->
-                  ,ACTG_UNIT_AFRS_CD         <!-- 회계단위업무코드 -->
-                  ,ACTG_TR_CD                <!-- 회계거래코드 -->
-                  ,ACTG_ERLM_SEQ             <!-- 회계등록순번 -->
-                  ,RKFR_DT                   <!-- 기산일자 -->
-                  ,FNDS_DVSN_CD              <!-- 자금구분코드 -->
-                  ,RCTM_ISTT_CD              <!-- 입금기관코드 -->
-                  ,RCTM_BANO                 <!-- 입금은행계좌번호 -->
-                  ,DPOW_NAME                 <!-- 예금주명 -->
-                  ,HDWR_PRCS_YN              <!-- 수기처리여부 -->
-                  ,ACPT_PTCL_SMTL_AMT        <!-- 수납내역합계금액 -->
-                  ,DEAL_ALTN_AMT             <!-- 딜대체금액 -->
-                  ,DEAL_CASH_AMT             <!-- 딜현금금액 -->
-                  ,DEAL_BKCH_AMT             <!-- 딜자기앞수표금액 -->
-                  ,DEAL_CKBL_AMT             <!-- 딜타점권금액 -->
-                  ,BILL_POUT_YN              <!-- 계산서출력여부 -->
-                  ,TRBK_POUT_YN              <!-- 거래장출력여부 -->
-                  ,RCLM_DVSN_CD              <!-- 회수구분코드 -->
-                  ,PUCR_INT_ALTN_AMT         <!-- 환출이자대체금액 -->
-                  ,PUCR_INT_RCTM_AMT         <!-- 환출이자입금금액 -->
-                  ,CLCN_FEE_AMT              <!-- 추심수수료금액 -->
-                  ,IMPT_STMP_AMT             <!-- 수입인지금액 -->
-                  ,FEE_TOT_AMT               <!-- 수수료총금액 -->
-                  ,RVSE_CNCL_DVSN_CD         <!-- 정정취소구분코드 -->
-                  ,RVSE_CNCL_RSON_TEXT       <!-- 정정취소사유내용 -->
-                  ,RVSE_CNCL_TR_SEQ          <!-- 정정취소거래순번 -->
-                  ,TR_AF_LOAN_RMND           <!-- 거래이후대출잔액 -->
-                  ,RDPT_TMOD                 <!-- 상환회차 -->
-                  ,DEAL_PXDF_PRCA            <!-- 딜대지급원금 -->
-                  ,PXDF_INT_AMT              <!-- 대지급이자금액 -->
-                  ,PXDF_ETC_AMT              <!-- 대지급기타금액 -->
-                  ,ORGNO                     <!-- 조직번호 -->
-                  ,TR_STFNO                  <!-- 거래직원번호 -->
-                  ,DCFC_STFNO                <!-- 결재자직원번호 -->
-                  ,CLM_SEQ                   <!-- 청구순번 -->
-                  ,ACTG_SYNS_CD              <!-- 회계적요코드 -->
-                  ,SYNS_TEXT                 <!-- 적요내용 -->
-                  ,TAX_BILL_EVDC_ERLM_DT     <!-- 세금계산서증빙등록일자 -->
-                  ,TAX_BILL_EVDC_ERLM_SEQ    <!-- 세금계산서증빙등록순번 -->
-                  ,TAX_BILL_PRCS_SEQ         <!-- 세금계산서처리순번 -->
-                  ,BILL_EVDC_ERLM_DT         <!-- 계산서증빙등록일자 -->
-                  ,BILL_EVDC_ERLM_SEQ        <!-- 계산서증빙등록순번 -->
-                  ,BILL_PRCS_SEQ             <!-- 계산서처리순번 -->
-                  ,VAT                       <!-- 부가세 -->
-                  ,ISSU_BILL_EVDC_ERLM_DT    <!-- 발행계산서증빙등록일자 -->
-                  ,ISSU_BILL_PRCS_SEQ        <!-- 발행계산서처리순번 -->
-                  ,DFRM_FEE_PRCA_ECLS_YN     <!-- 지급수수료원금제외여부 -->
-                  ,DFRM_FEE_CLM_OBJT_AMT     <!-- 지급수수료청구대상금액 -->
-                  ,MRDP_FEE_AMT              <!-- 중도상환수수료금액 -->
-                  ,CHCK_ISSU_ISTT_NAME       <!-- 수표발행기관명 -->
-                  ,MRDP_YN                   <!-- 중도상환여부 -->
-                  ,RCTM_DT                   <!-- 입금일자 -->
-                  ,TR_OBJT_BSN_NO            <!-- 거래대상기업체번호 -->
-                  ,NOPR_ERNG_ETC_AMT         <!-- 영업외수익기타금액 -->
-                  ,NOPR_COST_ETC_AMT         <!-- 영업외비용기타금액 -->
-                  ,RCVB_RSTR_YN              <!-- 미수환원여부 -->
-                  ,RCVB_YN                   <!-- 미수여부 -->
-                  ,HND_DETL_DTM              <!-- 조작상세일시 -->
-                  ,HND_EMPNO                 <!-- 조작사원번호 -->
-                  ,HND_TMNL_NO               <!-- 조작단말기번호 -->
-                  ,HND_TR_ID                 <!-- 조작거래ID -->
-                  ,GUID                      <!-- GUID -->
+                   PRDT_CD                   /* 상품코드 */
+                  ,TR_SN                     /* 거래일련번호 */
+                  ,EXC_SN                    /* 실행일련번호 */
+                  ,TR_DT                     /* 거래일자 */
+                  ,TR_STAT_CD                /* 거래상태코드 */
+                  ,ETPR_CRDT_GRNT_TR_KIND_CD /* 거래종류코드 */
+                  ,DEAL_TR_AMT               /* 딜거래금액 */
+                  ,DEAL_TR_PRCA              /* 딜거래원금 */
+                  ,TR_INT_AMT                /* 거래이자금액 */
+                  ,DEAL_RDPT_OBJT_PRCA       /* 딜상환대상원금 */
+                  ,DEAL_MRDP_PRCA            /* 딜중도상환원금 */
+                  ,NRML_INT_AMT              /* 정상이자금액 */
+                  ,CRDT_GRNT_OVDU_INT_AMT    /* 신용공여연체이자금액 */
+                  ,CRDT_GRNT_RCVB_INT_AMT    /* 신용공여미수이자금액 */
+                  ,PUCR_INT_AMT              /* 환출이자금액 */
+                  ,TR_FEE_AMT                /* 거래수수료금액 */
+                  ,COST_AMT                  /* 비용금액 */
+                  ,TR_CRCY_CD                /* 거래통화코드 */
+                  ,WCRC_TRSL_RT              /* 원화환산율 */
+                  ,WCRC_TRSL_TR_PRCA         /* 원화환산거래원금 */
+                  ,WCRC_TRSL_TR_INT_AMT      /* 원화환산거래이자금액 */
+                  ,WCRC_TRSL_TR_FEE_AMT      /* 원화환산거래수수료금액 */
+                  ,WCRC_TRSL_COST_AMT        /* 원화환산비용금액 */
+                  ,ACTG_AFRS_CD              /* 회계업무코드 */
+                  ,ACTG_UNIT_AFRS_CD         /* 회계단위업무코드 */
+                  ,ACTG_TR_CD                /* 회계거래코드 */
+                  ,ACTG_ERLM_SEQ             /* 회계등록순번 */
+                  ,RKFR_DT                   /* 기산일자 */
+                  ,FNDS_DVSN_CD              /* 자금구분코드 */
+                  ,RCTM_ISTT_CD              /* 입금기관코드 */
+                  ,RCTM_BANO                 /* 입금은행계좌번호 */
+                  ,DPOW_NAME                 /* 예금주명 */
+                  ,HDWR_PRCS_YN              /* 수기처리여부 */
+                  ,ACPT_PTCL_SMTL_AMT        /* 수납내역합계금액 */
+                  ,DEAL_ALTN_AMT             /* 딜대체금액 */
+                  ,DEAL_CASH_AMT             /* 딜현금금액 */
+                  ,DEAL_BKCH_AMT             /* 딜자기앞수표금액 */
+                  ,DEAL_CKBL_AMT             /* 딜타점권금액 */
+                  ,BILL_POUT_YN              /* 계산서출력여부 */
+                  ,TRBK_POUT_YN              /* 거래장출력여부 */
+                  ,RCLM_DVSN_CD              /* 회수구분코드 */
+                  ,PUCR_INT_ALTN_AMT         /* 환출이자대체금액 */
+                  ,PUCR_INT_RCTM_AMT         /* 환출이자입금금액 */
+                  ,CLCN_FEE_AMT              /* 추심수수료금액 */
+                  ,IMPT_STMP_AMT             /* 수입인지금액 */
+                  ,FEE_TOT_AMT               /* 수수료총금액 */
+                  ,RVSE_CNCL_DVSN_CD         /* 정정취소구분코드 */
+                  ,RVSE_CNCL_RSON_TEXT       /* 정정취소사유내용 */
+                  ,RVSE_CNCL_TR_SEQ          /* 정정취소거래순번 */
+                  ,TR_AF_LOAN_RMND           /* 거래이후대출잔액 */
+                  ,RDPT_TMOD                 /* 상환회차 */
+                  ,DEAL_PXDF_PRCA            /* 딜대지급원금 */
+                  ,PXDF_INT_AMT              /* 대지급이자금액 */
+                  ,PXDF_ETC_AMT              /* 대지급기타금액 */
+                  ,ORGNO                     /* 조직번호 */
+                  ,TR_STFNO                  /* 거래직원번호 */
+                  ,DCFC_STFNO                /* 결재자직원번호 */
+                  ,CLM_SEQ                   /* 청구순번 */
+                  ,ACTG_SYNS_CD              /* 회계적요코드 */
+                  ,SYNS_TEXT                 /* 적요내용 */
+                  ,TAX_BILL_EVDC_ERLM_DT     /* 세금계산서증빙등록일자 */
+                  ,TAX_BILL_EVDC_ERLM_SEQ    /* 세금계산서증빙등록순번 */
+                  ,TAX_BILL_PRCS_SEQ         /* 세금계산서처리순번 */
+                  ,BILL_EVDC_ERLM_DT         /* 계산서증빙등록일자 */
+                  ,BILL_EVDC_ERLM_SEQ        /* 계산서증빙등록순번 */
+                  ,BILL_PRCS_SEQ             /* 계산서처리순번 */
+                  ,VAT                       /* 부가세 */
+                  ,ISSU_BILL_EVDC_ERLM_DT    /* 발행계산서증빙등록일자 */
+                  ,ISSU_BILL_PRCS_SEQ        /* 발행계산서처리순번 */
+                  ,DFRM_FEE_PRCA_ECLS_YN     /* 지급수수료원금제외여부 */
+                  ,DFRM_FEE_CLM_OBJT_AMT     /* 지급수수료청구대상금액 */
+                  ,MRDP_FEE_AMT              /* 중도상환수수료금액 */
+                  ,CHCK_ISSU_ISTT_NAME       /* 수표발행기관명 */
+                  ,MRDP_YN                   /* 중도상환여부 */
+                  ,RCTM_DT                   /* 입금일자 */
+                  ,TR_OBJT_BSN_NO            /* 거래대상기업체번호 */
+                  ,NOPR_ERNG_ETC_AMT         /* 영업외수익기타금액 */
+                  ,NOPR_COST_ETC_AMT         /* 영업외비용기타금액 */
+                  ,RCVB_RSTR_YN              /* 미수환원여부 */
+                  ,RCVB_YN                   /* 미수여부 */
+                  ,HND_DETL_DTM              /* 조작상세일시 */
+                  ,HND_EMPNO                 /* 조작사원번호 */
+                  ,HND_TMNL_NO               /* 조작단말기번호 */
+                  ,HND_TR_ID                 /* 조작거래ID */
+                  ,GUID                      /* GUID */
                )
         VALUES (
-                   #{prdtCd}    <!-- 상품코드 -->
-                  ,#{trSn}     <!-- 거래일련번호 -->
-                  ,#{excSn}    <!-- 실행일련번호 -->
-                  ,#{trDt}    <!-- 거래일자 -->
-                  ,#{trStatCd}    <!-- 거래상태코드 -->
-                  ,#{etprCrdtGrntTrKindCd} <!-- 거래종류코드 -->
-                  ,#{dealTrAmt}    <!-- 딜거래금액 -->
-                  ,#{dealTrPrca}    <!-- 딜거래원금 -->
-                  ,#{trIntAmt}    <!-- 거래이자금액 -->
-                  ,#{dealRdptObjtPrca}    <!-- 딜상환대상원금 -->
-                  ,#{dealMrdpPrca}    <!-- 딜중도상환원금 -->
-                  ,#{nrmlIntAmt}    <!-- 정상이자금액 -->
-                  ,#{crdtGrntOvduIntAmt}    <!-- 신용공여연체이자금액 -->
-                  ,#{crdtGrntRcvbIntAmt}    <!-- 신용공여미수이자금액 -->
-                  ,#{pucrIntAmt}    <!-- 환출이자금액 -->
-                  ,#{trFeeAmt}    <!-- 거래수수료금액 -->
-                  ,#{costAmt}    <!-- 비용금액 -->
-                  ,#{trCrcyCd}    <!-- 거래통화코드 -->
-                  ,#{wcrcTrslRt}    <!-- 원화환산율 -->
-                  ,#{wcrcTrslTrPrca}    <!-- 원화환산거래원금 -->
-                  ,#{wcrcTrslTrIntAmt}    <!-- 원화환산거래이자금액 -->
-                  ,#{wcrcTrslTrFeeAmt}    <!-- 원화환산거래수수료금액 -->
-                  ,#{wcrcTrslCostAmt}    <!-- 원화환산비용금액 -->
-                  ,#{actgAfrsCd}    <!-- 회계업무코드 -->
-                  ,#{actgUnitAfrsCd}    <!-- 회계단위업무코드 -->
-                  ,#{actgTrCd}    <!-- 회계거래코드 -->
-                  ,#{actgErlmSeq}    <!-- 회계등록순번 -->
-                  ,#{rkfrDt}    <!-- 기산일자 -->
-                  ,#{fndsDvsnCd}    <!-- 자금구분코드 -->
-                  ,#{rctmIsttCd}    <!-- 입금기관코드 -->
-                  ,#{rctmBano}    <!-- 입금은행계좌번호 -->
-                  ,#{dpowName}    <!-- 예금주명 -->
-                  ,#{hdwrPrcsYn}    <!-- 수기처리여부 -->
-                  ,#{acptPtclSmtlAmt}    <!-- 수납내역합계금액 -->
-                  ,#{dealAltnAmt}    <!-- 딜대체금액 -->
-                  ,#{dealCashAmt}    <!-- 딜현금금액 -->
-                  ,#{dealBkchAmt}    <!-- 딜자기앞수표금액 -->
-                  ,#{dealCkblAmt}    <!-- 딜타점권금액 -->
-                  ,#{billPoutYn}    <!-- 계산서출력여부 -->
-                  ,#{trbkPoutYn}    <!-- 거래장출력여부 -->
-                  ,#{rclmDvsnCd}    <!-- 회수구분코드 -->
-                  ,#{pucrIntAltnAmt}    <!-- 환출이자대체금액 -->
-                  ,#{pucrIntRctmAmt}    <!-- 환출이자입금금액 -->
-                  ,#{clcnFeeAmt}    <!-- 추심수수료금액 -->
-                  ,#{imptStmpAmt}    <!-- 수입인지금액 -->
-                  ,#{feeTotAmt}    <!-- 수수료총금액 -->
-                  ,#{rvseCnclDvsnCd}    <!-- 정정취소구분코드 -->
-                  ,#{rvseCnclRsonText}    <!-- 정정취소사유내용 -->
-                  ,#{rvseCnclTrSeq}    <!-- 정정취소거래순번 -->
-                  ,#{trAfLoanRmnd}    <!-- 거래이후대출잔액 -->
-                  ,#{rdptTmod}    <!-- 상환회차 -->
-                  ,#{dealPxdfPrca}    <!-- 딜대지급원금 -->
-                  ,#{pxdfIntAmt}    <!-- 대지급이자금액 -->
-                  ,#{pxdfEtcAmt}    <!-- 대지급기타금액 -->
-                  ,#{orgno}    <!-- 조직번호 -->
-                  ,#{trStfno}    <!-- 거래직원번호 -->
-                  ,#{dcfcStfno}    <!-- 결재자직원번호 -->
-                  ,#{clmSeq}    <!-- 청구순번 -->
-                  ,#{actgSynsCd}    <!-- 회계적요코드 -->
-                  ,#{synsText}    <!-- 적요내용 -->
-                  ,#{taxBillEvdcErlmDt}    <!-- 세금계산서증빙등록일자 -->
-                  ,#{taxBillEvdcErlmSeq}    <!-- 세금계산서증빙등록순번 -->
-                  ,#{taxBillPrcsSeq}    <!-- 세금계산서처리순번 -->
-                  ,#{billEvdcErlmDt}    <!-- 계산서증빙등록일자 -->
-                  ,#{billEvdcErlmSeq}    <!-- 계산서증빙등록순번 -->
-                  ,#{billPrcsSeq}    <!-- 계산서처리순번 -->
-                  ,#{vat}    <!-- 부가세 -->
-                  ,#{issuBillEvdcErlmDt}    <!-- 발행계산서증빙등록일자 -->
-                  ,#{issuBillPrcsSeq}    <!-- 발행계산서처리순번 -->
-                  ,#{dfrmFeePrcaEclsYn}    <!-- 지급수수료원금제외여부 -->
-                  ,#{dfrmFeeClmObjtAmt}    <!-- 지급수수료청구대상금액 -->
-                  ,#{mrdpFeeAmt}    <!-- 중도상환수수료금액 -->
-                  ,#{chckIssuIsttName}    <!-- 수표발행기관명 -->
-                  ,#{mrdpYn}    <!-- 중도상환여부 -->
-                  ,#{rctmDt}    <!-- 입금일자 -->
-                  ,#{trObjtBsnNo}    <!-- 거래대상기업체번호 -->
-                  ,#{noprErngEtcAmt}    <!-- 영업외수익기타금액 -->
-                  ,#{noprCostEtcAmt}    <!-- 영업외비용기타금액 -->
-                  ,#{rcvbRstrYn}    <!-- 미수환원여부 -->
-                  ,#{rcvbYn}    <!-- 미수여부 -->
-                  ,SYSDATE    <!-- 조작상세일시 -->
-                  ,#{hndEmpno}    <!-- 조작사원번호 -->
-                  ,#{hndTmnlNo}    <!-- 조작단말기번호 -->
-                  ,#{hndTrId}    <!-- 조작거래ID -->
-                  ,#{guid}    <!-- GUID -->
+                   #{prdtCd}    /* 상품코드 */
+                  ,#{trSn}     /* 거래일련번호 */
+                  ,#{excSn}    /* 실행일련번호 */
+                  ,#{trDt}    /* 거래일자 */
+                  ,#{trStatCd}    /* 거래상태코드 */
+                  ,#{etprCrdtGrntTrKindCd} /* 거래종류코드 */
+                  ,#{dealTrAmt}    /* 딜거래금액 */
+                  ,#{dealTrPrca}    /* 딜거래원금 */
+                  ,#{trIntAmt}    /* 거래이자금액 */
+                  ,#{dealRdptObjtPrca}    /* 딜상환대상원금 */
+                  ,#{dealMrdpPrca}    /* 딜중도상환원금 */
+                  ,#{nrmlIntAmt}    /* 정상이자금액 */
+                  ,#{crdtGrntOvduIntAmt}    /* 신용공여연체이자금액 */
+                  ,#{crdtGrntRcvbIntAmt}    /* 신용공여미수이자금액 */
+                  ,#{pucrIntAmt}    /* 환출이자금액 */
+                  ,#{trFeeAmt}    /* 거래수수료금액 */
+                  ,#{costAmt}    /* 비용금액 */
+                  ,#{trCrcyCd}    /* 거래통화코드 */
+                  ,#{wcrcTrslRt}    /* 원화환산율 */
+                  ,#{wcrcTrslTrPrca}    /* 원화환산거래원금 */
+                  ,#{wcrcTrslTrIntAmt}    /* 원화환산거래이자금액 */
+                  ,#{wcrcTrslTrFeeAmt}    /* 원화환산거래수수료금액 */
+                  ,#{wcrcTrslCostAmt}    /* 원화환산비용금액 */
+                  ,#{actgAfrsCd}    /* 회계업무코드 */
+                  ,#{actgUnitAfrsCd}    /* 회계단위업무코드 */
+                  ,#{actgTrCd}    /* 회계거래코드 */
+                  ,#{actgErlmSeq}    /* 회계등록순번 */
+                  ,#{rkfrDt}    /* 기산일자 */
+                  ,#{fndsDvsnCd}    /* 자금구분코드 */
+                  ,#{rctmIsttCd}    /* 입금기관코드 */
+                  ,#{rctmBano}    /* 입금은행계좌번호 */
+                  ,#{dpowName}    /* 예금주명 */
+                  ,#{hdwrPrcsYn}    /* 수기처리여부 */
+                  ,#{acptPtclSmtlAmt}    /* 수납내역합계금액 */
+                  ,#{dealAltnAmt}    /* 딜대체금액 */
+                  ,#{dealCashAmt}    /* 딜현금금액 */
+                  ,#{dealBkchAmt}    /* 딜자기앞수표금액 */
+                  ,#{dealCkblAmt}    /* 딜타점권금액 */
+                  ,#{billPoutYn}    /* 계산서출력여부 */
+                  ,#{trbkPoutYn}    /* 거래장출력여부 */
+                  ,#{rclmDvsnCd}    /* 회수구분코드 */
+                  ,#{pucrIntAltnAmt}    /* 환출이자대체금액 */
+                  ,#{pucrIntRctmAmt}    /* 환출이자입금금액 */
+                  ,#{clcnFeeAmt}    /* 추심수수료금액 */
+                  ,#{imptStmpAmt}    /* 수입인지금액 */
+                  ,#{feeTotAmt}    /* 수수료총금액 */
+                  ,#{rvseCnclDvsnCd}    /* 정정취소구분코드 */
+                  ,#{rvseCnclRsonText}    /* 정정취소사유내용 */
+                  ,#{rvseCnclTrSeq}    /* 정정취소거래순번 */
+                  ,#{trAfLoanRmnd}    /* 거래이후대출잔액 */
+                  ,#{rdptTmod}    /* 상환회차 */
+                  ,#{dealPxdfPrca}    /* 딜대지급원금 */
+                  ,#{pxdfIntAmt}    /* 대지급이자금액 */
+                  ,#{pxdfEtcAmt}    /* 대지급기타금액 */
+                  ,#{orgno}    /* 조직번호 */
+                  ,#{trStfno}    /* 거래직원번호 */
+                  ,#{dcfcStfno}    /* 결재자직원번호 */
+                  ,#{clmSeq}    /* 청구순번 */
+                  ,#{actgSynsCd}    /* 회계적요코드 */
+                  ,#{synsText}    /* 적요내용 */
+                  ,#{taxBillEvdcErlmDt}    /* 세금계산서증빙등록일자 */
+                  ,#{taxBillEvdcErlmSeq}    /* 세금계산서증빙등록순번 */
+                  ,#{taxBillPrcsSeq}    /* 세금계산서처리순번 */
+                  ,#{billEvdcErlmDt}    /* 계산서증빙등록일자 */
+                  ,#{billEvdcErlmSeq}    /* 계산서증빙등록순번 */
+                  ,#{billPrcsSeq}    /* 계산서처리순번 */
+                  ,#{vat}    /* 부가세 */
+                  ,#{issuBillEvdcErlmDt}    /* 발행계산서증빙등록일자 */
+                  ,#{issuBillPrcsSeq}    /* 발행계산서처리순번 */
+                  ,#{dfrmFeePrcaEclsYn}    /* 지급수수료원금제외여부 */
+                  ,#{dfrmFeeClmObjtAmt}    /* 지급수수료청구대상금액 */
+                  ,#{mrdpFeeAmt}    /* 중도상환수수료금액 */
+                  ,#{chckIssuIsttName}    /* 수표발행기관명 */
+                  ,#{mrdpYn}    /* 중도상환여부 */
+                  ,#{rctmDt}    /* 입금일자 */
+                  ,#{trObjtBsnNo}    /* 거래대상기업체번호 */
+                  ,#{noprErngEtcAmt}    /* 영업외수익기타금액 */
+                  ,#{noprCostEtcAmt}    /* 영업외비용기타금액 */
+                  ,#{rcvbRstrYn}    /* 미수환원여부 */
+                  ,#{rcvbYn}    /* 미수여부 */
+                  ,SYSDATE    /* 조작상세일시 */
+                  ,#{hndEmpno}    /* 조작사원번호 */
+                  ,#{hndTmnlNo}    /* 조작단말기번호 */
+                  ,#{hndTrId}    /* 조작거래ID */
+                  ,#{guid}    /* GUID */
                )
     </insert>
 
@@ -646,99 +646,99 @@
     <delete id="cancelDlTrList" parameterType="com.nanuri.rams.business.common.dto.IBIMS410BDTO">
         DELETE
           FROM IBIMS410B
-         WHERE PRDT_CD = #{prdtCd}              <!-- 상품코드 -->
-           AND TR_SN  = #{trSn}                <!-- 거래일련번호 -->
-           AND EXC_SN = #{excSn}               <!-- 실행일련번호 -->
+         WHERE PRDT_CD = #{prdtCd}             /* 상품코드 */
+           AND TR_SN  = #{trSn}                /* 거래일련번호 */
+           AND EXC_SN = #{excSn}               /* 실행일련번호 */
     </delete>
 
     <!-- 딜거래내역 UPDATE -->
     <update id="updateDlTrList" parameterType="com.nanuri.rams.business.common.dto.IBIMS410BDTO">
         UPDATE IBIMS410B
-           SET TR_DT                     = #{trDt}                <!-- 거래일자 -->
-              ,TR_STAT_CD                = #{trStatCd}            <!-- 거래상태코드 -->
-              ,ETPR_CRDT_GRNT_TR_KIND_CD = #{etprCrdtGrntTrKindCd}<!-- 거래종류코드 -->
-              ,DEAL_TR_AMT               = #{dealTrAmt}           <!-- 딜거래금액 -->
-              ,DEAL_TR_PRCA              = #{dealTrPrca}          <!-- 딜거래원금 -->
-              ,TR_INT_AMT                = #{trIntAmt}            <!-- 거래이자금액 -->
-              ,DEAL_RDPT_OBJT_PRCA       = #{dealRdptObjtPrca}    <!-- 딜상환대상원금 -->
-              ,DEAL_MRDP_PRCA            = #{dealMrdpPrca}        <!-- 딜중도상환원금 -->
-              ,NRML_INT_AMT              = #{nrmlIntAmt}          <!-- 정상이자금액 -->
-              ,CRDT_GRNT_OVDU_INT_AMT    = #{crdtGrntOvduIntAmt}  <!-- 신용공여연체이자금액 -->
-              ,CRDT_GRNT_RCVB_INT_AMT    = #{crdtGrntRcvbIntAmt}  <!-- 신용공여미수이자금액 -->
-              ,PUCR_INT_AMT              = #{pucrIntAmt}          <!-- 환출이자금액 -->
-              ,TR_FEE_AMT                = #{trFeeAmt}            <!-- 거래수수료금액 -->
-              ,COST_AMT                  = #{costAmt}             <!-- 비용금액 -->
-              ,TR_CRCY_CD                = #{trCrcyCd}            <!-- 거래통화코드 -->
-              ,WCRC_TRSL_RT              = #{wcrcTrslRt}          <!-- 원화환산율 -->
-              ,WCRC_TRSL_TR_PRCA         = #{wcrcTrslTrPrca}      <!-- 원화환산거래원금 -->
-              ,WCRC_TRSL_TR_INT_AMT      = #{wcrcTrslTrIntAmt}    <!-- 원화환산거래이자금액 -->
-              ,WCRC_TRSL_TR_FEE_AMT      = #{wcrcTrslTrFeeAmt}    <!-- 원화환산거래수수료금액 -->
-              ,WCRC_TRSL_COST_AMT        = #{wcrcTrslCostAmt}     <!-- 원화환산비용금액 -->
-              ,ACTG_AFRS_CD              = #{actgAfrsCd}          <!-- 회계업무코드 -->
-              ,ACTG_UNIT_AFRS_CD         = #{actgUnitAfrsCd}      <!-- 회계단위업무코드 -->
-              ,ACTG_TR_CD                = #{actgTrCd}            <!-- 회계거래코드 -->
-              ,ACTG_ERLM_SEQ             = #{actgErlmSeq}         <!-- 회계등록순번 -->
-              ,RKFR_DT                   = #{rkfrDt}              <!-- 기산일자 -->
-              ,FNDS_DVSN_CD              = #{fndsDvsnCd}          <!-- 자금구분코드 -->
-              ,RCTM_ISTT_CD              = #{rctmIsttCd}          <!-- 입금기관코드 -->
-              ,RCTM_BANO                 = #{rctmBano}            <!-- 입금은행계좌번호 -->
-              ,DPOW_NAME                 = #{dpowName}            <!-- 예금주명 -->
-              ,HDWR_PRCS_YN              = #{hdwrPrcsYn}          <!-- 수기처리여부 -->
-              ,ACPT_PTCL_SMTL_AMT        = #{acptPtclSmtlAmt}     <!-- 수납내역합계금액 -->
-              ,DEAL_ALTN_AMT             = #{dealAltnAmt}         <!-- 딜대체금액 -->
-              ,DEAL_CASH_AMT             = #{dealCashAmt}         <!-- 딜현금금액 -->
-              ,DEAL_BKCH_AMT             = #{dealBkchAmt}         <!-- 딜자기앞수표금액 -->
-              ,DEAL_CKBL_AMT             = #{dealCkblAmt}         <!-- 딜타점권금액 -->
-              ,BILL_POUT_YN              = #{billPoutYn}          <!-- 계산서출력여부 -->
-              ,TRBK_POUT_YN              = #{trbkPoutYn}          <!-- 거래장출력여부 -->
-              ,RCLM_DVSN_CD              = #{rclmDvsnCd}          <!-- 회수구분코드 -->
-              ,PUCR_INT_ALTN_AMT         = #{pucrIntAltnAmt}      <!-- 환출이자대체금액 -->
-              ,PUCR_INT_RCTM_AMT         = #{pucrIntRctmAmt}      <!-- 환출이자입금금액 -->
-              ,CLCN_FEE_AMT              = #{clcnFeeAmt}          <!-- 추심수수료금액 -->
-              ,IMPT_STMP_AMT             = #{imptStmpAmt}         <!-- 수입인지금액 -->
-              ,FEE_TOT_AMT               = #{feeTotAmt}           <!-- 수수료총금액 -->
-              ,RVSE_CNCL_DVSN_CD         = #{rvseCnclDvsnCd}      <!-- 정정취소구분코드 -->
-              ,RVSE_CNCL_RSON_TEXT       = #{rvseCnclRsonText}    <!-- 정정취소사유내용 -->
-              ,RVSE_CNCL_TR_SEQ          = #{rvseCnclTrSeq}       <!-- 정정취소거래순번 -->
-              ,TR_AF_LOAN_RMND           = #{trAfLoanRmnd}        <!-- 거래이후대출잔액 -->
-              ,RDPT_TMOD                 = #{rdptTmod}            <!-- 상환회차 -->
-              ,DEAL_PXDF_PRCA            = #{dealPxdfPrca}        <!-- 딜대지급원금 -->
-              ,PXDF_INT_AMT              = #{pxdfIntAmt}          <!-- 대지급이자금액 -->
-              ,PXDF_ETC_AMT              = #{pxdfEtcAmt}          <!-- 대지급기타금액 -->
-              ,ORGNO                     = #{orgno}               <!-- 조직번호 -->
-              ,TR_STFNO                  = #{trStfno}             <!-- 거래직원번호 -->
-              ,DCFC_STFNO                = #{dcfcStfno}           <!-- 결재자직원번호 -->
-              ,CLM_SEQ                   = #{clmSeq}              <!-- 청구순번 -->
-              ,ACTG_SYNS_CD              = #{actgSynsCd}          <!-- 회계적요코드 -->
-              ,SYNS_TEXT                 = #{synsText}            <!-- 적요내용 -->
-              ,TAX_BILL_EVDC_ERLM_DT     = #{taxBillEvdcErlmDt}   <!-- 세금계산서증빙등록일자 -->
-              ,TAX_BILL_EVDC_ERLM_SEQ    = #{taxBillEvdcErlmSeq}  <!-- 세금계산서증빙등록순번 -->
-              ,TAX_BILL_PRCS_SEQ         = #{taxBillPrcsSeq}      <!-- 세금계산서처리순번 -->
-              ,BILL_EVDC_ERLM_DT         = #{billEvdcErlmDt}      <!-- 계산서증빙등록일자 -->
-              ,BILL_EVDC_ERLM_SEQ        = #{billEvdcErlmSeq}     <!-- 계산서증빙등록순번 -->
-              ,BILL_PRCS_SEQ             = #{billPrcsSeq}         <!-- 계산서처리순번 -->
-              ,VAT                       = #{vat}                 <!-- 부가세 -->
-              ,ISSU_BILL_EVDC_ERLM_DT    = #{issuBillEvdcErlmDt}  <!-- 발행계산서증빙등록일자 -->
-              ,ISSU_BILL_PRCS_SEQ        = #{issuBillPrcsSeq}     <!-- 발행계산서처리순번 -->
-              ,DFRM_FEE_PRCA_ECLS_YN     = #{dfrmFeePrcaEclsYn}   <!-- 지급수수료원금제외여부 -->
-              ,DFRM_FEE_CLM_OBJT_AMT     = #{dfrmFeeClmObjtAmt}   <!-- 지급수수료청구대상금액 -->
-              ,MRDP_FEE_AMT              = #{mrdpFeeAmt}          <!-- 중도상환수수료금액 -->
-              ,CHCK_ISSU_ISTT_NAME       = #{chckIssuIsttName}    <!-- 수표발행기관명 -->
-              ,MRDP_YN                   = #{mrdpYn}              <!-- 중도상환여부 -->
-              ,RCTM_DT                   = #{rctmDt}              <!-- 입금일자 -->
-              ,TR_OBJT_BSN_NO            = #{trObjtBsnNo}         <!-- 거래대상기업체번호 -->
-              ,NOPR_ERNG_ETC_AMT         = #{noprErngEtcAmt}      <!-- 영업외수익기타금액 -->
-              ,NOPR_COST_ETC_AMT         = #{noprCostEtcAmt}      <!-- 영업외비용기타금액 -->
-              ,RCVB_RSTR_YN              = #{rcvbRstrYn}          <!-- 미수환원여부 -->
-              ,RCVB_YN                   = #{rcvbYn}              <!-- 미수여부 -->
-              ,HND_DETL_DTM              = SYSDATE                  <!-- 조작상세일시 -->
-              ,HND_EMPNO                 = #{hndEmpno}            <!-- 조작사원번호 -->
-              ,HND_TMNL_NO               = #{hndTmnlNo}           <!-- 조작단말기번호 -->
-              ,HND_TR_ID                 = #{hndTrId}             <!-- 조작거래ID -->
-              ,GUID                      = ,#{guid}               <!-- GUID -->
-         WHERE PRDT_CD = #{prdtCd}              <!-- 상품코드 -->
-           AND TR_SN  = #{trSn}                <!-- 거래일련번호 -->
-           AND EXC_SN = #{excSn}               <!-- 실행일련번호 -->
+           SET TR_DT                     = #{trDt}                /* 거래일자 */
+              ,TR_STAT_CD                = #{trStatCd}            /* 거래상태코드 */
+              ,ETPR_CRDT_GRNT_TR_KIND_CD = #{etprCrdtGrntTrKindCd}/* 거래종류코드 */
+              ,DEAL_TR_AMT               = #{dealTrAmt}           /* 딜거래금액 */
+              ,DEAL_TR_PRCA              = #{dealTrPrca}          /* 딜거래원금 */
+              ,TR_INT_AMT                = #{trIntAmt}            /* 거래이자금액 */
+              ,DEAL_RDPT_OBJT_PRCA       = #{dealRdptObjtPrca}    /* 딜상환대상원금 */
+              ,DEAL_MRDP_PRCA            = #{dealMrdpPrca}        /* 딜중도상환원금 */
+              ,NRML_INT_AMT              = #{nrmlIntAmt}          /* 정상이자금액 */
+              ,CRDT_GRNT_OVDU_INT_AMT    = #{crdtGrntOvduIntAmt}  /* 신용공여연체이자금액 */
+              ,CRDT_GRNT_RCVB_INT_AMT    = #{crdtGrntRcvbIntAmt}  /* 신용공여미수이자금액 */
+              ,PUCR_INT_AMT              = #{pucrIntAmt}          /* 환출이자금액 */
+              ,TR_FEE_AMT                = #{trFeeAmt}            /* 거래수수료금액 */
+              ,COST_AMT                  = #{costAmt}             /* 비용금액 */
+              ,TR_CRCY_CD                = #{trCrcyCd}            /* 거래통화코드 */
+              ,WCRC_TRSL_RT              = #{wcrcTrslRt}          /* 원화환산율 */
+              ,WCRC_TRSL_TR_PRCA         = #{wcrcTrslTrPrca}      /* 원화환산거래원금 */
+              ,WCRC_TRSL_TR_INT_AMT      = #{wcrcTrslTrIntAmt}    /* 원화환산거래이자금액 */
+              ,WCRC_TRSL_TR_FEE_AMT      = #{wcrcTrslTrFeeAmt}    /* 원화환산거래수수료금액 */
+              ,WCRC_TRSL_COST_AMT        = #{wcrcTrslCostAmt}     /* 원화환산비용금액 */
+              ,ACTG_AFRS_CD              = #{actgAfrsCd}          /* 회계업무코드 */
+              ,ACTG_UNIT_AFRS_CD         = #{actgUnitAfrsCd}      /* 회계단위업무코드 */
+              ,ACTG_TR_CD                = #{actgTrCd}            /* 회계거래코드 */
+              ,ACTG_ERLM_SEQ             = #{actgErlmSeq}         /* 회계등록순번 */
+              ,RKFR_DT                   = #{rkfrDt}              /* 기산일자 */
+              ,FNDS_DVSN_CD              = #{fndsDvsnCd}          /* 자금구분코드 */
+              ,RCTM_ISTT_CD              = #{rctmIsttCd}          /* 입금기관코드 */
+              ,RCTM_BANO                 = #{rctmBano}            /* 입금은행계좌번호 */
+              ,DPOW_NAME                 = #{dpowName}            /* 예금주명 */
+              ,HDWR_PRCS_YN              = #{hdwrPrcsYn}          /* 수기처리여부 */
+              ,ACPT_PTCL_SMTL_AMT        = #{acptPtclSmtlAmt}     /* 수납내역합계금액 */
+              ,DEAL_ALTN_AMT             = #{dealAltnAmt}         /* 딜대체금액 */
+              ,DEAL_CASH_AMT             = #{dealCashAmt}         /* 딜현금금액 */
+              ,DEAL_BKCH_AMT             = #{dealBkchAmt}         /* 딜자기앞수표금액 */
+              ,DEAL_CKBL_AMT             = #{dealCkblAmt}         /* 딜타점권금액 */
+              ,BILL_POUT_YN              = #{billPoutYn}          /* 계산서출력여부 */
+              ,TRBK_POUT_YN              = #{trbkPoutYn}          /* 거래장출력여부 */
+              ,RCLM_DVSN_CD              = #{rclmDvsnCd}          /* 회수구분코드 */
+              ,PUCR_INT_ALTN_AMT         = #{pucrIntAltnAmt}      /* 환출이자대체금액 */
+              ,PUCR_INT_RCTM_AMT         = #{pucrIntRctmAmt}      /* 환출이자입금금액 */
+              ,CLCN_FEE_AMT              = #{clcnFeeAmt}          /* 추심수수료금액 */
+              ,IMPT_STMP_AMT             = #{imptStmpAmt}         /* 수입인지금액 */
+              ,FEE_TOT_AMT               = #{feeTotAmt}           /* 수수료총금액 */
+              ,RVSE_CNCL_DVSN_CD         = #{rvseCnclDvsnCd}      /* 정정취소구분코드 */
+              ,RVSE_CNCL_RSON_TEXT       = #{rvseCnclRsonText}    /* 정정취소사유내용 */
+              ,RVSE_CNCL_TR_SEQ          = #{rvseCnclTrSeq}       /* 정정취소거래순번 */
+              ,TR_AF_LOAN_RMND           = #{trAfLoanRmnd}        /* 거래이후대출잔액 */
+              ,RDPT_TMOD                 = #{rdptTmod}            /* 상환회차 */
+              ,DEAL_PXDF_PRCA            = #{dealPxdfPrca}        /* 딜대지급원금 */
+              ,PXDF_INT_AMT              = #{pxdfIntAmt}          /* 대지급이자금액 */
+              ,PXDF_ETC_AMT              = #{pxdfEtcAmt}          /* 대지급기타금액 */
+              ,ORGNO                     = #{orgno}               /* 조직번호 */
+              ,TR_STFNO                  = #{trStfno}             /* 거래직원번호 */
+              ,DCFC_STFNO                = #{dcfcStfno}           /* 결재자직원번호 */
+              ,CLM_SEQ                   = #{clmSeq}              /* 청구순번 */
+              ,ACTG_SYNS_CD              = #{actgSynsCd}          /* 회계적요코드 */
+              ,SYNS_TEXT                 = #{synsText}            /* 적요내용 */
+              ,TAX_BILL_EVDC_ERLM_DT     = #{taxBillEvdcErlmDt}   /* 세금계산서증빙등록일자 */
+              ,TAX_BILL_EVDC_ERLM_SEQ    = #{taxBillEvdcErlmSeq}  /* 세금계산서증빙등록순번 */
+              ,TAX_BILL_PRCS_SEQ         = #{taxBillPrcsSeq}      /* 세금계산서처리순번 */
+              ,BILL_EVDC_ERLM_DT         = #{billEvdcErlmDt}      /* 계산서증빙등록일자 */
+              ,BILL_EVDC_ERLM_SEQ        = #{billEvdcErlmSeq}     /* 계산서증빙등록순번 */
+              ,BILL_PRCS_SEQ             = #{billPrcsSeq}         /* 계산서처리순번 */
+              ,VAT                       = #{vat}                 /* 부가세 */
+              ,ISSU_BILL_EVDC_ERLM_DT    = #{issuBillEvdcErlmDt}  /* 발행계산서증빙등록일자 */
+              ,ISSU_BILL_PRCS_SEQ        = #{issuBillPrcsSeq}     /* 발행계산서처리순번 */
+              ,DFRM_FEE_PRCA_ECLS_YN     = #{dfrmFeePrcaEclsYn}   /* 지급수수료원금제외여부 */
+              ,DFRM_FEE_CLM_OBJT_AMT     = #{dfrmFeeClmObjtAmt}   /* 지급수수료청구대상금액 */
+              ,MRDP_FEE_AMT              = #{mrdpFeeAmt}          /* 중도상환수수료금액 */
+              ,CHCK_ISSU_ISTT_NAME       = #{chckIssuIsttName}    /* 수표발행기관명 */
+              ,MRDP_YN                   = #{mrdpYn}              /* 중도상환여부 */
+              ,RCTM_DT                   = #{rctmDt}              /* 입금일자 */
+              ,TR_OBJT_BSN_NO            = #{trObjtBsnNo}         /* 거래대상기업체번호 */
+              ,NOPR_ERNG_ETC_AMT         = #{noprErngEtcAmt}      /* 영업외수익기타금액 */
+              ,NOPR_COST_ETC_AMT         = #{noprCostEtcAmt}      /* 영업외비용기타금액 */
+              ,RCVB_RSTR_YN              = #{rcvbRstrYn}          /* 미수환원여부 */
+              ,RCVB_YN                   = #{rcvbYn}              /* 미수여부 */
+              ,HND_DETL_DTM              = SYSDATE                /* 조작상세일시 */
+              ,HND_EMPNO                 = #{hndEmpno}            /* 조작사원번호 */
+              ,HND_TMNL_NO               = #{hndTmnlNo}           /* 조작단말기번호 */
+              ,HND_TR_ID                 = #{hndTrId}             /* 조작거래ID */
+              ,GUID                      = ,#{guid}               /* GUID */
+         WHERE PRDT_CD = #{prdtCd}             /* 상품코드 */
+           AND TR_SN  = #{trSn}                /* 거래일련번호 */
+           AND EXC_SN = #{excSn}               /* 실행일련번호 */
     </update>
 
     <!-- 자금품의결재 -->
