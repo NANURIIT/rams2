@@ -47,8 +47,8 @@
           FROM IBIMS006B A
          WHERE A.DLT_YN != 'Y'
         <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(athCdNm)">
-           AND A.ATH_CD_NM LIKE '%'|| #{athCdNm}|| '%')	<!-- 권한코드명 -->
-            OR A.ATH_CD LIKE '%'|| #{athCdNm}|| '%')
+           AND A.ATH_CD_NM LIKE '%'|| #{athCdNm}|| '%'	<!-- 권한코드명 -->
+            OR A.ATH_CD LIKE '%'|| #{athCdNm}|| '%'
         </if>
     </select>
     

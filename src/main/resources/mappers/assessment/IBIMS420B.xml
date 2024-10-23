@@ -174,7 +174,7 @@
     
 	<!-- 딜승인수수료스케쥴기본  -->
 	<select id="selectFeeRcivLst" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS420BVO">
-SELECT A.PRDT_CD					/* 상품코드 */
+	  SELECT A.PRDT_CD					/* 상품코드 */
 	       , A.FEE_SN					/* 수수료일련번호 */
 	       , A.RGST_STTS_CD				/* 등록상태코드 */
 	       , A.PRAR_DT					/* 예정일자 */
