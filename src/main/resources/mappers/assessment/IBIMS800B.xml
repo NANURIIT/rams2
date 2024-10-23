@@ -12,25 +12,25 @@
     <select id="getAsstSnnGrdListNoStdrDt" resultType="com.nanuri.rams.business.common.vo.IBIMS800BVO">
         SELECT A.DEAL_NO                     AS DEAL_NO                   /* 딜번호 */
                 , A.DEAL_NM                     AS DEAL_NM                /* 딜명 */
-                , IFNULL(A.PRDT_CD, '')         AS PRDT_CD                /* 상품코드 */
+                , NVL(A.PRDT_CD, '')         AS PRDT_CD                /* 상품코드 */
                 , T.EXC_SN                      AS EXC_SN                 /* 실행일련번호 */
-                , IFNULL(A.PRDT_NM, '')         AS PRDT_NM                /* 상품명 */
-                , IFNULL((SELECT MAX(B.ENTP_HNGL_NM)
+                , NVL(A.PRDT_NM, '')         AS PRDT_NM                /* 상품명 */
+                , NVL((SELECT MAX(B.ENTP_HNGL_NM)
                             FROM IBIMS114B B
                             WHERE B.BSNS_RGST_NO = A.TR_OTHR_DSCM_NO), ''
                             )                    AS ENTP_HNGL_NM         /* 업체한글명 */
                 , A.PRDT_LCLS_CD                                         /* 기업여신상품대분류코드 */
-                , IFNULL(s002b_1.CD_VL_NM , '') AS PRDT_LCLS_CD_NM       /* 기업여신상품대분류코드명 */
+                , NVL(s002b_1.CD_VL_NM , '') AS PRDT_LCLS_CD_NM       /* 기업여신상품대분류코드명 */
                 , A.PRDT_MDCL_CD                                         /* 기업여신상품중분류코드 */
-                , IFNULL(s002b_2.CD_VL_NM , '') AS PRDT_MDCL_CD_NM       /* 기업여신상품중분류코드명 */
+                , NVL(s002b_2.CD_VL_NM , '') AS PRDT_MDCL_CD_NM       /* 기업여신상품중분류코드명 */
                 , A.PRDT_CLSF_CD                                         /* 기업여신상품분류코드 */
-                , IFNULL(s002b_3.CD_VL_NM , '') AS PRDT_CLSF_CD_NM       /* 기업여신상품분류코드명 */
+                , NVL(s002b_3.CD_VL_NM , '') AS PRDT_CLSF_CD_NM       /* 기업여신상품분류코드명 */
                 , A.HOLD_PRPS_DCD               AS HOLD_PRPS_DCD         /* 보유목적구분코드 */  
                 , A.IB_PRDT_CLSF_CD                                      /* IB상품분류코드 */
-                , IFNULL(s002b_4.CD_VL_NM, '')  AS IB_PRDT_CLSF_CD_NM    /* IB상품분류코드명 */
-                , IFNULL(A.APVL_AMT , '')       AS APVL_AMT              /* 종목승인금액 */
-                , IFNULL(A.ACTS_CD  , '')       AS ACTS_CD               /* 계정과목코드 */
-                , IFNULL(A.PRG_STTS_CD  , '')   AS PRG_STTS_CD           /* 진행상태코드 */
+                , NVL(s002b_4.CD_VL_NM, '')  AS IB_PRDT_CLSF_CD_NM    /* IB상품분류코드명 */
+                , NVL(A.APVL_AMT , '')       AS APVL_AMT              /* 종목승인금액 */
+                , NVL(A.ACTS_CD  , '')       AS ACTS_CD               /* 계정과목코드 */
+                , NVL(A.PRG_STTS_CD  , '')   AS PRG_STTS_CD           /* 진행상태코드 */
                 , (SELECT MAX(EMP_NM)
                     FROM IBIMS003B s003b
                     WHERE EMPNO = A.CHRR_EMPNO) AS CHRR_EMPNM            /* 담당자사원번호 */
@@ -39,7 +39,7 @@
                     SELECT C.DPRT_NM
                     FROM IBIMS003B C
                     WHERE C.DPRT_CD = A.MNGM_BDCD
-                            LIMIT 1                     
+                      AND ROWNUM = 1                      
                     )                             AS DPRT_NM            /* 부서명   */
                 , NVL(T.DEAL_EXC_AMT,0)         AS DEAL_EXC_AMT         /* 투자금액  */
                 , NVL(T.DEAL_EXC_BLCE,0)        AS DEAL_EXC_BLCE        /* 투자잔액  */
@@ -162,7 +162,7 @@
                     , #{item.indvEvlAprnAmt}                /*집합평가충당금액*/
                     , #{item.indvEvlAprnAmt}                /*개별평가충당금액*/
                     , 0                                     /*미수이자충당금액*/ <!--todo: 회계반영화면 작성완료시 값 넣어야함 -->
-                    , CURRENT_TIMESTAMP()			        /*조작상세일시*/
+                    , SYSDATE			                    /*조작상세일시*/
                     , #{item.hndEmpNo}						/*조작사원번호*/
                     , ''
                     , ''

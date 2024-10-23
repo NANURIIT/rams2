@@ -13,10 +13,10 @@
 		     , A.DLT_DT											<!-- 삭제일자 -->
 		     , A.DLT_TM											<!-- 삭제시간 -->
 		     , A.DLT_EMPNO										<!-- 삭제자사번 -->
-             , IFNULL(DATE_FORMAT(A.HND_DETL_DTM, '%Y-%m-%d'), '') AS HND_DT
-             , IFNULL(DATE_FORMAT(A.HND_DETL_DTM, '%H:%i:%s'), '') AS HND_TM
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYYMMDD'), '') AS HND_DT
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24MISS'), '') AS HND_TM
              , A.HND_EMPNO
-             , IFNULL((SELECT EMP_NM
+             , NVL((SELECT EMP_NM
 					   FROM IBIMS003B
 					   WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
 	  	  FROM IBIMS006B A
@@ -35,20 +35,20 @@
              , A.DLT_EMPNO										<!-- 삭제자사번 -->
              , A.RGST_DT
              , A.RGST_EMPNO
-             , IFNULL((SELECT EMP_NM
+             , NVL((SELECT EMP_NM
 					   FROM IBIMS003B
 					   WHERE EMPNO = A.RGST_EMPNO), '') AS RGST_EMP_NM
-             , IFNULL(DATE_FORMAT(A.HND_DETL_DTM, '%Y-%m-%d'), '') AS HND_DT
-             , IFNULL(DATE_FORMAT(A.HND_DETL_DTM, '%H:%i:%s'), '') AS HND_TM
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYYMMDD'), '') AS HND_DT
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24MISS'), '') AS HND_TM
              , A.HND_EMPNO
-             , IFNULL((SELECT EMP_NM
+             , NVL((SELECT EMP_NM
 					   FROM IBIMS003B
 					   WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
           FROM IBIMS006B A
          WHERE A.DLT_YN != 'Y'
         <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(athCdNm)">
-           AND A.ATH_CD_NM LIKE CONCAT('%', #{athCdNm}, '%')	<!-- 권한코드명 -->
-            OR A.ATH_CD LIKE CONCAT('%', #{athCdNm}, '%')
+           AND A.ATH_CD_NM LIKE '%'|| #{athCdNm}|| '%')	<!-- 권한코드명 -->
+            OR A.ATH_CD LIKE '%'|| #{athCdNm}|| '%')
         </if>
     </select>
     
@@ -91,8 +91,8 @@
                 , #{athCdExpl}
                 , NVL(#{athDcd}, 1)
                 , #{aplyYn}
-                , DATE_FORMAT(NOW(), '%Y%m%d')
-                , DATE_FORMAT(NOW(), '%H%i%s')
+                , TO_CHAR(SYSDATE, 'YYYYMMDD')
+                , TO_CHAR(SYSDATE, 'HH24MISS')
                 , #{rgstEmpno}
                 , 'N'
                 , NVL(#{dltDt}, '')
@@ -131,8 +131,8 @@
               ,HND_EMPNO = #{hndEmpno}					<!-- 처리자사번 -->
               ,HND_DETL_DTM = DEFAULT					<!-- 처리일시 -->
               ,DLT_YN = 'Y'								<!-- 삭제여부 -->
-              ,DLT_DT = DATE_FORMAT(now(), '%Y%m%d')	<!-- 삭제일자 -->
-              ,DLT_TM = DATE_FORMAT(now(), '%H%i%s')	<!-- 삭제시간 -->
+              ,DLT_DT = TO_CHAR(SYSDATE, 'YYYYMMDD')	<!-- 삭제일자 -->
+              ,DLT_TM = TO_CHAR(SYSDATE, 'HH24MISS')	<!-- 삭제시간 -->
               ,DLT_EMPNO = #{dltEmpno}					<!-- 삭제자사번 -->
          WHERE 1=1
            AND ATH_CD IN					<!-- 권한코드 -->
@@ -155,7 +155,7 @@
 	
 	<!-- 권한에 따른 사용가능 메뉴 조회 -->
 	<select id="getMenuListM" resultType="map" parameterType="java.util.Map">
-		SELECT DISTINCT(SUBSTRING(B.HGRK_MENU_ID, 1, 4)) AS HG_RNK_MENU_ID
+		SELECT DISTINCT(SUBSTR(B.HGRK_MENU_ID, 1, 4)) AS HG_RNK_MENU_ID
 		  FROM IBIMS007B A
 		  LEFT JOIN IBIMS005B B
 		    ON A.MENU_ID = B.MENU_ID

@@ -72,7 +72,7 @@
 		     , INTRT_CNGE_FRQC_MNUM = #{intrtCngeFrqcMnum} /* 금리변동주기개월수 */
 		     , APLY_DNUM_DCD = #{aplyDnumDcd} /* 적용일수구분코드 */
 		     , STDR_INTRT_APLY_DNUM = #{stdrIntrtAplyDnum} /* 기준금리적용일수 */
-		     , HND_DETL_DTM = DEFAULT /* 조작상세일시 */
+		     , HND_DETL_DTM = SYSDATE /* 조작상세일시 */
 		 WHERE PRDT_CD = #{prdtCd} /* 상품코드 */
 		   AND RGST_SN = #{rgstSn} /* 등록일련번호 */	 
     </update>
@@ -101,7 +101,7 @@
 	    (
 		  #{prdtCd}					/* 상품코드 */
 		, (
-		  SELECT IFNULL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
+		  SELECT NVL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
 		    FROM IBIMS346B A 	/* 딜승인금리기본 */
 		   WHERE 1 = 1
   		     AND A.PRDT_CD =  #{prdtCd}
@@ -115,7 +115,7 @@
 		, #{intrtCngeFrqcMnum}		/* 금리변동주기개월수 */
 		, #{aplyDnumDcd}			/* 적용일수구분코드 */
 		, #{stdrIntrtAplyDnum}		/* 기준금리적용일수 */
-		, DEFAULT    				/* 조작상세일시 */
+		, SYSDATE    				/* 조작상세일시 */
 		, #{hndEmpno}				/* 조작사원번호 */
 		, #{hndTmnlNo}				/* 조작단말기번호 */
 		, #{hndTrId}				/* 조작거래id */
@@ -149,7 +149,7 @@
 	(
 		#{item.prdtCd}				/* 상품코드 */
 		, (
-			SELECT IFNULL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
+			SELECT NVL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
 			FROM IBIMS346B A 	/* 딜승인금리기본 */
 			WHERE A.PRDT_CD =  #{item.prdtCd}
 		)                         		/* 등록일련번호 */		  
@@ -162,7 +162,7 @@
 		, #{item.intrtCngeFrqcMnum}		/* 금리변동주기개월수 */
 		, #{item.aplyDnumDcd}			/* 적용일수구분코드 */
 		, #{item.stdrIntrtAplyDnum}		/* 기준금리적용일수 */
-		, DEFAULT    					/* 조작상세일시 */
+		, SYSDATE    					/* 조작상세일시 */
 		, #{item.hndEmpno}				/* 조작사원번호 */
 		, #{item.hndTmnlNo}				/* 조작단말기번호 */
 		, #{item.hndTrId}				/* 조작거래id */

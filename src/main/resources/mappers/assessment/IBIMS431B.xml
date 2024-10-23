@@ -129,19 +129,19 @@
             (
                 #{wrtnDt}
               , (
-                  SELECT IFNULL(MAX(temp.CNST_NO), CONCAT(#{wrtnYm}, '0000')) + 1
+                  SELECT NVL(MAX(temp.CNST_NO), #{wrtnYm}||'0000') + 1
                     FROM (
                       SELECT CNST_NO
                         FROM IBIMS431B
-                       WHERE WRTN_DT LIKE CONCAT(#{wrtnYm}, '%')
+                       WHERE WRTN_DT LIKE #{wrtnYm}|| '%'
                   ) AS temp
                 )
               , (
-                  SELECT IFNULL(MAX(temp.CNST_NO), CONCAT(#{wrtnYm}, '0000')) + 1
+                  SELECT NVL(MAX(temp.CNST_NO), #{wrtnYm}||'0000') + 1
                     FROM (
                       SELECT CNST_NO
                         FROM IBIMS431B
-                       WHERE WRTN_DT LIKE CONCAT(#{wrtnYm}, '%')
+                       WHERE WRTN_DT LIKE #{wrtnYm}||'%'
                   ) AS temp
                 )
               , #{baltDt}
@@ -187,12 +187,12 @@
               , #{apvlNo}
               , #{bdgBusiCd}
               , #{frcrRslnAmt}
-              , NOW()
+              , SYSDATE
               , #{hndEmpno}
               , #{hndTmnlNo}
               , #{hndTrId}
               , #{guid}
-            );
+            )
     </insert>
 
     <update id="updateIBIMS431B" parameterType="com.nanuri.rams.business.common.vo.IBIMS431BVO">
@@ -256,7 +256,7 @@
            SET JOB_DECD_CD = #{jobDecdCd}
              , JOB_DECD_NO = #{jobDecdNo}
              , CNCL_JOB_DECD_NO = #{cnclJobDecdNo}
-             , HND_DETL_DTM = NOW()
+             , HND_DETL_DTM = SYSDATE
              , HND_EMPNO = #{hndEmpno}
              , HND_TMNL_NO = #{hndTmnlNo}
              , HND_TR_ID = #{hndTrId}

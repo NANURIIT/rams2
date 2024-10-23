@@ -82,7 +82,7 @@
                , #{item.ovduIntrRt}                       <!-- 연체이자율 -->
                , #{item.trchDcd}                          <!-- 트렌치구분코드 -->
                , #{item.trSn}                             <!-- 거래일련번호 -->
-               , NOW()                                    <!-- 조작상세일시 -->
+               , SYSDATE                                    <!-- 조작상세일시 -->
                , #{item.hndEmpno}                         <!-- 조작사원번호 -->
                , #{item.hndTmnlNo}                        <!-- 조작단말기번호 -->
                , #{item.hndTrId}                          <!-- 조작거래id -->
@@ -137,7 +137,7 @@
                , #{ovduIntrRt}                       <!-- 연체이자율 -->
                , #{trchDcd}                          <!-- 트렌치구분코드 -->
                , #{trSn}                             <!-- 거래일련번호 -->
-               , NOW()                                    <!-- 조작상세일시 -->
+               , SYSDATE                                    <!-- 조작상세일시 -->
                , #{hndEmpno}                         <!-- 조작사원번호 -->
                , #{hndTmnlNo}                        <!-- 조작단말기번호 -->
                , #{hndTrId}                          <!-- 조작거래id -->
@@ -160,7 +160,7 @@
                , APLY_IRT 		= #{aplyIrt} 			/* 적용이율 */
                , OVDU_INTR_RT 	= #{ovduIntrRt} 		/* 연체이자율 */
                , TRCH_DCD 		= #{trchDcd} 			/* 트렌치구분코드 */
-               , HND_DETL_DTM 	= current_timestamp() 		/* 조작상세일시 */
+               , HND_DETL_DTM 	= SYSDATE 		/* 조작상세일시 */
            WHERE PRDT_CD           = #{prdtCd}  	          /* 상품코드 */
              AND EXC_SN            = #{excSn}               /* 실행일련번호 */
              AND SCX_DCD           = #{scxDcd} 	          /* 일정구분코드 */

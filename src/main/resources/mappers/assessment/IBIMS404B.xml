@@ -49,7 +49,7 @@
 			  #{prdtCd}  	       /* 상품코드 */
 			, #{excSn} 		       /* 실행일련번호 */
 			, (
-			  SELECT IFNULL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
+			  SELECT NVL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
 			    FROM IBIMS404B A	/* 여신실행금리기본 */
 			   WHERE 1 = 1
 	  		     AND A.PRDT_CD = #{prdtCd}
@@ -97,7 +97,7 @@
 		      PRDT_CD				/* 상품코드 */
 		    , #{excSn} AS EXC_SN	/* 실행일련번호 */
 			, (
-			  SELECT IFNULL(MAX(RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
+			  SELECT NVL(MAX(RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
 			    FROM IBIMS404B 	/* 여신실행금리기본 */
 			   WHERE 1 = 1
 	  		     AND PRDT_CD = #{prdtCd}
@@ -107,7 +107,7 @@
 		    , APLY_END_DT			/* 적용종료일자 */
 		    , STDR_INTRT_KND_CD		/* 기준금리종류코드 */
 		    , FXN_INTRT				/* 고정금리 */
-		    , IFNULL(#{addIntrt}, ADD_INTRT) AS ADD_INTRT /* 가산금리 */
+		    , NVL(#{addIntrt}, ADD_INTRT) AS ADD_INTRT /* 가산금리 */
 		    , INTRT_CNGE_FRQC_CD	/* 금리변동주기코드 */
 		    , INTRT_CNGE_FRQC_MNUM	/* 금리변동주기개월수 */
 		    , APLY_DNUM_DCD			/* 적용일수구분코드 */
@@ -165,7 +165,7 @@
             , FXN_INTRT+ADD_INTRT AS APLY_INTRT
 		 FROM IBIMS404B A
 		WHERE 1=1
-		  AND PRDT_CD = #{prdtCd} <!-- A000000001 -->
+		  AND PRDT_CD = #{prdtCd}
 		  AND EXC_SN  = #{excSn}
 		  AND ( 
 		        A.APLY_STRT_DT BETWEEN #{aplyStrtDt} AND  #{aplyEndDt}
@@ -182,7 +182,7 @@
 				WHERE 1=1
 				AND TRIM(V.STDR_DT) &lt; A.STDR_DT
 				AND V.HOLIDAY = 0
-				AND V.STDR_DT BETWEEN DATE_FORMAT(ADD_MONTHS(STR_TO_DATE(A.STDR_DT,'%Y%m%d'), -1),'%Y%m%d') AND  A.STDR_DT
+				AND V.STDR_DT BETWEEN TO_DATE(ADD_MONTHS(TO_CHAR(A.STDR_DT,'YYYYMMDD'), -1),'YYYYMMDD') AND  A.STDR_DT
 			   ) AS BF_DT
 			,
 			( 
@@ -191,7 +191,7 @@
 				WHERE 1=1
 				AND TRIM(V.STDR_DT) &gt; A.STDR_DT
 				AND V.HOLIDAY = 0
-				AND V.STDR_DT BETWEEN A.STDR_DT AND DATE_FORMAT(ADD_MONTHS(STR_TO_DATE(A.STDR_DT,'%Y%m%d'), 1),'%Y%m%d')
+				AND V.STDR_DT BETWEEN A.STDR_DT AND TO_DATE(ADD_MONTHS(TO_CHAR(A.STDR_DT,'YYYYMMDD'), 1),'YYYYMMDD')
 			   ) AS AF_DT
 			 , DAYOFWEEKS 
 			 , HOLIDAY 
@@ -210,7 +210,7 @@
             , ADD_INTRT
 		 FROM IBIMS404B A
 		WHERE 1=1
-		  AND PRDT_CD = #{prdtCd} <!-- A000000002 -->
+		  AND PRDT_CD = #{prdtCd} 
 		  AND #{aplyStrtDt} BETWEEN A.APLY_STRT_DT AND A.APLY_END_DT
     </select>       
      
@@ -219,7 +219,7 @@
               COUNT(*) AS aplyCnt
 		 FROM IBIMS404B A
 		WHERE 1=1
-		  AND PRDT_CD = #{prdtCd} <!-- A000000002 -->
+		  AND PRDT_CD = #{prdtCd} 
 		  AND ( 
 		        A.APLY_STRT_DT BETWEEN #{aplyStrtDt} AND  #{aplyEndDt}
 		     OR A.APLY_END_DT  BETWEEN #{aplyStrtDt} AND  #{aplyEndDt}
@@ -227,7 +227,7 @@
     </select>
     
     <select id="getMonthDiff" parameterType="com.nanuri.rams.business.common.vo.IBIMS404BVO" resultType="java.lang.Integer">
-	    SELECT PERIOD_DIFF(SUBSTR(#{aplyEndDt}, 1,6), SUBSTR(#{aplyStrtDt}, 1,6))
+	    SELECT MONTHS_BETWEEN(SUBSTR(#{aplyEndDt}, 1,6)||'01', SUBSTR(#{aplyStrtDt}, 1,6)||'01') FROM DUAL
     </select>   
 
 	<!-- TB06015P 금리정보 조회 --> 
@@ -266,11 +266,11 @@
 				   , INTRT_CNGE_FRQC_MNUM = #{item.intrtCngeFrqcMnum} 			/* 금리변동주기개월수 */
 				   , APLY_DNUM_DCD = #{item.aplyDnumDcd} 						/* 적용일수구분코드 */
 				   , STDR_INTRT_APLY_DNUM = #{item.stdrIntrtAplyDnum} 			/* 기준금리적용일수 */
-				   , HND_DETL_DTM = now() 										/* 조작상세일시 */
-				   , HND_EMPNO = IFNULL(#{item.hndEmpno}, '') 					/* 조작사원번호 */
-				   , HND_TMNL_NO = IFNULL(#{item.hndTmnlNo}, '') 				/* 조작단말기번호 */
-				   , HND_TR_ID = IFNULL(#{item.hndTrId}, '') 					/* 조작거래id */
-				   , GUID = IFNULL(#{item.guid}, '') 							/* guid */
+				   , HND_DETL_DTM = SYSDATE 										/* 조작상세일시 */
+				   , HND_EMPNO = NVL(#{item.hndEmpno}, '') 					/* 조작사원번호 */
+				   , HND_TMNL_NO = NVL(#{item.hndTmnlNo}, '') 				/* 조작단말기번호 */
+				   , HND_TR_ID = NVL(#{item.hndTrId}, '') 					/* 조작거래id */
+				   , GUID = NVL(#{item.guid}, '') 							/* guid */
 			WHERE PRDT_CD = #{prdtCd} 											/* 상품코드 */
 			  AND EXC_SN = #{excSn} 											/* 실행일련번호 */
 			  AND RGST_SN = #{item.rgstSn} 										/* 등록일련번호 */
@@ -304,7 +304,7 @@
 			  #{prdtCd}  	       							/* 상품코드 */
 			, #{excSn} 		       							/* 실행일련번호 */
 			, (
-			  SELECT IFNULL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
+			  SELECT NVL(MAX(A.RGST_SN),0)+1 AS RGST_SN	 /* 등록일련번호 */
 			    FROM IBIMS404B A							/* 여신실행금리기본 */
 			   WHERE 1 = 1
 	  		     AND A.PRDT_CD = #{prdtCd}
@@ -319,7 +319,7 @@
 			, #{item.intrtCngeFrqcMnum} 					/* 금리변동주기개월수 */
 			, #{item.aplyDnumDcd}   						   /* 적용일수구분코드 */
 			, #{item.stdrIntrtAplyDnum} 					/* 기준금리적용일수 */
-			, now()        									/* 조작상세일시 */
+			, SYSDATE        									/* 조작상세일시 */
 			, #{item.hndEmpno}          					/* 조작사원번호 */
 			, #{item.hndTmnlNo}         					/* 조작단말기번호 */
 			, #{item.hndTrId}           					/* 조작거래id */

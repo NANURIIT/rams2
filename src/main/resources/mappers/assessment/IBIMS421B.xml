@@ -6,7 +6,7 @@
         SELECT FEE_KND_CD        /* 수수료종류코드 */
              , ACT_CD            /* 계정과목코드 */
              , RGST_STTS_CD      /* 등록상태코드 */
-             , FEE_NM          /* 수수료명 */
+             , FEE_NAME          /* 수수료명 */
              , FEE_RCOG_DCD      /* 수수료인식구분코드 */
              , FEE_RCKN_DCD      /* 수수료산정구분코드 */
              , FEE_RT            /* 수수료율 */
@@ -23,7 +23,7 @@
              , GUID              /* GUID */
           FROM IBIMS421B
          WHERE 1=1
-           AND FEE_NM LIKE #{feeNm}
+           AND FEE_NAME LIKE #{feeNm}
     </select>
 
     <insert id="IBIMS421BInsert" parameterType="com.nanuri.rams.business.common.dto.IBIMS421BDTO" >
@@ -32,7 +32,7 @@
                 FEE_KND_CD
               , ACT_CD
               , RGST_STTS_CD
-              , FEE_NM
+              , FEE_NAME
               , FEE_RCOG_DCD
               , FEE_RCKN_DCD
               , FEE_RT
@@ -63,7 +63,7 @@
               , #{acctJobCd}
               , #{acctUnJobCd}
               , #{acctTrCd}
-              , NOW()
+              , SYSDATE
               , #{hndEmpno}
               , #{hndTmnlNo}
               , #{hndTrId}
@@ -73,7 +73,7 @@
 
     <update id="IBIMS421BUpdate" parameterType="com.nanuri.rams.business.common.dto.IBIMS421BDTO" >
         UPDATE IBIMS421B
-           SET FEE_NM = #{feeNm}
+           SET FEE_NAME = #{feeNm}
              , FEE_RCOG_DCD = #{feeRcogDcd}
              , FEE_RCKN_DCD = #{feeRcknDcd}
              , FEE_RT = #{feeRt}
@@ -83,7 +83,7 @@
              , ACCT_JOB_CD = #{acctJobCd}
              , ACCT_UN_JOB_CD = #{acctUnJobCd}
              , ACCT_TR_CD = #{acctTrCd}
-             , HND_DETL_DTM = NOW()
+             , HND_DETL_DTM = SYSDATE
              , HND_EMPNO = #{hndEmpno}
              , HND_TMNL_NO = #{hndTmnlNo}
              , HND_TR_ID = #{hndTrId}

@@ -41,7 +41,7 @@
            AND A.PRDT_CD = #{prdtCd}
            AND A.NS_FND_CD = #{nsFndCd}
            AND A.NS_PRDT_DCD = #{nsPrdtDcd}
-         LIMIT 1
+           AND ROWNUM = 1
     </select>
 
     <insert id="insertSPPIData" parameterType="com.nanuri.rams.business.common.vo.IBIMS206BVO">
@@ -83,7 +83,7 @@
             )
         VALUES
             (
-                DATE_FORMAT(NOW(), '%Y%m%d')
+                TO_CHAR(SYSDATE, 'YYYYMMDD')
               , #{nsFndCd}
               , #{nsPrdtDcd}
               , #{prdtCd}
@@ -111,7 +111,7 @@
               , #{apvlDt}
               , #{gbckDt}
               , #{cnclYn}
-              , NOW()
+              , SYSDATE
               , #{hndEmpno}
               , #{hndTmnlNo}
               , #{hndTrId}
@@ -121,7 +121,7 @@
 
     <update id="updateSPPIData" parameterType="com.nanuri.rams.business.common.vo.IBIMS206BVO">
         UPDATE IBIMS206B
-           SET RGST_DT = DATE_FORMAT(NOW(), '%Y%m%d')
+           SET RGST_DT = TO_CHAR(SYSDATE, 'YYYYMMDD')
              , NS_FND_CD = #{nsFndCd}
              , NS_PRDT_DCD = #{nsPrdtDcd}
              , PRDT_CD = #{prdtCd}
@@ -156,7 +156,7 @@
              , APVL_DT = #{apvlDt}
              , GBCK_DT = #{gbckDt}
              , CNCL_YN = #{cnclYn}
-             , HND_DETL_DTM = NOW()
+             , HND_DETL_DTM = SYSDATE
              , HND_EMPNO = #{hndEmpno}
              , HND_TMNL_NO = #{hndTmnlNo}
              , HND_TR_ID = #{hndTrId}

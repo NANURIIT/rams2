@@ -6,7 +6,7 @@
         SELECT STDR_DT 			/* 펀드코드 */
              , CRNCY_CD 		/* 펀드명 */
              , STDR_EXRT 		/* 펀드구분 */
-             , date_format(RGST_DT, '%Y-%m-%d') AS RGST_DT 			/* 등록일자 */
+             , TO_DATE(RGST_DT, 'YYYYMMDD') AS RGST_DT 			/* 등록일자 */
 		  FROM IBIMS994B	          
 		 WHERE 1=1
            AND CRNCY_CD = #{crncyCd}  

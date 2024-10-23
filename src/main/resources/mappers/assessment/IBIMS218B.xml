@@ -18,6 +18,7 @@
                 , MRTG_RTO                                          <!-- 담보비율 -->
                 , AVBL_MRTG_PRC                                     <!-- 가용담보가격 -->
                 , ETC_MRTG_ACQ_MTH_CD                               <!-- 기타담보취득방법코드 -->
+                , HND_DETL_DTM
                 , HND_EMPNO                                         <!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
                 , HND_TR_ID                                         <!-- 조작거래id -->
@@ -36,6 +37,7 @@
                , #{mrtgRto}                                         <!-- 담보비율 -->
                , #{avblMrtgPrc}                                     <!-- 가용담보가격 -->
                , #{etcMrtgAcqMthCd}                                 <!-- 기타담보취득방법코드 -->
+               , SYSDATE
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->

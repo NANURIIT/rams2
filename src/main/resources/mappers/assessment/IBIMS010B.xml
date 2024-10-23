@@ -52,7 +52,7 @@
 		   FROM IBIMS010B A      
 		  WHERE 1=1
 		    AND A.ARDY_BZEP_NO = #{ardyBzepNo}
-		    AND A.USE_YN = IF ( IFNULL(#{useYn}, 'A') = 'A', A.USE_YN, #{useYn})		    		
+		    AND A.USE_YN = IF ( NVL(#{useYn}, 'A') = 'A', A.USE_YN, #{useYn})		    		
 	</select>
 
 	<!-- 기업체리스트 조회  -->
@@ -123,27 +123,27 @@
 		   FROM IBIMS010B A 
 		  WHERE 1=1  		  
 		  	<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(ardyBzepNo)">
-			AND A.ARDY_BZEP_NO LIKE CONCAT('%', #{ardyBzepNo} , '%')
+			AND A.ARDY_BZEP_NO LIKE '%'|| #{ardyBzepNo} || '%')
 		    </if>
 		  	<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(rnbn)">
-			AND A.RNBN LIKE CONCAT('%', #{rnbn}, '%')                 <!-- 주민사업자등록번호 -->
+			AND A.RNBN LIKE '%'|| #{rnbn}|| '%')                 <!-- 주민사업자등록번호 -->
 		    </if>
 		  	<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(crno)">
-			AND A.CRNO LIKE CONCAT('%', #{crno}, '%')                 <!-- 법인등록번호 -->
+			AND A.CRNO LIKE '%'|| #{crno}|| '%')                 <!-- 법인등록번호 -->
 		    </if>
 		  	<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(bzepName)">
-			AND (  A.BZEP_NAME     LIKE CONCAT('%', #{bzepName}, '%')
-				OR A.KOR_BZPL_NAME LIKE CONCAT('%', #{bzepName}, '%')
-				OR UPPER(A.ENG_BZPL_NAME) LIKE CONCAT('%', UPPER(#{bzepName}), '%') )		
+			AND (  A.BZEP_NAME     LIKE '%'|| #{bzepName}|| '%')
+				OR A.KOR_BZPL_NAME LIKE '%'|| #{bzepName}|| '%')
+				OR UPPER(A.ENG_BZPL_NAME) LIKE '%'|| UPPER(#{bzepName})|| '%') )		
 		    </if>
-		    AND A.USE_YN = IF ( IFNULL(#{useYn}, 'A') = 'A', A.USE_YN, #{useYn})		    
+		    AND A.USE_YN = IF ( NVL(#{useYn}, 'A') = 'A', A.USE_YN, #{useYn})		    
 	</select>
 
 	<!-- 기업체리스트 생성  -->
 	<insert id="insertArdyBzepInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS010BVO$ArdyBzepVO">
 		<!-- 기업체리스트 생성 IBIMS010BMapper.insertArdyBzepInfo  -->		
 		<selectKey keyProperty="ardyBzepNo" resultType="String" order="BEFORE">
-		SELECT LPAD(IFNULL(MAX(CAST(A.ARDY_BZEP_NO AS INTEGER)), 0) + 1, 13, '0')
+		SELECT LPAD(NVL(MAX(TO_NUMBER(A.ARDY_BZEP_NO)), 0) + 1, 13, '0')
 		  FROM IBIMS010B A
 		</selectKey>
 		
@@ -229,7 +229,7 @@
 				  ,#{fnafHltySrnmRt} <!-- 재무건전성비율 -->
 				  ,#{ovrsSpcYn}      <!-- 해외SPC여부 -->
 				  ,'Y'               <!-- 사용여부 -->
-				  , current_timestamp()      <!-- 조작상세일시 -->
+				  , SYSDATE      <!-- 조작상세일시 -->
 				  ,#{hndEmpno}        <!-- 조작사원번호 -->
 				  ,#{hndTmnlNo}       <!-- 조작단말기번호 -->
 				  ,#{hndTrId}         <!-- 조작거래ID -->
@@ -267,7 +267,7 @@
              , BUCO_NAME			= #{bucoName}       <!-- 업태명 -->
              , CLSE_DVSN_CD			= #{clseDvsnCd}     <!-- 폐업구분코드 -->
              , CLSE_DT				= #{clseDt}         <!-- 폐업일자 -->
-             , ERLM_DT				= DATE_FORMAT(current_timestamp(), '%Y%m%d')         <!-- 등록일자 -->
+             , ERLM_DT				= TO_CHAR(SYSDATE, 'YYYYMMDD')         <!-- 등록일자 -->
              , RDM_TR_OPPN_NO		= #{rdmTrOppnNo}    <!-- RDM거래상대방번호 -->
              , SMET_YN				= #{smetYn}         <!-- 중소기업여부 -->
              , ETPR_SHAP_DVSN_CD	= #{etprShapDvsnCd} <!-- 기업형태구분코드 -->
@@ -280,7 +280,7 @@
              , FNAF_HLTY_SRNM_RT	= #{fnafHltySrnmRt} <!-- 재무건전성비율 -->
              , OVRS_SPC_YN			= #{ovrsSpcYn}      <!-- 해외SPC여부 -->
              , USE_YN				= 'Y'               <!-- 사용여부 -->
-             , HND_DETL_DTM			= DATE_FORMAT(current_timestamp(), '%Y%m%d%H%i%s')  <!-- 조작상세일시 -->
+             , HND_DETL_DTM			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  <!-- 조작상세일시 -->
              , HND_EMPNO			= #{hndEmpno}       <!-- 조작사원번호 -->
              , HND_TMNL_NO			= #{hndTmnlNo}      <!-- 조작단말기번호 -->
              , HND_TR_ID			= #{hndTrId}        <!-- 조작거래ID -->
@@ -296,7 +296,7 @@
 		<!-- 기업체리스트 수정 IBIMS010BMapper.updateArdyBzepInfo -->
 		UPDATE IBIMS010B 
 		   SET USE_YN				= 'N'                <!-- 사용여부 -->
-             , HND_DETL_DTM			= DATE_FORMAT(current_timestamp(), '%Y%m%d%H%i%s')  <!-- 조작상세일시 -->
+             , HND_DETL_DTM			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  <!-- 조작상세일시 -->
              , HND_EMPNO			= #{hndEmpno}        <!-- 조작사원번호 -->
              , HND_TMNL_NO			= #{hndTmnlNo}       <!-- 조작단말기번호 -->
              , HND_TR_ID			= #{hndTrId}         <!-- 조작거래ID -->

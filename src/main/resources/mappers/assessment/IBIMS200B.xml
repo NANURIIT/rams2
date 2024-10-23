@@ -26,8 +26,7 @@
 			FROM IBIMS200B A	/* 상품기본 */
 			WHERE 1=1
 			<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtName)">
-				AND A.PRDT_NAME LIKE CONCAT('%', #{prdtName}, '%')						/* 상풍명 */ 
-				
+				AND A.PRDT_NAME LIKE '%' || #{prdtName} || '%'						/* 상풍명 */ 
 			</if>
 			<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(crdtGrntActsCd)">
 				AND A.CRDT_GRNT_ACTS_CD = #{crdtGrntActsCd}							/* 계정과목 */

@@ -2,75 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS115BMapper">
 
-        <!-- 위원회위원내역등록  -->
+    <!-- 위원회위원내역등록 -->
     <insert id="insert115B" parameterType="com.nanuri.rams.business.common.dto.IBIMS115BDTO">
         INSERT INTO IBIMS115B
                (
-                  CNSB_DCD                                <!-- 협의체구분코드 -->
-                , CNSB_SQ                                 <!-- 협의체순번 -->
-                , RSLTN_YR                                <!-- 결의년도 -->
-                , SN                                      <!-- 일련번호 -->
-                , DEAL_NO                                 <!-- 딜번호 -->
-                , MTR_DCD                                 <!-- 안건구분코드 -->
-                , JDGM_DCD                                <!-- 심사구분코드 -->
-                , ATDC_TRGT_DCD                           <!-- 참석대상구분코드 -->
-                , ATDC_TRGT_EMPNO                         <!-- 참석대상사원번호 -->
-                , ATDC_ANGT_EMPNO                         <!-- 참석대리인사원번호 -->
-                , ATDC_YN                                 <!-- 참석여부 -->
-                , APRV_OPPS_DCD                           <!-- 찬성반대구분코드 -->
-                , OPNN_RGST_DT                            <!-- 의견등록일자 -->
-                , OPNN_RGST_EMPNO                         <!-- 의견등록자사원번호 -->
-                , OPNN_CTNS                               <!-- 의견내용 -->
-                , DEL_YN                                  <!-- 삭제여부 -->
-                , HND_DETL_DTM                            <!-- 조작상세일시 -->
-                , HND_EMPNO                               <!-- 조작사원번호 -->
-                , HND_TMNL_NO                             <!-- 조작단말기번호 -->
-                , HND_TR_ID                               <!-- 조작거래ID -->
-                , GUID                                    <!-- GUID -->
+                  CNSB_DCD                                /* 협의체구분코드 */
+                , CNSB_SQ                                 /* 협의체순번 */
+                , RSLTN_YR                                /* 결의년도 */
+                , SN                                      /* 일련번호 */
+                , DEAL_NO                                 /* 딜번호 */
+                , MTR_DCD                                 /* 안건구분코드 */
+                , JDGM_DCD                                /* 심사구분코드 */
+                , ATDC_TRGT_DCD                           /* 참석대상구분코드 */
+                , ATDC_TRGT_EMPNO                         /* 참석대상사원번호 */
+                , ATDC_ANGT_EMPNO                         /* 참석대리인사원번호 */
+                , ATDC_YN                                 /* 참석여부 */
+                , APRV_OPPS_DCD                           /* 찬성반대구분코드 */
+                , OPNN_RGST_DT                            /* 의견등록일자 */
+                , OPNN_RGST_EMPNO                         /* 의견등록자사원번호 */
+                , OPNN_CTNS                               /* 의견내용 */
+                , DEL_YN                                  /* 삭제여부 */
+                , HND_DETL_DTM                            /* 조작상세일시 */
+                , HND_EMPNO                               /* 조작사원번호 */
+                , HND_TMNL_NO                             /* 조작단말기번호 */
+                , HND_TR_ID                               /* 조작거래ID */
+                , GUID                                    /* GUID */
                )
         VALUES
                <foreach collection="list" item="item" index="index" separator=",">
                (
-                 #{item.cnsbDcd}                                <!-- 협의체구분코드 -->
-               , #{item.sn}                                     <!-- 협의체순번 -->
-               , #{item.rsltnYr}                                <!-- 결의년도 -->
-               , #{index}+1                                     <!-- 일련번호 -->
-               , #{item.dealNo}                                 <!-- 딜번호 -->
-               , #{item.mtrDcd}                                 <!-- 안건구분코드 -->
-               , #{item.jdgmDcd}                                <!-- 심사구분코드 -->
-               , #{item.atdcTrgtDcd}                            <!-- 참석대상구분코드 -->
-               , #{item.atdcTrgtEmpno}                          <!-- 참석대상사원번호 -->
-               , #{item.atdcAngtEmpno}                          <!-- 참석대리인사원번호 -->
-               , #{item.atdcYn}                                 <!-- 참석여부 -->
-               , #{item.aprvOppsDcd}                            <!-- 찬성반대구분코드 -->
-               , #{item.opnnRgstDt}                             <!-- 의견등록일자 -->
-               , #{item.opnnRgstEmpno}                          <!-- 의견등록자사원번호 -->
-               , #{item.opnnCtns}                               <!-- 의견내용 -->
-               , DEFAULT                                        <!-- 삭제여부 -->
-               , DEFAULT                                        <!-- 조작상세일시 -->
-               , #{item.hndEmpno}                               <!-- 조작사원번호 -->
-               , #{item.hndTmnlNo}                              <!-- 조작단말기번호 -->
-               , #{item.hndTrId}                                <!-- 조작거래ID -->
-               , #{item.guid}                                   <!-- GUID -->
+                 #{item.cnsbDcd}                          /* 협의체구분코드 */
+               , #{item.sn}                               /* 협의체순번 */
+               , #{item.rsltnYr}                          /* 결의년도 */
+               , #{index}+1                               /* 일련번호 */
+               , #{item.dealNo}                           /* 딜번호 */
+               , #{item.mtrDcd}                           /* 안건구분코드 */
+               , #{item.jdgmDcd}                          /* 심사구분코드 */
+               , #{item.atdcTrgtDcd}                      /* 참석대상구분코드 */
+               , #{item.atdcTrgtEmpno}                    /* 참석대상사원번호 */
+               , #{item.atdcAngtEmpno}                    /* 참석대리인사원번호 */
+               , #{item.atdcYn}                           /* 참석여부 */
+               , #{item.aprvOppsDcd}                      /* 찬성반대구분코드 */
+               , #{item.opnnRgstDt}                       /* 의견등록일자 */
+               , #{item.opnnRgstEmpno}                    /* 의견등록자사원번호 */
+               , #{item.opnnCtns}                         /* 의견내용 */
+               , '0'                                      /* 삭제여부 */
+               , SYSDATE                                  /* 조작상세일시 */
+               , #{item.hndEmpno}                         /* 조작사원번호 */
+               , #{item.hndTmnlNo}                        /* 조작단말기번호 */
+               , #{item.hndTrId}                          /* 조작거래ID */
+               , #{item.guid}                             /* GUID */
                )
                </foreach>
     </insert>
     
     <select id="getMMBRInfo" parameterType="com.nanuri.rams.business.common.dto.IBIMS115BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS115BVO">
-        SELECT ATDC_TRGT_DCD                                                   <!-- 참석대상구분코드 -->
-             , IFNULL(ATDC_TRGT_EMPNO, '') AS ATDC_TRGT_EMPNO                  <!-- 참석대상사원번호 -->
-             , IFNULL((
+        SELECT ATDC_TRGT_DCD                                                 /* 참석대상구분코드 */
+             , NVL(ATDC_TRGT_EMPNO, '') AS ATDC_TRGT_EMPNO                   /* 참석대상사원번호 */
+             , NVL((
                 SELECT EMP_NM
                   FROM IBIMS003B
                  WHERE EMPNO = ATDC_TRGT_EMPNO
                ), '') AS ATDC_TRGT_EMPNM
-             , IFNULL(ATDC_ANGT_EMPNO, '') AS ATDC_ANGT_EMPNO                  <!-- 참석대리인사원번호 -->
-             , IFNULL((
+             , NVL(ATDC_ANGT_EMPNO, '') AS ATDC_ANGT_EMPNO                   /* 참석대리인사원번호 */
+             , NVL((
                 SELECT EMP_NM
                   FROM IBIMS003B
                  WHERE EMPNO = ATDC_ANGT_EMPNO
                ), '') AS ATDC_ANGT_EMPNM
-             <!-- , DEAL_NO                                                         딜번호 -->
+             /* , DEAL_NO                                                         딜번호 */
           FROM IBIMS115B
          WHERE CNSB_DCD = #{cnsbDcd}
            AND RSLTN_YR = #{rsltnYr}
@@ -82,53 +82,53 @@
         DELETE
           FROM IBIMS115B
          WHERE 1=1
-           AND CNSB_DCD                                = #{cnsbDcd}                                <!-- 협의체구분코드 -->
-           AND CNSB_SQ                                 = #{sn}                                     <!-- 협의체순번 -->
-           AND RSLTN_YR                                = #{rsltnYr}                                <!-- 결의년도 -->
+           AND CNSB_DCD                                = #{cnsbDcd}                                /* 협의체구분코드 */
+           AND CNSB_SQ                                 = #{sn}                                     /* 협의체순번 */
+           AND RSLTN_YR                                = #{rsltnYr}                                /* 결의년도 */
     </delete>
 
     <!-- 협의체 의견등록(승인조건) 20240621 join절 수정 임시중복제거.. -->
     <select id="getDealInfoByEno" parameterType="map" resultType="com.nanuri.rams.business.common.vo.TB05020SVO">
-		SELECT A.CNSB_DCD                                                 <!-- 협의체구분코드 -->
+		SELECT A.CNSB_DCD                                                 /* 협의체구분코드 */
 		     , (
 		        SELECT CD_VL_NM
 		          FROM IBIMS002B
 		         WHERE CMNS_CD_GRP = 'R016'
 		           AND CD_VL_ID = A.CNSB_DCD
 		       ) AS CNSB_DCD_NM
-		     , A.RSLTN_YR                                                 <!-- 결의년도 -->
-		     , A.CNSB_SQ                                                  <!-- 협의체순번(회차) -->
-		     , A.SN                                                       <!-- 일련번호 -->
-		     , A.DEAL_NO                                                  <!-- 딜번호 -->
-		     , A.MTR_DCD                                                  <!-- 안건구분코드 -->
-		     , A.JDGM_DCD                                                 <!-- 심사구분코드 -->
-		     , B.MTR_NM                                                   <!-- 안건명 -->
-			 , D.CNSB_OPN_DT                                              <!-- 협의체개최일자 -->
-			 , B.PTFD_CRNCY_CD                                            <!-- 부의통화코드 -->
-		     , CONCAT('(',B.PTFD_CRNCY_CD,') ',
+		     , A.RSLTN_YR                                                 /* 결의년도 */
+		     , A.CNSB_SQ                                                  /* 협의체순번(회차) */
+		     , A.SN                                                       /* 일련번호 */
+		     , A.DEAL_NO                                                  /* 딜번호 */
+		     , A.MTR_DCD                                                  /* 안건구분코드 */
+		     , A.JDGM_DCD                                                 /* 심사구분코드 */
+		     , B.MTR_NM                                                   /* 안건명 */
+			   , D.CNSB_OPN_DT                                              /* 협의체개최일자 */
+			   , B.PTFD_CRNCY_CD                                            /* 부의통화코드 */
+		     , '('||B.PTFD_CRNCY_CD ||') ' ||
 		       (
 		        SELECT CD_VL_NM
 		          FROM IBIMS002B
 		         WHERE CMNS_CD_GRP = 'I027'
 		           AND CD_VL_ID = B.PTFD_CRNCY_CD
-		       )) AS PTFD_CRNCY_CD_NM
-			 , B.PTFD_AMT                                                 <!-- 부의금액 -->
-			 , IFNULL(C.APVL_AMT, '') AS APVL_AMT                         <!-- 승인금액 -->
-			 , B.MTR_PRG_STTS_DCD                                         <!-- 안건진행상태구분코드 -->
+		       ) AS PTFD_CRNCY_CD_NM
+			   , B.PTFD_AMT                                                 /* 부의금액 */
+			   , NVL(C.APVL_AMT, '') AS APVL_AMT                            /* 승인금액 */
+			   , B.MTR_PRG_STTS_DCD                                         /* 안건진행상태구분코드 */
 		     , (
 		        SELECT CD_VL_NM
 		          FROM IBIMS002B
 		         WHERE CMNS_CD_GRP = 'I011'
 		           AND CD_VL_ID = B.MTR_PRG_STTS_DCD
 		       ) AS MTR_PRG_STTS_DCD_NM
-			 , A.APRV_OPPS_DCD                                            <!-- 찬성반대구분코드 -->
-		     , IFNULL((
+			   , A.APRV_OPPS_DCD                                            /* 찬성반대구분코드 */
+		     , NVL((
 		        SELECT CD_VL_NM
 		          FROM IBIMS002B
 		         WHERE CMNS_CD_GRP = 'A012'
 		           AND CD_VL_ID = A.APRV_OPPS_DCD
 		       ), '') AS APRV_OPPS_DCD_NM
-			 , IFNULL(A.OPNN_CTNS, '') AS OPNN_CTNS                       <!-- 의견내용 -->	 
+			   , NVL(A.OPNN_CTNS, '') AS OPNN_CTNS                          /* 의견내용 */	 
 		  FROM IBIMS115B A  /* 위원회안건내역(협의체위원정보) */
 		     , IBIMS103B B
 		     , IBIMS112B C  /* 위원회안건내역(협의체안건정보) */     
@@ -151,10 +151,10 @@
 		   AND D.RSLTN_YR = A.RSLTN_YR 
 		   AND D.SN       = A.CNSB_SQ
 		   AND D.JDGM_RSLT_DCD <![CDATA[>]]> '303'
-		 ORDER BY A.CNSB_DCD                                                 <!-- 협의체구분코드 -->     
-		        , A.RSLTN_YR                                                 <!-- 결의년도 -->
-		        , A.CNSB_SQ                                                  <!-- 협의체순번(회차) -->
-		        , A.SN                                                       <!-- 일련번호 -->
+		 ORDER BY A.CNSB_DCD                                                 /* 협의체구분코드 */     
+		        , A.RSLTN_YR                                                 /* 결의년도 */
+		        , A.CNSB_SQ                                                  /* 협의체순번(회차) */
+		        , A.SN                                                       /* 일련번호 */
        
     </select>
     
@@ -162,7 +162,7 @@
         UPDATE IBIMS115B
            SET ATDC_YN       = 'Y'
              , APRV_OPPS_DCD   = #{aprvOppsDcd}
-             , OPNN_RGST_DT    = DATE_FORMAT(NOW(), '%Y%m%d')
+             , OPNN_RGST_DT    = TO_CHAR(SYSDATE, 'YYYYMMDD')
              , OPNN_RGST_EMPNO = #{opnnRgstEmpno}
              , OPNN_CTNS       = #{opnnCtns}
          WHERE CNSB_DCD = #{cnsbDcd}
@@ -172,30 +172,30 @@
     </update>
 
     <select id="getMMBRInfoTB05030S" parameterType="map" resultType="com.nanuri.rams.business.common.vo.IBIMS115BVO">
-        SELECT A.ATDC_TRGT_DCD AS ATDC_TRGT_DCD                                                    <!-- 참석대상구분코드 -->
-             , A.ATDC_TRGT_EMPNO AS ATDC_TRGT_EMPNO                                                  <!-- 참석대상사원번호 -->
+        SELECT A.ATDC_TRGT_DCD AS ATDC_TRGT_DCD                                 /* 참석대상구분코드 */
+             , A.ATDC_TRGT_EMPNO AS ATDC_TRGT_EMPNO                             /* 참석대상사원번호 */
              , (
                 SELECT EMP_NM
                   FROM IBIMS003B
                  WHERE EMPNO = A.ATDC_TRGT_EMPNO
                ) AS ATDC_TRGT_EMPNM
-             , IFNULL(A.ATDC_ANGT_EMPNO, '') AS ATDC_ANGT_EMPNO                    <!-- 참석대리인사원번호 -->
-             , IFNULL((
+             , NVL(A.ATDC_ANGT_EMPNO, '') AS ATDC_ANGT_EMPNO                    /* 참석대리인사원번호 */
+             , NVL((
                 SELECT EMP_NM
                   FROM IBIMS003B
                  WHERE EMPNO = A.ATDC_ANGT_EMPNO
                ), '') AS ATDC_ANGT_EMPNM
-             , A.ATDC_YN AS ATDC_YN                                                          <!-- 참석여부 -->
-             , A.APRV_OPPS_DCD AS APRV_OPPS_DCD                                                    <!-- 찬성반대구분코드 -->
+             , A.ATDC_YN AS ATDC_YN                                             /* 참석여부 */
+             , A.APRV_OPPS_DCD AS APRV_OPPS_DCD                                 /* 찬성반대구분코드 */
              , (
                 SELECT CD_VL_NM
                   FROM IBIMS002B
                  WHERE CMNS_CD_GRP = 'A012'
                    AND CD_VL_ID = A.APRV_OPPS_DCD
                ) AS APRV_OPPS_DCD_NM
-             , A.OPNN_CTNS AS OPNN_CTNS                                                        <!-- 의견내용 -->
-             , IFNULL(A.OPNN_RGST_DT, '') AS OPNN_RGST_DT                          <!-- 의견등록일자 -->
-             , A.SN AS SN                                                                <!-- 일련번호 -->
+             , A.OPNN_CTNS AS OPNN_CTNS                                         /* 의견내용 */
+             , NVL(A.OPNN_RGST_DT, '') AS OPNN_RGST_DT                          /* 의견등록일자 */
+             , A.SN AS SN                                                       /* 일련번호 */
              , A.CNSB_DCD
              , A.CNSB_SQ
           FROM IBIMS115B A
@@ -208,7 +208,7 @@
            AND A.CNSB_DCD = #{cnsbDcd}
            AND A.CNSB_SQ  = #{cnsbSq}
            AND A.RSLTN_YR = #{rsltnYr}
-           <!-- 20240621 dealno 추가 -->
+           /* 20240621 dealno 추가 */
            AND A.DEAL_NO  = #{dealNo}
            AND B.SN = #{sn}
            AND A.CNSB_DCD = B.CNSB_DCD 
@@ -222,7 +222,7 @@
            SET ATDC_YN       = #{item.atdcYn}
              , APRV_OPPS_DCD = #{item.aprvOppsDcd}
              , OPNN_CTNS     = #{item.opnnCtns}
-             , OPNN_RGST_DT  = DATE_FORMAT(CURRENT_DATE(), '%Y%m%d')
+             , OPNN_RGST_DT  = TO_CHAR(SYSDATE, 'YYYYMMDD')
          WHERE CNSB_DCD      = #{item.cnsbDcd}
            AND CNSB_SQ       = #{item.cnsbSq}
            AND RSLTN_YR      = #{item.rsltnYr}

@@ -171,7 +171,7 @@
 			 , GUID						/* guid	 */ 
 		  FROM IBIMS348H A 	/* 딜승인수수료스케쥴기본 */
 		 WHERE 1 = 1
-		   AND A.PRDT_CD = #{prdtCd}  
+		   AND A.PRDT_CD = #{prdtCd}
 		   AND A.HGRK_TR_SN = (SELECT MAX(HGRK_TR_SN) FROM IBIMS348H WHERE PRDT_CD = #{prdtCd} AND HGRK_TR_SN &lt; #{trSn})
 	</select>
 		    	
@@ -266,7 +266,7 @@
 			, #{item.dcRt}				    /* 할인율 */
 			, #{item.rpsrNm}				    /* 대표자명 */
 			, #{item.rgstBdcd}			    /* 등록부점코드 */
-			, NOW()					    /* 조작상세일시 */
+			, SYSDATE					    /* 조작상세일시 */
 			, #{item.hndEmpno}			    /* 조작사원번호 */
 			, #{item.hndTmnlNo}			    /* 조작단말기번호 */
 			, #{item.hndTrId}			    /* 조작거래ID */
@@ -324,7 +324,7 @@
 		  FROM IBIMS348H A 	
 		 WHERE PRDT_CD               = #{prdtCd}					/* 종목코드 */
 		   AND FEE_SN				 = #{feeSn}					/* 수수료일련번호 */
-		 LIMIT 1
+		   AND ROWNUM = 1
     </select>    
     
 	<update  id="updateIBIMS348H" parameterType="com.nanuri.rams.business.common.vo.IBIMS348BVO">
@@ -353,7 +353,7 @@
 			, ACTS_CD 				= #{item.actsCd}					/* 계정과목코드 */
 			, RPSR_NM 				= #{item.rpsrNm}					/* 대표자명 */
 			, RGST_BDCD 			= #{item.rgstBdcd}				/* 등록부점코드 */
-			, HND_DETL_DTM 			= NOW()						/* 조작상세일시 */
+			, HND_DETL_DTM 			= SYSDATE						/* 조작상세일시 */
 			, HND_EMPNO 			= #{item.hndEmpno}				/* 조작사원번호 */
 			, HND_TMNL_NO 			= #{item.hndTmnlNo}				/* 조작단말기번호 */
 			, HND_TR_ID 			= #{item.hndTrId}				/* 조작거래ID */

@@ -128,7 +128,7 @@
                , #{cdVlId}                               <!-- 코드값ID -->
                , #{cdVlNm}                               <!-- 코드값명 -->
                , #{rsltCdVl}                             <!-- 변환후코드ID -->
-               , DATE_FORMAT(NOW(), '%Y%m%d')            <!-- 등록일자 -->
+               , TO_CHAR(SYSDATE, 'YYYYMMDD')            <!-- 등록일자 -->
                , #{rgstEmpno}                            <!-- 등록사원번호 -->
                , (  SELECT CASE WHEN #{cdSq} = 0 THEN MAX(NVL(A.CD_SQ, 0)+1)					  
 								ELSE #{cdSq}

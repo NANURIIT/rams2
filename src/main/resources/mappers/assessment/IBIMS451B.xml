@@ -26,7 +26,7 @@
     </select>
 
     <select id="thdtTrDtlsGetData" parameterType="com.nanuri.rams.business.common.dto.IBIMS451BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS451BVO">
-        SELECT B.DEAL_NO                        /* 딜번호 */
+       SELECT B.DEAL_NO                        /* 딜번호 */
              , A.TR_SN                          /* 거래순번 */
              , A.ETPR_CRDT_GRNT_TR_KIND_CD      /* 거래종류코드 */
              , A.DEAL_TR_PRCA                   /* 거래원금 */
@@ -43,13 +43,13 @@
                 END
                 ) ICDC_DCD                  /* 증감구분코드 */
           FROM IBIMS410B A
-     LEFT JOIN IBIMS201B B
-            ON A.PRDT_CD = B.PRDT_CD
+              ,IBIMS201B B
          WHERE 1=1
+           AND A.PRDT_CD = B.PRDT_CD(+)
            /* 딜거래내역 기본조건 */
            AND A.TR_STAT_CD = '1'
            /* 딜승인 기본조건 */
-           AND B.LAST_YN = '1'
+           AND B.LAST_YN(+) = '1'
            /* 조회조건 */
            AND A.TR_DT = #{stdrDt}
            AND A.ORGNO = #{mngmBdcd}

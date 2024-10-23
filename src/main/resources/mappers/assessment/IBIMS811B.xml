@@ -47,16 +47,16 @@
 				, MTR_DCD
 				, JDGM_DCD
 				, DFR_EXP_MNUM
-				, IFNULL(#{nrmlIntr}, 0)         				AS NRML_INTR
-				, IFNULL(#{intrAmtOvduIntr}, 0)  				AS INTR_AMT_OVDU_INTR
-				, IFNULL(#{aplyIrt}, 0)          				AS APLY_IRT
-				, IFNULL(#{ovduPrna}, 0)         				AS OVDU_PRNA
-				, IFNULL(#{eprzCrdlAcbkAmt}, 0)  				AS EPRZ_CRDL_ACBK_AMT
-				, IFNULL(#{avrBlce}, 0)          				AS AVR_BLCE
-				, IFNULL(#{hdwtEvlAmt}, 0)       				AS HDWT_EVL_AMT
-				, IFNULL(#{qotaRt}, 0)           				AS QOTA_RT
-				, IFNULL(#{setlShqt}, 0)         				AS SETL_SHQT
-				, IFNULL(#{dcsnYn}, 'n')           				AS DCSN_YN
+				, NVL(#{nrmlIntr}, 0)         				AS NRML_INTR
+				, NVL(#{intrAmtOvduIntr}, 0)  				AS INTR_AMT_OVDU_INTR
+				, NVL(#{aplyIrt}, 0)          				AS APLY_IRT
+				, NVL(#{ovduPrna}, 0)         				AS OVDU_PRNA
+				, NVL(#{eprzCrdlAcbkAmt}, 0)  				AS EPRZ_CRDL_ACBK_AMT
+				, NVL(#{avrBlce}, 0)          				AS AVR_BLCE
+				, NVL(#{hdwtEvlAmt}, 0)       				AS HDWT_EVL_AMT
+				, NVL(#{qotaRt}, 0)           				AS QOTA_RT
+				, NVL(#{setlShqt}, 0)         				AS SETL_SHQT
+				, NVL(#{dcsnYn}, 'n')           				AS DCSN_YN
 				, HND_DETL_DTM
 				, HND_EMPNO
 				, HND_TMNL_NO

@@ -53,7 +53,7 @@
         INSERT INTO IBIMS981B
             (
                 SELECT T.DUDT_MNGM_NO                                                       AS DUDT_MNGM_NO          /* 기일관리번호 */
-                     , IFNULL((SELECT MAX(ERLM_SEQ) FROM IBIMS981B) + ROWNUM(), ROWNUM())   AS ERLM_SEQ              /* 등록순번 */
+                     , NVL((SELECT MAX(ERLM_SEQ) FROM IBIMS981B) + ROWNUM(), ROWNUM())   AS ERLM_SEQ              /* 등록순번 */
                      , C.DEAL_NO                                                            AS DEAL_NO               /* 딜번호 */
                      , T.PRDT_CD                                                            AS PRDT_CD               /* 상품코드 */
                      , D.DUDT_DPCH_TP_DCD								 AS DUDT_DPCH_TP_DCD	     /* 통보 */
@@ -66,7 +66,7 @@
                      , 'N'                                                                  AS USE_YN                /* 사용여부 */
                      , 'N'                                                                  AS DPCH_YN               /* 통보여부 */
                      , 'N'                                                                  AS DEL_YN                /* 삭제여부 */
-                     , NOW()                                                                AS HND_DETL_DTM          /* 조작상세일시 */
+                     , SYSDATE                                                              AS HND_DETL_DTM          /* 조작상세일시 */
                      , ''                                                                   AS HND_EMPNO             /* 조작사원번호 */
                      , ''                                                                   AS HND_TMNL_NO           /* 조작단말기번호 */
                      , ''                                                                   AS HND_TR_ID             /* 조작거래ID */

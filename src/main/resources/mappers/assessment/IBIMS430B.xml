@@ -8,7 +8,7 @@
     <!--입금순번 구하기-->
     <select id="getNxtRctmSeq" parameterType="String" resultType="Integer">
         SELECT 
-            IFNULL(MAX(RCTM_SEQ)+1, 1)
+            NVL(MAX(RCTM_SEQ)+1, 1)
         FROM 
             IBIMS430B
         WHERE 
@@ -22,7 +22,7 @@
         FROM 
             IBIMS430B
         WHERE 
-            DATE_FORMAT(RGST_DTM , '%Y%m%d') = DATE_FORMAT(#{rgstDtm}, '%Y%m%d')
+            TO_CHAR(RGST_DTM , 'YYYYMMDD') = TO_CHAR(#{rgstDtm}, 'YYYYMMDD')
     </select>
 
     <!--입금내역등록-->
@@ -99,7 +99,7 @@
         AND RCTM_DT = #{rctmDt}
         </if>
         <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(rgstDt)">
-        AND DATE_FORMAT(RGST_DTM , '%Y%m%d') = #{rgstDt}
+        AND TO_CHAR(RGST_DTM , 'YYYYMMDD') = #{rgstDt}
         </if>
         <if test="rgstSeq != 0">
         AND RGST_SEQ = #{rgstSeq}
@@ -147,7 +147,7 @@
 
     <!--TB07170S 입금내역조회-->
     <select id="getDptrDtlsList" parameterType="com.nanuri.rams.business.common.dto.IBIMS430BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS430BVO">
-        SELECT  A.RCTM_DT 					/*입금일자*/
+ 		  SELECT  A.RCTM_DT 					/*입금일자*/
                 , B.DEAL_NO                 /*딜번호*/
                 , B.PRDT_CD					/*종목코드*/
                 , A.MNGM_BDCD 				/*관리부점코드*/
@@ -169,9 +169,8 @@
                     WHERE U.EMPNO = A.RGST_EMPNO 
                 ) AS RGST_EMPNM				/*처리자*/
                 , A.RGST_BDCD 				/*처리부서*/
-            FROM IBIMS430B A
-            JOIN
-            (
+            FROM IBIMS430B A            
+            ,(
                 SELECT  CASE  WHEN P.SCX_DCD = '02'
                                 THEN P.PRAR_PRNA
                                 ELSE P.RDMP_PRAR_INTR
@@ -184,9 +183,10 @@
                                 , D1.TR_CRRY_CD 			                            /*통화코드*/
                                 , P.PRCS_CPLT_YN
                             FROM IBIMS403B P				                              /*원리금상환스케줄*/
-                            JOIN IBIMS201B D1 
-                            ON D1.PRDT_CD = P.PRDT_CD
-                            WHERE D1.LAST_YN = '1'
+                               , IBIMS201B D1 
+                            WHERE 1=1
+                            AND  D1.PRDT_CD = P.PRDT_CD
+                            AND D1.LAST_YN = '1'
                             AND (P.PRCS_CPLT_YN != '1' OR P.PRCS_CPLT_YN IS NULL)
                             UNION ALL
                             SELECT   F.FEE_AMT				AS PMNT_PRAR_AMT	          /*납부예정금액*/
@@ -197,15 +197,16 @@
                                 , '03'					      AS SCX_DCD                  /*상환구분*/
                                 , D2.TR_CRRY_CD                                   /*통화코드*/
                                 , F.PRCS_CPLT_YN
-                            FROM IBIMS348B F                                      /*수수료상환스케줄*/
-                            JOIN IBIMS201B D2
-                            ON D2.PRDT_CD = F.PRDT_CD
-                            WHERE D2.LAST_YN = '1'
+                            FROM  IBIMS348B F                                      /*수수료상환스케줄*/
+                            	, IBIMS201B D2                            
+                            WHERE 1=1 
+                            AND D2.PRDT_CD = F.PRDT_CD
+                            AND D2.LAST_YN = '1'
                             AND (F.PRCS_CPLT_YN != '1' OR F.PRCS_CPLT_YN IS NULL)
             ) AS B
-                ON B.PRAR_DT = A.RCTM_DT 
-                AND B.SCX_DCD = A.RDPT_OBJT_DVSN_CD
         WHERE 1=1
+        AND B.PRAR_DT = A.RCTM_DT 
+        AND B.SCX_DCD = A.RDPT_OBJT_DVSN_CD
         <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(rdptObjtDvsnCd)">
         AND A.RDPT_OBJT_DVSN_CD  = #{rdptObjtDvsnCd}
         </if>

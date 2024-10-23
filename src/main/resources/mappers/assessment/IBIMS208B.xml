@@ -57,7 +57,7 @@
                      , X.PRDT_CD
                   FROM IBIMS209B X
                  WHERE X.PRDT_CD = #{prdtCd}
-                 LIMIT 1
+                   AND ROWNUM = 1
                ) AS I209B
             ON I209B.DEAL_NO = IBIMS208B.DEAL_NO
          WHERE 1=1
