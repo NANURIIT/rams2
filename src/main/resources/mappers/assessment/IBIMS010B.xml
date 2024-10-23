@@ -134,7 +134,7 @@
 		  	<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(bzepName)">
 			AND (  A.BZEP_NAME     LIKE '%'|| #{bzepName}|| '%'
 				OR A.KOR_BZPL_NAME LIKE '%'|| #{bzepName}|| '%'
-				OR UPPER(A.ENG_BZPL_NAME) LIKE '%'|| UPPER(#{bzepName})|| '%'		
+				OR UPPER(A.ENG_BZPL_NAME) LIKE '%'|| UPPER(#{bzepName})|| '%')		
 		    </if>
 		    AND A.USE_YN = IF ( NVL(#{useYn}, 'A') = 'A', A.USE_YN, #{useYn})		    
 	</select>
@@ -292,7 +292,8 @@
 	</update>
 
 	<!-- 기업체 사용여부 미사용 수정  -->
-		<!-- 기업체리스트 수정 IBIMS010BMapper.updateArdyBzepInfo -->/*< */ id="updateArdyBzepUseYn" parameterType="com.nanuri.rams.business.common.vo.IBIMS010BVO$ArdyBzepVO">		
+		<!-- 기업체리스트 수정 IBIMS010BMapper.updateArdyBzepInfo -->
+	<update id="updateArdyBzepUseYn" parameterType="com.nanuri.rams.business.common.vo.IBIMS010BVO$ArdyBzepVO">		
 		UPDATE IBIMS010B 
 		   SET USE_YN				= 'N'                /* 사용여부 */
              , HND_DETL_DTM			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  /* 조작상세일시 */
@@ -312,6 +313,6 @@
 		  FROM IBIMS002B
 		 WHERE CMNS_CD_GRP IN ('B022', 'E034', 'E035', 'S007', 'U005')
 	</select>
-		 <!-- ORDER BY CD_SQ ASC -->
+	<!-- ORDER BY CD_SQ ASC -->
 
 </mapper>
