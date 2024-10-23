@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS602BMapper">
 	
-	/* 당월사업관리의견조회  */
+	<!-- 당월사업관리의견조회-->  
     <select id="selectIBIMS602B" resultType="com.nanuri.rams.business.common.dto.IBIMS602BDTO" parameterType="com.nanuri.rams.business.common.vo.IBIMS601BVO">
         SELECT DEAL_NO                                           /* Deal번호 */
              , INSPCT_YM                                      	 /* 심사년월 */
@@ -23,7 +23,7 @@
 		   </if>
     </select>
     
-    /* 당월사업관리의견등록  */
+    <!-- 당월사업관리의견등록 -->
     <insert id="insertIBIMS602B" parameterType="com.nanuri.rams.business.common.vo.IBIMS601BVO">
         INSERT INTO IBIMS602B 
                (
@@ -46,7 +46,7 @@
                )
     </insert>
 	
-	/* 당월사업관리의견변경  */
+	<!-- 당월사업관리의견변경 -->
     <update id="updateIBIMS602B" parameterType="com.nanuri.rams.business.common.vo.IBIMS601BVO">
        UPDATE IBIMS602B
           SET INSPCT_YM                                         = NVL(#{inspctYm}, (SELECT TO_CHAR(SYSDATE, 'YYYYMM') FROM DUAL))   /* 심사년월 */                                

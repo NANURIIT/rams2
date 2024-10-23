@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS518BMapper">
 
-	/* 투자기업정보 조회 */
+	<!-- 투자기업정보 조회 -->
 	<select id="getInvstBzscalList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS518BVO">
         SELECT DEAL_NO                        /* 딜번호 */
              , STDR_YM                        /* 기준년월 */
@@ -24,7 +24,7 @@
          WHERE DEAL_NO = #{dealNo}
 	</select>
 	
-	/* 투자기업정보 저장 */
+	<!-- 투자기업정보 저장 -->
 	<insert id="saveInvstEprzInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS518BVO">
 		INSERT INTO IBIMS518B
                (
@@ -74,7 +74,7 @@
 		</foreach>  
 	</insert>
 
-    /* 투자기업정보 삭제 */
+    <!-- 투자기업정보 삭제 -->
     <delete id="delInvstEprzInfo" parameterType="string">
         DELETE
          FROM IBIMS518B

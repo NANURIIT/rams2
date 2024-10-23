@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS514BMapper">
 
-	/* 사업주요일정 조회 */
+	<!-- 사업주요일정 조회 -->
 	<select id="getBsnsForecast" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS514BVO">
 		SELECT DEAL_NO                                 /* 딜번호 */
          , SN                                      /* 일련번호 */
@@ -21,7 +21,7 @@
        AND DEAL_NO                                 = #{dealNo}                                   
 	</select>
 	
-	/* 사업주요일정 저장 */
+	<!-- 사업주요일정 저장 -->
 	<insert id="saveBsnsForecast" parameterType="com.nanuri.rams.business.common.vo.IBIMS514BVO">
 		  INSERT INTO IBIMS514B 
                (
@@ -57,7 +57,7 @@
         </foreach>
 	</insert>
 	
-	/* 사업주요일정 삭제 */
+	<!-- 사업주요일정 삭제 -->
 	<delete id="delBsnsForecast" parameterType="string">
 		DELETE 
 		  FROM IBIMS514B

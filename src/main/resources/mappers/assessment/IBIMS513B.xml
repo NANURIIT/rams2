@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS513BMapper">
 
-	/* 대주단정보 조회 */
+	<!-- 대주단정보 조회 -->
 	<select id="getStlnInfo" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS513BVO">
 		SELECT DEAL_NO                                 /* 딜번호 */
          , IB_STLN_DCD                             /* 투자금융대주구분코드 */
@@ -31,7 +31,7 @@
         BY SN
 	</select>
 
-    /* 수익자 조회 */
+  <!-- 수익자 조회 --> 
 	<select id="getErnInfo" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS513BVO">
 		SELECT DEAL_NO                                 /* 딜번호 */
          , IB_STLN_DCD                             /* 투자금융대주구분코드 */
@@ -59,7 +59,7 @@
 	ORDER BY SN
 	</select>
 	
-	  /* 대주단정보 저장 */
+	  <!-- 대주단정보 저장 -->
 	  <insert id="saveStlnInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS513BVO">
 	  	INSERT INTO IBIMS513B 
           (
@@ -99,7 +99,7 @@
 	  	</foreach>  
 	  </insert>
 
-    /* 대주단정보 저장 */
+    <!-- 대주단정보 저장 -->
 	  <insert id="saveErnInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS513BVO">
 	  	INSERT INTO IBIMS513B
              (
@@ -139,7 +139,7 @@
 	  	</foreach>
 	  </insert>
 	
-	  /* 대주단정보 삭제 */
+	  <!-- 대주단정보 삭제 -->
 	  <delete id="delStlnInfo" parameterType="string">
 	  	DELETE
 	  	  FROM IBIMS513B
@@ -147,7 +147,7 @@
 	  	   AND STLN_ERN_DCD = '1'
 	  </delete>
 
-    /* 수익자정보 삭제 */
+    <!-- 수익자정보 삭제 -->
     <delete id="delErnInfo" parameterType="string">
         DELETE
          FROM IBIMS513B
