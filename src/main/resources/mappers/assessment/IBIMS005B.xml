@@ -20,7 +20,7 @@
          AND A.SCRN_APLY_SHP_CD = 'M'															<!-- 화면적용형태코드 -->
          AND A.DEL_YN = 'N'																		<!-- 삭제여부 -->
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(menuNm)">
-         AND A.MENU_NM LIKE '%'|| #{menuNm} || '%')										<!-- 메뉴명 -->
+         AND A.MENU_NM LIKE '%'|| #{menuNm} || '%'										<!-- 메뉴명 -->
          </if>
        ORDER BY A.SORT_NO																		<!-- 정렬번호 -->
     </select>
