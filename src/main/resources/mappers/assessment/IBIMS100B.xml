@@ -20,8 +20,8 @@
 	         (
 	         SELECT A.EMPNO                             									                /* 담당자 */ 
 	              , A.WORK_DCD                         	 									                /* 작업구분코드 */
-	              , CASE WHEN A.EMPNO      =  #{empno} THEN 1 ELSE 0 END AS CNT1		  /* 결재대기건수 */
-	              , CASE WHEN A.RQST_EMPNO &lt;&gt; #{empno} THEN 1 ELSE 0 END AS CNT2 		/* 결재진행건수 */
+	              , CASE WHEN A.EMPNO      =  #{empno} THEN 1 ELSE 0 END AS CNT1		      /* 결재대기건수 */
+	              , CASE WHEN A.RQST_EMPNO != #{empno} THEN 1 ELSE 0 END AS CNT2 		      /* 결재진행건수 */
 	              , 0    AS CNT3 
 	           FROM IBIMS100B A
 	          WHERE 1=1
@@ -33,7 +33,7 @@
 	              , A.WORK_DCD                          									                /* 작업구분코드 */
 	              , 0    AS CNT1                      										                /* 결재대기건수 */
 	              , 0    AS CNT2                       										                /* 결재요청건수 */
-	              , CASE WHEN A.EMPNO = #{empno} THEN 1 ELSE 0 END  AS CNT3			    /* 협의회회의건수 */
+	              , CASE WHEN A.EMPNO = #{empno} THEN 1 ELSE 0 END  AS CNT3			          /* 협의회회의건수 */
 	           FROM IBIMS100B A
 	 	      WHERE 1=1
 	            AND A.WORK_DCD   = '02'  													                        /* 회의 */

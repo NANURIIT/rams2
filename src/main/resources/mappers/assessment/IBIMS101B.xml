@@ -482,7 +482,7 @@
     	      ,C.EPRZ_CRDL_INTR_BNAO_DCD                      
     	      ,C.TR_OTHR_DSCM_NO                              
             ,C.BZEP_NAME        
-            ,C.LAST_RDMP_TMRD || '/' || C.TOT_RDMP_TMRD AS RDMP_TMRD /*상환회차*/                 
+            ,C.LAST_RDMP_TMRD || '/' || C.TOT_RDMP_TMRD AS RDMP_TMRD          /* 상환회차 */                 
             /*,C.PRG_STTS_CD || '-' || CD4.CD_VL_NM   AS PRG_STTS_CD      
             ,C.IB_PRDT_CLSF_CD || '-' || CD5.CD_VL_NM  AS IB_PRDT_CLSF_CD   
             ,C.RQS_KND_CD || '-' || CD6.CD_VL_NM     AS  RQS_KND_CD   */
@@ -530,9 +530,9 @@
              ,B.EPRZ_CRDL_CTRC_AMT                                                     /*  기업여신약정금액 */
     	       ,B.EPRZ_CRDL_INTR_BNAO_DCD                                                /*  기업여신이자선후취구분코드 */
              ,(SELECT C1.TOT_RDMP_TMRD  FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1' AND ROWNUM = 1) AS TOT_RDMP_TMRD      /*  총상환회차 */
-             ,(SELECT MAX(C1.LAST_RDMP_TMRD)  FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1') AS LAST_RDMP_TMRD      /*  최종상환회차 */
-    	       ,(SELECT SUM(C1.DEAL_EXC_AMT)  FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1' ) AS LOAN_AMT      /*  대출금액 */
-    	       ,(SELECT SUM(C1.DEAL_EXC_BLCE) FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1' ) AS DEAL_EXC_BLCE /*  대출잔액 */
+             ,(SELECT MAX(C1.LAST_RDMP_TMRD)  FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1') AS LAST_RDMP_TMRD              /*  최종상환회차 */
+    	       ,(SELECT SUM(C1.DEAL_EXC_AMT)  FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1' ) AS LOAN_AMT                     /*  대출금액 */
+    	       ,(SELECT SUM(C1.DEAL_EXC_BLCE) FROM IBIMS402B C1 WHERE C1.PRDT_CD = A.PRDT_CD AND C1.LDG_STTS_CD = '1' ) AS DEAL_EXC_BLCE                /*  대출잔액 */
                   from IBIMS201B A
                   LEFT JOIN IBIMS401B B
                   ON A.PRDT_CD = B.PRDT_CD
