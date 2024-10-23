@@ -3,11 +3,11 @@
 
 $(document).ready(function () {
     pqGrid();
-    // $("#selectDate_1").val(getCurrentDate())
-    // $("#selectDate_2").val(getLastDateOfCurrentMonth())
-    // $('#disabledView').find('input').prop('disabled', true);
-    // fnSelectBox();
-    // createOption();
+    $("#selectDate_1").val(getCurrentDate())
+    $("#selectDate_2").val(getLastDateOfCurrentMonth())
+    $('#disabledView').find('input').prop('disabled', true);
+    fnSelectBox();
+    createOption();
 });
 
 function getCurrentDate() {

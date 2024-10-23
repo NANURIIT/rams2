@@ -154,7 +154,7 @@
                 , HND_TR_ID                               /* 조작거래ID */
                 , GUID                                    /* GUID */
               )
-          SELECT
+          VALUES (
                   #{curDate}                              /* 당일일자 */
                 , #{jobId}                                /* JOB ID */
                 , #{jobName}                              /* JOB NAME */
@@ -178,6 +178,7 @@
                 , #{hndTmnlNo}                            /* 조작단말기번호 */
                 , #{hndTrId}                              /* 조작거래ID */
                 , #{guid}                                 /* GUID */
+          )
     </insert>
 
     <!-- 배치JOB 스케줄러 수정  -->

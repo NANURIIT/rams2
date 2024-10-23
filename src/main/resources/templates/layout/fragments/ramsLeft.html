@@ -319,8 +319,8 @@
                             <!-- <a onclick="callPageTest('TB08060S', '월말결산 반영')">월말결산 반영</a> -->
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08090S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08090S')}?'active':''">
-                            <a th:href="@{/TB08090S}">건전성 및 충당금산출</a>
-                            <!-- <a onclick="callPageTest('TB08090S', '건전성 및 충당금산출');">건전성 및 충당금산출</a> -->
+                            <!-- <a th:href="@{/TB08090S}">건전성 및 충당금산출</a> -->
+                            <a onclick="callPageTest('TB08090S', '건전성 및 충당금산출');">건전성 및 충당금산출</a>
                         </li>
                         <!-- <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08060S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08060S')}?'active':''"></li>
                         </li> -->
@@ -352,8 +352,8 @@
                             <a th:href="@{/TB09040S}">정기보고 관리</a>
                         </li> -->
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB09090S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB09090S')}?'active':''">
-                            <a th:href="@{/TB09090S}">금융감독원보고자료관리</a>
-                            <!-- <a onclick="callPageTest('TB09090S', '금융감독원보고자료관리');">금융감독원보고자료관리</a> -->
+                            <!-- <a th:href="@{/TB09090S}">금융감독원보고자료관리</a> -->
+                            <a onclick="callPageTest('TB09090S', '금융감독원보고자료관리');">금융감독원보고자료관리</a>
                         </li>
                         <!-- <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB09900S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB09900S')}?'active':''">
                             <a th:href="@{/TB09900S}">배치 스케줄러 관리</a>
@@ -363,23 +363,23 @@
                         </li> -->
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB09050S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB09050')}?'active':''">
                             <a th:href="@{/TB09050S}">신용정보원보고</a>
-                            <!-- <a onclick="callPageTest('TB09050S', '금융감독원보고자료관리');">신용정보원보고</a> -->
+                            <!-- <a onclick="callPageTest('TB09050S', '신용정보원보고');">신용정보원보고</a> -->
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB09060S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB09060')}?'active':''">
-                            <a th:href="@{/TB09060S}">연체내역조회</a>
-                            <!-- <a onclick="callPageTest('TB09060S', '금융감독원보고자료관리');">연체내역조회</a> -->
+                            <!-- <a th:href="@{/TB09060S}">연체내역조회</a> -->
+                            <a onclick="callPageTest('TB09060S', '연체내역조회');">연체내역조회</a>
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB09070S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB09070')}?'active':''">
                             <a th:href="@{/TB09070S}">상환대상내역조회</a>
-                            <!-- <a onclick="callPageTest('TB09070S', '금융감독원보고자료관리');">상환대상내역조회</a> -->
+                            <!-- <a onclick="callPageTest('TB09070S', '상환대상내역조회');">상환대상내역조회</a> -->
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB09080S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB09080')}?'active':''">
                             <a th:href="@{/TB09080S}">거래내역조회</a>
-                            <!-- <a onclick="callPageTest('TB09080S', '금융감독원보고자료관리');">거래내역조회</a> -->
+                            <!-- <a onclick="callPageTest('TB09080S', '거래내역조회');">거래내역조회</a> -->
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB10710S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB10710')}?'active':''">
-                            <a th:href="@{/TB10710S}">기일관리</a>
-                            <!-- <a onclick="callPageTest('TB10710S', '금융감독원보고자료관리');">기일관리</a> -->
+                            <!-- <a th:href="@{/TB10710S}">기일관리</a> -->
+                            <a onclick="callPageTest('TB10710S', '기일관리');">기일관리</a>
                         </li>
                     </ul>
                 </li>
@@ -406,13 +406,15 @@
                             <a th:href="@{/TB10410S}">메뉴관리</a>
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB10510S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB10510S')}?'active':''">
-                            <a th:href="@{/TB10510S}">배치 스케줄러 관리</a>
+                            <!-- <a th:href="@{/TB10510S}">배치 스케줄러 관리</a> -->
+                            <a onclick="callPageTest('TB10510S', '배치 스케줄러 관리');">배치 스케줄러 관리</a>
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB10610S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB10610S')}?'active':''">
                             <a th:href="@{/TB10610S}">배치 스케줄러 모니터링</a>
                         </li> 
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB10720S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB10720')}?'active':''">
-                            <a th:href="@{/TB10720S}">마감관리</a>
+                            <!-- <a th:href="@{/TB10720S}">마감관리</a> -->
+                            <a onclick="callPageTest('TB10720S', '마감관리');">마감관리</a>
                         </li>
                     </ul>
                 </li>
