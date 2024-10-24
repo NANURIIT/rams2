@@ -47,6 +47,11 @@ public class LoggerInterceptor implements HandlerInterceptor {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 
+				// if (modelAndView != null && modelAndView.getModel().containsKey("total")) {
+				// 	Object total = modelAndView.getModel().get("total");
+				// 	log.debug("Total: {}", total);
+				// }
+
 		log.debug( "\n=============== E N D ===============\n URI ==> {} \n=====================================", request.getRequestURI());
 
 	}
