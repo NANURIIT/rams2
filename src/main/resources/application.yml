@@ -24,8 +24,10 @@ spring:
   application:
     name: NANURI IT Corp Risk Management System
   datasource:
-    driver-class-name: com.tmax.tibero.jdbc.TbDriver
-    url: jdbc:tibero:thin:@172.30.1.32:8629:tibero
+    # driver-class-name: com.tmax.tibero.jdbc.TbDriver
+    url: jdbc:log4jdbc:tibero:thin:@172.30.1.32:8629:tibero
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    # url: jdbc:tibero:thin:@172.30.1.32:8629:tibero
     username: RAMS
     password: Nanuriwork1!
     hikari:
@@ -36,7 +38,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.Oracle9Dialect 
-        hbm2ddl.auto: update 
+        hbm2ddl.auto: update
 
   mvc:
     hiddenmethod:

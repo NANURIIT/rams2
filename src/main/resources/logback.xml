@@ -42,9 +42,16 @@
 	<!-- 출력되는 로그의 양 순서 : ERROR < WARN < INFO < DEBUG < TRACE -->    
 	<!-- Logger -->
 	<logger name="com.nanuri.rams" level="DEBUG" appender-ref="STDOUT" />
-    <logger name="jdbc.sqlonly" level="DEBUG" appender-ref="STDOUT" />
-    <logger name="jdbc.resultsettable" level="DEBUG" appender-ref="STDOUT" />
-    <logger name="jdbc.sqltiming" level="DEBUG" appender-ref="STDOUT" />
+
+    <!-- <logger name="jdbc" level="OFF"/>
+    <logger name="jdbc.sqlonly" level="OFF"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+    <logger name="jdbc.audit" level="OFF"/>
+    <logger name="jdbc.resultset" level="OFF"/>
+    <logger name="jdbc.resultsettable" level="DEBUG"/>
+    <logger name="jdbc.connection" level="OFF" /> -->
+
+    <logger name="org.tmax.tibero.jdbc" level="DEBUG" />
 	<!-- <logger name="jdbc.sqlonly" level="INFO" appender-ref="console-dblog" /> -->
 	<!-- <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-dblog" /> -->
 	<logger name="jdbc.resultsettable" level="INFO" appender-ref="STDOUT" />
@@ -55,6 +62,8 @@
     <!-- TLD 관련 로그 출력-->
     <logger name="org.apache.jasper.servlet.TldScanner" level="INFO"/>
     <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE" />
     <!-- <logger name="org.hibernate" level="ERROR"/>
     <logger name="org.hibernate.SQL" level="DEBUG" />
     <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="DEBUG"/> -->
