@@ -42,6 +42,9 @@
 	<!-- 출력되는 로그의 양 순서 : ERROR < WARN < INFO < DEBUG < TRACE -->    
 	<!-- Logger -->
 	<logger name="com.nanuri.rams" level="DEBUG" appender-ref="STDOUT" />
+    <logger name="jdbc.sqlonly" level="DEBUG" appender-ref="STDOUT" />
+    <logger name="jdbc.resultsettable" level="DEBUG" appender-ref="STDOUT" />
+    <logger name="jdbc.sqltiming" level="DEBUG" appender-ref="STDOUT" />
 	<!-- <logger name="jdbc.sqlonly" level="INFO" appender-ref="console-dblog" /> -->
 	<!-- <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-dblog" /> -->
 	<logger name="jdbc.resultsettable" level="INFO" appender-ref="STDOUT" />

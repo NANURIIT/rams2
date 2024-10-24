@@ -22,6 +22,6 @@ public class FileUploadDTO {
     private String orgFileNm;		/* 파일내용 (원본파일이름) */
     private String rgstDt;			/* 등록일자 */
     private String dltF;			/* 삭제여부 */
-    private String hndlDprtCd	;				
+    private String hndlDprtCd;				
     private String hndlPEno	;
 }
