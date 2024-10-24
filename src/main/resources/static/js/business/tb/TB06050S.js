@@ -25,7 +25,7 @@ function getSPPIData() {
 
     $.ajax({
         type: "POST",
-        url: "/TB07190S/getSPPIData",
+        url: "/TB06050S/getSPPIData",
         contentType: "application/json; charset=UTF-8",
         data: JSON.stringify(paramData),
         success: function (data) {
@@ -106,7 +106,7 @@ function mergeSPPIData() {
 
     $.ajax({
         type: "POST",
-        url: `/TB07190S/${url}`,
+        url: `/TB06050S/${url}`,
         contentType: "application/json; charset=UTF-8",
         data: JSON.stringify(paramData),
         success: function (data) {
