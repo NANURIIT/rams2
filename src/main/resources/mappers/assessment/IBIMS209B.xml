@@ -50,7 +50,7 @@
 				     AND s201b.LAST_YN			= '1'
                  )
                , #{rgstDt}                                          <!-- 등록일자 -->
-               , SYSADATE                                            <!-- 조작상세일시 -->
+               , SYSDATE                                            <!-- 조작상세일시 -->
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->
