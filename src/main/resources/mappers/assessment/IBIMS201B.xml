@@ -1085,6 +1085,7 @@
             , DSHN_RT_GRD_CD                                    <!-- 기업여신부도율등급코드 -->
             , RGST_DT                                           <!-- 등록일자 -->
             , CHNG_DT                                           <!-- 변경일자 -->
+            , HND_DETL_DTM                                      <!-- 조작상세일시 -->
             , HND_EMPNO                                         <!-- 조작사원번호 -->
             , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
             , HND_TR_ID                                         <!-- 조작거래id -->
@@ -1094,10 +1095,9 @@
             )
             VALUES (
             #{prdtCd}                                          <!-- 상품코드 -->
-            , NVL(
-              (SELECT MAX(SN)
-                FROM IBIMS201B, 0) + 1
-            )   			    <!-- 일련번호 -->
+            , ( SELECT LPAD(NVL(MAX(SN), 0) + 1, 10, '0') 
+                FROM IBIMS201B	   			                        <!-- 일련번호 -->
+              )
             , #{lastYn}                                          <!-- 최종여부 -->
             , #{prdtNm}                                          <!-- 상품명 -->
             , #{prdtDsc}                                         <!-- 상품설명 -->
@@ -1235,6 +1235,7 @@
             , #{dshnRtGrdCd}                                     <!-- 기업여신부도율등급코드 -->
             , #{rgstDt}                                          <!-- 등록일자 -->
             , #{chngDt}                                          <!-- 변경일자 -->
+            , SYSDATE                                            <!-- 조작상세일시 -->
             , #{hndEmpno}                                        <!-- 조작사원번호 -->
             , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
             , #{hndTrId}                                         <!-- 조작거래id -->
