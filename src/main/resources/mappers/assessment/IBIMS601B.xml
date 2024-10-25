@@ -58,6 +58,7 @@
                 , BUSI_PRG_STEP                                     /* 사업진행단계 */
                 , CHECK_RSLT										                    /* 점검결과 */
              	  , BSN_BD_SLLT_BALC_CHECK_OPNN						            /* 영업점분양수지점검의견 */
+                , HND_DETL_DTM                                      /* 조작상세일시 */
                 , HND_EMPNO                                         /* 조작사원번호 */
                 , HND_TMNL_NO                                       /* 조작단말기번호 */
                 , HND_TR_ID                                         /* 조작거래id */
@@ -84,6 +85,7 @@
                , #{busiPrgStep}                                     /* 사업진행단계 */
                , #{checkRslt}										                    /* 점검결과 */
                , #{bsnBdSlltBalcCheckOpnn}							            /* 영업점분양수지점검의견 */
+               , SYSDATE                                            /* 작업상세일시 */
                , #{hndEmpno}                                        /* 조작사원번호 */
                , #{hndTmnlNo}                                       /* 조작단말기번호 */
                , #{hndTrId}                                         /* 조작거래id */
@@ -114,6 +116,7 @@
             , BUSI_PRG_STEP                                     = #{busiPrgStep}                                     /* 사업진행단계 */
             , CHECK_RSLT										                    = #{checkRslt}							                  			 /* 점검결과 */
             , BSN_BD_SLLT_BALC_CHECK_OPNN						            = #{bsnBdSlltBalcCheckOpnn}	                  			 /* 영업점분양수지점검의견 */
+            ,HND_DETL_DTM                                       = SYSDATE                                            /* 조작상세일시 */
             , HND_EMPNO                                         = #{hndEmpno}                                        /* 조작사원번호 */
             , HND_TMNL_NO                                       = #{hndTmnlNo}                                       /* 조작단말기번호 */
             , HND_TR_ID                                         = #{hndTrId}                                         /* 조작거래id */

@@ -15,7 +15,7 @@
 		 	 	 , A.LGL_PRCR_CNTNT										AS LGL_PRCR_CNTNT 			/* 법적절차내용*/
 		 	 	 , A.CRTRM_INFO												AS CRTRM_INFO						/* 법원정보*/ 
 			 	 , A.ACDNT_NO													AS ACDNT_NO							/* 사건번호*/
-			 	 , TO_CHAR(A.RGST_DT, 'YYYY-MM-DD') 	AS RGST_DT							/* 등록일자*/
+			 	 , A.RGST_DT 												 	AS RGST_DT							/* 등록일자*/
 		 	 	 , A.FST_RGST_P_ENO										AS FST_RGST_P_ENO 			/* 최초등록자사번*/
 		 	 	 , D.EMP_NM	         									AS FST_RGST_P_ENO_NM		/* 최초등록자이름 */
 		  FROM IBIMS608B A									 				/* 부실자산재산조사정보*/

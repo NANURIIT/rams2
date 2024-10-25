@@ -14,7 +14,7 @@
  	 		   , C.CD_VL_NM					   						AS ESTT_KND_CCD_NM					/* 재산종류구분코드명*/
  			   , A.ESTT_EXMNTN_CNTNT							AS ESTT_EXMNTN_CNTNT 				/* 재산조사내용*/
  	 		   , A.REAL_PRFT_F										AS REAL_PRFT_F							/* 실제이익여부*/
- 	 		   , TO_CHAR(A.RGST_DT, 'YYYY-MM-DD') AS RGST_DT									/* 등록일자*/
+ 	 		   , A.RGST_DT	 											AS RGST_DT									/* 등록일자*/
  	 		   , A.FST_RGST_P_ENO					  			AS FST_RGST_P_ENO 					/* 최초등록자사번*/
  			   , D.EMP_NM	         				  			AS FST_RGST_P_ENO_NM				/* 최초등록자이름*/
       FROM IBIMS607B A	/* 부실자산재산조사정보*/
