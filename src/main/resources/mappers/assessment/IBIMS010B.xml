@@ -136,7 +136,7 @@
 				OR A.KOR_BZPL_NAME LIKE '%'|| #{bzepName}|| '%'
 				OR UPPER(A.ENG_BZPL_NAME) LIKE '%'|| UPPER(#{bzepName})|| '%')		
 		    </if>
-		    AND A.USE_YN = IF ( NVL(#{useYn}, 'A') = 'A', A.USE_YN, #{useYn})		    
+		    AND A.USE_YN = CASE WHEN NVL(#{useYn}, 'A') = 'A' THEN A.USE_YN ELSE #{useYn} END		    
 	</select>
 
 	<!-- 기업체리스트 생성  -->

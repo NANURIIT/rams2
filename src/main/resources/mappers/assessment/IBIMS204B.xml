@@ -13,7 +13,7 @@
               , A.HND_TMNL_NO                 /* 조작단말기번호 */          
               , A.HND_TR_ID                   /* 조작거래id */      
               , A.GUID                        /* guid */  
-              , "u"                  AS  queryType
+              , 'u'                  AS  queryType
           FROM IBIMS204B A
          WHERE A.PRDT_CD = #{prdtCd}
          ORDER BY A.APLY_MNUM ASC;
