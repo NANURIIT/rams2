@@ -1532,20 +1532,22 @@ function setInputDataFromSelectData (data, menuId) {
  */
 function ramsTabHandler (menuId){
 	
-	const $tabs = $(`#${menuId}_ramsTab`).children();
+	const $tabs = $(`#${menuId}_ramsTab li a`);
 
-	for(let i = 0; i < $tabs.length; i++){
-		$($tabs[i]).on('click', function(){
-			$tabs.removeClass('active');
-			$(this).addClass('active');
-			$('.tab-content div[role="tabpanel"]').removeClass('active');
-			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
-			// if(i === ){
+    $tabs.each(function (i) {
+		
+        console.log("온클릭반복문 드가자잇");
+        
+        $(this).on('click', function () {
 
-			// }
-		})
-	}
+            $tabs.removeClass('active');
+            $(this).addClass('active');
 
+            $('.tab-content div[role="tabpanel"]').removeClass('active');
+            $(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+        });
+    });
+		
 }
 
 
