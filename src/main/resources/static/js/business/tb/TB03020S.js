@@ -314,7 +314,7 @@ function loadDealSnList(dealNo) {
 function loadInvstGdsLdvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getSelectBoxCode/I012",
+		url: "/getSelectBoxCode/I029",
 		dataType: "json",
 		success: function(data) {
 			ldvdCd = data;
@@ -340,7 +340,7 @@ function loadInvstGdsLdvdCd() {
 function loadInvstGdsMdvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getSelectBoxCode/I015",
+		url: "/getSelectBoxCode/I030",
 		dataType: "json",
 		success: function(data) {
 			mdvdCd = data;
@@ -366,7 +366,7 @@ function loadInvstGdsMdvdCd() {
 function loadInvstGdsSdvdCd() {
 	$.ajax({
 		type: "GET",
-		url: "/getSelectBoxCode/I014",
+		url: "/getSelectBoxCode/I031",
 		dataType: "json",
 		success: function(data) {
 			sdvdCd = data;

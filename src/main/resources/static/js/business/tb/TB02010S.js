@@ -85,6 +85,6 @@ function sendPage(menuId, pageName) {
 	console.log(getMenuId[1]);
 	console.log(getPageName[1]);
 	
-	callPageTest(getMenuId[1], getPageName[1]);
+	callPage(getMenuId[1], getPageName[1]);
 	
 }

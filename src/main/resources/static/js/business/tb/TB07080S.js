@@ -13,12 +13,13 @@ $(document).ready(function () {
     pqGrid();
     $('#disabledView').find('input').prop('disabled', true);
     createOption();
+    vldDateVal();
 });
 
 
-function dateInputSet (){
+function dateInputSet() {
     const $this = $("input[id*='Dt']");
-    $this.val('YYYY-MM-DD');
+    $this.attr('placeholder', 'YYYY-MM-DD');
 }
 
 /*
@@ -29,9 +30,8 @@ function TB07080S_inputReset() {
     $('#TB07080S_prdtCd').val('');
     $('#TB07080S_prdtNm').val('');
     $('#TB07080S_excSn').val('');
-    $('#TB07080S_excSn').html('<option value="">전체</option>');
-    $('#allDataBox').find('input').val('');
-    $('#allDataBox').find('select').val('');
+    $('#TB07080S_excSn').html('<option value="">선택(필수)</option>');
+    resetInputValue($('#allDataBox'))
 }
 
 /*
@@ -207,6 +207,10 @@ function TB07080S_colModelData() {
             halign: "center",
             align: "center",
             filter: { crules: [{ condition: 'range' }] },
+            editor: {
+                type: "textbox",
+                attr: "maxlength='8'",
+            },
             render: function (ui) {
                 let result;
                 if (ui.cellData) {
@@ -222,6 +226,10 @@ function TB07080S_colModelData() {
             halign: "center",
             align: "center",
             filter: { crules: [{ condition: 'range' }] },
+            editor: {
+                type: "textbox",
+                attr: "maxlength='8'",
+            },
             render: function (ui) {
                 let result;
                 if (ui.cellData) {
@@ -448,9 +456,15 @@ function getExcSn(prdtCd) {
         data: prdtCd,
         dataType: "json",
         success: function (data) {
-            let html = '<option value="">전체</option>';
-            if (data.length > 0) {
-                //let html
+            let html = '<option value="">선택(필수)</option>';
+            if (data[0] === undefined) {
+                Swal.fire({
+                    icon: 'warning'
+                    , text: "실행순번이 존재하지 않습니다!(멘트좀 고쳐주세요)"
+                    , confirmButtonText: "확인"
+                });
+                TB07080S_inputReset();
+            } else if (data.length > 0) {
                 data.forEach(item => {
                     html += '<option value="' + item + '">' + item + '</option>';
                 });
@@ -633,22 +647,14 @@ function getIntrtData() {
  *  SELECT TB07080S
  */
 function selectTB07080S() {
+
     let excResult;
     let intrtResult;
-    excResult = getExcData();   // 데이터값이 나온 함수
-    intrtResult = getIntrtData();
 
     if (!$('#TB07080S_prdtCd').val()) {
         Swal.fire({
             icon: 'warning'
             , text: "종목코드를 입력해주세요!"
-            , confirmButtonText: "확인"
-        });
-        return;
-    } else if (!$('#TB07080S_prdtNm').val()) {
-        Swal.fire({
-            icon: 'warning'
-            , text: "상품명을 입력해주세요!"
             , confirmButtonText: "확인"
         });
         return;
@@ -659,19 +665,27 @@ function selectTB07080S() {
             , confirmButtonText: "확인"
         });
         return;
-    } else if (excResult === 2 || intrtResult === 2) {
+    }
+
+    excResult = getExcData();   // 데이터값이 나온 함수
+    intrtResult = getIntrtData();
+
+    if (excResult === 2 || intrtResult === 2) {
         Swal.fire({
             icon: 'warning'
             , text: "조회된 데이터가 없습니다"
             , confirmButtonText: "확인"
         });
+        TB07080S_inputReset();
     } else if (excResult === 0 && intrtResult === 0) {
         Swal.fire({
             icon: 'error'
             , text: "정보조회 실패!"
             , confirmButtonText: "확인"
         });
+        TB07080S_inputReset();
     }
+
 }
 
 /*
