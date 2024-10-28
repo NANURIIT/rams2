@@ -36,7 +36,7 @@ VALUES (
 		, #{chrgPEno}					
 		, #{cstmNm}					
 		, #{cstmPhNo}
-		, "1" 
+		, '1' 
 		, SYSDATE
 		, #{hndEmpno}
 	   )

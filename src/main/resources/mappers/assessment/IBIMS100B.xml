@@ -179,7 +179,7 @@
                )                                          
         VALUES (                                          
                  #{empno}                                 /* 사원번호 */
-               , SYSDATE                                  /* 기준일자 */
+               , TO_CHAR(SYSDATE, 'YYYYMMDD')             /* 기준일자 */
                <if test='sn == ""'>		        		        /* 일련번호 */
                , (SELECT NVL(MAX(A.SN)+1,1) FROM IBIMS100B A WHERE EMPNO = #{empno} AND STDR_DT = TO_CHAR(SYSDATE, 'YYYYMMDD'))
                </if>
