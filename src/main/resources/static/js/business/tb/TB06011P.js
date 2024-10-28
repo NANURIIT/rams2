@@ -11,9 +11,9 @@ $("input[id*='_prdtCd']").on('keydown', async function (evt) {
 
 		// 사용한 인풋박스의 출처 페이지 가져오기
 		let prefix;
-		if($(this).attr('id') === $("#TB06011P_prdtCd").attr('id')){
+		if ($(this).attr('id') === $("#TB06011P_prdtCd").attr('id')) {
 			prefix = TB06011P_pf;
-		}else {
+		} else {
 			prefix = $(this).attr('id').slice(0, 8);
 		}
 
@@ -23,7 +23,7 @@ $("input[id*='_prdtCd']").on('keydown', async function (evt) {
 		await getGridState();
 
 		// 팝업 오픈
-		if (TB06011P_gridState === 0){
+		if (TB06011P_gridState === 0) {
 			callGridTB06011P(prefix);
 			$('#TB06011P_prdtCd').val(data);
 			setTimeout(() => getPrdtCdList(), 400);
@@ -326,7 +326,7 @@ function dataPrdtCdSetGrid(data) {
 	arrPqGridPrdtCdList.setData(data);
 
 	arrPqGridPrdtCdList.option("strNoRows", '조회된 데이터가 없습니다.');
-	
+
 	arrPqGridPrdtCdList.on("cellDblClick", function (event, ui) {
 		var rowData = ui.rowData;
 		setPrdtInfo(rowData);
@@ -335,7 +335,7 @@ function dataPrdtCdSetGrid(data) {
 	// 검색된 행이 1개일 경우 데이터 바로 입력
 	if (arrPqGridPrdtCdList.pdata.length === 1) {
 		setPrdtInfo(arrPqGridPrdtCdList.pdata[0]);
-	} 
+	}
 	// 검색된 행이 0일 경우 모든 데이터 출력
 	else if (arrPqGridPrdtCdList.pdata.length === 0) {
 		$('#TB06011P_prdtCd').val("");
@@ -402,8 +402,8 @@ function callTB06011P(prefix) {
 	$('#TB06011P_prefix').val(prefix);
 	$('#modal-TB06011P').modal('show');
 	setTimeout(() => roadPrdtCdListGrid(), 300);
-	
-	
+
+
 }
 
 /**
@@ -500,9 +500,9 @@ async function getGridState() {
 		data: param,
 		dataType: "json",
 		success: function (data) {
-			if(!data || data === undefined || data.length === 0){
+			if (!data || data === undefined || data.length === 0) {
 				TB06011P_gridState = 1;
-			} else if (data.length >= 2){
+			} else if (data.length >= 2) {
 				TB06011P_gridState = 1;
 			} else if (data) {
 				TB06011P_gridState = 0;
@@ -656,10 +656,10 @@ function setPrdtInfo(e) {
 	$(pageApvlAmt).val(e.apvlAmt);
 	$(pageInvAmt).val(e.invAmt);
 	$(pageInvBlce).val(e.invBlce);
-	if(prefix != "TB09080S"){
+	if (prefix != "TB09080S") {
 		$(pageDealNm).val(e.dealNm);
 	}
-	if(prefix == "TB06060S"){
+	if (prefix == "TB06060S") {
 		$(pageDealNm).val('');
 	}
 
@@ -674,11 +674,20 @@ function setPrdtInfo(e) {
 		$('#' + prefix + '_ibDealNo').focus();
 		$('#' + prefix + '_lstCCaseCcd').val(e.nmcpMtrDcd);
 		$('#' + prefix + '_riskInspctCcd').val(e.lstCCaseDcd);
-		getDealList();
+		if (prefix == 'TB06010S') {
+			TB06010Sjs.getDealList();
+
+		} else if (prefix == 'TB06020S') {
+			TB06020Sjs.getDealList();
+
+		} else if (prefix == 'TB06030S') {
+			TB06030Sjs.getDealList();
+		}
 	}
 
-	if(prefix == 'TB09080S'){
-		console.log(tr);/* 
+	if (prefix == 'TB09080S') {
+		console.log(tr);
+		/* 
 		$('#TB09080S_ibDealNo').val(e.dealNo);
 		$('#TB09080S_ibDealNm').val(e.dealNm); */
 		//getDealList();
@@ -690,18 +699,18 @@ function setPrdtInfo(e) {
 
 	/* 0723 add */
 	if (prefix === 'TB07050S') {
-		srchExcSn(e.prdtCd);
-		srch();
+		TB07050Sjs.srchExcSn(e.prdtCd);
+		TB07050Sjs.srch();
 	}
 
-	if(prefix === 'TB07150S'){
-		srchExcSn_TB07150S(e.prdtCd);
+	if (prefix === 'TB07150S') {
+		TB07150Sjs.srchExcSn_TB07150S(e.prdtCd);
 	}
 
 	/* 0724 add */
 	if (prefix === 'TB06040S') {
 		$('#TB06040S_prgSttsCd').val(e.prgSttsNm);
-		srch()
+		TB06040Sjs.srch()
 	}
 
 	if (prefix === 'TB04050S') {
@@ -725,10 +734,10 @@ function setPrdtInfo(e) {
 			$('#TB07010S_prdtCd').val('');
 			$('#TB07010S_prdtNm').val('');
 			// resetAll('TB07010S');
-			reset();
-			feeRciv.setData([]);
+			TB07010Sjs.reset();
+			TB07010Sjs.feeRciv.setData([]);
 		} else {
-			srch();
+			TB07010Sjs.srch();
 		}
 	}
 
@@ -738,7 +747,7 @@ function setPrdtInfo(e) {
 	}
 
 	if (prefix === 'TB07030S') {
-		srch()
+		TB07030Sjs.srch()
 	}
 
 	if (prefix === 'TB07040S') {
@@ -749,23 +758,23 @@ function setPrdtInfo(e) {
 	if (prefix === 'TB07060S') {
 		$('#TB07060S_krwTrslExcAmt').val('');
 		$('#TB07060S_apvlAmt').val('');
-		srchExcSn(e.prdtCd);
+		TB07060Sjs.srchExcSn(e.prdtCd);
 	}
 
 	if (prefix === 'TB07070S') {
-		srch()
+		TB07070Sjs.srch()
 	}
 
 	if (prefix === 'TB07080S') {
-		getExcSn(e.prdtCd);
+		TB07080Sjs.getExcSn(e.prdtCd);
 	}
 
 	if (prefix === 'TB08040S') {
-		srch()
+		TB08040Sjs.srch()
 	}
 
 	if (prefix === 'TB08050S') {
-		srch()
+		TB08050Sjs.srch()
 	}
 
 	modalClose_TB06011P();
