@@ -1471,12 +1471,13 @@ function getBasicValues(id) {
  * div ibox로 잡혀있을텐데 원하는 태그에 id값을 주고 셀렉터로 받아서 인풋값 초기화
  */
 function resetInputValue (selector) {
-    $(`${selector} input`).val('');
-    $(`${selector} input[id*='Amt']
-      ,${selector} input[id*='Blce']
-      ,${selector} input[id*='Exrt']
-      ,${selector} input[id*='Mnum']
-      ,${selector} input[id*='Tmrd']`).val('0');
+    selector.find(`select`).val('');
+    selector.find(`input`).val('');
+    selector.find(`input[id*='Amt']
+				 , input[id*='Blce']
+				 , input[id*='Exrt']
+				 , input[id*='Mnum']
+				 , input[id*='Tmrd']`).val('0');
 }
 
 /**
@@ -1530,13 +1531,7 @@ function setInputDataFromSelectData (data, menuId) {
  * @param {Object} gridFunctionObj	함수를담은 오브젝트
  */
 function ramsTabHandler (menuId){
-
-	// let index = gridFunctionObj.keys();
-
-	// indexsdfasdf
-
-	console.log("계속 일하니?");
-
+	
 	const $tabs = $(`#${menuId}_ramsTab`).children();
 
 	for(let i = 0; i < $tabs.length; i++){
@@ -1553,6 +1548,29 @@ function ramsTabHandler (menuId){
 
 }
 
+
+/**
+ * 날짜 인풋태그 유효성체크
+ */
+function vldDateVal (){
+	$('.input-group.date input[class="form-control"]').on("change", function(){
+		//	태그의 날짜 불러오기
+		const date = $(this).val();
+		let test = new Date(formatDate(date));
+		let resultDate;
+
+		if(test === "InvalidDate"){
+			return $(this).val(0);
+		}else{
+			//	날짜 변환
+			resultDate = formatDate(date);
+
+			// 변환된 날짜 입력
+			$(this).val(resultDate);
+			return;
+		}
+	})
+}
 
 // $(document).ajaxComplete(function (event, xhr, settings) {
 //     const $this = $(".input-group.date input[class='form-control']");

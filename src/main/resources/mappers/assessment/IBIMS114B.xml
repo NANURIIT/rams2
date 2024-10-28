@@ -84,7 +84,6 @@
 		     , NVL (MAX(B.CSTM_NM), '')                  					    AS CSTM_NM  			/* 고객명 */ 
 		     , COUNT(DISTINCT B.CSTM_NM)      									AS CUST_CNT 			/* 고객건수 */ 
 		     , COUNT(DISTINCT RM_SQ)          									AS RM_COUNT      		/* RM활동건수 */ 
-		     , (SELECT COUNT(*) FROM RAC04B IA WHERE IA.SCRN_MENU_ID = 'S3030')	AS FILE_CNT 			/* 첨부파일건수 */ 
 		     , A.ARDY_BZEP_NO													AS ENTP_CD				/* 업체코드 */ 
 		  FROM IBIMS010B A 
 		       LEFT OUTER JOIN IBIMS102B B
@@ -95,7 +94,7 @@
 		 <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(entpCd)">
            AND A.ARDY_BZEP_NO = #{entpCd}
 		 </if>
-		   AND UPPER(A.BZEP_NAME) LIKE '%'|| UPPER(#{entpHnglNm}) || '%' 
+		   AND UPPER(A.BZEP_NAME) LIKE '%'|| UPPER(#{entpHnglNm}) || '%'
 		 GROUP BY A.BZEP_NAME , A.CRNO,A.RNBN, A.ARDY_BZEP_NO	
 		 ORDER BY A.ARDY_BZEP_NO 
 	</select>

@@ -8,7 +8,7 @@
 			   , A.JDGM_DCD							          AS	JDGM_DCD				      /* 리스크심사구분코드 */
 			   , A.MTR_DCD							          AS	MTR_DCD					      /* 부수안건구분코드 */
 			   , A.SQ									            AS	SQ						        /* 일련번호 */
-			   , TO_CHAR(A.RGST_DT, 'YYYY-MM-DD')	AS	RGST_DT					      /* 등록일자 */
+			   , A.RGST_DT                       	AS	RGST_DT					      /* 등록일자 */
 			   , A.EVNT_AFTR_MNG_CCD					    AS	EVNT_AFTR_MNG_CCD		  /* 사후관리구분코드 */
 			   , B.CD_VL_NM 							        AS	EVNT_AFTR_MNG_CCD_NM	/* 사후관리구분코드명 */
 			   , A.EVNT_AFTR_MNG_CNTNT				    AS	EVNT_AFTR_MNG_CNTNT		/* 사후관리내용 */

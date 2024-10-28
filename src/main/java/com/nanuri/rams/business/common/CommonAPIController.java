@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +73,9 @@ public class CommonAPIController {
 	// 공통코드
 	@GetMapping(value = "/getSelectBoxCode/{code}")
 	public List<Map<String, Object>> getSelectBoxCode(@PathVariable String code) {
-		return commonService.getSelectBox(code);
+		List<String> param = new ArrayList<>();
+		param.add(code);
+		return commonService.getSelectBox(param);
 	}
 
 	// 공통코드2

@@ -30,6 +30,7 @@
                   MRTG_MNGM_NO                                      <!-- 담보관리번호 -->
                 , PRDT_CD                                           <!-- 상품코드 -->
                 , RGST_DT                                           <!-- 등록일자 -->
+                , HND_DETL_DTM                                      <!-- 조작상세일시 -->
                 , HND_EMPNO                                         <!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
                 , HND_TR_ID                                         <!-- 조작거래id -->
@@ -39,6 +40,7 @@
                  #{mrtgMngmNo}                                      <!-- 담보관리번호 -->
                , #{prdtCd}                                          <!-- 상품코드 -->
                , TO_CHAR(SYSDATE, 'YYYYMMDD')                       <!-- 등록일자 -->
+               , SYSDATE                                            <!-- 조작상세일시 -->
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->

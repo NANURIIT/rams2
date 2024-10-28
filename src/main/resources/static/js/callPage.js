@@ -30,6 +30,8 @@ function callPage(menuId, pageName) {
 
     history.pushState(null, '', '/' + menuId);
 
+    ramsTabHandler(menuId);
+
     // AJAX 요청으로 해당 콘텐츠를 가져옴
     $.ajax({
         url: '/' + menuId, // 서버에서 해당 페이지에 맞는 콘텐츠를 가져올 URL
@@ -131,7 +133,7 @@ function callPage(menuId, pageName) {
                             }else
                             // 나머지 공통 플러그인은 재실행
                             if(($($script[j]).attr('src')).split('/')[1] != "business"){
-                                console.log($($this[i]).attr('src'));
+                                // console.log($($this[i]).attr('src'));
                             }
                             /**
                              * 나머지 스크립트

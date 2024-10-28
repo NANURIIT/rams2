@@ -34,9 +34,9 @@ public class LoggerAspect {
 
 		log.debug(type + name + "." + joinPoint.getSignature().getName() + "()");
 
-		Object result = joinPoint.proceed();
+		// Object result = joinPoint.proceed();
 
-		log.debug("Result: " + result); // 쿼리 결과를 로그에 기록
+		// log.debug("Result: " + result); // 쿼리 결과를 로그에 기록
 		return joinPoint.proceed();
 	}
 

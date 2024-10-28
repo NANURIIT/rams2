@@ -570,12 +570,6 @@
  		   <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(mtrNm)">
  		   AND s103b.MTR_NM                                            LIKE '%'|| #{mtrNm}|| '%'
  		   </if>
- 		   /* <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(mtrPrgSttsDcdFrom)">
- 		   AND s103b.MTR_PRG_STTS_DCD <![CDATA[>=]]> #{mtrPrgSttsDcdFrom}
- 		   </if>
- 		   <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(mtrPrgSttsDcdTo)">
- 		   AND s103b.MTR_PRG_STTS_DCD <![CDATA[<=]]> #{mtrPrgSttsDcdTo}
- 		   </if> */
 		 ORDER BY s103b.MTR_DCD
 		 		, s103b.SN
     </select>

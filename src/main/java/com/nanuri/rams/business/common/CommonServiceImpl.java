@@ -82,8 +82,8 @@ public class CommonServiceImpl implements CommonService {
 	 * 셀렉트박스 코드, 밸류 취득
 	 */
 	@Override
-	public List<Map<String, Object>> getSelectBox(String cmnsCdGrp) {
-		return raa91bMapper.getSelectBox(cmnsCdGrp);
+	public List<Map<String, Object>> getSelectBox(List<String> code) {
+		return ibims002bMapper.getSelectBoxList(code);
 	}
 	
 	/**

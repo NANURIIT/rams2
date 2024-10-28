@@ -27,7 +27,7 @@
          , A.ANS_ACPT_DT					AS ANS_ACPT_DT							/* 답변접수일자 */  -- 확인일(심사부서장)
          , A.IVTG_RSLT_CTNS       AS IVTG_RSLT_CTNS						/* 검토결과내용 */
   		FROM IBIMS604B A	/* 일별신용사건현황*/
- LEFT JOIN (
+			 LEFT JOIN (
 						SELECT B.DEAL_NO								/* IBDEAL번호 */
 							   , B.JDGM_DCD								/* 심사구분코드 */
 							   , B.MTR_DCD								/* 안건구분코드 */
@@ -59,7 +59,7 @@
 					     AND B.LAST_YN 							= '1'
 					     AND B.MTR_PRG_STTS_DCD 		IN ('309', '308', '501')
 					     <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(empno)">
-							 AND B.OWN_P_ENO 						= #{empno}					/*담당자사번*/
+							AND (B.OWN_P_ENO = #{empno} OR #{empno} IS NULL)					/*담당자사번*/
 						  </if>
 							<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(inspctDprtDcd)">
 							AND B.INSPCT_DPRT_DCD 			= #{inspctDprtDcd}	/*심사부서구분코드*/
@@ -92,9 +92,15 @@
 			 	 , ANS_ACPT_DT			= CASE WHEN (SELECT ATH_CD FROM IBIMS003B WHERE EMPNO = #{hndEmpno}) = 'AG28' THEN TO_CHAR(SYSDATE, 'YYYYMMDD')
 										   						 ELSE NULL END 				/* 심사부서장확인일자 */
          , HND_EMPNO        = #{hndEmpno}                                     
-         , HND_TMNL_NO      = #{hndTmnlNo}                                      
-         , HND_TR_ID        = #{hndTrId}                                        
-         , GUID             = #{guid}   
+         <if test="hndTmnlNo != null">
+   			 , HND_TMNL_NO = #{hndTmnlNo}
+				 </if>                                   
+         <if test="hndTrId != null">
+    		 , AND hndTrId = #{hndTrId}
+				 </if>
+         <if test = "guid != null">                               
+         , GUID             = #{guid}
+				 </if>   
      WHERE 1=1
        AND DEAL_NO				= #{dealNo}			/* Deal번호 */
        AND STDR_DT				= #{stdrDt}			/* 기준일자 */

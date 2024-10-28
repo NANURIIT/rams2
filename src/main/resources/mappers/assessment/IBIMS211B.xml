@@ -111,6 +111,7 @@
                 , VALT_MRTG_PRC                                     <!-- 유효담보가격 -->
                 , KRW_TRSL_VALT_MRTG_PRC                            <!-- 원화환산유효담보가격 -->
                 , DEL_YN                                            <!-- 삭제여부 -->
+                , HND_DETL_DTM                                      <!-- 조작상세일시 -->
                 , HND_EMPNO                                         <!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
                 , HND_TR_ID                                         <!-- 조작거래id -->
@@ -149,6 +150,7 @@
                , #{valtMrtgPrc}                                     <!-- 유효담보가격 -->
                , #{krwTrslValtMrtgPrc}                              <!-- 원화환산유효담보가격 -->
                , #{delYn}                                           <!-- 삭제여부 -->
+               , SYSDATE                                            <!-- 조작상세일시 -->
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->
@@ -160,10 +162,10 @@
     <select id="makeMrtgMngmNo" resultType="String" parameterType="com.nanuri.rams.business.common.vo.TB06013PVO">
     	SELECT (
                 TO_CHAR(SYSDATE, 'YYYY')
-                , LPAD(#{mrtgStupKndCd}, 2, '0')
-                , #{mrtgLclsCd}
-                , #{mrtgMdclCd}
-                , LPAD(
+                || LPAD(#{mrtgStupKndCd}, 2, '0')
+                || #{mrtgLclsCd}
+                || #{mrtgMdclCd}
+                || LPAD(
                         (
                           (SELECT COUNT(1)
                              FROM IBIMS211B a 
@@ -172,7 +174,8 @@
                           ) + 1
                         ), 4, '0'
                       )
-               ) AS MRTG_MNGM_NO FROM DUAL
+               ) AS MRTG_MNGM_NO 
+        FROM DUAL
     </select>
     
     <!-- 담보정보상세 -->

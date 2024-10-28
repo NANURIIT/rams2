@@ -27,6 +27,7 @@
                 , INSPCT_DT                                         /* 심사날짜 */
                 , INSPCT_RMRK                                       /* 심사비고 */
                 , RMRK                                              /* 비고 */
+                , HND_DETL_DTM                                      /* 조작상세일시 */
                 , HND_EMPNO                                         /* 조작사원번호 */
                 , HND_TMNL_NO                                       /* 조작단말기번호 */
                 , HND_TR_ID                                         /* 조작거래id */
@@ -39,6 +40,7 @@
                , #{item.inspctDt}                                        /* 심사날짜 */
                , #{item.inspctRmrk}                                      /* 심사비고 */
                , #{item.rmrk}                                            /* 비고 */
+               , SYSDATE                                                 /* 조작상세일시 */
                , #{item.hndEmpno}                                        /* 조작사원번호 */
                , #{item.hndTmnlNo}                                       /* 조작단말기번호 */
                , #{item.hndTrId}                                         /* 조작거래id */

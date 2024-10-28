@@ -22,7 +22,7 @@ import com.nanuri.rams.com.code.AthCd;
 public interface CommonService {
 
 	// 셀렉트박스 코드, 밸류 취득
-	public List<Map<String, Object>> getSelectBox(String cmnsCdGrp);
+	public List<Map<String, Object>> getSelectBox(List<String> code);
 	
 	// title 정보
 	public IBIMS005BVO.TitleVo getTitle(String menuId);

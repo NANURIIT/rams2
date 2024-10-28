@@ -72,7 +72,9 @@ function renderGrid(colId, gridId) {
 const resetTb06080 = () => {
   // 조회조건
   $("#TB06080S_rspl_empNm").val(""); // 책임자
-  $("#TB06080S_rspl_empNo").val(""); // 승인요청자
+  $("#TB06080S_rspl_empNo").val(""); // 책임자사번
+  $("#TB06080S_rqst_empNm").val(""); // 승인요청자
+  $("#TB06080S_rqst_empNo").val(""); // 승인요청자사번
   $("#decdStepDcd").val("sel"); // 결재단계
   //승인요청
   $("#TB06080S_apvlRqstSq").val(""); // 승인요청순번
