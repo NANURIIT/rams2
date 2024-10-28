@@ -1,4 +1,5 @@
-let pqGridObjDealList;
+const TB04030Sjs = (function(){
+  let pqGridObjDealList;
 $(document).ready(function () {
   setKeyFunction_TB04030S();
 
@@ -252,3 +253,8 @@ let colDealList = [
     hidden: true,
   },
 ];
+
+  return {
+    assignmentSearch : assignmentSearch
+  }
+})();
