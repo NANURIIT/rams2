@@ -141,9 +141,9 @@
                         <span class="fa arrow"></span>
                     </a>
                     <ul class="nav nav-second-level collapse">
-                        <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB06100S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB06100S')}?'active':''">
-                            <!-- <a th:href="@{/TB06100S}">사업명세조회</a> -->
-                            <a onclick="callPage('TB06100S', '사업명세조회')">사업명세조회</a>
+                        <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB04060S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB04060S')}?'active':''">
+                            <!-- <a th:href="@{/TB04060S}">사업명세조회</a> -->
+                            <a onclick="callPage('TB04060S', '사업명세조회')">사업명세조회</a>
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB06010S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB06010')}?'active':''">
                             <!-- <a th:href="@{/TB06010S}">대출채권/채무보증 정보등록</a> -->

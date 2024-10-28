@@ -133,7 +133,7 @@ function callPage(menuId, pageName) {
                             }else
                             // 나머지 공통 플러그인은 재실행
                             if(($($script[j]).attr('src')).split('/')[1] != "business"){
-                                console.log($($this[i]).attr('src'));
+                                // console.log($($this[i]).attr('src'));
                             }
                             /**
                              * 나머지 스크립트
