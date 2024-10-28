@@ -20,11 +20,11 @@
 	                         	<label class="col-sm-1 control-label">권한코드/권한명</label>
 								<div class="col-sm-2">
 									<div class="input-group">
-	                        			<input type="text" class="form-control" id="authCodeSearchInput" onkeyup="if(window.event.keyCode==13){searchButtonClick()}">
+	                        			<input type="text" class="form-control" id="authCodeSearchInput" onkeyup="if(window.event.keyCode==13){TB09090Sjs.searchButtonClick()}">
 									</div>
 								</div>
 								<div class="col-sm-9 text-left">
-									<button class="btn btn-primary" type="button" id="authCodeSearchButton" onclick="searchButtonClick();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-primary" type="button" id="authCodeSearchButton" onclick="TB09090Sjs.searchButtonClick();"><i class="fa fa-search"></i>&nbsp;조회</button>
 								</div>
 	                        </div>
 	   					</div>
@@ -35,9 +35,9 @@
 							<div class="ibox-title">
 								<h5>▶ 그룹코드</h5>
 								<div class="ibox-tools">		                   		
-									<button class="btn btn-default btn-xs" type="button" onclick="addAuthCodeRow();"><i class="fa fa-plus"></i>&nbsp;행추가</button>
-									<button class="btn btn-default btn-xs" type="button" onclick="clickDeleteButton();"><i class="fa fa-minus"></i>&nbsp;행삭제</button>
-									<button class="btn btn-success btn-xs" type="button" onclick="clickAuthSaveButton();"><i class="fa fa-save"></i>&nbsp;저장</button>
+									<button class="btn btn-default btn-xs" type="button" onclick="TB09090Sjs.addAuthCodeRow();"><i class="fa fa-plus"></i>&nbsp;행추가</button>
+									<button class="btn btn-default btn-xs" type="button" onclick="TB09090Sjs.clickDeleteButton();"><i class="fa fa-minus"></i>&nbsp;행삭제</button>
+									<button class="btn btn-success btn-xs" type="button" onclick="TB09090Sjs.clickAuthSaveButton();"><i class="fa fa-save"></i>&nbsp;저장</button>
 								</div>
 							</div>
 							<div class="ibox-content">
@@ -50,7 +50,7 @@
 							<div class="ibox-title">
 								<h5>▶ 상세코드</h5>
 								<div class="ibox-tools">		                       		
-									<button class="btn btn-success btn-xs" type="button" onclick="clickSaveMenuButton();"><i class="fa fa-save"></i>&nbsp;저장</button>
+									<button class="btn btn-success btn-xs" type="button" onclick="TB09090Sjs.clickSaveMenuButton();"><i class="fa fa-save"></i>&nbsp;저장</button>
 								</div>
 							</div>
 							<div class="ibox-content">
