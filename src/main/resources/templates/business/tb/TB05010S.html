@@ -36,11 +36,11 @@
 						<div class="form-group form-inline row">
 							<!-- 버튼영역 -->
 							<div class="col-sm-12 text-right mb-2">
-								<button class="btn btn-success btn-xs" id="saveButton" onclick="tempSave();" ><i
+								<button class="btn btn-success btn-xs" id="saveButton" onclick="TB05010Sjs.tempSave();" ><i
 										class="fa fa-save"></i>&nbsp;임시저장</button>
-								<button class="btn btn-info btn-xs" id="confirmButton" disabled onclick="changeCNFRNCStatus(304);"><i
+								<button class="btn btn-info btn-xs" id="confirmButton" disabled onclick="TB05010Sjs.changeCNFRNCStatus(304);"><i
 										class="fa fa-check"></i>&nbsp;준비확정</button>
-								<button class="btn btn-danger btn-xs" id="cancleButton" disabled onclick="changeCNFRNCStatus(303);"><i
+								<button class="btn btn-danger btn-xs" id="cancleButton" disabled onclick="TB05010Sjs.changeCNFRNCStatus(303);"><i
 										class="fa fa-undo"></i>&nbsp;준비취소</button>
 							</div>
 							<!-- 전결협의체 -->
@@ -48,7 +48,7 @@
 								<span class="req"></span>전결협의체
 							</label>
 							<div class="col-sm-2 input-group">
-								<select class="form-control" name="account" id="TB05010S_R016" onchange="chngInspctPrgrsStCd(this);">
+								<select class="form-control" name="account" id="TB05010S_R016" onchange="TB05010Sjs.chngInspctPrgrsStCd(this);">
 								</select>
 							</div>
 							<!-- 결의년도 -->
@@ -62,10 +62,10 @@
 							<div class="col-sm-4">
 							</div>
 							<div class="col-sm-2">
-								<button class="btn btn-primary" onclick="getCNFRNCList();">
+								<button class="btn btn-primary" onclick="TB05010Sjs.getCNFRNCList();">
 									<i class="fa fa-search"></i>&nbsp;조회
 								</button>
-								<button class="btn btn-default" onclick="btnReset();"><i class="fa fa-undo">
+								<button class="btn btn-default" onclick="TB05010Sjs.btnReset();"><i class="fa fa-undo">
 									</i>&nbsp;초기화
 								</button>
 							</div>
@@ -90,7 +90,7 @@
 										<h5>▶&nbsp;안건정보</h5>
 										<div class="ibox-tools">
 											<button class="btn btn-default btn-xs" id="addCnfrncInfo" onclick="callTB04011P('TB05010S');"><i class="fa fa-search-plus"></i>&nbsp;안건추가</button>
-											<button class="btn btn-default btn-xs" id="delCnfrncInfo" onclick="delCaseList();"><i class="fa fa-search-minus"></i>&nbsp;안건삭제</button>
+											<button class="btn btn-default btn-xs" id="delCnfrncInfo" onclick="TB05010Sjs.delCaseList();"><i class="fa fa-search-minus"></i>&nbsp;안건삭제</button>
 											<button class="btn btn-info btn-xs" id="approveAlert" onclick="testAlert('확정쪽지를 발송하였습니다.')"><i class="fa fa-comment"></i>&nbsp;확정쪽지</button>
 											<button class="btn btn-warning btn-xs" id="cancelAlert" onclick="testAlert('취소쪽지를 발송하였습니다.')"><i class="fa fa-comment-o"></i>&nbsp;취소쪽지</button>
 										</div>
@@ -118,7 +118,7 @@
 												<label class="col-sm-2 control-label"><span class="req"></span>회차</label>
 												<div class="col-sm-4 input-group">
 													<input type="text" class="form-control" id="TB05010S_inspctCnfrncSqcSq2"
-													oninput="this.value = this.value.replace(/[^0-9]/g, '');" onchange="chngInspctCnfrncSqc();">
+													oninput="this.value = this.value.replace(/[^0-9]/g, '');" onchange="TB05010Sjs.chngInspctCnfrncSqc();">
 												</div>
 											</div>
 										</div>
@@ -152,9 +152,9 @@
 									<div class="ibox-title">
 										<h5>▶&nbsp;위원정보</h5>
 										<div class="ibox-tools">
-											<button class="btn btn-default btn-xs" onclick="addMMBRRow();"><i
+											<button class="btn btn-default btn-xs" onclick="TB05010Sjs.addMMBRRow();"><i
 													class="fa fa-plus"></i>&nbsp;행추가</button>
-											<button class="btn btn-default btn-xs" onclick="mmbrDelRow();"><i
+											<button class="btn btn-default btn-xs" onclick="TB05010Sjs.mmbrDelRow();"><i
 													class="fa fa-minus"></i>&nbsp;행삭제</button>
 										</div>
 									</div>
