@@ -30,6 +30,8 @@ function callPage(menuId, pageName) {
 
     history.pushState(null, '', '/' + menuId);
 
+    ramsTabHandler(menuId);
+
     // AJAX 요청으로 해당 콘텐츠를 가져옴
     $.ajax({
         url: '/' + menuId, // 서버에서 해당 페이지에 맞는 콘텐츠를 가져올 URL
