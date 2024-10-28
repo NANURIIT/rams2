@@ -1531,13 +1531,7 @@ function setInputDataFromSelectData (data, menuId) {
  * @param {Object} gridFunctionObj	함수를담은 오브젝트
  */
 function ramsTabHandler (menuId){
-
-	// let index = gridFunctionObj.keys();
-
-	// indexsdfasdf
-
-	console.log("계속 일하니?");
-
+	
 	const $tabs = $(`#${menuId}_ramsTab`).children();
 
 	for(let i = 0; i < $tabs.length; i++){
