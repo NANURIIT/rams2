@@ -1,4 +1,4 @@
-const TB09090Sjs = (function () {
+const TB07120Sjs = (function () {
   let TB07120S_grdSelect = {};
 
   let TB07120S_nowRowData = {}; // 더블클릭시 로우데이터
