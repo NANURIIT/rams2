@@ -45,18 +45,18 @@
 										</span>
 									</div>
 									<div class="col-sm-2 form-group text-right">
-										<button class="btn btn-primary" onclick="getDealInfoTB08036S();"><i class="fa fa-search"></i>&nbsp;조회</button>&nbsp;
-										<button class="btn btn-default" onclick="btnResetTB08036S();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-primary" onclick="TB08036Sjs.getDealInfoTB08036S();"><i class="fa fa-search"></i>&nbsp;조회</button>&nbsp;
+										<button class="btn btn-default" onclick="TB08036Sjs.btnResetTB08036S();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- TAB -->
 						<div class="tabs-container ">
-							<ul class="nav nav-tabs " role="tablist" id="ramsTab">
-								<li class=""><a class="nav-link active" data-toggle="tab" href="#tab-1">분양수지 관리</a></li>
-								<li class=""><a class="nav-link" data-toggle="tab" href="#tab-2">당월 사업 관리의견</a></li>
-								<li class=""><a class="nav-link" data-toggle="tab" href="#tab-3">기타 사후관리</a></li>
+							<ul class="nav nav-tabs " role="tablist" id="TB08036S_ramsTab">
+								<li class=""><a class="nav-link active" data-toggle="tab" href="#TB08036S_tab-1">분양수지 관리</a></li>
+								<li class=""><a class="nav-link" data-toggle="tab" href="#TB08036S_tab-2">당월 사업 관리의견</a></li>
+								<li class=""><a class="nav-link" data-toggle="tab" href="#TB08036S_tab-3">기타 사후관리</a></li>
 								<li class="">&nbsp;&nbsp;&nbsp;</li>
 								<li class="">
 									<button class="btn btn-default btn-xs mt-1" type="button">
@@ -66,7 +66,7 @@
 							</ul>
 							<div class="tab-content">
 								<!-- 분양수지 관리 -->
-								<div role="tabpanel" id="tab-1" class="tab-pane active">
+								<div role="tabpanel" id="TB08036S_tab-1" class="tab-pane active">
 									<div class="panel-body">
 										<div class="row form-inline form-group text-right align-items-start">
 											<!-- 분양공사일정 -->
@@ -217,7 +217,7 @@
 									</div>
 								</div>
 								<!-- 당월 사업 관리의견 -->
-								<div role="tabpanel" id="tab-2" class="tab-pane">
+								<div role="tabpanel" id="TB08036S_tab-2" class="tab-pane">
 									<div class="panel-body">
 										<div class="row form-inline form-group text-right">
 											<div class="ibox col-sm-12">
@@ -235,14 +235,14 @@
 									</div>
 								</div>
 								<!-- 기타 사후관리 -->
-								<div role="tabpanel" id="tab-3" class="tab-pane">
+								<div role="tabpanel" id="TB08036S_tab-3" class="tab-pane">
 									<div class="panel-body">
 										<div class="row form-inline form-group text-right">
 											<div class="ibox col-sm-12">
 												<div class="ibox-title">
 													<div class="ibox-tools mt-1">
-														<button class="btn btn-xs btn-default float-right m-t-n-xs" type="button" id="sellDownDelRow" onclick="delRow();" style="margin-left: 2px; margin-right: 2px;">- 행삭제</button>
-														<button class="btn btn-xs btn-default float-right m-t-n-xs" type="button" id="sellDownAddRow" onclick="addRow();" style="margin-left: 2px; margin-right: 2px;">+ 행추가</button>
+														<button class="btn btn-xs btn-default float-right m-t-n-xs" type="button" id="sellDownDelRow" onclick="TB08036Sjs.delRow();" style="margin-left: 2px; margin-right: 2px;">- 행삭제</button>
+														<button class="btn btn-xs btn-default float-right m-t-n-xs" type="button" id="sellDownAddRow" onclick="TB08036Sjs.addRow();" style="margin-left: 2px; margin-right: 2px;">+ 행추가</button>
 													</div>
 												</div>
 												<div class="ibox-content mb-1">
@@ -300,10 +300,10 @@
 						<div class="row">
 							<div class="col-sm-6 form-inline"></div>
 							<div class="col-sm-6 text-right mt-1 mb-1">
-								<button id="" class="btn btn-success" onclick="modifyDealInfoTB08036S();">
+								<button id="" class="btn btn-success" onclick="TB08036Sjs.modifyDealInfoTB08036S();">
 									<i class="fa fa-save"></i>&nbsp;저장
 								</button>
-								<button id="" class="btn btn-danger" onclick="deleteDealInfoTB08036S();">
+								<button id="" class="btn btn-danger" onclick="TB08036Sjs.deleteDealInfoTB08036S();">
 									<i class="fa fa-eraser"></i>&nbsp;삭제
 								</button>
 							</div>
