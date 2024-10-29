@@ -1532,38 +1532,26 @@ function setInputDataFromSelectData (data, menuId) {
  * @param {Object} gridFunctionObj	함수를담은 오브젝트
  */
 function ramsTabHandler (menuId){
-
-	// $('.tab-content div[role="tabpanel"]').addClass('active');
-	// $('.tab-content div[role="tabpanel"]').removeClass('active');
-
+	// 화면 공통 탭들 선택
 	const $tabs = $(`#${menuId}_ramsTab li`);
-
+	// 각 탭에 이벤트 부여
     $tabs.each(function (i) {
-
 		if(i == 0){
 			$(this).find('a').addClass('active');
 			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
 		}
-
-		$(this).on('mousedown', function (e) {
-
+		// 이벤트 겹치지않도록 마우스 업 이벤트로 처리
+		$(this).on('mouseup', function (e) {
 			if(e.which === 1){
-				console.log(i);
-				console.log($(this).find('a').attr('id'));
-	
 				$tabs.find('a').removeClass('active');
 				$(this).find('a').addClass('active');
-	
-				$('.tab-content div[role="tabpanel"]').removeClass('active');
+				$(`.tab-content div[id*="${menuId}_tab"]`).removeClass('active');
 				$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
 			}else {
 				return;
 			}
-
         });
-		
     });
-
 }
 
 // function setGridFromRamstab () {
