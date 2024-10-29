@@ -25,12 +25,11 @@ jobs:
    
     - uses: actions/checkout@v3
     - name : github action container의 gradlew 권한 허용
-      run : cd /home/nanuri/TiberoRams/rams || chmod +x gradlew
+      run : chmod +x gradlew | pwd
     - name: Build with Gradle
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: build
-        # -DDB_URL=${{ secrets.DB_URL }} -DDB_USERNAME=${{ secrets.DB_USERNAME }} -DDB_PASSWORD=${{ secrets.DB_PASSWORD }}
     - name : 빌드 여부 확인
       run:  ls -ahl ./build/libs/*.jar
 
@@ -44,7 +43,7 @@ jobs:
         port: 22
         rm: true
         source: ./build/libs/*.jar
-        target: /home/nanuri/TiberoRams/rams/build/libs
+        target: /home/nanuri/TiberoRams/TiberoRams/build/libs
         ## 작업에 사용했던 디렉토리를 경로상에서 제거
         strip_components: 1
 
