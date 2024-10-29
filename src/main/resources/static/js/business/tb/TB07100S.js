@@ -1,4 +1,4 @@
-const TB09090Sjs = (function () {
+const TB07100Sjs = (function () {
   let TB07100S_rlthPruf; // 실물증빙
   let TB07100S_basic; // 기본?
 
