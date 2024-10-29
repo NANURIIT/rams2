@@ -1533,14 +1533,9 @@ function setInputDataFromSelectData (data, menuId) {
  */
 function ramsTabHandler (menuId){
 
-	// $('.tab-content div[role="tabpanel"]').addClass('active');
-	// $('.tab-content div[role="tabpanel"]').removeClass('active');
-
 	const $tabs = $(`#${menuId}_ramsTab li`);
 
     $tabs.each(function (i) {
-
-		// $(this).find('a').attr('href', '');
 
 		if(i == 0){
 			$(this).find('a').addClass('active');
@@ -1556,7 +1551,7 @@ function ramsTabHandler (menuId){
 				$tabs.find('a').removeClass('active');
 				$(this).find('a').addClass('active');
 	
-				$('.tab-content div[role="tabpanel"]').removeClass('active');
+				$(`.tab-content div[id*="${menuId}_tab"]`).removeClass('active');
 				$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
 			}else {
 				return;
