@@ -62,9 +62,9 @@
 										</div>
 									</div>
 									<div class="col-sm-9 text-left">
-										<button class="btn btn-primary" onclick="getBscDealDetail();">
+										<button class="btn btn-primary" onclick="TB03020Sjs.getBscDealDetail();">
 											<i class="fa fa-search"></i>&nbsp;조회</button>
-										<button class="btn btn-default" type="button" onclick="resetSrchCondition();">
+										<button class="btn btn-default" type="button" onclick="TB03020Sjs.resetSrchCondition();">
 											<i class="fa fa-undo"></i>&nbsp;초기화
 										</button>
 									</div>
@@ -194,7 +194,7 @@
 								<div class="ibox">
 									<div class="ibox-title">
 										<h5>▶&nbsp;업체정보</h5>
-										<button type="button" class=" btn btn-default btn-xs invst ml-1" id="invstClose" onclick="tabCtrl('#invst');"><i class="fa fa-arrow-up" id="invstIcon"></i></button>
+										<button type="button" class=" btn btn-default btn-xs invst ml-1" id="invstClose" onclick="TB03020Sjs.tabCtrl('#invst');"><i class="fa fa-arrow-up" id="invstIcon"></i></button>
 										<span class="pl-2">
 											<button class="btn btn-success btn-xs" onclick="callTB06019P('TB06010S');">기업체 등록</button>
 										</span>
@@ -256,7 +256,7 @@
 								<div class="ibox">
 									<div class="ibox-title">
 										<h5>▶ 수익정보</h5>
-										<button type="button" class=" btn btn-default btn-xs ern ml-1" id="ernClose" onclick="tabCtrl('#ern');"><i class="fa fa-arrow-up" id="ernIcon"></i></button>
+										<button type="button" class=" btn btn-default btn-xs ern ml-1" id="ernClose" onclick="TB03020Sjs.tabCtrl('#ern');"><i class="fa fa-arrow-up" id="ernIcon"></i></button>
 
 									</div>
 									<div class="ibox-content" id="ernInfo">
@@ -432,7 +432,7 @@
 											<h5>▶ 공동영업관리자/협업부서</h5>
 											<div class="ibox-tools">
 												<button class="btn btn-success btn-xs" type="button" onclick="callTB03022P('TB03020S');" >공동영업관리자등록</button>
-												<button class="btn btn-default btn-xs " type="button" id="mngPListDelRow" onclick="mngPListDelRow();" >- 행삭제</button>
+												<button class="btn btn-default btn-xs " type="button" id="mngPListDelRow" onclick="TB03020Sjs.mngPListDelRow();" >- 행삭제</button>
 											</div>
 										</div>
 									</div>
@@ -470,7 +470,7 @@
 								</div>
 
 								<div class="col-sm-12 text-right">
-									<button class="btn btn-info" type="button" id="saveDeal" onclick="saveDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-save"></i>&nbsp;등록</button>
+									<button class="btn btn-info" type="button" id="saveDeal" onclick="TB03020Sjs.saveDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-save"></i>&nbsp;등록</button>
 							<!--		<button class="btn btn-success" type="button" id="approveDeal" onclick="reqApproveDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-check"></i>&nbsp;결재요청</button> -->
 							<!--		<button class="btn btn-success" type="button" id="confirmDeal" onclick="cnfmDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-check"></i>&nbsp;결재승인</button> -->
 							<!--		<button class="btn btn-warning" type="button" id="rejectDeal" onclick="rejtDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-warning"></i>&nbsp;반송</button> -->

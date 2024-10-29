@@ -25,6 +25,7 @@ $(function () {
 	});
 	$('.input-group.clockpicker').clockpicker({
 	});
+	// setGridFromRamstab();
 });
 
 /**
@@ -969,11 +970,11 @@ function getSelectBoxList(prefix, item, async = true) {
 
 						$('#TB04010S_R005_2').append(html);
 					} else if (value.cmnsGrpCd == 'I029') {
-						ldvdCd.push(value);
+						TB04010Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I030') {
-						mdvdCd.push(value);
+						TB04010Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I031') {
-						sdvdCd.push(value);
+						TB04010Sjs.sdvdCd.push(value);
 					}
 				}
 				if (prefix == 'TB04020S') {
@@ -988,11 +989,11 @@ function getSelectBoxList(prefix, item, async = true) {
 
 				if (prefix == 'TB06010S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06010Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06010Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06010Sjs.sdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I027') {									// 통화코드
 						var html = '';
 						html += '<option value="' + value.cdValue + '">' + value.cdName + ' (' + value.cdValue + ')' + '</option>';
@@ -1004,21 +1005,21 @@ function getSelectBoxList(prefix, item, async = true) {
 
 				if (prefix == 'TB06020S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06020Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06020Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06020Sjs.sdvdCd.push(value);
 					}
 				}
 
 				if (prefix == 'TB06030S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06030Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06030Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06030Sjs.sdvdCd.push(value);
 					}
 				}
 
@@ -1471,12 +1472,13 @@ function getBasicValues(id) {
  * div ibox로 잡혀있을텐데 원하는 태그에 id값을 주고 셀렉터로 받아서 인풋값 초기화
  */
 function resetInputValue (selector) {
-    $(`${selector} input`).val('');
-    $(`${selector} input[id*='Amt']
-      ,${selector} input[id*='Blce']
-      ,${selector} input[id*='Exrt']
-      ,${selector} input[id*='Mnum']
-      ,${selector} input[id*='Tmrd']`).val('0');
+    selector.find(`select`).val('');
+    selector.find(`input`).val('');
+    selector.find(`input[id*='Amt']
+				 , input[id*='Blce']
+				 , input[id*='Exrt']
+				 , input[id*='Mnum']
+				 , input[id*='Tmrd']`).val('0');
 }
 
 /**
@@ -1530,29 +1532,55 @@ function setInputDataFromSelectData (data, menuId) {
  * @param {Object} gridFunctionObj	함수를담은 오브젝트
  */
 function ramsTabHandler (menuId){
-
-	// let index = gridFunctionObj.keys();
-
-	// indexsdfasdf
-
-	console.log("계속 일하니?");
-
-	const $tabs = $(`#${menuId}_ramsTab`).children();
-
-	for(let i = 0; i < $tabs.length; i++){
-		$($tabs[i]).on('click', function(){
-			$tabs.removeClass('active');
-			$(this).addClass('active');
-			$('.tab-content div[role="tabpanel"]').removeClass('active');
+	// 화면 공통 탭들 선택
+	const $tabs = $(`#${menuId}_ramsTab li`);
+	// 각 탭에 이벤트 부여
+    $tabs.each(function (i) {
+		if(i == 0){
+			$(this).find('a').addClass('active');
 			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
-			// if(i === ){
-
-			// }
-		})
-	}
-
+		}
+		// 이벤트 겹치지않도록 마우스 업 이벤트로 처리
+		$(this).on('mouseup', function (e) {
+			if(e.which === 1){
+				$tabs.find('a').removeClass('active');
+				$(this).find('a').addClass('active');
+				$(`.tab-content div[id*="${menuId}_tab"]`).removeClass('active');
+				$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+			}else {
+				return;
+			}
+        });
+    });
 }
 
+// function setGridFromRamstab () {
+// 	$('.tab-content div[role="tabpanel"]').addClass('active');
+// }
+
+
+/**
+ * 날짜 인풋태그 유효성체크
+ */
+function vldDateVal (){
+	$('.input-group.date input[class="form-control"]').on("change", function(){
+		//	태그의 날짜 불러오기
+		const date = $(this).val();
+		let test = new Date(formatDate(date));
+		let resultDate;
+
+		if(test === "InvalidDate"){
+			return $(this).val(0);
+		}else{
+			//	날짜 변환
+			resultDate = formatDate(date);
+
+			// 변환된 날짜 입력
+			$(this).val(resultDate);
+			return;
+		}
+	})
+}
 
 // $(document).ajaxComplete(function (event, xhr, settings) {
 //     const $this = $(".input-group.date input[class='form-control']");

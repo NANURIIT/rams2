@@ -71,10 +71,10 @@
 							</div> -->
 							<!-- 버튼영역 -->
 							<div class="col-sm-4 text-right">
-								<button class="btn btn-primary" onclick="getSPPIData();">
+								<button class="btn btn-primary" onclick="TB06050Sjs.getSPPIData();">
 									<i class="fa fa-search"></i>&nbsp;조회</button>
-								<button class="btn btn-default" type="button" onclick="reset();">
-									<i class="fa fa-undo"></i>&nbsp;초기화</button>	
+								<button class="btn btn-default" type="button" onclick="TB06050Sjs.reset();">
+									<i class="fa fa-undo"></i>&nbsp;초기화</button>
 							</div>
 						</div>
 					</div>
@@ -128,7 +128,7 @@
 								<h3>▶ SSPI검토</h3>
 							</div>
 							<div class="ibox-content">
-								
+
 								<div class="form-group row form-inline m-1 mb-3">
 									<div class="col-sm-10 form-group">
 										<label class="col-sm-1 control-label">
@@ -145,7 +145,7 @@
 								<div class="hr-sect" style="opacity: 1;">
 									<h4 class="bold">계약상현금흐름 특성검토 Checklist</h4>
 								</div>
-								
+
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item">
 										<p>채무자/발행자에 의한 원리금 상환 취소 가능조건 존재 여부 검토 <span>(* 다음의 조건이 "Y"인 경우 SPPI 미충족)</span></p>
@@ -188,7 +188,7 @@
 												</div>
 												<span class="col-sm-10 fw-bolder">이자율 조건이 주가지수와 연동되어 있는 조건인가?</span>
 											</li>
-										</ul>	
+										</ul>
 									</li>
 									<li class="list-group-item">
 										<p>이자율조건 검토_2 <span>(* 다음의 조건이 하나라도 "Y"인 경우 SPPI 미충족)</span></p>
@@ -226,7 +226,7 @@
 												</div>
 												<span class="col-sm-10 fw-bolder">구조화채권에 대한 투자인가? (이자율이 주가지수 이외의 옵션(캡/플로어/채권 index 둘)이나 그 밖의 다른 요소에 의해 변동되는 구조화 채권)</span>
 											</li>
-										</ul>	
+										</ul>
 									</li>
 									<li class="list-group-item">
 										<p>계약상 출자전환 가능 여부 <span>(* 다음의 조건이 하나라도 "Y"인 경우 SPPI 미충족)</span></p>
@@ -253,7 +253,7 @@
 												</div>
 												<span class="col-sm-10 fw-bolder">전환사채 / 신주인수인권부사채 등 지분전환 / 취득 조건 존재여부?</span>
 											</li>
-										</ul>	
+										</ul>
 									</li>
 									<li class="list-group-item">
 										<p>만기연장 / 조기상환 조건 검토 <span>(* 다음의 조건이 하나라도 "N"인 경우 SPPI 미충족)</span></p>
@@ -291,7 +291,7 @@
 												</div>
 												<span class="col-sm-10 fw-bolder">중도상환금액은 미지급된 원리금을 실질적으로 나타내며, 계약의 조기 청산에 대한 합리적인 추가보상을 포함하고 있는가?</span>
 											</li>
-										</ul>	
+										</ul>
 									</li>
 									<li class="list-group-item">
 										<p>후순위채권인 경우의 검토 <span>(* 다음의 조건이 하나라도 "N"인 경우 SPPI 미충족)</span></p>
@@ -329,7 +329,7 @@
 												</div>
 												<span class="col-sm-10 fw-bolder">별도의 신용보강(제 3자 지급보증, 보증서, 담보 등)을 통한 채권보전이 존재하는가?</span>
 											</li>
-										</ul>	
+										</ul>
 									</li>
 									<li class="list-group-item">
 										<p>특정자산이나 현금흐름에 대한 투자(SPC투자)의 검토 <span>(* 다음의 조건이 "N"인 경우 SPPI 미충족)</span></p>
@@ -353,11 +353,11 @@
 													<li class="list-group-item">⑤ 그외 별도 계약조건 또는 위 조건들을 조합하여 채권보전이 충분하다고 판단되는 경우</li>
 												</ul>
 											</li>
-										</ul>	
+										</ul>
 									</li>
 									<li class="list-group-item">
 										<p>계약 상 연계된 금융상품(Tranche 구조) 검토 <span>(* 다음의 조건이 하나라도 "N"인 경우 SPPI 미충족)</span></p>
-									
+
 										<ul class="list-group2">
 											<li class="form-group row align-items-start">
 												<div class="col-sm-1-5 input-group">
@@ -385,9 +385,9 @@
 												</span>
 											</li>
 								  		</ul>
-									</li>	
-								</ul>	
-							</div>	
+									</li>
+								</ul>
+							</div>
 						</div>
 						<div class="ibox form-inline">
 							<!-- 버튼영역 -->
@@ -396,7 +396,7 @@
 								<button class="btn btn-danger" type="button" onclick=""><i class="fa fa-eraser"></i>&nbsp;삭제</button>
 							</div>
 						</div>
-					</div>	
+					</div>
 				</div>
 			</div>
 		</div><!-- row -->

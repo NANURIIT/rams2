@@ -57,7 +57,7 @@
 									<input type="text" class="form-control" id="TB08031S_corpNm" readonly>
 								</div>
 								<div class="col-sm-1">
-									<button class="btn btn-primary" onclick="srchBsnsInfo('ibDealNo');">
+									<button class="btn btn-primary" onclick="TB08031Sjs.srchBsnsInfo('ibDealNo');">
 										<i class="fa fa-search"></i>&nbsp;조회
 									</button>
 								</div>
@@ -228,28 +228,28 @@
 						<div class="ibox-content">
 							<!-- tab -->
 							<div class="tabs-container">
-								<ul class="nav nav-tabs" role="tablist" id="ramsTab">
-									<li><a class="nav-link" data-toggle="tab" href="#tab-1">사업정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-2">사업정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-3">사업정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-4">사업정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-5">사업정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-6" onclick="setBsnsPartInfoGrid();">사업참가자정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-7">사업주요전망</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-8">채권보전주요약정</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-9">조건변경이력</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-10">대주단정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-11">수익자정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-12">관련사업정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-13">투자기업목록</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-14">자산운용사정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-15">편입자산정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-16">투자자산계좌(종목)정보</a></li>
-									<li><a class="nav-link" data-toggle="tab" href="#tab-17">첨부파일정보</a></li>
+								<ul class="nav nav-tabs" role="tablist" id="TB08031S_ramsTab">
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-1">사업정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-2">사업정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-3">사업정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-4">사업정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-5">사업정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-6" onclick="TB08031Sjs.setBsnsPartInfoGrid();">사업참가자정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-7">사업주요전망</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-8">채권보전주요약정</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-9">조건변경이력</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-10">대주단정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-11">수익자정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-12">관련사업정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-13">투자기업목록</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-14">자산운용사정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-15">편입자산정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-16">투자자산계좌(종목)정보</a></li>
+									<li><a class="nav-link" data-toggle="tab" href="#TB08031S_tab-17">첨부파일정보</a></li>
 								</ul>
 								<div class="tab-content">
 									<!-- 사업정보 -->
-									<div role="tabpanel" id="tab-1" class="tab-pane active">
+									<div role="tabpanel" id="TB08031S_tab-1" class="tab-pane active">
 										<div class="panel-body">
 											<div class="col-sm-12">
 												<div class="form-group form-inline row text-right">
@@ -524,7 +524,7 @@
 									<!-- 사업정보 END -->
 									
 									<!-- 2 -->
-									<div role="tabpanel" id="tab-2" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-2" class="tab-pane">
 										<div class="panel-body">
 											<div class="col-sm-12">
 												<div class="form-group form-inline row text-right">
@@ -604,7 +604,7 @@
 									<!-- 2 END -->
 									
 									<!-- 3 -->
-									<div role="tabpanel" id="tab-3" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-3" class="tab-pane">
 										<div class="panel-body">
 											<div class="col-sm-12">
 												<div class="form-group form-inline row text-right">
@@ -830,7 +830,7 @@
 									<!-- 3 END -->
 									
 									<!-- 4 -->
-									<div role="tabpanel" id="tab-4" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-4" class="tab-pane">
 										<div class="panel-body">
 											<div class="col-sm-12">
 												<div class="form-group form-inline row text-right">
@@ -1029,7 +1029,7 @@
 									<!-- 4 END -->
 									
 									<!-- 5 -->
-									<div role="tabpanel" id="tab-5" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-5" class="tab-pane">
 										<div class="panel-body">
 											<div class="col-sm-12">
 												<div class="form-group form-inline row text-right">
@@ -1227,7 +1227,7 @@
 									<!-- 5 END -->
 									
 									<!-- 사업참가자정보 -->
-									<div role="tabpanel" id="tab-6" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-6" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1235,10 +1235,10 @@
 														<div class="ibox-title">
 															<h5>▶&nbsp;사업참가자정보</h5>
 															<div class="ibox-tools">
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowBsnsPartInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowBsnsPartInfo();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowBsnsPartInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowBsnsPartInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1312,7 +1312,7 @@
 												<div class="col-sm text-right mb-1">
 												<!-- <button class="btn btn-default" type="button" onclick="tab3BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 												<button class="btn btn-danger"  type="button" onclick="tab3BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button> -->
-													<button class="btn btn-success" type="button" onclick="bsnsPartInfoBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.bsnsPartInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1322,7 +1322,7 @@
 									<!-- 사업참가자정보 END -->
 									
 									<!-- 사업주요전망 -->
-									<div role="tabpanel" id="tab-7" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-7" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1330,10 +1330,10 @@
 														<div class="ibox-title">
 															<h5>▶&nbsp;일정정보</h5>
 															<div class="ibox-tools">
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowBsnsForecast();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowBsnsForecast();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowBsnsForecast();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowBsnsForecast();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1425,7 +1425,7 @@
 												<div class="col-sm text-right mb-1">
 													<!-- <button class="btn btn-default" type="button" onclick="tab3BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 													<button class="btn btn-danger"  type="button" onclick="tab3BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button> -->
-													<button class="btn btn-success" type="button" onclick="bsnsForecastBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.bsnsForecastBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1435,7 +1435,7 @@
 									<!-- 사업주요전망 END -->
 									
 									<!-- 채권보전주요약정 -->
-									<div role="tabpanel" id="tab-8" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-8" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1443,10 +1443,10 @@
 														<div class="ibox-title">
 															<h5>▶&nbsp;채권보전 기본정보</h5>
 															<div class="ibox-tools">
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowBondProtInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowBondProtInfo();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowBondProtInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowBondProtInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1528,7 +1528,7 @@
 												<div class="col-sm text-right mb-1">
 													<!-- <button class="btn btn-default" type="button" onclick="tab3BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 								<button class="btn btn-danger"  type="button" onclick="tab3BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button> -->
-													<button class="btn btn-success" type="button" onclick="bondProtInfoBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.bondProtInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1538,7 +1538,7 @@
 									<!-- 채권보전주요약정 END -->
 									
 									<!-- 조건병력이력 -->
-									<div role="tabpanel" id="tab-9" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-9" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1546,10 +1546,10 @@
 														<div class="ibox-title">
 															<h5>▶&nbsp;조건변경내역</h5>
 															<div class="ibox-tools">
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowCchInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowCchInfo();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowCchInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowCchInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1667,7 +1667,7 @@
 												<div class="col-sm text-right mb-1">
 													<!-- <button class="btn btn-default" type="button" onclick="tab3BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 													<button class="btn btn-danger"  type="button" onclick="tab3BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button> -->
-													<button class="btn btn-success" type="button" onclick="cchInfoBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.cchInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1677,7 +1677,7 @@
 									<!-- 조건병력이력 END -->
 									
 									<!-- 대주단정보 -->
-									<div role="tabpanel" id="tab-10" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-10" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1688,10 +1688,10 @@
 																<button class="btn btn-default btn-xs" type="button" onclick="functionExportExcel();">
 																	<i class="fa fa-file-excel-o"></i>&nbsp;Excel
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowStlnInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowStlnInfo();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowStlnInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowStlnInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1764,7 +1764,7 @@
 											<div class="form-group row">
 												<!-- button -->
 												<div class="col-sm text-right mb-1">
-													<button class="btn btn-success" type="button" onclick="stlnInfoBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.stlnInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1774,7 +1774,7 @@
 									<!-- 대주단 END -->
 									
 									<!-- 수익자정보 -->
-									<div role="tabpanel" id="tab-11" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-11" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1786,10 +1786,10 @@
 																	onclick="functionExportExcel();">
 																	<i class="fa fa-file-excel-o"></i>&nbsp;Excel
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowErnInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowErnInfo();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowErnInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowErnInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1860,7 +1860,7 @@
 												<!-- button -->
 												<div class="col-sm text-right mb-1">
 													<button class="btn btn-success" type="button"
-														onclick="ernInfoBtnSave();">
+														onclick="TB08031Sjs.ernInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1870,7 +1870,7 @@
 									<!-- 수익자정보 END -->
 									
 									<!-- 관련사업정보 -->
-									<div role="tabpanel" id="tab-12" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-12" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1884,7 +1884,7 @@
 																<button class="btn btn-default btn-xs" type="button" onclick="functionExportExcel();">
 																	<i class="fa fa-file-excel-o"></i>&nbsp;Excel
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowReltDealInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowReltDealInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -1921,7 +1921,7 @@
 											<div class="form-group row">
 												<!-- button -->
 												<div class="col-sm text-right mb-1">
-													<button class="btn btn-success" type="button" onclick="reltBusiInfoBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.reltBusiInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -1931,7 +1931,7 @@
 									<!-- 관련사업정보 END -->
 									
 									<!-- 투자기업목록 -->
-									<div role="tabpanel" id="tab-13" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-13" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -1942,10 +1942,10 @@
 																<button class="btn btn-default btn-xs" type="button" onclick="functionExportExcel();">
 																	<i class="fa fa-file-excel-o"></i>&nbsp;Excel
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowInvstEprzInfo('#TB08031S_invstBzscalList');">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowInvstEprzInfo('#TB08031S_invstBzscalList');">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowInvstEprzInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowInvstEprzInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -2087,7 +2087,7 @@
 									<!-- 투자기업목록 END -->
 									
 									<!-- 자산운용사정보 -->
-									<div role="tabpanel" id="tab-14" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-14" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -2163,7 +2163,7 @@
 									<!-- 자산운용사정보 END -->
 									
 									<!-- 편입자산정보 -->
-									<div role="tabpanel" id="tab-15" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-15" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -2174,10 +2174,10 @@
 																<button class="btn btn-default btn-xs" type="button" onclick="functionExportExcel();">
 																	<i class="fa fa-file-excel-o"></i>&nbsp;Excel
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="addMenuRowAdmsAsstInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.addMenuRowAdmsAsstInfo();">
 																	<i class="fa fa-plus"></i>&nbsp;행추가
 																</button>
-																<button class="btn btn-default btn-xs" type="button" onclick="delMenuRowAdmsAsstInfo();">
+																<button class="btn btn-default btn-xs" type="button" onclick="TB08031Sjs.delMenuRowAdmsAsstInfo();">
 																	<i class="fa fa-minus"></i>&nbsp;행삭제
 																</button>
 															</div>
@@ -2247,7 +2247,7 @@
 											<div class="form-group row">
 												<!-- button -->
 												<div class="col-sm text-right mb-1">
-													<button class="btn btn-success" type="button" onclick="admsAsstInfoBtnSave();">
+													<button class="btn btn-success" type="button" onclick="TB08031Sjs.admsAsstInfoBtnSave();">
 														<i class="fa fa-save"></i>&nbsp;저장
 													</button>
 												</div>
@@ -2257,7 +2257,7 @@
 									<!-- 편입자산정보 END -->
 									
 									<!-- 투자자산계좌(종목)정보 -->
-									<div role="tabpanel" id="tab-16" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-16" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -2346,7 +2346,7 @@
 									<!-- 투자자산계좌(종목)정보 END -->
 									
 									<!-- 첨부파일정보 -->
-									<div role="tabpanel" id="tab-17" class="tab-pane">
+									<div role="tabpanel" id="TB08031S_tab-17" class="tab-pane">
 										<div class="panel-body">
 											<div class="row">
 												<div class="col-sm-12">
@@ -2491,7 +2491,7 @@
 		</div>
 		<!-- row END -->
 		<div class="text-right">
-			<button class="btn btn-warning mb-1 py-1" onclick="saveTabInfo();">
+			<button class="btn btn-warning mb-1 py-1" onclick="TB08031Sjs.saveTabInfo();">
 				<i class="fa fa-check-square m-1"></i> 등록
 			</button>
 		</div>
