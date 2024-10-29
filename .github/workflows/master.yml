@@ -32,7 +32,7 @@ jobs:
       with:
         arguments: build
     - name : 빌드 여부 확인
-      run:  ls -ahl ./build/libs/libs/*.jar
+      run:  ls -ahl ./build/libs/*.jar
 
     ## 서버에 빌드jar 전송
     - name: Transfer artifact
@@ -44,8 +44,8 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: 22
         rm: true
-        source: ./build/libs/libs/*.jar
-        target: /home/nanuri/TiberoRams/TiberoRams/build/libs/libs
+        source: ./build/libs/*.jar
+        target: /home/nanuri/TiberoRams/TiberoRams/build/libs
         ## 작업에 사용했던 디렉토리를 경로상에서 제거
         strip_components: 1
 
@@ -65,5 +65,3 @@ jobs:
         script: |
           ~/TiberoRams/startTiberRams.sh
 
-    - name: Generate and submit dependency graph
-      uses: gradle/actions/dependency-submission@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
