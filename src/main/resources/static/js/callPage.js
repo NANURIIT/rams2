@@ -45,9 +45,9 @@ function callPage(menuId, pageName) {
             let $title = $(response).find(`div[data-titleId="/${menuId}"]`)
 
             // 타이틀 숨기기
-            $('#title-top div[data-titleId*="TB"]').hide()
+            $('#title-top div[data-titleId*="TB"], #title-top div[data-titleId*="GD"]').hide()
             // 컨텐츠 숨기기
-            $('#page-wrapper div[data-menuId*="TB"]').hide()
+            $('#page-wrapper div[data-menuId*="TB"], #page-wrapper div[data-menuId*="GD"]').hide()
 
             // 새로운 타이틀 생성
             $(`#title-top`).append($title);
@@ -63,7 +63,7 @@ function callPage(menuId, pageName) {
                 `);
 
             // 새로운 컨텐츠 div 생성
-            $(`div[data-menuId*="/TB"]`).last().after(`<div data-menuId="/${menuId}"></div>`);
+            $(`div[data-menuId*="/TB"], div[data-menuId*="/GD"]`).last().after(`<div data-menuId="/${menuId}"></div>`);
 
             // 컨텐츠 내용 생성
             $(`div[data-menuId="/${menuId}"]`).html(customContent);
@@ -176,11 +176,11 @@ function moveTab(menuId) {
     $(`#myTab li button[data-tabid="/${menuId}"]`).addClass('active');
 
     // 상단 타이틀요소 이동
-    $(`div[data-titleId*="TB"]`).hide()
+    $(`div[data-titleId*="TB"], div[data-titleId*="GD"]`).hide()
     $(`div[data-titleId="/${menuId}"]`).show()
 
     // 메인Content요소 이동
-    $(`div[data-menuId*="TB"]`).hide()
+    $(`div[data-menuId*="TB"], div[data-menuId*="GD"]`).hide()
     $(`div[data-menuId="/${menuId}"]`).show()
 
     history.pushState(null, '', '/' + menuId);
