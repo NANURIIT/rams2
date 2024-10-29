@@ -41,10 +41,10 @@
 									</div>
 								</div>
 								<div class="col-sm-7 text-right">
-									<button class="btn btn-primary" type="button" onclick="srch();">
+									<button class="btn btn-primary" type="button" onclick="TB08050Sjs.srch();">
 										<i class="fa fa-search"></i>조회</button>
 									<!-- <button class="btn btn-default" type="button" disabled>다음</button> -->
-									<button class="btn btn-default" type="button" onclick="resetAll('TB08050S', ['grd_feeDtls']); reBdin(); resetMore();">
+									<button class="btn btn-default" type="button" onclick="resetAll('TB08050S', ['grd_feeDtls']); TB08050Sjs.reBdin(); TB08050Sjs.resetMore();">
 										<i class="fa fa-undo"></i>&nbsp;초기화
 									</button>
 								</div>
@@ -137,11 +137,11 @@
 											<div class="col-sm-12 form-group">
 												<label class="col-sm-1">수수료대상금액</label>
 												<div class="col-sm-3 input-group">
-													<input class="form-control text-right" type="text" id="TB08050S_eprzCrdlFeeStdrAmt" placeholder="0" oninput="inputNumberFormat(this); calulator('fee'); ">
+													<input class="form-control text-right" type="text" id="TB08050S_eprzCrdlFeeStdrAmt" placeholder="0" oninput="inputNumberFormat(this); TB08050Sjs.calulator('fee'); ">
 												</div>
 												<label class="col-sm-1">수수료율(%)</label>
 												<div class="col-sm-3 input-group">
-													<input class="form-control text-right" type="text" id="TB08050S_feeRt" placeholder="0" oninput="calulator('fee'); ">
+													<input class="form-control text-right" type="text" id="TB08050S_feeRt" placeholder="0" oninput="TB08050Sjs.calulator('fee'); ">
 												</div>
 												<label class="col-sm-1">수수료금액</label>
 												<div class="col-sm-3 input-group">
@@ -239,7 +239,7 @@
 												</div>
 												<label class="col-sm-1">적용환율</label>
 												<div class="col-sm-3 input-group">
-													<input class="form-control text-right" type="text" id="TB08050S_aplcExchR" oninput="calulator('crry')">
+													<input class="form-control text-right" type="text" id="TB08050S_aplcExchR" oninput="TB08050Sjs.calulator('crry')">
 												</div>
 											</div>
 										</div>
@@ -345,7 +345,7 @@
 						</div>
 						<div class="row">
 							<div class="col-sm-12 text-right">
-								<button class="btn btn-success" id="btnSave" onclick="save();"><i class="fa fa-check"></i>&nbsp;등록</button>
+								<button class="btn btn-success" id="btnSave" onclick="TB08050Sjs.save();"><i class="fa fa-check"></i>&nbsp;등록</button>
 								<!--		<button class="btn btn-success" type="button" id="approveDeal" onclick="reqApproveDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-check"></i>&nbsp;결재요청</button> -->
 								<!--		<button class="btn btn-success" type="button" id="confirmDeal" onclick="cnfmDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-check"></i>&nbsp;결재승인</button> -->
 								<!--		<button class="btn btn-warning" type="button" id="rejectDeal" onclick="rejtDeal();" style="margin-left:2px; margin-right:2px;"><i class="fa fa-warning"></i>&nbsp;반송</button> -->
