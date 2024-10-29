@@ -876,52 +876,52 @@ const TB06030Sjs = (function(){
 		var paramData = {
 			"prdtCd": $('#TB06030S_res_prdtCd').val()									// 상품코드
 			, "dcmNo" : null
-	, "jobExcuMbdy" : null
-	, "realMngmBdcd" : null
-	, "realMngmEmpno" : null
-	, "fondDt" : replaceAll($('#TB06030S_fondDt').val(), '-', '')
-	, "keepExprDt" : replaceAll($('#TB06030S_keepExprDt').val(), '-', '')
-	, "invExprDt" : replaceAll($('#TB06030S_invExprDt').val(), '-', '')
-	, "fincCtrcAmt" : replaceAll($('#TB06030S_fincCtrcAmt').val(), ',', '')
-	, "fincFlflAmt" : replaceAll($('#TB06030S_fincFlflAmt').val(), ',', '')
-	, "thcoFincCtrcAmt" : replaceAll($('#TB06030S_thcoFincCtrcAmt').val(), ',', '')
-	, "thcoFincAmt" : replaceAll($('#TB06030S_thcoFincAmt').val(), ',', '')
-	, "nowFincBlce" : replaceAll($('#TB06030S_nowFincBlce').val(), ',', '')
-	, "mngmPayBlce" : replaceAll($('#TB06030S_mngmPayBlce').val(), ',', '')
-	, "ernDstrAmt" : null
-	, "fincQotaRt" : null
-	, "stdrErnRt" : replaceAll($('#TB06030S_stdrErnRt').val(), ',', '')
-	, "mngmPayRt" : replaceAll($('#TB06030S_mngmPayRt').val(), ',', '')
-	, "fincChrDcd" : $('#TB06030S_fincChrDcd').val()
-	, "fincEdycNo" : $('#TB06030S_fincEdycNo').val()
-	, "rptTrgtYn" : rptTrgtYn
-	, "aflTrgtYn" : aflTrgtYn
-	, "dpndCmpYn" : dpndCmpYn
-	, "demgYn" : null
-	, "demgLssdCmlAmt" : null
-	, "demgBfFincBlce" : null
-	, "stlaSttmNo" : null
-	, "acqAmt" : null
-	, "crryCd" : $('#TB06030S_I027').val()
-	, "stdrExrt" : null
-	, "frcrFincBlce" : null
-	, "frcrMngmPayBlce" : null
-	, "curdDstrAmt" : null
-	, "frcrFrsAcqAmt" : null
-	, "frcrFincCtrcAmt" : null
-	, "frcrFincFlflAmt" : null
-	, "frcrThcoFincCtrcAmt" : null
-	, "frcrThcoFincAmt" : null
-	, "frsTrDt" : null
-	, "prfmPayBlce" : null
-	, "prcrPrfmPayBlce" : null
-	, "hndDetlDtm" : null
-	, "hndEmpno" : null
-	, "hndTmnlNo" : null
-	, "hndTrId" : null
-	, "guid" : null
-		}
-		
+			, "jobExcuMbdy" : null
+			, "realMngmBdcd" : null
+			, "realMngmEmpno" : null
+			, "fondDt" : replaceAll($('#TB06030S_fondDt').val(), '-', '')
+			, "keepExprDt" : replaceAll($('#TB06030S_keepExprDt').val(), '-', '')
+			, "invExprDt" : replaceAll($('#TB06030S_invExprDt').val(), '-', '')
+			, "fincCtrcAmt" : replaceAll($('#TB06030S_fincCtrcAmt').val(), ',', '')
+			, "fincFlflAmt" : replaceAll($('#TB06030S_fincFlflAmt').val(), ',', '')
+			, "thcoFincCtrcAmt" : replaceAll($('#TB06030S_thcoFincCtrcAmt').val(), ',', '')
+			, "thcoFincAmt" : replaceAll($('#TB06030S_thcoFincAmt').val(), ',', '')
+			, "nowFincBlce" : replaceAll($('#TB06030S_nowFincBlce').val(), ',', '')
+			, "mngmPayBlce" : replaceAll($('#TB06030S_mngmPayBlce').val(), ',', '')
+			, "ernDstrAmt" : null
+			, "fincQotaRt" : null
+			, "stdrErnRt" : replaceAll($('#TB06030S_stdrErnRt').val(), ',', '')
+			, "mngmPayRt" : replaceAll($('#TB06030S_mngmPayRt').val(), ',', '')
+			, "fincChrDcd" : $('#TB06030S_fincChrDcd').val()
+			, "fincEdycNo" : $('#TB06030S_fincEdycNo').val()
+			, "rptTrgtYn" : rptTrgtYn
+			, "aflTrgtYn" : aflTrgtYn
+			, "dpndCmpYn" : dpndCmpYn
+			, "demgYn" : null
+			, "demgLssdCmlAmt" : null
+			, "demgBfFincBlce" : null
+			, "stlaSttmNo" : null
+			, "acqAmt" : null
+			, "crryCd" : $('#TB06030S_I027').val()
+			, "stdrExrt" : null
+			, "frcrFincBlce" : null
+			, "frcrMngmPayBlce" : null
+			, "curdDstrAmt" : null
+			, "frcrFrsAcqAmt" : null
+			, "frcrFincCtrcAmt" : null
+			, "frcrFincFlflAmt" : null
+			, "frcrThcoFincCtrcAmt" : null
+			, "frcrThcoFincAmt" : null
+			, "frsTrDt" : null
+			, "prfmPayBlce" : null
+			, "prcrPrfmPayBlce" : null
+			, "hndDetlDtm" : null
+			, "hndEmpno" : null
+			, "hndTmnlNo" : null
+			, "hndTrId" : null
+			, "guid" : null
+			}
+				
 		return paramData;
 	}
 
@@ -1279,5 +1279,8 @@ const TB06030Sjs = (function(){
 		, managePrdtCd : managePrdtCd
 		, setLstMrtg : setLstMrtg
 		, setAtchFle : setAtchFle
+		, ldvdCd : ldvdCd
+		, mdvdCd : mdvdCd
+		, sdvdCd : sdvdCd
 	}
 })();
