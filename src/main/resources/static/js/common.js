@@ -25,6 +25,7 @@ $(function () {
 	});
 	$('.input-group.clockpicker').clockpicker({
 	});
+	// setGridFromRamstab();
 });
 
 /**
@@ -1531,24 +1532,43 @@ function setInputDataFromSelectData (data, menuId) {
  * @param {Object} gridFunctionObj	함수를담은 오브젝트
  */
 function ramsTabHandler (menuId){
-	
-	const $tabs = $(`#${menuId}_ramsTab li a`);
+
+	// $('.tab-content div[role="tabpanel"]').addClass('active');
+	// $('.tab-content div[role="tabpanel"]').removeClass('active');
+
+	const $tabs = $(`#${menuId}_ramsTab li`);
 
     $tabs.each(function (i) {
-		
-        console.log("온클릭반복문 드가자잇");
-        
-        $(this).on('click', function () {
 
-            $tabs.removeClass('active');
-            $(this).addClass('active');
+		if(i == 0){
+			$(this).find('a').addClass('active');
+			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+		}
 
-            $('.tab-content div[role="tabpanel"]').removeClass('active');
-            $(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+		$(this).on('mousedown', function (e) {
+
+			if(e.which === 1){
+				console.log(i);
+				console.log($(this).find('a').attr('id'));
+	
+				$tabs.find('a').removeClass('active');
+				$(this).find('a').addClass('active');
+	
+				$('.tab-content div[role="tabpanel"]').removeClass('active');
+				$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+			}else {
+				return;
+			}
+
         });
-    });
 		
+    });
+
 }
+
+// function setGridFromRamstab () {
+// 	$('.tab-content div[role="tabpanel"]').addClass('active');
+// }
 
 
 /**

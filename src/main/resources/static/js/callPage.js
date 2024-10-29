@@ -72,6 +72,8 @@ function callPage(menuId, pageName) {
             const $modals = $('.modal.fade');
             const $script = $('script');
 
+	        // $('.tab-content div[role="tabpanel"]').addClass('active');
+
             // html요소, script요소 중복제거 for문
             for (let i = 0; i < $this.length; i++) {
                 if ($($this[i]).attr('class') === 'modal fade') {
