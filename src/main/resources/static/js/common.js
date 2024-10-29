@@ -970,11 +970,11 @@ function getSelectBoxList(prefix, item, async = true) {
 
 						$('#TB04010S_R005_2').append(html);
 					} else if (value.cmnsGrpCd == 'I029') {
-						ldvdCd.push(value);
+						TB04010Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I030') {
-						mdvdCd.push(value);
+						TB04010Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I031') {
-						sdvdCd.push(value);
+						TB04010Sjs.sdvdCd.push(value);
 					}
 				}
 				if (prefix == 'TB04020S') {
@@ -989,11 +989,11 @@ function getSelectBoxList(prefix, item, async = true) {
 
 				if (prefix == 'TB06010S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06010Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06010Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06010Sjs.sdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I027') {									// 통화코드
 						var html = '';
 						html += '<option value="' + value.cdValue + '">' + value.cdName + ' (' + value.cdValue + ')' + '</option>';
@@ -1005,21 +1005,21 @@ function getSelectBoxList(prefix, item, async = true) {
 
 				if (prefix == 'TB06020S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06020Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06020Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06020Sjs.sdvdCd.push(value);
 					}
 				}
 
 				if (prefix == 'TB06030S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06030Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06030Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06030Sjs.sdvdCd.push(value);
 					}
 				}
 
