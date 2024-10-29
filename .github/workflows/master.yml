@@ -25,19 +25,12 @@ jobs:
     steps:
    
     - uses: actions/checkout@v3
-    - name: Set up DB environment variables
-      env:
-        DB_URL: ${{ secrets.DB_URL }}
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      run: |
-        echo "DB 환경 변수가 설정되었습니다."
     - name : github action container의 gradlew 권한 허용
       run : chmod +x gradlew | pwd
     - name: Build with Gradle
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        arguments: build
+        arguments: build -DDB_URL=${{ secrets.DB_URL }} -DDB_USERNAME=${{ secrets.DB_USERNAME }} -DDB_PASSWORD=${{ secrets.DB_PASSWORD }}
     - name : 빌드 여부 확인
       run:  ls -ahl ./build/libs/*.jar
 
