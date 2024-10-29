@@ -1540,12 +1540,14 @@ function ramsTabHandler (menuId){
 
     $tabs.each(function (i) {
 
+		// $(this).find('a').attr('href', '');
+
 		if(i == 0){
 			$(this).find('a').addClass('active');
 			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
 		}
 
-		$(this).on('mousedown', function (e) {
+		$(this).on('mouseup', function (e) {
 
 			if(e.which === 1){
 				console.log(i);
