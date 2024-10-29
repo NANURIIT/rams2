@@ -451,13 +451,16 @@
                     </a>
                     <ul class="nav nav-second-level collapse">
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'GD10010S'" th:classappend="${#httpServletRequest.requestURI.contains('/GD10010')}?'active':''">
-                            <a th:href="@{/GD10010S}">컴포넌트가이드</a>
+                            <!-- <a th:href="@{/GD10010S}">컴포넌트가이드</a> -->
+                            <a onclick="callPage('GD10010S', '컴포넌트가이드');">컴포넌트가이드</a>
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'GD10140S'" th:classappend="${#httpServletRequest.requestURI.contains('/GD10140')}?'active':''">
-                            <a th:href="@{/GD10140S}">추가화면(예정)</a>
+                            <!-- <a th:href="@{/GD10140S}">추가화면(예정)</a> -->
+                            <a onclick="callPage('GD10140S', '추가화면(예정)');">추가화면(예정)</a>
                         </li>
                         <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'GD10150S'" th:classappend="${#httpServletRequest.requestURI.contains('/GD10150')}?'active':''">
-                            <a th:href="@{/GD10150S}">기일관리-화면변경예정(완)</a>
+                            <!-- <a th:href="@{/GD10150S}">기일관리-화면변경예정(완)</a> -->
+                            <a onclick="callPage('GD10150S', '기일관리-화면변경예정(완)');">기일관리-화면변경예정(완)</a>
                         </li>
                         <!-- <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'GD10160S'" th:classappend="${#httpServletRequest.requestURI.contains('/GD10160')}?'active':''">
                             <a th:href="@{/GD10160S}">조건변경(완)</a>

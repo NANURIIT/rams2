@@ -136,33 +136,33 @@ function setDealInfo(e) {
   if (prefix == "TB03020S") {
     $("#selectedMngDealNo").val(ibDealNo);
     $("#selectedMngDealNo").focus();
-    getBscDealDetail();
+    TB03020Sjs.getBscDealDetail();
   }
 
   if (prefix == "TB04010S") {
     $("#TB04010S_selectedDealNo").val(ibDealNo);
     $("#TB04010S_selectedDealNo").focus();
-    getDealList();
+    TB04010Sjs.getDealList();
   }
 
   if (prefix == "TB04050S") {
     $("#TB04050S_ibDealNo").val(ibDealNo);
     $("#TB04050S_ibDealNm").val(ibDealNm);
     //$("#TB04050S_ibDealNo").focus();
-    getLoiDetail();
-    getDealInfo_TB04050S(ibDealNo);
+    TB04050Sjs.getLoiDetail();
+    TB04050Sjs.getDealInfo_TB04050S(ibDealNo);
   }
 
   if (prefix == "TB05040S") {
-    getDealList();
+    TB05040Sjs.getDealList();
   }
 
   if (prefix == "TB03040S") {
-    ibSpecSearch();
+    TB03040Sjs.ibSpecSearch();
   }
 
   if (prefix == 'TB04020S') {
-    checkDealSearch();
+    TB04020Sjs.checkDealSearch();
   }
 
   if (prefix == "AS04110S") {
@@ -173,7 +173,7 @@ function setDealInfo(e) {
     getReltDealInfo(ibDealNo);
   }
   if (prefix == "TB08010S") {
-    getEamList();
+    TB08010Sjs.getEamList();
   }
 
   
