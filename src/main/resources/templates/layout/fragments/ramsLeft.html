@@ -295,20 +295,20 @@
 							<a class="left-ex" aria-expanded="false">PF사후관리<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level collapse" th:classappend="${#httpServletRequest.requestURI.contains('/TB08031')}?'in':''" aria-expanded="false" th:style="${#httpServletRequest.requestURI.contains('/TB0803')}?'':'height: 0px;'">
 								<li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08031S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08031')}?'active':''">
-									<a th:href="@{/TB08031S}">&nbsp;&nbsp;사업정보 관리</a>
+									<!-- <a th:href="@{/TB08031S}">&nbsp;&nbsp;사업정보 관리</a> -->
                                     <a onclick="callPage('TB08031S', '사업정보 관리');">&nbsp;&nbsp;사업정보 관리</a>
 								</li>
 								<li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08032S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08032')}?'active':''">
-									<a th:href="@{/TB08032S}">&nbsp;&nbsp;인프라PF사업정보 등록</a>
+									<!-- <a th:href="@{/TB08032S}">&nbsp;&nbsp;인프라PF사업정보 등록</a> -->
                                     <a onclick="callPage('TB08032S', '인프라PF사업정보 등록');">&nbsp;&nbsp;인프라PF사업정보 등록</a>
 								</li>
 								<li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08033S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08033')}?'active':''">
-									<a th:href="@{/TB08033S}">&nbsp;&nbsp;인프라/유가증권 사업정보 등록</a>
+									<!-- <a th:href="@{/TB08033S}">&nbsp;&nbsp;인프라/유가증권 사업정보 등록</a> -->
                                     <a onclick="callPage('TB08033S', '인프라/유가증권 사업정보 등록');">&nbsp;&nbsp;인프라/유가증권 사업정보 등록</a>
 
 								</li>
 								<li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08034S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08034')}?'active':''">
-									<a th:href="@{/TB08034S}">&nbsp;&nbsp;M&A 사업정보 등록</a>
+									<!-- <a th:href="@{/TB08034S}">&nbsp;&nbsp;M&A 사업정보 등록</a> -->
                                     <a onclick="callPage('TB08034S', 'M&A 사업정보 등록');">&nbsp;&nbsp;M&A 사업정보 등록</a>
 
 								</li>
