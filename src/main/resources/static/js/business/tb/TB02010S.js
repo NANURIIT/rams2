@@ -28,17 +28,17 @@ const TB02010Sjs = (function(){
 						$.each(infoList, function(key, value) {
 							
 							html += `<tr ondblclick="TB02010Sjs.sendPage('${value.menuId}','${value.workCtns}');" style="cursor: pointer;">`;
-							html += '<td>' + Number(key+1) + '</td>';							// 일련번호
-							html += '<td style="display:none;">' + value.workDcd + '</td>';		// 작업구분코드
-							html += '<td>' + value.workDcdNm + '</td>';							// 작업구분코드명
-							html += '<td>' + formatDate(value.prcsDt) + '</td>';				// 작업일자
-							html += '<td>' + value.workCtns + '</td>';							// 작업설명
-							html += '<td>' + formatDate(value.rqstDt) + '</td>';				// 요청일자
-							html += '<td>' + handleNullData(value.dprtNm) + '</td>';			// 요청부서
-							html += '<td>' + handleNullData(value.regEnoNm) + '</td>';			// 요청자
-							html += '<td>' + value.mtrNm + '</td>';								// 사업명
-							html += '<td>' + value.dealNo + '</td>';							// 딜관리번호
-							html += '<td style="display:none;">' + value.menuId + '</td>';		// menuId
+							html += '<td>' + Number(key+1) + '</td>';								// 일련번호
+							html += '<td style="display:none;">' + value.workDcd + '</td>';			// 작업구분코드
+							html += '<td>' + value.workDcdNm + '</td>';								// 작업구분코드명
+							html += '<td>' + handleNullData(formatDate(value.prcsDt)) + '</td>';	// 작업일자
+							html += '<td>' + value.workCtns + '</td>';								// 작업설명
+							html += '<td>' + handleNullData(formatDate(value.rqstDt)) + '</td>';	// 요청일자
+							html += '<td>' + handleNullData(value.dprtNm) + '</td>';				// 요청부서
+							html += '<td>' + handleNullData(value.regEnoNm) + '</td>';				// 요청자
+							html += '<td>' + handleNullData(value.mtrNm) + '</td>';					// 사업명
+							html += '<td>' + handleNullData(value.dealNo) + '</td>';				// 딜관리번호
+							html += '<td style="display:none;">' + value.menuId + '</td>';			// menuId
 							html += '</tr>';
 							
 							if (isEmpty(value.prcsDt)) {

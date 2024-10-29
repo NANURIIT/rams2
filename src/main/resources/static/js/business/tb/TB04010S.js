@@ -916,6 +916,7 @@ const TB04010Sjs = (function(){
 			data: paramData,
 			dataType: "json",
 			success: function(data) {
+				console.log("TEST_여기 들어옴!! 성공이야");
 				arrPqGridDocInfo.setData(data);
 				arrPqGridDocInfo.option("rowDblClick", function(event, ui) {
 					docInfoDetails(ui.rowData);
@@ -4312,7 +4313,12 @@ const TB04010Sjs = (function(){
 	
 	// tabGrid settings
 	function setDocInfoGrid(){
-		setTimeout(() => arrPqGridDocInfo.refresh(), 1);
+		//setTimeout(() => arrPqGridDocInfo.refresh(), 1);
+		//if (arrPqGridDocInfo && arrPqGridDocInfo.refresh) {
+		//	setTimeout(() => arrPqGridDocInfo.refresh(), 1);
+		//} else {
+		//	console.error("arrPqGridDocInfo가 정의되지 않았습니다.");
+		//}
 	}
 	function setAssetInfoGrid(){
 		setTimeout(() => arrPqGridAssetInfo.refresh(), 1);
@@ -4367,5 +4373,8 @@ const TB04010Sjs = (function(){
 		, tab8BtnReset : tab8BtnReset
 		, tab8BtnDelete : tab8BtnDelete
 		, tab8BtnSave : tab8BtnSave
+		, ldvdCd : ldvdCd
+		, mdvdCd : mdvdCd
+		, sdvdCd : sdvdCd
 	}
 })();

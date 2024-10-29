@@ -1116,5 +1116,8 @@ const TB06020Sjs = (function(){
 		, managePrdtCd : managePrdtCd
 		, setLstMrtg : setLstMrtg
 		, setAtchFle : setAtchFle
+		, ldvdCd : ldvdCd
+		, mdvdCd : mdvdCd
+		, sdvdCd : sdvdCd
 	}
 })();

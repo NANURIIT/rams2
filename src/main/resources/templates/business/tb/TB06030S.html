@@ -88,8 +88,8 @@
 									</div>
 								</div>
 								<div class="col-sm text-right">
-									<button class="btn btn-primary" type="button" onclick="getDealList();"><i class="fa fa-search"></i>&nbsp;조회</button>
-									<button class="btn btn-default" onclick="resetSearchRequiment();"><i class="fa fa-undo"></i>&nbsp;초기화</button>&nbsp;
+									<button class="btn btn-primary" type="button" onclick="TB06030Sjs.getDealList();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-default" onclick="TB06030Sjs.resetSearchRequiment();"><i class="fa fa-undo"></i>&nbsp;초기화</button>&nbsp;
 								</div>
 							</div>
 						</div>
@@ -497,15 +497,15 @@
 										</div>
 										<label class="col-sm-1 col-form-label text-right">출자약정금액</label>
 										<div class="col-sm-2 input-group">
-											<input type="text" class="form-control text-right" style="" id="TB06030S_fincCtrcAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
+											<input type="text" class="form-control text-right" id="TB06030S_fincCtrcAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
 										</div>
 										<label class="col-sm-1 col-form-label text-right text-nowrap">당사출자금액(이행)</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right" style="" id="TB06030S_thcoFincAmt" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
+											<input type="text" class="form-control text-right" id="TB06030S_thcoFincAmt" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
 										</div>
 										<label class="col-sm-1 col-form-label text-right text-nowrap">출자지분율</label>
 										<div class="col-sm-2 input-group">
-											<input type="text" class="form-control text-right mr-1" style="" id="TB06030S_fincQotaRt" readonly>%
+											<input type="text" class="form-control text-right mr-1" id="TB06030S_fincQotaRt" readonly>%
 										</div>
 									</div>
 								</div>
@@ -518,15 +518,15 @@
 										</div>
 										<label class="col-sm-1 col-form-label text-right">출자이행금액</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right" style="" id="TB06030S_fincFlflAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
+											<input type="text" class="form-control text-right" id="TB06030S_fincFlflAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
 										</div>
 										<label class="col-sm-1 col-form-label text-right">현재출자잔액</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right" style="" id="TB06030S_nowFincBlce" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
+											<input type="text" class="form-control text-right" id="TB06030S_nowFincBlce" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
 										</div>
 										<label class="col-sm-1 col-form-label text-right text-nowrap">기준수익율</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right mr-1" style="" id="TB06030S_stdrErnRt" readonly>%
+											<input type="text" class="form-control text-right mr-1" id="TB06030S_stdrErnRt" readonly>%
 										</div>
 										
 									</div>
@@ -540,15 +540,15 @@
 										</div>
 										<label class="col-sm-1 col-form-label text-right text-nowrap">당사출자약정금액</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right" style="" id="TB06030S_thcoFincCtrcAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
+											<input type="text" class="form-control text-right" id="TB06030S_thcoFincCtrcAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
 										</div>
 										<label class="col-sm-1 col-form-label text-right">관리보수잔액</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right" style="" id="TB06030S_mngmPayBlce" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
+											<input type="text" class="form-control text-right" id="TB06030S_mngmPayBlce" readonly oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="inputNumberFormat2(this);">
 										</div>
 										<label class="col-sm-1 col-form-label text-right text-nowrap">관리보수율</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control text-right mr-1" style="" id="TB06030S_mngmPayRt" readonly>%
+											<input type="text" class="form-control text-right mr-1"  id="TB06030S_mngmPayRt" readonly>%
 										</div>
 									</div>
 								</div>
@@ -565,7 +565,7 @@
 										</div>
 										<label class="col-sm-1 col-form-label text-right text-nowrap">출자증서번호</label>
 										<div class="col-sm-2 input-group ">
-											<input type="text" class="form-control" style="" id="TB06030S_fincEdycNo">
+											<input type="text" class="form-control" id="TB06030S_fincEdycNo">
 										</div>
 										<label class="col-sm-1 col-form-label text-right">금감원보고대상</label>
 										<div class="col-sm-0-5 input-group">
@@ -585,8 +585,8 @@
 						</div>
 						<div class="ibox">
 							<div class="text-right">
-								<button class="btn btn-default" type="button" onclick="managePrdtCd(0);" style="margin-left:2px; margin-right:2px;" id="regPrdt" disabled>종목 등록</button>
-								<button class="btn btn-default" type="button" onclick="managePrdtCd(1);" style="margin-left:2px; margin-right:2px;" id="delPrdt" disabled>종목 삭제</button>
+								<button class="btn btn-default" type="button" onclick="TB06030Sjs.managePrdtCd(0);" style="margin-left:2px; margin-right:2px;" id="regPrdt" disabled>종목 등록</button>
+								<button class="btn btn-default" type="button" onclick="TB06030Sjs.managePrdtCd(1);" style="margin-left:2px; margin-right:2px;" id="delPrdt" disabled>종목 삭제</button>
 							</div>
 						</div>
 					</div>
@@ -596,14 +596,14 @@
 				
 				<!-- tab -->
 				<div class="tabs-container mb-2">
-					<ul class="nav nav-tabs" role="tablist" id="ramsTab">
-						<li><a class="nav-link active" data-toggle="tab" href="#tab-1">셀다운 승인조건</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-2" onclick="setLstMrtg();">담보/보증 정보</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-3" onclick="setAtchFle();">첨부파일</a></li>
+					<ul class="nav nav-tabs" role="tablist" id="TB06030S_ramsTab">
+						<li><a class="nav-link active" data-toggle="tab" href="#TB06030S_tab-1">셀다운 승인조건</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB06030S_tab-2" onclick="TB06030Sjs.setLstMrtg();">담보/보증 정보</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB06030S_tab-3" onclick="TB06030Sjs.setAtchFle();">첨부파일</a></li>
 					</ul>
 					<div class="tab-content">
 						<!-- 셀다운 승인조건 -->
-						<div role="tabpanel" class="tab-pane active" id="tab-1">
+						<div role="tabpanel" class="tab-pane active" id="TB06030S_tab-1">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-12">
@@ -659,7 +659,7 @@
 							</div>
 						</div>
 						<!-- 담보정보 -->
-						<div role="tabpanel" class="tab-pane " id="tab-2">
+						<div role="tabpanel" class="tab-pane " id="TB06030S_tab-2">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-12">
@@ -712,7 +712,7 @@
 							</div>
 						</div>
 						<!-- 첨부파일 -->
-						<div role="tabpanel" class="tab-pane " id="tab-3">
+						<div role="tabpanel" class="tab-pane " id="TB06030S_tab-3">
 							<div class="panel-body">
 								<div class="row">
 									<!-- 첨부파일 start -->
