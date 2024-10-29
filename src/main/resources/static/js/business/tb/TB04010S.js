@@ -4367,5 +4367,6 @@ const TB04010Sjs = (function(){
 		, tab8BtnReset : tab8BtnReset
 		, tab8BtnDelete : tab8BtnDelete
 		, tab8BtnSave : tab8BtnSave
+		, ldvdCd : ldvdCd
 	}
 })();
