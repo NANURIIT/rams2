@@ -62,9 +62,9 @@
 									<input type="text" class="form-control" style="width:40px;" id="TB07140S_srchPrdtNm" readonly>
 								</div>
 								<div class="col-sm-2 text-right">
-									<button class="btn btn-primary" type="button" id="" onclick="getFincList();"><i
+									<button class="btn btn-primary" type="button" id="" onclick="TB07140Sjs.getFincList();"><i
 											class="fa fa-search"></i>&nbsp;조회</button>
-									<button id="TB07140S_" class="btn btn-default" onclick="removeAll();"><i
+									<button id="TB07140S_" class="btn btn-default" onclick="TB07140Sjs.removeAll();"><i
 											class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
@@ -84,8 +84,8 @@
 										<label class="col-sm-1">처리구분</label>
 										<div class="col-sm-3 input-group">
 											<div class="btn-group col-sm-6 pd0" role="group" aria-label="">
-												<button class="btn btn-s toggleBtn1 btn-info" onclick="insertBtn();">등록</button>
-												<button class="btn btn-s toggleBtn2 btn-default" onclick="cancelBtn();">취소</button>
+												<button class="btn btn-s toggleBtn1 btn-info" onclick="TB07140Sjs.insertBtn();">등록</button>
+												<button class="btn btn-s toggleBtn2 btn-default" onclick="TB07140Sjs.cancelBtn();">취소</button>
 											</div>
 										</div>
 									</div>
@@ -331,9 +331,9 @@
 								</div>
 								<div class="row">
 									<div class="col-sm-12 text-right">
-										<button class="btn btn-info" onclick="pqExportExcel();"><i
+										<button class="btn btn-info" onclick="TB07140Sjs.pqExportExcel();"><i
 												class="fa fa-save"></i>&nbsp;엑셀저장</button>
-										<button class="btn btn-success" onclick="excFinc();"><i
+										<button class="btn btn-success" onclick="TB07140Sjs.excFinc();"><i
 												class="fa fa-check"></i>&nbsp;실행</button>
 									</div>
 								</div>

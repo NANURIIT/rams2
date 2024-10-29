@@ -1214,6 +1214,8 @@ const TB07010Sjs = (function() {
 	,	save : save
 	,	showAlert119 : showAlert119
 	,	ldgMovePage : ldgMovePage
+	,	calAcbkAmt : calAcbkAmt
+	,	calKrwTrsl : calKrwTrsl
 	}
 
 })();
