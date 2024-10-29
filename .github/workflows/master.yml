@@ -37,7 +37,7 @@ jobs:
     - name: Transfer artifact
       uses: appleboy/scp-action@master
       with:
-        timeout: 3000
+        timeout: 30m
         username: ${{ secrets.SSH_USERNAME }}
         host: ${{ secrets.SSH_HOST }}
         key: ${{ secrets.SSH_KEY }}
