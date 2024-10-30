@@ -108,7 +108,7 @@ function setDvdCdId(e){
 
 		$('#TB04010S_I030').val(mdvdCdVl).prop("selected", true).change();	// 투자상품중분류
 
-		$('#TB04010S_I029').val(sdvdCdVl).prop("selected", true).change();	// 투자상품소분류
+		$('#TB04010S_I031').val(sdvdCdVl).prop("selected", true).change();	// 투자상품소분류
 
 	}
 
