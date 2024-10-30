@@ -36,7 +36,7 @@
                         </li>
                     </ul>
                 </li> -->
-                <li th:each="hgRnkMenuId : ${menuListM}" th:if="${hgRnkMenuId.HG_RNK_MENU_ID} == 'TB02'" th:classappend="${#httpServletRequest.requestURI.contains('/TB02')}?'active':''">
+                <!-- <li th:each="hgRnkMenuId : ${menuListM}" th:if="${hgRnkMenuId.HG_RNK_MENU_ID} == 'TB02'" th:classappend="${#httpServletRequest.requestURI.contains('/TB02')}?'active':''">
                     <a href="#">
                         <i class="fa fa-th-large"></i>
                         <span class="nav-label">오늘의 할 일</span>
@@ -47,7 +47,7 @@
                             <a th:href="@{/TB02010S}">오늘의 할 일</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li th:each="hgRnkMenuId : ${menuListM}" th:if="${hgRnkMenuId.HG_RNK_MENU_ID} == 'TB03'" th:classappend="${#httpServletRequest.requestURI.contains('/TB03')}?'active':''">
                     <a href="#">
                         <i class="fa fa-folder-open-o"></i>
