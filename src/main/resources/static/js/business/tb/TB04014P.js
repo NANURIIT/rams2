@@ -2,6 +2,10 @@ var ldvdCd;
 var mdvdCd;
 var sdvdCd;
 
+ldvdCd = TB04010Sjs.ldvdCd;
+mdvdCd = TB04010Sjs.mdvdCd;
+sdvdCd = TB04010Sjs.sdvdCd;
+
 /**
  * 모달 팝업 show
  * @param {string} prefix 결과전달 ID의 prefix
@@ -21,11 +25,10 @@ function modalClose_TB04014P() {
 
 function makeTable(){
 	var html = "";
-	
+
 	$.each(sdvdCd, function(key, value) {
 		var sdvdCdPre1 = value.cdValue.slice(0,-1);
 		var sdvdCdPre2 = value.cdValue.slice(0,-2) + "0";
-		
 
 		html += "<tr>";
 		html += "<td style='display:none;'>";
