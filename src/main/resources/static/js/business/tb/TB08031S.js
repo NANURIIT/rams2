@@ -194,7 +194,7 @@ const TB08031Sjs = (function(){
 	function loadInvbnkAmnBzCd() {
 		$.ajax({
 			type: "GET",
-			url: "/getSelectBoxCode/I029",
+			url: "/getSelectBoxCode/I020",
 			dataType: "json",
 			success: function(data) {
 				var html = "";
@@ -1552,7 +1552,7 @@ const TB08031Sjs = (function(){
 			}
 		}
 		
-		var tabPst = $('#ramsTab').children();
+		var tabPst = $('#TB08031S_ramsTab').children();
 		switch(firstLetter) {
 			case 'A' :/* TAB MENU SHOW/HIDE */
 						$('#TB08031S_invbnkAmnBzCd').val('01');
