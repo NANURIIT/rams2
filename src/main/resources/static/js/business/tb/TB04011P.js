@@ -181,13 +181,24 @@ function setMtrInfo(e) {
 	}
 	
 	if (prefix == 'TB06012P') {
-		getAppvCndt(ibDealNo, lstCCaseCcd, riskInspctCcd);
+		TB06012P_getAppvCndt(ibDealNo, lstCCaseCcd, riskInspctCcd);
 	}
 	
 	if (prefix == 'TB06010S' || prefix == 'TB06020S' || prefix == 'TB06030S') {
-		$('#TB06010S_ibDealNo').val(ibDealNo);
-		$('#TB06010S_ibDealNo').focus();
-		getDealList();
+		$(`#${prefix}_ibDealNo`).val(ibDealNo);
+		$(`#${prefix}_ibDealNo`).focus();
+
+		if(prefix == 'TB06010S'){
+			TB06010Sjs.getDealList();
+		}else
+		if (prefix == 'TB06020S'){
+			TB06020Sjs.getDealList();
+		}else
+
+		if(prefix == 'TB06030S'){
+			TB06030Sjs.getDealList();
+		}
+
 	}
 
 	modalClose_TB04011P();

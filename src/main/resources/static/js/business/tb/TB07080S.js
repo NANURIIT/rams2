@@ -1005,5 +1005,6 @@ const TB07080Sjs = (function () {
     TB07080S_addNewRow: TB07080S_addNewRow,
     TB07080S_deleteRow: TB07080S_deleteRow,
     updateTB07080S: updateTB07080S,
+    getExcSn: getExcSn
   };
 })();

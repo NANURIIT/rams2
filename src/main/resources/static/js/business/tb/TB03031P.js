@@ -198,7 +198,7 @@ function registRmSave() {
 						//setRmInfo($('#TB03030S_entpInfo').children('tr').first());
 					}
 					$('#modal-TB03031P').modal('hide');
-					getEntpInfo();
+					TB03030Sjs.getEntpInfo();
 					$("#gridRmEntpInfo").pqGrid("option", "dataModel.data", []);
 					$("#gridRmEntpInfo").pqGrid("refreshDataAndView");
 					$("#gridRmInfo").pqGrid("option", "dataModel.data", []);

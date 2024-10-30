@@ -15,11 +15,11 @@ const TB08040Sjs = (function () {
     selectBox = getSelectBoxList(
       "TB08040S",
       "F004" + // 수수료종류코드 FEE_KND_CD
-        "/F006" + // 수수료인식구분 FEE_RCOG_DCD
-        "/E027" + // 과세유형구분코드 TXTN_TP_DCD
-        "/F001" + // 수수료선후급구분코드 FEE_BNAP_DCD
-        "/T006" + // 수수료과세여부 FEE_TXTN_YN
-        "/I027", // 통화코드
+      "/F006" + // 수수료인식구분 FEE_RCOG_DCD
+      "/E027" + // 과세유형구분코드 TXTN_TP_DCD
+      "/F001" + // 수수료선후급구분코드 FEE_BNAP_DCD
+      "/T006" + // 수수료과세여부 FEE_TXTN_YN
+      "/I027", // 통화코드
       false
     );
     // 수수료종류코드
@@ -712,7 +712,7 @@ const TB08040Sjs = (function () {
             resetAll("", ["grd_feeSch"]);
           }
         },
-        error: function (result) {},
+        error: function (result) { },
       });
     }
   }
@@ -974,7 +974,7 @@ const TB08040Sjs = (function () {
   }
 
   // swal.fire
-  function sf(flag, icon, text, callback = () => {}) {
+  function sf(flag, icon, text, callback = () => { }) {
     if (flag === 1) {
       Swal.fire({
         icon: `${icon}`,
@@ -991,5 +991,18 @@ const TB08040Sjs = (function () {
       }).then(callback);
     }
   }
-  return {};
+  return {
+    feeSch: feeSch
+    , grdSelect: grdSelect
+    , feeSchLen: feeSchLen
+    , selectBox: selectBox
+    , saveGrid: saveGrid
+    , fValid: fValid
+    , srch: srch
+    , save: save
+    , validation: validation
+    , gridEvt: gridEvt
+    , chkGrd: chkGrd
+    , sf: sf
+  };
 })();

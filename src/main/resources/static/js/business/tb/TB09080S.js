@@ -1,4 +1,4 @@
-const TB09090Sjs = (function () {
+const TB09080Sjs = (function () {
   let dealDtlsIns; //거래내역 grid instance
 
   let colM_TB09080S = [

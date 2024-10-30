@@ -300,6 +300,6 @@ function setMrtgInfo(e) {
 	$(pageMrtgMngmNo).val(e.mrtgMngmNo);
 	$(pageMrtgNm).val(e.mrtgNm);
 	
-	getMrtgInfoDetails();
+	TB06013P_getMrtgInfoDetails();
 	modalClose_TB06017P();
 }
