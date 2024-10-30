@@ -9,6 +9,7 @@ function callPage(menuId, pageName) {
     } else
         // 이미 생성되었다가 지워진 탭이면 탭을 재생성
         if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
+
             $('#myTab').append(`
             <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
@@ -72,7 +73,7 @@ function callPage(menuId, pageName) {
             const $modals = $('.modal.fade');
             const $script = $('script');
 
-	        // $('.tab-content div[role="tabpanel"]').addClass('active');
+            // $('.tab-content div[role="tabpanel"]').addClass('active');
 
             // html요소, script요소 중복제거 for문
             for (let i = 0; i < $this.length; i++) {
@@ -96,8 +97,6 @@ function callPage(menuId, pageName) {
                             // 공통 플러그인 중 중복실행되면 안되는것들 체크
                             if (
                                 false
-
-                                // || $($script[j]).attr('src') === "js/common.js"
 
                                 || $($script[j]).attr('src') === "js/jquery-3.1.1.min.js"
                                 || $($script[j]).attr('src') === "js/plugins/popper/popper.min.js"
@@ -125,15 +124,18 @@ function callPage(menuId, pageName) {
 
                                 || $($script[j]).attr('src') === "js/ramsLayout.js"
 
-                                || $($script[j]).attr('src') === "js/callPageTest.js"
+                                || $($script[j]).attr('src') === "js/callPage.js"
                                 || $($script[j]).attr('src') === "js/plugins/slimscroll/jquery.slimscroll.min.js"
                                 || $($script[j]).attr('src') === "js/plugins/pace/pace.min.js"
+
                             ) {
                                 isDuplicateScript = true;
                             } else
                                 // 나머지 공통 플러그인은 재실행
                                 if (($($script[j]).attr('src')).split('/')[1] != "business") {
-                                    // console.log($($this[i]).attr('src'));
+                                    console.log("가져왔어요?");
+                                    console.log($($this[i]).attr('src'));
+                                    isDuplicateScript = false;
                                 }
                                 /**
                                  * 나머지 스크립트
@@ -142,13 +144,11 @@ function callPage(menuId, pageName) {
                                     // 나머지 팝업함수 등등은 한번만 나오게 거름
                                     isDuplicateScript = true;
                                 }
-
-                            // isDuplicateScript = true;
-
-                            break;
                         }
                     }
                     if (!isDuplicateScript) {
+                        console.log("무엇을 뿌렸는가");
+                        console.log($this[i]);
                         $('body').append($this[i]); // 중복된 스크립트가 아니면 body에 추가
                     }
                 }
