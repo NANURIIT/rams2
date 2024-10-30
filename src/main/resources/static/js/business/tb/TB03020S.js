@@ -1,4 +1,5 @@
 const TB03020Sjs = (function(){
+	
 	var loginUserId = '';
 	let pqGridObjEnopList;
 
