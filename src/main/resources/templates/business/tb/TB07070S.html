@@ -54,7 +54,7 @@
 								<label class="col-sm-1 col-form-label">거래일자</label>
 								<div class="col-sm-3 input-group">
 									<div class="col-sm-12 input-group date px-0">
-										<input type="text" class="form-control" id="TB07070S_trDt" name="" value="" placeholder="YYYY-MM-DD">
+										<input type="text" class="form-control" id="TB07070S_trDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');" value="" placeholder="YYYY-MM-DD">
 										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 									</div>
 								</div>

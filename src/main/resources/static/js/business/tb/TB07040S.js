@@ -2342,5 +2342,10 @@ const TB07040Sjs = (function () {
     compClear: compClear,
     setHoldPrpsDcd: setHoldPrpsDcd,
     showAlert: showAlert,
+    btnAdd: btnAdd,
+    btnCancel: btnCancel,
+    calcTrAmt: calcTrAmt,
+    calcTrslAmt: calcTrslAmt,
+    setHoldPrpsDcd: setHoldPrpsDcd,
   };
 })();
