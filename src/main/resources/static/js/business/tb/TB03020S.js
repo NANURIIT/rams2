@@ -1140,9 +1140,10 @@ const TB03020Sjs = (function(){
 	];
 
 	return{
+
+		//	함수
 		resetSrchCondition : resetSrchCondition
 		, getBscDealDetail : getBscDealDetail
-		, resetSrchCondition : resetSrchCondition
 		, tabCtrl : tabCtrl
 		, mngPListDelRow : mngPListDelRow
 		, saveDeal : saveDeal

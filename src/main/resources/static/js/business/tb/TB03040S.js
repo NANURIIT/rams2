@@ -171,6 +171,8 @@ const TB03040Sjs = (function(){
   ];
   
   return{
+
+    //  함수
     ibSpecSearch : ibSpecSearch
   }
 })();

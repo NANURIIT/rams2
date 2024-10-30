@@ -91,6 +91,8 @@ const TB02010Sjs = (function(){
 	}
 
 	return {
+
+		//	함수
 		sendPage : sendPage
 	}
 })();

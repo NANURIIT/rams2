@@ -1271,6 +1271,16 @@ const TB07010Sjs = (function () {
     /**
      * 사용 할 함수 정의
      */
+    
+    //  전역변수
+    feeRciv: feeRciv,
+    prcsCpltYn: prcsCpltYn,
+    feeSn: feeSn,
+    prarDt: prarDt,
+    fValid: fValid,
+    F006: F006,
+
+    // 함수
     srch: srch,
     reset: reset,
     setLoanablAmt: setLoanablAmt,
@@ -1280,11 +1290,6 @@ const TB07010Sjs = (function () {
     ldgMovePage: ldgMovePage,
     calAcbkAmt: calAcbkAmt,
     calKrwTrsl: calKrwTrsl,
-    feeRciv: feeRciv,
-    prcsCpltYn: prcsCpltYn,
-    feeSn: feeSn,
-    prarDt: prarDt,
-    fValid: fValid,
-    F006: F006,
+
   };
 })();

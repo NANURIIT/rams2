@@ -254,12 +254,18 @@ const TB05040Sjs = (function(){
 			dataType: "json",
 			success: function(data) {
 				var dealInfo = data;
-				
+				/**
+				 * 결의협의체 조건
+				 */
 				if (!isEmpty(dealInfo.cnsbDcd)) {
 					$('#TB05040S_riskInspctRsltnCcd').val(dealInfo.cnsbDcd).prop("selected", true);					// 결의협의체
 				} else{
 					$('#TB05040S_rsltnCnfrncCcd option:eq(0)').prop("selected", true);								// 결의협의체
 				}
+
+				/**
+				 * 지주사전협의 조건
+				 */
 				if (!isEmpty(dealInfo.fstCnfrncF)) {
 					$('#TB05040S_fstCnfrncF').val(dealInfo.fstCnfrncF).prop("selected", true);						// 지주사전협의	
 				} else {

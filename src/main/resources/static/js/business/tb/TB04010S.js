@@ -4340,7 +4340,14 @@ const TB04010Sjs = (function(){
 	}
 
 	return{
-		getDealList : getDealList
+		
+		//	전역변수
+		ldvdCd : ldvdCd
+		, mdvdCd : mdvdCd
+		, sdvdCd : sdvdCd
+
+		//	함수
+		, getDealList : getDealList
 		, btnReset : btnReset
 		, deleteDealInfo : deleteDealInfo
 		, assesmentRequest : assesmentRequest
@@ -4373,8 +4380,5 @@ const TB04010Sjs = (function(){
 		, tab8BtnReset : tab8BtnReset
 		, tab8BtnDelete : tab8BtnDelete
 		, tab8BtnSave : tab8BtnSave
-		, ldvdCd : ldvdCd
-		, mdvdCd : mdvdCd
-		, sdvdCd : sdvdCd
 	}
 })();
