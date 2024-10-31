@@ -1,6 +1,6 @@
-var ldvdCd;
-var mdvdCd;
-var sdvdCd;
+var ldvdCd = TB06010Sjs.ldvdCd;
+var mdvdCd = TB06010Sjs.mdvdCd;
+var sdvdCd = TB06010Sjs.sdvdCd;
 
 /**
  * 모달 팝업 show
