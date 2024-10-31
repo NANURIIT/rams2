@@ -1381,7 +1381,7 @@ const TB07060Sjs = (function () {
    * Event
    *******************************************************************/
   // tab1 거래내역
-  $("#tab1").on("click", function () {
+  $("#TB07060S_tab1").on("click", function () {
     // trDtls.refresh()
     // intrTrDtls.refresh()
     // feeRcivDtls.refresh()
@@ -1389,12 +1389,12 @@ const TB07060Sjs = (function () {
   });
 
   // tab2 실행원장
-  $("#tab2").on("click", function () {
+  $("#TB07060S_tab2").on("click", function () {
     inqExcLdg();
   });
 
   // tab3 실행금리정보
-  $("#tab3").on("click", function () {
+  $("#TB07060S_tab3").on("click", function () {
     //    excIntrtInf.refresh();
     inqExcIntrtInf();
   });
