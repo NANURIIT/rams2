@@ -146,6 +146,8 @@ function callTB07021P(prefix) {
 	
 	$('#TB07021P_prefix').val(prefix);
 	$('#modal-TB07021P').modal('show');
+	indexChangeHandler("TB07021P");
+	
 	setTimeout(() => showFnltGrid(), 300);					//그리드 호출
 
 }

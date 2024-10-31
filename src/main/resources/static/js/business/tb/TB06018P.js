@@ -9,6 +9,7 @@ var sdvdCd;
 function callTB06018P(prefix) {
 	$('#TB06018P_prefix').val(prefix);
 	$('#modal-TB06018P').modal('show');
+	indexChangeHandler("TB06018P");
 	makeTable();
 }
 

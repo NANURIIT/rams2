@@ -18,6 +18,7 @@ async function callTB06013P(prefix) {
 
   $("#TB06013P_prefix").val(prefix);
   $("#modal-TB06013P").modal("show");
+	indexChangeHandler("TB06013P");
 
   // setTimeout(() => {
   //   setGrid_TB06013P();

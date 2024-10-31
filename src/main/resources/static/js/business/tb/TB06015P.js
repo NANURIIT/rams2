@@ -1996,6 +1996,7 @@ function keyDownEnter_TB06015P() {
 function callTB06015P(prefix) {
 	$('#TB06015P_prefix').val(prefix);
 	$('#modal-TB06015P').modal('show');
+	indexChangeHandler("TB06015P");
 
 	sltBoxSet_pqGrid();
 

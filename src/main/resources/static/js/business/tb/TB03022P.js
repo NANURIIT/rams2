@@ -15,6 +15,7 @@ function callTB03022P(prefix, e) {
 	reset_TB03022P();
 	$('#TB03022P_prefix').val(prefix);
 	$('#modal-TB03022P').modal('show');
+	indexChangeHandler("TB03022P");
 	setTimeout(() => {
 		let setPqGridObj = [
 			{

@@ -1582,6 +1582,18 @@ function vldDateVal (){
 	})
 }
 
+
+/**
+ * 마지막에 부른 모달 최상위 index로 올리기
+ * @param {String} prefix 화면명
+ */
+function indexChangeHandler (prefix) {
+	// console.log("");
+	$(`div[id*="modal-"]`).css('z-index', '');
+	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
+	$(`#modal-${prefix}`).attr('style', 'z-index: 4000 !important;');
+}
+
 // $(document).ajaxComplete(function (event, xhr, settings) {
 //     const $this = $(".input-group.date input[class='form-control']");
 // 	if(($this.val()).length === 8){

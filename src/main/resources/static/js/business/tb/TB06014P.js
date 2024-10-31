@@ -15,6 +15,7 @@ function callTB06014P(prefix) {
 	clearTB06014P();
 	$('#TB06014P_prefix').val(prefix);
 	$('#modal-TB06014P').modal('show');
+	indexChangeHandler("TB06014P");
 }
 
 /**

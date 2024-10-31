@@ -9,6 +9,7 @@ function callTB06012P(prefix) {
   $("#TB06012P_prefix").val(prefix);
   TB06012P_getAppvCndt();
   $("#modal-TB06012P").modal("show");
+	indexChangeHandler("TB06012P");
   $("#TB06012P_I027").val("KRW").prop('selected', true);
   setTimeout(() => {
     let obj = {

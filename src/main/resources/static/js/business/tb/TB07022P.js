@@ -173,6 +173,8 @@ function callTB07022P(prefix) {
 
 	$('#TB07022P_prefix').val(prefix);
 	$('#modal-TB07022P').modal('show');
+	indexChangeHandler("TB07022P");
+
 	setTimeout(() => showFndGrid(), 300);					//그리드 호출	
 }
 

@@ -211,6 +211,7 @@ function callTB06017P(prefix) {
 
 	$('#TB06017P_prefix').val(prefix);
 	$('#modal-TB06017P').modal('show');
+	indexChangeHandler("TB06017P");
 	setTimeout(() => roadMrtgInfoListGrid(), 300);
 }
 

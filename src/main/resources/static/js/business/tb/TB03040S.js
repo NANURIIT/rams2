@@ -11,12 +11,12 @@ const TB03040Sjs = (function(){
       {
         height: 500,
         maxHeight: 500,
-        id: "gridDealList",
+        id: "TB03040S_gridDealList",
         colModel: colDealList,
       },
     ];
     setPqGrid(arrPqGridObj);
-    pqGridObjEnopList = $("#gridDealList").pqGrid("instance");
+    pqGridObjEnopList = $("#TB03040S_gridDealList").pqGrid("instance");
   });
 
   // 유효성 검사용 날짜패턴

@@ -13,6 +13,8 @@ function callTB03031P(prefix) {
 	modalReset();
 	$('#prefix_TB03031P').val(prefix);
 	$('#modal-TB03031P').modal('show');
+	indexChangeHandler("TB03031P");
+
 	// setTimeout(() => {
 		
 	// 	$("#gridModalRmFileInfo").pqGrid(obj);

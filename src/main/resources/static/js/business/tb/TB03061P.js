@@ -31,6 +31,8 @@ function callTB03061P(prefix, e) {
 	keyDownEnter_TB03061P();
 	$('#TB03061P_prefix').val(prefix);
 	$('#modal-TB03061P').modal('show');
+	indexChangeHandler("TB03061P");
+
 	setTimeout(() => {
 		/** 첨부파일그리드 **/
 		let arrModalPqGridObj = [
