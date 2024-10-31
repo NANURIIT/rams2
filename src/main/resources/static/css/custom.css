@@ -113,7 +113,7 @@ select.form-control {   height: 32px;}
 
 /******************** wrapper ********************/
 #page-wrapper {background: #e9ecef;}
-#page-wrapper .page-heading {}
+#page-wrapper .page-heading {margin-top: -2px;}
 #page-wrapper .page-heading h2 {color: #12689f; font-weight:bold;}
 #page-wrapper .page-heading h2:before{content: ' '; margin: 0 6px; background: #12689f; font-size: 22px; width: 5px; height: 5px; display: block; float: left; margin-top: 10px; border-radius: 6px;}
 span.req::before {content: '*'; font-size: 14px; font-weight: lighter;}
@@ -374,6 +374,7 @@ hr{ margin-top: 0.5rem;
     font-weight: bold;
     color: #666666;
 	position: relative;
+	border-radius: 5px 5px 0 0;
 }
 .top-tabs-container > .top-nav-tabs .nav-link {
 	float: left; 
@@ -440,6 +441,11 @@ hr{ margin-top: 0.5rem;
 .top-tabs-container .top-nav-tabs > li .fa.fa-close {
 	cursor: pointer;
 	position: absolute;
-	right: 3px;
-	top: 3px;
+	right: 6px;
+	top: 5px;
+}
+.top-tabs-container .top-nav-tabs > li .fa.fa-close::before{    
+	content: '\00d7';
+	-webkit-text-stroke: 0.5px #333;
+	font-size: 1rem;
 }
