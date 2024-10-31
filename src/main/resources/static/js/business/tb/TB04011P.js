@@ -14,6 +14,8 @@ function callTB04011P(prefix) {
 			$('#modal-TB04011P').modal('show');
 			break;
 	}
+	indexChangeHandler("TB04011P");
+
 	setTimeout(() => {
 		let setPqGridObj = [
 			{

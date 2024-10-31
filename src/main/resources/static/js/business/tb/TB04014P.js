@@ -13,6 +13,7 @@ sdvdCd = TB04010Sjs.sdvdCd;
 function callTB04014P(prefix) {
 	$('#TB04014P_prefix').val(prefix);
 	$('#modal-TB04014P').modal('show');
+	indexChangeHandler("TB04014P");
 	makeTable();
 }
 

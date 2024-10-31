@@ -10,6 +10,7 @@ const dummyData = TB06016P_rowData;
 function callTB06016P(prefix) {
 	$('#TB06016P_prefix').val(prefix);
 	$('#modal-TB06016P').modal('show');
+	indexChangeHandler("TB06016P");
 	TB06016P_setData();
 	setTimeout(() => TB06016P_pqGrid(), 300);
 	setTimeout(() => TB06016P_getMdwyRdmpFeeRto(), 350);

@@ -10,6 +10,7 @@ function callTB06019P(prefix) {
 
 	$('#TB06019P_prefix').val(prefix);
 	$('#modal-TB06019P').modal('show');
+	indexChangeHandler("TB06019P");
 	setKeyFunction_TB06019P();
 }
 

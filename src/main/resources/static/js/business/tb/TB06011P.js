@@ -402,6 +402,7 @@ function callTB06011P(prefix) {
 	$('#TB06011P_prefix').val(prefix);
 	$('#modal-TB06011P').modal('show');
 	setTimeout(() => roadPrdtCdListGrid(), 300);
+	indexChangeHandler("TB06011P")
 
 
 }

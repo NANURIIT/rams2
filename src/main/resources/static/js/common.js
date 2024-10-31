@@ -1590,7 +1590,8 @@ function vldDateVal (){
 function indexChangeHandler (prefix) {
 	console.log("인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기");
 	$(`div[id*="modal-"]`).css('z-index', '');
-	$(`#modal-${prefix}`).css('z-index', '4000 !important;');
+	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
+	$(`#modal-${prefix}`).attr('style', 'z-index: 4000 !important;');
 }
 
 // $(document).ajaxComplete(function (event, xhr, settings) {
