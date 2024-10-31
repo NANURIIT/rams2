@@ -8,7 +8,8 @@
 	<script th:src="@{js/common.js}"></script>
 	<script th:src="@{js/fileUpload.js}"></script>
 	<script th:src="@{js/business/tb/TB04010S.js}"></script>
-	<script th:src="@{js/business/tb/TB04014P.js}"></script>
+	<script th:src="@{js/business/popup/AC01140P.js}"></script>
+	<!-- <script th:src="@{js/business/tb/TB04014P.js}"></script> -->
 	<script th:src="@{js/business/tb/TB04013P.js}"></script>
 	<script th:src="@{js/business/tb/TB04012P.js}"></script>
 	<script th:src="@{js/business/tb/TB03023P.js}"></script>
@@ -18,7 +19,8 @@
 </th:block>
 
 <th:block layout:fragment="modalpopup">
-	<th:block th:replace="business/tb/TB04014P :: TB04014P"></th:block>
+	<th:block th:replace="business/popup/AC01140P :: AC01140P"></th:block>
+	<!-- <th:block th:replace="business/tb/TB04014P :: TB04014P"></th:block> -->
 	<th:block th:replace="business/tb/TB04013P :: TB04013P"></th:block>
 	<th:block th:replace="business/tb/TB04012P :: TB04012P"></th:block>
 	<th:block th:replace="business/tb/TB03023P :: TB03023P"></th:block>
@@ -175,7 +177,7 @@
 													<div class="ibox-title">
 														<h5>▶&nbsp;투자형태</h5>
 														<div class="ibox-tools">
-															<button class="btn btn-default btn-xs" type="button" onclick="callTB04014P('TB04010S');">금융상품분류찾기</button>
+															<button class="btn btn-default btn-xs" type="button" onclick="callAC01140P('TB04010S');">금융상품분류찾기</button>
 														</div>
 													</div>
 													<div class="ibox-content text-right">
