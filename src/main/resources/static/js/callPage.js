@@ -18,9 +18,9 @@ function callPage(menuId, pageName) {
         } else
         // 이미 생성되었다가 지워진 탭이면 탭을 재생성
         if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
-
+            $(".main-tab").removeClass("active");
             $('#myTab').append(`
-            <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
+            <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
                         type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
                     </button>
@@ -62,9 +62,12 @@ function callPage(menuId, pageName) {
             // 새로운 타이틀 생성
             $(`#title-top`).append($title);
 
+            //기존 탭들 active 클래스 삭제
+            $(".main-tab").removeClass("active");
+
             // 새로운 탭 생성
             $('#myTab').append(`
-                    <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
+                    <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
                             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
                                 type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
                             </button>
@@ -180,9 +183,12 @@ function moveTab(menuId) {
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
         return;
     }
+    
+    $(".main-tab").removeClass("active");
 
     $("#myTab li button").removeClass('active');
     $(`#myTab li button[data-tabid="/${menuId}"]`).addClass('active');
+    $(`#myTab li[data-tabid="/${menuId}"]`).addClass('active');
 
     // 상단 타이틀요소 이동
     $(`div[data-titleId*="TB"], div[data-titleId*="GD"]`).hide()
