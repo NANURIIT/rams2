@@ -1279,6 +1279,7 @@ const TB06030Sjs = (function(){
 		, managePrdtCd : managePrdtCd
 		, setLstMrtg : setLstMrtg
 		, setAtchFle : setAtchFle
+		, getIBIMS212BDTOInfo: getIBIMS212BDTOInfo
 		, ldvdCd : ldvdCd
 		, mdvdCd : mdvdCd
 		, sdvdCd : sdvdCd
