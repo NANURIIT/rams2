@@ -3,10 +3,19 @@ function callPage(menuId, pageName) {
     const url = window.location.pathname;
     console.log(url);
 
+    
+
     if (url === "/" + menuId) {
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
         return;
     } else
+        if($('#myTab li').length >= 10){
+            Swal.fire({
+                icon: 'warning'
+                , title: "10개 이상의 페이지를 여실 수 없습니다!"
+            })
+            return;
+        } else
         // 이미 생성되었다가 지워진 탭이면 탭을 재생성
         if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
 
