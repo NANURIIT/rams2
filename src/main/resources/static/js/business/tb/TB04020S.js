@@ -1,4 +1,4 @@
-const TB0420Sjs = (function(){
+const TB04020Sjs = (function(){
 	let pqGridObjDealList;
 	$(document).ready(function() {
 	
