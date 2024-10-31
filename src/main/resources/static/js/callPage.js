@@ -38,7 +38,7 @@ function callPage(menuId, pageName) {
                 return;
             }
 
-    // history.pushState(null, '', '/' + menuId);
+    history.pushState(null, '', '/' + menuId);
 
     // AJAX 요청으로 해당 콘텐츠를 가져옴
     $.ajax({
