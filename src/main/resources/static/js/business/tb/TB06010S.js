@@ -1977,6 +1977,8 @@ const TB06010Sjs = (function(){
 	}
 
 	return {
+		
+		// 함수
 		getDealList : getDealList
 		, resetSearchRequiment : resetSearchRequiment
 		, changeExpDt : changeExpDt
@@ -1992,6 +1994,9 @@ const TB06010Sjs = (function(){
 		, tab5BtnReset : tab5BtnReset
 		, tab5BtnDelete : tab5BtnDelete
 		, tab5BtnSave : tab5BtnSave
+		, getIBIMS212BDTOInfo: getIBIMS212BDTOInfo
+
+		// 변수
 		, ldvdCd : ldvdCd
 		, mdvdCd : mdvdCd
 		, sdvdCd : sdvdCd
