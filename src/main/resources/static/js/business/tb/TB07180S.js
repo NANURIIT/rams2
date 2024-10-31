@@ -660,7 +660,6 @@ const TB07180Sjs = (function () {
   return {
     getFeeData: getFeeData,
     resetInputData: resetInputData,
-    pqExportExcel: pqExportExcel,
     insertFeeData: insertFeeData,
   };
 })();

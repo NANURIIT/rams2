@@ -1423,5 +1423,6 @@ const TB07050Sjs = (function () {
     resetMore: resetMore,
     gridEvt: gridEvt,
     save: save,
+    srchExcSn: srchExcSn,
   };
 })();

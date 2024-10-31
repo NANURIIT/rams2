@@ -1438,5 +1438,6 @@ const TB07060Sjs = (function () {
   return {
     srch: srch,
     reset: reset,
+    srchExcSn: srchExcSn,
   };
 })();

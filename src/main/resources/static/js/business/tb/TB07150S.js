@@ -821,5 +821,6 @@ const TB07150Sjs = (function () {
     srch: srch,
     reset: reset,
     cndChng: cndChng,
+    srchExcSn_TB07150S: srchExcSn_TB07150S,
   };
 })();
