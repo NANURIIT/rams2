@@ -1588,7 +1588,7 @@ function vldDateVal (){
  * @param {String} prefix 화면명
  */
 function indexChangeHandler (prefix) {
-	console.log("인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기인덱스바꾸기");
+	// console.log("");
 	$(`div[id*="modal-"]`).css('z-index', '');
 	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
 	$(`#modal-${prefix}`).attr('style', 'z-index: 4000 !important;');
