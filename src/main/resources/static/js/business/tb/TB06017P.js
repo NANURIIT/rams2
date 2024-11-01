@@ -211,6 +211,7 @@ function callTB06017P(prefix) {
 
 	$('#TB06017P_prefix').val(prefix);
 	$('#modal-TB06017P').modal('show');
+	indexChangeHandler("TB06017P");
 	setTimeout(() => roadMrtgInfoListGrid(), 300);
 }
 
@@ -300,6 +301,6 @@ function setMrtgInfo(e) {
 	$(pageMrtgMngmNo).val(e.mrtgMngmNo);
 	$(pageMrtgNm).val(e.mrtgNm);
 	
-	getMrtgInfoDetails();
+	TB06013P_getMrtgInfoDetails();
 	modalClose_TB06017P();
 }

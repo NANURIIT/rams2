@@ -4,7 +4,7 @@
 /** onload **/
 $(function () {
 	// datepicker 초기화
-	var dpDate = $('.input-group.date').datepicker({
+	$('.input-group.date').datepicker({
 		format: "yyyy-mm-dd",
 		todayBtn: "linked",
 		keyboardNavigation: false,
@@ -13,7 +13,7 @@ $(function () {
 		autoclose: true,
 		language: "ko"
 	});
-	var dpMonth = $('.input-group.month').datepicker({
+	$('.input-group.month').datepicker({
 		format: "yyyy-mm",
 		keyboardNavigation: false,
 		forceParse: false,
@@ -23,8 +23,17 @@ $(function () {
 		minViewMode: "months",
 		startView: "months"
 	});
-	var cpTime = $('.input-group.clockpicker').clockpicker({
+	$('.input-group.clockpicker').clockpicker({
 	});
+	// setGridFromRamstab();
+
+	testest();
+
+	// const pageCode = location.
+
+	// if(){
+
+	// }
 });
 
 /**
@@ -969,11 +978,11 @@ function getSelectBoxList(prefix, item, async = true) {
 
 						$('#TB04010S_R005_2').append(html);
 					} else if (value.cmnsGrpCd == 'I029') {
-						ldvdCd.push(value);
+						TB04010Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I030') {
-						mdvdCd.push(value);
+						TB04010Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I031') {
-						sdvdCd.push(value);
+						TB04010Sjs.sdvdCd.push(value);
 					}
 				}
 				if (prefix == 'TB04020S') {
@@ -988,11 +997,11 @@ function getSelectBoxList(prefix, item, async = true) {
 
 				if (prefix == 'TB06010S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06010Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06010Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06010Sjs.sdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'I027') {									// 통화코드
 						var html = '';
 						html += '<option value="' + value.cdValue + '">' + value.cdName + ' (' + value.cdValue + ')' + '</option>';
@@ -1004,21 +1013,21 @@ function getSelectBoxList(prefix, item, async = true) {
 
 				if (prefix == 'TB06020S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06020Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06020Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06020Sjs.sdvdCd.push(value);
 					}
 				}
 
 				if (prefix == 'TB06030S') {
 					if (value.cmnsGrpCd == 'E022') {
-						ldvdCd.push(value);
+						TB06030Sjs.ldvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'E023') {
-						mdvdCd.push(value);
+						TB06030Sjs.mdvdCd.push(value);
 					} else if (value.cmnsGrpCd == 'P004') {
-						sdvdCd.push(value);
+						TB06030Sjs.sdvdCd.push(value);
 					}
 				}
 
@@ -1279,6 +1288,7 @@ function resetAll(p, arr = []) {
  * @returns 
  */
 function setPqGrid(pqGridObjs) {
+
 	pqGridObjs.forEach(pqGridObj => {
 		// basic
 		let height = pqGridObj.height;		// 높이
@@ -1464,3 +1474,181 @@ function getBasicValues(id) {
 	}
 }
 
+/**
+ * 인풋박스 초기화
+ * @param {$selector} selector 제이쿼리던 자바스크립트던 상관없음
+ * div ibox로 잡혀있을텐데 원하는 태그에 id값을 주고 셀렉터로 받아서 인풋값 초기화
+ */
+function resetInputValue (selector) {
+    selector.find(`select`).val('');
+    selector.find(`input`).val('');
+    selector.find(`input[id*='Amt']
+				 , input[id*='Blce']
+				 , input[id*='Exrt']
+				 , input[id*='Mnum']
+				 , input[id*='Tmrd']`).val('0');
+}
+
+/**
+ * pqgrid instance 데이터 인풋박스에 뿌리기
+ * 사용처
+ * pqgrid dblClick 이벤트
+ * pqgrid rowClick 이벤트
+ * @param ui	pqgrid ui 요소
+ * @param { String } menuId
+ */
+function setInputboxFromPdata (ui, menuId){
+	const keys = Object.keys(ui.rowData);
+    for(let i = 0; i < keys.length; i++){
+    	$(`#${menuId}_${keys[i]}`).val(ui.rowData[keys[i]]);
+    }
+}
+
+/**
+ * 단건 select data뿌리기
+ * @param data	ajax 셀렉트 데이터
+ * @param { String } menuId
+ */
+function setInputDataFromSelectData (data, menuId) {
+	const keys = Object.keys(data);
+	for(let i = 0; i < keys.length; i++){
+		// 날짜 포맷
+		if(keys[i].includes('Dt')){
+			$(`#${menuId}_${keys[i]}`).val(formatDate(data[keys[i]]));
+		}
+		// 숫자 포맷
+		else if(
+			//	조건 시작
+			keys[i].includes('Amt')
+			|| keys[i].includes('Blce')
+			|| keys[i].includes('Exrt')
+			|| keys[i].includes('Mnum')
+			|| keys[i].includes('Tmrd')
+			//	조건 끝
+		){
+			$(`#${menuId}_${keys[i]}`).val(comma(data[keys[i]]));
+		}
+		// 나머지
+		else{
+			$(`#${menuId}_${keys[i]}`).val(data[keys[i]]);
+		}
+	}
+}
+
+/**
+ * @param {String} menuId  화면명
+ * @param {Object} gridFunctionObj	함수를담은 오브젝트
+ */
+function ramsTabHandler (menuId){
+	// 화면 공통 탭들 선택
+	const $tabs = $(`#${menuId}_ramsTab li`);
+	// 각 탭에 이벤트 부여
+    $tabs.each(function (i) {
+		if(i == 0){
+			$(this).find('a').addClass('active');
+			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+		}
+		// 이벤트 겹치지않도록 마우스 업 이벤트로 처리
+		$(this).on('mouseup', function (e) {
+			if(e.which === 1){
+				$tabs.find('a').removeClass('active');
+				$(this).find('a').addClass('active');
+				$(`.tab-content div[id*="${menuId}_tab"]`).removeClass('active');
+				$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
+			}else {
+				return;
+			}
+        });
+    });
+}
+
+// function setGridFromRamstab () {
+// 	$('.tab-content div[role="tabpanel"]').addClass('active');
+// }
+
+
+/**
+ * 날짜 인풋태그 유효성체크
+ */
+function vldDateVal (){
+	$('.input-group.date input[class="form-control"]').on("change", function(){
+		//	태그의 날짜 불러오기
+		const date = $(this).val();
+		let test = new Date(formatDate(date));
+		let resultDate;
+
+		if(test === "InvalidDate"){
+			return $(this).val(0);
+		}else{
+			//	날짜 변환
+			resultDate = formatDate(date);
+
+			// 변환된 날짜 입력
+			$(this).val(resultDate);
+			return;
+		}
+	})
+}
+
+
+/**
+ * 마지막에 부른 모달 최상위 index로 올리기
+ * @param {String} prefix 화면명
+ */
+function indexChangeHandler (prefix) {
+	// console.log("");
+	$(`div[id*="modal-"]`).css('z-index', '');
+	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
+	$(`#modal-${prefix}`).attr('style', 'z-index: 4000 !important;');
+}
+
+
+
+
+/**
+ * 페이지처리함수
+ */
+function testest () {
+	const url = window.location.pathname;
+	const nowTabId = $(`li[data-tabId="${url}"`).attr('data-tabId')
+	const nowTitleId = $(`div[data-titleId="${url}"]`).attr('data-titleId');
+	const chk_menu = $(`div[data-menuid="/TB02010S"`).attr('data-menuid')
+
+	console.log("체크메뉴" ,chk_menu);
+	
+	console.log("url:"+url);
+	console.log("nowTabId:"+nowTabId);
+	console.log("nowTitleId"+nowTitleId);
+	
+	let url_ref = document.referrer
+	let result_id = url_ref.split("/");
+
+	// console.log("referrer::::::" ,url_ref);
+	
+
+	// if(chk_menu != undefined){
+	// 	console.log("레퍼러 열어줘요 언디파인드아닙니다");
+	// }
+
+	// console.log(url_ref.indexOf("TB06020S"));
+	
+
+	// if( url_ref.indexOf("TB02010S") === -1){
+	// 	console.log("레퍼러 열어줘요 인덱스옵");
+	// }
+
+	// window.location.href = "/TB02010S"
+
+	if(chk_menu === undefined){
+		console.log("2010S로 가줄래?");
+		window.location.href = "/TB02010S"
+	}else{
+		console.log(result_id[result_id.length - 1]);
+		callPage(result_id[result_id.length - 1]);
+	}
+
+	// if(nowTabId === nowTitleId && url != "/TB02010S"){
+	// 	console.log("2010S로 가줄래?");
+	// }
+	
+}

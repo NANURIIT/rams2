@@ -42,9 +42,9 @@
           FROM IBIMS997B
          WHERE 1=1
 		       AND CUR_DATE = #{curDate}
-           AND JOB_ID LIKE CONCAT('%',#{jobId},'%')
-		       AND JOB_NAME LIKE CONCAT('%',#{jobName},'%')
-           AND IFNULL(NULLIF(#{jobStatus}, ''), 'A') IN (JOB_STATUS, 'A')
+           AND JOB_ID LIKE '%' || #{jobId} || '%'
+		       AND JOB_NAME LIKE '%' || #{jobName} || '%'
+           AND NVL(NULLIF(#{jobStatus}, ''), 'A') IN (JOB_STATUS, 'A')
   	</select>
 
     <select id="batchMonitering" parameterType="string" resultType="int">
@@ -52,7 +52,7 @@
         FROM IBIMS997B
        WHERE 1=1
          AND JOB_STATUS IN (2, 5)
-         AND CUR_DATE = IFNULL(NULLIF(#{curDate}, ''),(
+         AND CUR_DATE = NVL(NULLIF(#{curDate}, ''),(
                           SELECT BZ_DD
 			                      FROM IBIMS999B
                         ))
@@ -81,20 +81,20 @@
         FROM IBIMS997B
        WHERE 1=1
          AND JOB_STATUS IN (0, 3, 5, 6, 7)
-         AND CUR_DATE = IFNULL(NULLIF(#{curDate}, ''),(
+         AND CUR_DATE = NVL(NULLIF(#{curDate}, ''),(
                           SELECT BZ_DD
 			                      FROM IBIMS999B
                         ))
          AND PRE_JOB_COUNT &lt; 1
          AND CONFIRM_JOB_COUNT &lt; 1
-       LIMIT 1;
+         AND ROWNUM = 1;
     </select>
 
     <select id="jobCount" parameterType="string" resultType="int">
       SELECT COUNT(JOB_ID)                                  /* JOB ID */
         FROM IBIMS997B
        WHERE 1=1
-         AND CUR_DATE = IFNULL(NULLIF(#{curDate}, ''),(
+         AND CUR_DATE = NVL(NULLIF(#{curDate}, ''),(
                           SELECT BZ_DD
 			                      FROM IBIMS999B
                         ))
@@ -154,7 +154,7 @@
                 , HND_TR_ID                               /* 조작거래ID */
                 , GUID                                    /* GUID */
               )
-          SELECT
+          VALUES (
                   #{curDate}                              /* 당일일자 */
                 , #{jobId}                                /* JOB ID */
                 , #{jobName}                              /* JOB NAME */
@@ -173,11 +173,12 @@
                 , #{startTime}                            /* 시작시간 */
                 , #{endTime}                              /* 종료시간 */
                 , #{jobStatus}                            /* 작업상태 */
-                , NOW()                                   /* 조작상세일시 */
+                , SYSDATE                                   /* 조작상세일시 */
                 , #{hndEmpno}                             /* 조작사원번호 */
                 , #{hndTmnlNo}                            /* 조작단말기번호 */
                 , #{hndTrId}                              /* 조작거래ID */
                 , #{guid}                                 /* GUID */
+          )
     </insert>
 
     <!-- 배치JOB 스케줄러 수정  -->
@@ -193,15 +194,15 @@
               <!-- , CONFIRM_JOB_COUNT  = #{confirmJobCount}    /* CONFIRM JOB 건수 */ -->
               , CHILD_PID          = #{childPid}           /* 프로그램 PID */
               <!-- , RUN_COUNT          = #{runCount}           /* 실행횟수 */ -->
-              , FIRST_START_TIME   = IFNULL(
+              , FIRST_START_TIME   = NVL(
                                             (
                                              SELECT NULLIF(FIRST_START_TIME, '')
                                                FROM IBIMS997B
                                               WHERE JOB_ID = #{jobId}
                                                 AND CUR_DATE = #{curDate}
-                                            ), DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+                                            ), TO_CHAR(SYSDATE, 'YYYY-MM-DD hh:mm:ss')
                                            )            /* 최초 시작시간 */
-              , START_TIME         = IFNULL(DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'), 
+              , START_TIME         = NVL(TO_CHAR(SYSDATE, 'YYYY-MM-DD hh:mm:ss'), 
                                             (
                                              SELECT NULLIF(START_TIME, '')
                                                FROM IBIMS997B
@@ -209,8 +210,8 @@
                                                 AND CUR_DATE = #{curDate}
                                             )
                                            )                /* 시작시간 */
-              , END_TIME           = IFNULL(#{endTime}, '') /* 종료시간 */
-              , JOB_STATUS         = IFNULL(#{jobStatus}, 
+              , END_TIME           = NVL(#{endTime}, '') /* 종료시간 */
+              , JOB_STATUS         = NVL(#{jobStatus}, 
                                             (
                                              SELECT JOB_STATUS
                                                FROM IBIMS997B
@@ -218,7 +219,7 @@
                                                 AND CUR_DATE = #{curDate}
                                             )
                                            )                /* 작업상태 */
-              , HND_DETL_DTM       = NOW()                  /* 조작상세일시 */
+              , HND_DETL_DTM       = SYSDATE                  /* 조작상세일시 */
               , HND_EMPNO          = #{hndEmpno}            /* 조작사원번호 */
               , HND_TMNL_NO        = #{hndTmnlNo}           /* 조작단말기번호 */
               , HND_TR_ID          = #{hndTrId}             /* 조작거래ID */
@@ -233,14 +234,14 @@
          UPDATE IBIMS997B
             SET START_TIME         = ''                     /* 시작시간 */
               , END_TIME           = ''                     /* 종료시간 */
-              , ARGUMENT           = IFNULL(NULLIF(#{argument}, ''),
+              , ARGUMENT           = NVL(NULLIF(#{argument}, ''),
                                              (SELECT ARGUMENT 
                                                 FROM IBIMS997B 
                                                WHERE 1=1 
                                                  AND CUR_DATE = #{curDate} 
                                                  AND JOB_ID = #{jobId})
                                            )                /* ARGUMENT */
-              , JOB_STATUS         = IFNULL(#{jobStatus}, 
+              , JOB_STATUS         = NVL(#{jobStatus}, 
                                             (
                                              SELECT JOB_STATUS
                                                FROM IBIMS997B
@@ -248,7 +249,7 @@
                                                 AND CUR_DATE = #{curDate}
                                             )
                                            )                /* 작업상태 */
-              , HND_DETL_DTM       = NOW()                  /* 조작상세일시 */
+              , HND_DETL_DTM       = SYSDATE                  /* 조작상세일시 */
               , HND_EMPNO          = #{hndEmpno}            /* 조작사원번호 */
               , HND_TMNL_NO        = #{hndTmnlNo}           /* 조작단말기번호 */
               , HND_TR_ID          = #{hndTrId}             /* 조작거래ID */
@@ -270,12 +271,12 @@
     <update id="batchUpdate" parameterType="com.nanuri.rams.business.common.dto.IBIMS997BDTO">
       UPDATE IBIMS997B
          SET JOB_STATUS = #{jobStatus} /* 2:Complete, 3:Error */
-           , END_TIME = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+           , END_TIME = TO_CHAR(SYSDATE, 'YYYY-MM-DD hh:mm:ss')
            , RUN_COUNT = (SELECT (A.RUN_COUNT + 1)
                             FROM IBIMS997B A
                            WHERE A.CUR_DATE = #{curDate}
                              AND A.JOB_ID = #{jobId})
-           , HND_DETL_DTM = NOW()
+           , HND_DETL_DTM = SYSDATE
            , HND_EMPNO = #{hndEmpno}
            , HND_TR_ID = #{hndTrId}
        WHERE CUR_DATE = #{curDate}
@@ -285,7 +286,7 @@
     <update id="subPreJobCount" parameterType="com.nanuri.rams.business.common.dto.IBIMS997BDTO">
       UPDATE IBIMS997B
          SET PRE_JOB_COUNT = (PRE_JOB_COUNT - 1)
-       WHERE CUR_DATE = IFNULL(NULLIF(#{curDate}, ''),(
+       WHERE CUR_DATE = NVL(NULLIF(#{curDate}, ''),(
                           SELECT BZ_DD
 			                      FROM IBIMS999B
                         ))
@@ -308,11 +309,14 @@
                                         WHERE JOB_ID = #{jobId}
                                      )                      /* PRE_JOB_COUNT 건수 */
               , CONFIRM_JOB_COUNT  = (
-                                        SELECT IF(CONFIRM_YN = '0', '-1', CONFIRM_YN)
+                                        SELECT CASE 
+                                               WHEN CONFIRM_YN = '0' THEN '-1'
+                                               ELSE CONFIRM_YN
+                                                END AS CONFIRM_YN
                                           FROM IBIMS995B
                                          WHERE JOB_ID = #{jobId}
                                      )
-              , HND_DETL_DTM       = NOW()                  /* 조작상세일시 */
+              , HND_DETL_DTM       = SYSDATE                  /* 조작상세일시 */
               , HND_EMPNO          = #{hndEmpno}            /* 조작사원번호 */
               , HND_TMNL_NO        = #{hndTmnlNo}           /* 조작단말기번호 */
               , HND_TR_ID          = #{hndTrId}             /* 조작거래ID */
@@ -326,7 +330,7 @@
     <update id="updateConfirm" parameterType="com.nanuri.rams.business.common.dto.IBIMS997BDTO">
          UPDATE IBIMS997B
             SET CONFIRM_JOB_COUNT  = #{confirmJobCount}     /* CONFIRM JOB 건수 */
-              , HND_DETL_DTM       = NOW()                  /* 조작상세일시 */
+              , HND_DETL_DTM       = SYSDATE                  /* 조작상세일시 */
               , HND_EMPNO          = #{hndEmpno}            /* 조작사원번호 */
               , HND_TMNL_NO        = #{hndTmnlNo}           /* 조작단말기번호 */
               , HND_TR_ID          = #{hndTrId}             /* 조작거래ID */

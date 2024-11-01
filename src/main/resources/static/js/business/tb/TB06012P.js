@@ -7,8 +7,9 @@ function callTB06012P(prefix) {
   
   clearTB06012P();
   $("#TB06012P_prefix").val(prefix);
-  getAppvCndt();
+  TB06012P_getAppvCndt();
   $("#modal-TB06012P").modal("show");
+	indexChangeHandler("TB06012P");
   $("#TB06012P_I027").val("KRW").prop('selected', true);
   setTimeout(() => {
     let obj = {
@@ -352,7 +353,7 @@ function setAppvCndt(e) {
                                       
 }
 
-function getAppvCndt() {
+function TB06012P_getAppvCndt() {
 	  	
   var paramData = {
     dealNo: $("#"+$("#TB06012P_prefix").val()+"_ibDealNo").val(),

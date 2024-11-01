@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<script th:src="@{js/callPageTest.js}"></script>
+<script th:src="@{js/callPage.js}"></script>
 <!-- 공통헤드 -->
 <th:block th:replace="layout/fragments/ramsHead :: headFragment"></th:block>
 
@@ -20,19 +20,22 @@
 			<th:block th:replace="layout/fragments/ramsTop :: topFragment"></th:block>
 
 			<!-- 탭 추가 될 예정 s -->
-			<!-- <div class="top-tabs-container" id="tabs">
+			<div class="top-tabs-container" id="tabs">
 				<ul class="nav top-nav-tabs" id="myTab" role="tablist">
-					<li class="nav-item main-tab" role="presentation">
+					<li class="nav-item main-tab active" role="presentation" th:data-tabId="${#httpServletRequest.requestURI}">
 						<button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
-							type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('TB02010S')">오늘의 할일</button>
+							type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"
+							onclick="moveTab('TB02010S')">오늘의 할일
+						</button>
 					</li>
 				</ul>
-			</div> -->
+			</div>
+			
 			<!-- <div class="main-con" data-menuId="TB02010S"> -->
 			<!-- </div> -->
 			<!-- 상단 타이틀 -->
-			<div class="row wrapper white-bg page-heading">
-				<div class="col-lg-10">
+			<div class="row wrapper white-bg page-heading" id="title-top">
+				<div class="col-lg-10" th:data-titleId="${#httpServletRequest.requestURI}">
 					<h2 class="" th:text="|[${title.urlVrbCntn}] ${title.title}|"></h2>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
@@ -43,7 +46,6 @@
 						</li>
 					</ol>
 				</div>
-				<div class="col-lg-2"></div>
 			</div>
 
 			<!-- customContent -->

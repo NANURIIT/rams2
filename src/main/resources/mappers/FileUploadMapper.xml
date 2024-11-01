@@ -4,7 +4,7 @@
 	<!-- 관련문서정보 생성 -->
     <insert id="insertFileInfo" parameterType="com.nanuri.rams.business.common.dto.FileUploadDTO" useGeneratedKeys="true">
     	<selectKey keyProperty="attFileSq" resultType="int" order="BEFORE">
-    		SELECT IFNULL(MAX(ATT_FILE_SQ),0)+1			         <!-- 첨부파일일련번호 -->
+    		SELECT NVL(MAX(ATT_FILE_SQ),0)+1			         <!-- 첨부파일일련번호 -->
     		  FROM IBIMS989B 								
     		 WHERE FILE_KEY1 = #{fileKey1}				
     		   AND FILE_KEY2 = #{fileKey2}
@@ -37,7 +37,7 @@
     			, #{svFileSz}					<!-- 서퍼파일크기 -->
     			, #{scrnMenuId}					<!-- 화면메뉴ID -->
     			, #{orgFileNm}					<!-- 원본파일명 -->
-    			, DATE_FORMAT(now(),'%Y%m%d')	<!-- 등록일자 -->
+    			, TO_DATE(SYSDATE,'YYYYMMDD')	<!-- 등록일자 -->
     			, 'N'							<!-- 삭제여부 -->
     			, CURRENT_TIMESTAMP()			<!-- 처리일시 -->
     			, #{hndlDprtCd}					<!-- 처리부점코드 -->
@@ -49,7 +49,7 @@
 	<update id="updateFileInfo" parameterType="com.nanuri.rams.business.common.dto.FileUploadDTO" >
 		UPDATE IBIMS989B							   
 		   SET DLT_F = 'Y'
-			 , HNDL_DY_TM = CURRENT_TIMESTAMP()			<!-- 처리일시 -->
+			 , HNDL_DY_TM = SYSDATE			<!-- 처리일시 -->
 			 , HNDL_DPRT_CD	= #{hndlDprtCd}				<!-- 처리부점코드 -->
 			 , HNDL_P_ENO = #{hndlPEno}					<!-- 처리자사번 -->
 		 WHERE  FILE_KEY1  = #{fileKey1}		             <!-- 키1 -->

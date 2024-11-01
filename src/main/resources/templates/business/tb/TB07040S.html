@@ -53,10 +53,10 @@
 									</div>
 								</div>
 								<div class="col-sm-4 text-right">
-									<button class="btn btn-primary" type="button" onclick="getSellList();"><i
+									<button class="btn btn-primary" type="button" onclick="TB07040Sjs.getSellList();"><i
 											class="fa fa-search"></i>&nbsp;조회</button>
 									<!-- <button id="" class="btn btn-info" onclick=""><i class="fa fa-arrow-right"></i>&nbsp;다음</button> -->
-									<button id="" class="btn btn-default" onclick="compClear();"><i
+									<button id="" class="btn btn-default" onclick="TB07040Sjs.compClear();"><i
 											class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
@@ -74,9 +74,9 @@
 										<div class="col-sm-3 input-group">
 											<div class="btn-group col-sm-6 pd0" role="group" aria-label="">
 												<button class="btn btn-s toggleBtn1 btn-info"
-													onclick="btnAdd();">등록</button>
+													onclick="TB07040Sjs.btnAdd();">등록</button>
 												<button class="btn btn-s toggleBtn2 btn-default"
-													onclick="btnCancel();">취소</button>
+													onclick="TB07040Sjs.btnCancel();">취소</button>
 											</div>
 											<div class="col-sm-6 input-group">
 												<input type="checkbox" value="" id="" name="">
@@ -97,12 +97,12 @@
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control text-right" id="TB07040S_trQnt"
 												oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-												onkeyup="inputNumberFormat(this), calcTrAmt(), calcTrslAmt(), setHoldPrpsDcd();">
+												onkeyup="inputNumberFormat(this), TB07040Sjs.calcTrAmt(), TB07040Sjs.calcTrslAmt(), TB07040Sjs.setHoldPrpsDcd();">
 										</div>
 										<label class="col-sm-1">지분율</label>
 										<div class="col-sm-3 text-left input-group">
 											<input type="text" class="form-control text-right" id="TB07040S_qotaRt"
-												value="0.00" onclick="setHoldPrpsDcd();" readonly>%
+												value="0.00" onclick="TB07040Sjs.setHoldPrpsDcd();" readonly>%
 										</div>
 									</div>
 								</div>
@@ -118,7 +118,7 @@
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control text-right" id="TB07040S_trUnpr"
 												oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-												onkeyup="inputNumberFormat(this), calcTrAmt(), calcTrslAmt();">
+												onkeyup="inputNumberFormat(this), TB07040Sjs.calcTrAmt(), TB07040Sjs.calcTrslAmt();">
 										</div>
 										<label class="col-sm-1">평균단가</label>
 										<div class="col-sm-3 text-left input-group">
@@ -148,7 +148,7 @@
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control text-right" id="TB07040S_trAmt"
 												oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-												onkeyup="inputNumberFormat(this), calcTrAmt();" readonly>
+												onkeyup="inputNumberFormat(this), TB07040Sjs.calcTrAmt();" readonly>
 										</div>
 										<label class="col-sm-1">선급법인세</label>
 										<div class="col-sm-3 input-group">
@@ -185,7 +185,7 @@
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control text-right" id="TB07040S_trdeExrt"
 												oninput="this.value = this.value.replace(/[^0-9.]/g, '');"
-												onkeyup="calcTrslAmt();">
+												onkeyup="TB07040Sjs.calcTrslAmt();">
 										</div>
 										<label class="col-sm-1">거래세</label>
 										<div class="col-sm-3 input-group">
@@ -315,7 +315,7 @@
 									<div class="col-sm-12 text-right">
 										<button class="btn btn-info" onclick="testAlert('저장을 완료하였습니다.')"><i
 												class="fa fa-save"></i>&nbsp;엑셀저장</button>
-										<button class="btn btn-success" onclick="showAlert();"><i
+										<button class="btn btn-success" onclick="TB07040Sjs.showAlert();"><i
 												class="fa fa-check"></i>&nbsp;실행</button>
 									</div>
 								</div>

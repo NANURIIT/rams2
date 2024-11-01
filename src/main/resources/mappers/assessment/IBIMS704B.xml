@@ -50,7 +50,7 @@
               , #{dcsnYn}
               , #{rgstEmpno}
               , #{dcsnRgstEmpno}
-              , now()
+              , SYSDATE
               , #{hndEmpno}
               , #{hndTmnlNo}
               , #{hndTrId}
@@ -64,7 +64,7 @@
            SET DCSN_DT = #{dcsnDt}
              , DCSN_YN = #{dcsnYn}
              , DCSN_RGST_EMPNO = #{dcsnRgstEmpno}
-             , HND_DETL_DTM = now()
+             , HND_DETL_DTM = SYSDATE
              , HND_EMPNO = #{hndEmpno}
              , HND_TMNL_NO = #{hndTmnlNo}
              , HND_TR_ID = #{hndTrId}

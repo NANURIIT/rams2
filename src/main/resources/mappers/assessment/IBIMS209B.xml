@@ -16,7 +16,7 @@
 		     , IBIMS201B s201b
 		 WHERE 1=1
 		   AND s209b.DEAL_NO		= s201b.DEAL_NO
-		   AND s209b.PRDT_CD		= s201b.PRDT_CD 
+		   AND s209b.PRDT_CD		= s201b.PRDT_CD
 		   AND s201b.DEAL_NO		= #{dealNo}
 		   AND s201b.NMCP_MTR_DCD	= #{mtrDcd}
 		   AND s201b.LST_C_CASE_DCD	= #{jdgmDcd}
@@ -50,7 +50,7 @@
 				     AND s201b.LAST_YN			= '1'
                  )
                , #{rgstDt}                                          <!-- 등록일자 -->
-               , DEFAULT                                            <!-- 조작상세일시 -->
+               , SYSDATE                                            <!-- 조작상세일시 -->
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->
@@ -73,7 +73,7 @@
 																      AND s201b.LAST_YN			= '1'
 												                  ) <!-- 상품코드 -->
             , RGST_DT                                           = #{rgstDt}                                          <!-- 등록일자 -->
-            , HND_DETL_DTM                                      = DEFAULT                                            <!-- 조작상세일시 -->
+            , HND_DETL_DTM                                      = SYSDATE                                            <!-- 조작상세일시 -->
             , HND_EMPNO                                         = #{hndEmpno}                                        <!-- 조작사원번호 -->
             , HND_TMNL_NO                                       = #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
             , HND_TR_ID                                         = #{hndTrId}                                         <!-- 조작거래id -->

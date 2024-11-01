@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS602BMapper">
 	
-	<!-- 당월사업관리의견조회  -->
+	<!-- 당월사업관리의견조회-->  
     <select id="selectIBIMS602B" resultType="com.nanuri.rams.business.common.dto.IBIMS602BDTO" parameterType="com.nanuri.rams.business.common.vo.IBIMS601BVO">
-        SELECT DEAL_NO                                           <!-- Deal번호 -->
-             , INSPCT_YM                                      	 <!-- 심사년월 -->
-             , INSPCT_RMRK                                       <!-- 심사비고 -->
-             , HND_DETL_DTM                                      <!-- 조작상세일시 -->
-             , HND_EMPNO                                         <!-- 조작사원번호 -->
-             , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
-             , HND_TR_ID                                         <!-- 조작거래id -->
-             , GUID                                              <!-- guid -->
+        SELECT DEAL_NO                                           /* Deal번호 */
+             , INSPCT_YM                                      	 /* 심사년월 */
+             , INSPCT_RMRK                                       /* 심사비고 */
+             , HND_DETL_DTM                                      /* 조작상세일시 */
+             , HND_EMPNO                                         /* 조작사원번호 */
+             , HND_TMNL_NO                                       /* 조작단말기번호 */
+             , HND_TR_ID                                         /* 조작거래id */
+             , GUID                                              /* guid */
           FROM IBIMS602B
          WHERE 1=1
            AND DEAL_NO = #{dealNo}
@@ -23,38 +23,38 @@
 		   </if>
     </select>
     
-    <!-- 당월사업관리의견등록  -->
+    <!-- 당월사업관리의견등록 -->
     <insert id="insertIBIMS602B" parameterType="com.nanuri.rams.business.common.vo.IBIMS601BVO">
         INSERT INTO IBIMS602B 
                (
-                  DEAL_NO                                           						<!-- 딜번호 -->
-                , INSPCT_YM                                      							<!-- 심사년월 -->
-                , INSPCT_RMRK                                       						<!-- 심사비고 -->
-                , HND_EMPNO                                         						<!-- 조작사원번호 -->
-                , HND_TMNL_NO                                       						<!-- 조작단말기번호 -->
-                , HND_TR_ID                                         						<!-- 조작거래id -->
-                , GUID                                              						<!-- guid -->
+                  DEAL_NO                                           						/* 딜번호 */
+                , INSPCT_YM                                      							  /* 심사년월 */
+                , INSPCT_RMRK                                       						/* 심사비고 */
+                , HND_EMPNO                                         						/* 조작사원번호 */
+                , HND_TMNL_NO                                       						/* 조작단말기번호 */
+                , HND_TR_ID                                         						/* 조작거래id */
+                , GUID                                              						/* guid */
                )
         VALUES (
-                 #{dealNo}                                          						<!-- 딜번호 -->
-               , IFNULL(#{inspctYm}, (SELECT DATE_FORMAT(NOW(), '%Y%m') FROM DUAL))       	<!-- 심사년월 -->
-               , #{inspctRmrk}                                      						<!-- 심사비고 -->
-               , #{hndEmpno}                                        						<!-- 조작사원번호 -->
-               , #{hndTmnlNo}                                       						<!-- 조작단말기번호 -->
-               , #{hndTrId}                                         						<!-- 조작거래id -->
-               , #{guid}                                            						<!-- guid -->
+                 #{dealNo}                                          						/* 딜번호 */
+               , NVL(#{inspctYm}, (SELECT TO_CHAR(SYSDATE, 'YYYYMM') FROM DUAL))/* 심사년월 */
+               , #{inspctRmrk}                                      						/* 심사비고 */
+               , #{hndEmpno}                                        						/* 조작사원번호 */
+               , #{hndTmnlNo}                                       						/* 조작단말기번호 */
+               , #{hndTrId}                                         						/* 조작거래id */
+               , #{guid}                                            						/* guid */
                )
     </insert>
 	
-	<!-- 당월사업관리의견변경  -->
+	<!-- 당월사업관리의견변경 -->
     <update id="updateIBIMS602B" parameterType="com.nanuri.rams.business.common.vo.IBIMS601BVO">
        UPDATE IBIMS602B
-          SET INSPCT_YM                                      = IFNULL(#{inspctYm}, (SELECT DATE_FORMAT(NOW(), '%Y%m') FROM DUAL))      <!-- 심사년월 -->                                <!--  -->
-            , INSPCT_RMRK                                       = #{inspctRmrk}                                      						<!-- 심사비고 -->
-            , HND_EMPNO                                         = #{hndEmpno}                                        						<!-- 조작사원번호 -->
-            , HND_TMNL_NO                                       = #{hndTmnlNo}                                       						<!-- 조작단말기번호 -->
-            , HND_TR_ID                                         = #{hndTrId}                                         						<!-- 조작거래id -->
-            , GUID                                              = #{guid}                                            						<!-- guid -->
+          SET INSPCT_YM                                         = NVL(#{inspctYm}, (SELECT TO_CHAR(SYSDATE, 'YYYYMM') FROM DUAL))   /* 심사년월 */                                
+            , INSPCT_RMRK                                       = #{inspctRmrk}                                      						    /* 심사비고 */
+            , HND_EMPNO                                         = #{hndEmpno}                                        						    /* 조작사원번호 */
+            , HND_TMNL_NO                                       = #{hndTmnlNo}                                       						    /* 조작단말기번호 */
+            , HND_TR_ID                                         = #{hndTrId}                                         						    /* 조작거래id */
+            , GUID                                              = #{guid}                                            						    /* guid */
         WHERE 1=1
           AND DEAL_NO = #{dealNo}
     </update>
@@ -63,7 +63,7 @@
         DELETE 
           FROM IBIMS602B
          WHERE 1=1
-           AND DEAL_NO                                           = #{dealNo}                                         						 <!-- 딜번호 -->
+           AND DEAL_NO                                           = #{dealNo}                                         						 /* 딜번호 */
     </delete>
 	
 </mapper>

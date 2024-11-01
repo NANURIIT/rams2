@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS432BMapper">
 
     <select id="selectRlthPruf" parameterType="com.nanuri.rams.business.common.vo.IBIMS432BVO" resultType="com.nanuri.rams.business.common.vo.IBIMS432BVO">
-        SELECT A.WRTN_DT
+  		SELECT A.WRTN_DT
              , A.RSLN_BDCD
              , A.CNST_NO
              , A.STTM_DETL_SN
@@ -34,15 +34,15 @@
              , A.HND_TR_ID
              , A.GUID
           FROM IBIMS432B A
-     LEFT JOIN IBIMS431B B
-            ON A.CNST_NO = B.CNST_NO
-           AND A.RSLN_BDCD = B.RSLN_BDCD
-           AND A.WRTN_DT = B.WRTN_DT
+     		 , IBIMS431B B
          WHERE 1=1
-           AND A.WRTN_DT = #{wrtnDt}
-           AND A.RSLN_BDCD = #{rslnBdcd}
-           AND A.ACTS_CD = #{actsCd}
-           AND B.BCNC_NM = #{bcncNm}
+           AND A.CNST_NO 	= B.CNST_NO(+)
+           AND A.RSLN_BDCD 	= B.RSLN_BDCD(+)
+           AND A.WRTN_DT 	= B.WRTN_DT(+)
+           AND A.WRTN_DT 	= #{wrtnDt}
+           AND A.RSLN_BDCD 	= #{rslnBdcd}
+           AND A.ACTS_CD 	= #{actsCd}
+           AND B.BCNC_NM 	= #{bcncNm}
     </select>
 
     <insert id="insertIBIMS432B" parameterType="com.nanuri.rams.business.common.vo.IBIMS432BVO">
@@ -106,12 +106,12 @@
               , #{projId}
               , #{crryCd}
               , #{exrt}
-              , NOW()
+              , SYSDATE
               , #{hndEmpno}
               , #{hndTmnlNo}
               , #{hndTrId}
               , #{guid}
-            );
+            )
     </insert>
 
     <update  id="updateIBIMS432B" parameterType="com.nanuri.rams.business.common.vo.IBIMS432BVO">
@@ -141,7 +141,7 @@
            , PROJ_ID = #{projId}
            , CRRY_CD = #{crryCd}
            , EXRT = #{exrt}
-           , HND_DETL_DTM = NOW()
+           , HND_DETL_DTM = SYSDATE
            , HND_EMPNO = #{hndEmpno}
            , HND_TMNL_NO = #{hndTmnlNo}
            , HND_TR_ID = #{hndTrId}

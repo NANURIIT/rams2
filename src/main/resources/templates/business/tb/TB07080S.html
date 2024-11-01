@@ -32,13 +32,13 @@
 								<label class="col-sm-1 col-form-label">실행순번</label>
 								<div class="col-sm-2  input-group">
 									<select class="form-control" id="TB07080S_excSn">
-										<option value="">전체</option>
+										<option value="">선택(필수)</option>
 									</select>
 								</div>
 								<div class="col-sm-3 text-right pl-0">
-									<button class="btn btn-primary" type="button" onclick="selectTB07080S();">
+									<button class="btn btn-primary" type="button" onclick="TB07080Sjs.selectTB07080S();">
 										<i class="fa fa-search"></i>&nbsp;조회</button>
-									<button id="TB07080S_" class="btn btn-default" onclick="TB07080S_inputReset();">
+									<button id="TB07080S_" class="btn btn-default" onclick="TB07080Sjs.TB07080S_inputReset();">
 										<i class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
@@ -82,7 +82,7 @@
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">실행일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control" id="TB07080S_excDt_d" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_excDt_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 										<label class="col-sm-3 col-form-label text-right">이자상환주기개월수</label>
 										<div class="col-sm-3 input-group">
@@ -92,7 +92,7 @@
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">만기일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control" id="TB07080S_expDt_d" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_expDt_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 										<label class="col-sm-3 col-form-label text-right">이자납입일자코드</label>
 										<div class="col-sm-3 input-group">
@@ -118,7 +118,7 @@
 										</div>
 										<label class="col-sm-3 col-form-label text-right">원금연체일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control" id="TB07080S_prnaOvduDt_d" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_prnaOvduDt_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 									</div>
 									<div class="row form-group text-right mb-1">
@@ -128,7 +128,7 @@
 										</div>
 										<label class="col-sm-3 col-form-label text-right">이자연차일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control" id="TB07080S_intrOvduDt_d" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_intrOvduDt_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 									</div>
 									<div class="row form-group text-right mb-1">
@@ -174,7 +174,7 @@
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">거치만기일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control text-right" id="TB07080S_dfrExpMnum_d" name="" value="">
+											<input type="text" class="form-control text-right" id="TB07080S_dfrExpMnum_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 										<label class="col-sm-3 col-form-label text-right">일시상황금액</label>
 										<div class="col-sm-3 input-group">
@@ -184,7 +184,7 @@
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">최종원금상환일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control" id="TB07080S_lastPrnaRdmpDt_d" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_lastPrnaRdmpDt_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 										<label class="col-sm-3 col-form-label text-right">미수이자금액</label>
 										<div class="col-sm-3 input-group">
@@ -194,7 +194,7 @@
 									<div class="row form-group text-right mb-0">
 										<label class="col-sm-2 col-form-label text-right">최종이자계산일자</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control" id="TB07080S_lastIntrClcDt_d" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_lastIntrClcDt_d" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 										</div>
 									</div>
 								</div>
@@ -211,7 +211,7 @@
 										</div>
 										<label class="col-sm-3 col-form-label text-right">다음상황예정일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_nxtRdmpPrarDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_nxtRdmpPrarDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
@@ -222,14 +222,14 @@
 										</div>
 										<label class="col-sm-3 col-form-label text-right">다음이자납입일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_nxtIntrPymDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_nxtIntrPymDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">실행일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_excDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_excDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 										<label class="col-sm-3 col-form-label text-right">이자상환주기개월수</label>
@@ -240,7 +240,7 @@
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">만기일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_expDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_expDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 										<label class="col-sm-3 col-form-label text-right">이자납입일자코드</label>
@@ -267,7 +267,7 @@
 										</div>
 										<label class="col-sm-3 col-form-label text-right">원금연체일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_prnaOvduDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_prnaOvduDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
@@ -278,7 +278,7 @@
 										</div>
 										<label class="col-sm-3 col-form-label text-right">이자연차일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_intrOvduDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_intrOvduDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
@@ -335,7 +335,7 @@
 									<div class="row form-group text-right mb-1">
 										<label class="col-sm-2 col-form-label text-right">최종원금상환일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_lastPrnaRdmpDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_lastPrnaRdmpDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 										<label class="col-sm-3 col-form-label text-right">미수이자금액</label>
@@ -346,7 +346,7 @@
 									<div class="row form-group text-right mb-0">
 										<label class="col-sm-2 col-form-label text-right">최종이자계산일자</label>
 										<div class="col-sm-3 input-group date">
-											<input type="text" class="form-control" id="TB07080S_lastIntrClcDt" name="" value="">
+											<input type="text" class="form-control" id="TB07080S_lastIntrClcDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');"  value="">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
 									</div>
@@ -359,8 +359,8 @@
 						<div class="ibox-title">
 							<h5>▶ 실행금리정보</h5>
 							<div class="ibox-tools">		                   		
-								<button class="btn btn-default btn-xs" type="button" onclick="TB07080S_addNewRow();"><i class="fa fa-plus"></i></button>
-								<button class="btn btn-default btn-xs" type="button" onclick="TB07080S_deleteRow();"><i class="fa fa-minus"></i></button>
+								<button class="btn btn-default btn-xs" type="button" onclick="TB07080Sjs.TB07080S_addNewRow();"><i class="fa fa-plus"></i></button>
+								<button class="btn btn-default btn-xs" type="button" onclick="TB07080Sjs.TB07080S_deleteRow();"><i class="fa fa-minus"></i></button>
 							</div>
 						</div>
 						<div class="ibox-content">
@@ -413,7 +413,7 @@
 					<div class="ibox form-inline">
 						<!-- 버튼영역 -->
 						<div class="col-sm-12 text-right pd0">
-							<button class="btn btn-success" type="button" onclick="updateTB07080S();"><i class="fa fa-save"></i>&nbsp;저장</button>
+							<button class="btn btn-success" type="button" onclick="TB07080Sjs.updateTB07080S();"><i class="fa fa-save"></i>&nbsp;저장</button>
 						</div>
 					</div>
 				</div>
@@ -423,5 +423,5 @@
 	
 	<!-- 실행상환취소 ed -->
 </th:block>
-http://localhost:18080/TB07040S
+http://localhost:18090/TB07040S
 </html>

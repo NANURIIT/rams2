@@ -20,6 +20,7 @@
                 , GRTE_STLA_DE                                      <!-- 보증결산일 -->
                 , GRTE_STLA_DE_ETC_DCD                              <!-- 보증결산일기타구분코드 -->
                 , MRTG_GRTE_CTNS                                    <!-- 담보보증내용 -->
+                , HND_DETL_DTM
                 , HND_EMPNO                                         <!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
                 , HND_TR_ID                                         <!-- 조작거래id -->
@@ -40,6 +41,7 @@
                , #{grteStlaDe}                                      <!-- 보증결산일 -->
                , #{grteStlaDeEtcDcd}                                <!-- 보증결산일기타구분코드 -->
                , #{mrtgGrteCtns}                                    <!-- 담보보증내용 -->
+               , SYSDATE
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->

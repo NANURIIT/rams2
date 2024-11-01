@@ -8,7 +8,8 @@
 	<script th:src="@{js/common.js}"></script>
 	<script th:src="@{js/fileUpload.js}"></script>
 	<script th:src="@{js/business/tb/TB04010S.js}"></script>
-	<script th:src="@{js/business/tb/TB04014P.js}"></script>
+	<script th:src="@{js/business/popup/AC01140P.js}"></script>
+	<!-- <script th:src="@{js/business/tb/TB04014P.js}"></script> -->
 	<script th:src="@{js/business/tb/TB04013P.js}"></script>
 	<script th:src="@{js/business/tb/TB04012P.js}"></script>
 	<script th:src="@{js/business/tb/TB03023P.js}"></script>
@@ -18,7 +19,8 @@
 </th:block>
 
 <th:block layout:fragment="modalpopup">
-	<th:block th:replace="business/tb/TB04014P :: TB04014P"></th:block>
+	<th:block th:replace="business/popup/AC01140P :: AC01140P"></th:block>
+	<!-- <th:block th:replace="business/tb/TB04014P :: TB04014P"></th:block> -->
 	<th:block th:replace="business/tb/TB04013P :: TB04013P"></th:block>
 	<th:block th:replace="business/tb/TB04012P :: TB04012P"></th:block>
 	<th:block th:replace="business/tb/TB03023P :: TB03023P"></th:block>
@@ -63,17 +65,17 @@
 										</div>
 									</div>
 									<div class="col-sm-2 text-left">
-										<button class="btn btn-primary" type="button" onclick="getDealList();"><i class="fa fa-search"></i>&nbsp;조회</button>
-										<button class="btn btn-default" type="button" onclick="btnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-primary" type="button" onclick="TB04010Sjs.getDealList();"><i class="fa fa-search"></i>&nbsp;조회</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.btnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 									</div>
 									<div class="col-sm-5 text-right px-3" id="btnLine">
-										<button class="btn btn-danger"  			type="button" id="assesmentDelete"			onclick="deleteDealInfo();"			disabled><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success btn-outline" type="button" id="assesmentRequest"			onclick="assesmentRequest('202');"	disabled><i class="fa fa-check"></i>&nbsp;심사요청</button>
-										<button class="btn btn-danger btn-outline"  type="button" id="assesmentRequestCancel"	onclick="assesmentRequest('203');"	disabled><i class="fa fa-undo"></i>&nbsp;심사요청취소</button>
+										<button class="btn btn-danger"  			type="button" id="assesmentDelete"			onclick="TB04010Sjs.deleteDealInfo();"			disabled><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success btn-outline" type="button" id="assesmentRequest"			onclick="TB04010Sjs.assesmentRequest('202');"	disabled><i class="fa fa-check"></i>&nbsp;심사요청</button>
+										<button class="btn btn-danger btn-outline"  type="button" id="assesmentRequestCancel"	onclick="TB04010Sjs.assesmentRequest('203');"	disabled><i class="fa fa-undo"></i>&nbsp;심사요청취소</button>
 										<!--<button class="btn btn-warning btn-outline" type="button" id="assesmentRequestHold"		onclick="assesmentRequest('204');"	disabled><i class="fa fa-exclamation"></i>&nbsp;취소심사보류</button>-->
-										<button class="btn btn-success btn-outline" type="button" id="assesmentApprove"			onclick="assesmentRequest('208');"	disabled><i class="fa fa-check"></i>&nbsp;심사승인</button>
-										<button class="btn btn-danger btn-outline"  type="button" id="assesmentReturn"			onclick="assesmentRequest('206');"	disabled><i class="fa fa-undo"></i>&nbsp;심사반송</button>
-										<button class="btn btn-success btn-outline"  type="button" id="assesmenttlClsf"			onclick="assesmentRequest('309');"	disabled><i class="fa fa-undo"></i>&nbsp;승인확정</button>
+										<button class="btn btn-success btn-outline" type="button" id="assesmentApprove"			onclick="TB04010Sjs.assesmentRequest('208');"	disabled><i class="fa fa-check"></i>&nbsp;심사승인</button>
+										<button class="btn btn-danger btn-outline"  type="button" id="assesmentReturn"			onclick="TB04010Sjs.assesmentRequest('206');"	disabled><i class="fa fa-undo"></i>&nbsp;심사반송</button>
+										<button class="btn btn-success btn-outline"  type="button" id="assesmenttlClsf"			onclick="TB04010Sjs.assesmentRequest('309');"	disabled><i class="fa fa-undo"></i>&nbsp;승인확정</button>
 									</div>
 								</div>
 						</div>
@@ -88,18 +90,18 @@
 				<!-- tab -->
 				<div class="tabs-container">
 					<ul class="nav nav-tabs" role="tablist" id="ramsTab">
-						<li><a class="nav-link" data-toggle="tab" href="#tab-1">안건구조</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-2" onclick="setDocInfoGrid();">관련문서</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-3" onclick="setAssetInfoGrid();">(보증)기초자산</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-4" onclick="setCncCmpnyInfoGrid();">거래상대방</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-5" onclick="setInsGrdInfoGrid();">내부등급</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-6" onclick="setMrtgInfoGrid();">담보</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-7" onclick="setEnsrInfoGrid();">보증</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-8" onclick="setCmplInfoGrid();">책임준공</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-1">안건구조</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-2" onclick="TB04010Sjs.setDocInfoGrid();">관련문서</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-3" onclick="TB04010Sjs.setAssetInfoGrid();">(보증)기초자산</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-4" onclick="TB04010Sjs.setCncCmpnyInfoGrid();">거래상대방</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-5" onclick="TB04010Sjs.setInsGrdInfoGrid();">내부등급</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-6" onclick="TB04010Sjs.setMrtgInfoGrid();">담보</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-7" onclick="TB04010Sjs.setEnsrInfoGrid();">보증</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB04010S_tab-8" onclick="TB04010Sjs.setCmplInfoGrid();">책임준공</a></li>
 					</ul>
 					<div class="tab-content">
 						<!-- 안건구조 -->
-						<div role="tabpanel" id="tab-1" class="tab-pane active">
+						<div role="tabpanel" id="TB04010S_tab-1" class="tab-pane active">
 							<!-- 심사진행상태코드 -->
 							<input type="hidden" value="" id="mtrPrgSttsDcd">
 							<input type="hidden" value="" id="mtrNm">
@@ -153,7 +155,7 @@
 												<div class="form-group row">
 													<label class="col-sm-4 col-form-label mb-1"><span class="req"></span>전결구분</label>
 													<div class="col-sm-8 mb-1">
-														<select class="form-control" style="width:100%;" id="TB04010S_R004" onchange="fltrBtn(this)">
+														<select class="form-control" style="width:100%;" id="TB04010S_R004" onchange="TB04010Sjs.fltrBtn(this)">
 															<option value="">선택</option>
 														</select>
 													</div>
@@ -175,7 +177,7 @@
 													<div class="ibox-title">
 														<h5>▶&nbsp;투자형태</h5>
 														<div class="ibox-tools">
-															<button class="btn btn-default btn-xs" type="button" onclick="callTB04014P('TB04010S');">금융상품분류찾기</button>
+															<button class="btn btn-default btn-xs" type="button" onclick="callAC01140P('TB04010S');">금융상품분류찾기</button>
 														</div>
 													</div>
 													<div class="ibox-content text-right">
@@ -312,7 +314,7 @@
 														<div class="form-group row">
 															<label class="col-sm-4 col-form-label"></span>주요투자물건</label>
 															<div class="col-sm-8">
-																<select class="form-control" id="TB04010S_I035" onchange="filterSelectBox(this, 'TB04010S_I036')">
+																<select class="form-control" id="TB04010S_I035" onchange="TB04010Sjs.filterSelectBox(this, 'TB04010S_I036')">
 																	<option value="">선택</option>
 																</select>
 															</div>
@@ -614,14 +616,14 @@
 									</div>
 									<!-- button -->
 									<div class="col-sm-12 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab1reset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-success" type="button" onclick="tab1save();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab1reset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab1save();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 관련문서 -->
-						<div role="tabpanel" id="tab-2" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-2" class="tab-pane">
 							<div class="panel-body">
 								<!-- 첨부파일 start -->
 							<div class="col-lg-12">
@@ -673,7 +675,7 @@
 							</div>
 						</div>
 						<!-- 기초자산 -->
-						<div role="tabpanel" id="tab-3" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-3" class="tab-pane">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12">
@@ -753,15 +755,15 @@
 									</div>
 									<!-- button -->
 									<div class="col-sm-6 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab3BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-danger"  type="button" onclick="tab3BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success" type="button" onclick="tab3BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab3BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-danger"  type="button" onclick="TB04010Sjs.tab3BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab3BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 관계사 -->
-						<div role="tabpanel" id="tab-4" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-4" class="tab-pane">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12">
@@ -829,15 +831,15 @@
 									</div>
 									<!-- button -->
 									<div class="col-sm-6 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab4BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-danger"  type="button" onclick="tab4BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success" type="button" onclick="tab4BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab4BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-danger"  type="button" onclick="TB04010Sjs.tab4BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab4BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 내부등급 -->
-						<div role="tabpanel" id="tab-5" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-5" class="tab-pane">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12">
@@ -953,15 +955,15 @@
 									</div>
 									<!-- button -->
 									<div class="col-sm-6 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab5BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-danger"  type="button" onclick="tab5BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success" type="button" onclick="tab5BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab5BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-danger"  type="button" onclick="TB04010Sjs.tab5BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab5BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 담보 -->
-						<div role="tabpanel" id="tab-6" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-6" class="tab-pane">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12">
@@ -983,13 +985,13 @@
 														<div class="form-group row">
 															<label class="col-sm-1 col-form-label">담보유형</label>
 															<div class="col-sm-3">
-																<select class="form-control" id="TB04010S_M007" onchange="filterSelectBox(this, 'TB04010S_M005')">
+																<select class="form-control" id="TB04010S_M007" onchange="TB04010Sjs.filterSelectBox(this, 'TB04010S_M005')">
 																	<option value="">선택</option>
 																</select>
 															</div>
 															<label class="col-sm-1 col-form-label">담보취득방식</label>
 															<div class="col-sm-3">
-																<select class="form-control" id="TB04010S_M003" onchange="filterSelectBox(this, 'TB04010S_M002')">
+																<select class="form-control" id="TB04010S_M003" onchange="TB04010Sjs.filterSelectBox(this, 'TB04010S_M002')">
 																	<option value="">선택</option>
 																</select>
 															</div>
@@ -1048,15 +1050,15 @@
 								<div class="form-group row">
 									<!-- button -->
 									<div class="col-sm-12 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab6BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-danger" type="button" onclick="tab6BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success" type="button" onclick="tab6BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab6BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-danger" type="button" onclick="TB04010Sjs.tab6BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab6BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 보증 -->
-						<div role="tabpanel" id="tab-7" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-7" class="tab-pane">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12">
@@ -1120,15 +1122,15 @@
 								<div class="form-group row">
 									<!-- button -->
 									<div class="col-sm-12 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab7BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-danger"  type="button" onclick="tab7BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success" type="button" onclick="tab7BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab7BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-danger"  type="button" onclick="TB04010Sjs.tab7BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab7BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 책임준공 -->
-						<div role="tabpanel" id="tab-8" class="tab-pane">
+						<div role="tabpanel" id="TB04010S_tab-8" class="tab-pane">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-sm-12">
@@ -1201,9 +1203,9 @@
 								<div class="form-group row">
 									<!-- button -->
 									<div class="col-sm-12 text-right mb-2">
-										<button class="btn btn-default" type="button" onclick="tab8BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
-										<button class="btn btn-danger"  type="button" onclick="tab8BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
-										<button class="btn btn-success" type="button" onclick="tab8BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
+										<button class="btn btn-default" type="button" onclick="TB04010Sjs.tab8BtnReset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+										<button class="btn btn-danger"  type="button" onclick="TB04010Sjs.tab8BtnDelete();"><i class="fa fa-eraser"></i>&nbsp;삭제</button>
+										<button class="btn btn-success" type="button" onclick="TB04010Sjs.tab8BtnSave();"><i class="fa fa-save"></i>&nbsp;저장</button>
 									</div>
 								</div>
 							</div>

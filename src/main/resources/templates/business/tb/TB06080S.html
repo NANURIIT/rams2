@@ -48,19 +48,18 @@
 								<label class="col-sm-1 col-form-label text-right">결재단계</label>
 								<div class="col-sm-1-5 input-group">
 									<select class="form-control" name="TB06080S_decdStepDcd" id='decdStepDcd'>
-										<option value="sel">선택</option>
+										<option value="00">선택</option>
 										<!-- <option value=""></option> -->
 									</select>
 								</div>
 								<div class="col-sm-1-5 text-right">
-									<button class="btn btn-primary" type="button" id="" onclick="inqTB06080S()"><i class="fa fa-search"></i>&nbsp;조회</button>
-									<button id="" class="btn btn-default" onclick="resetTb06080()"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+									<button class="btn btn-primary" type="button" id="" onclick="TB06080Sjs.inqTB06080S()"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button id="" class="btn btn-default" onclick="TB06080Sjs.resetTb06080()"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				
+				</div>				
 				<div class="ibox">
 					<div class="ibox-title">
 						<div>
@@ -134,15 +133,15 @@
 								<div class="row form-group form-inline text-right mb-1">
 									<div class="col-sm-12 form-group">
 										<label class="col-sm-1 control-label">실행순번</label>
-										<div class="col-sm-1 input-group">
+										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control" id="TB06080S_excSq" readonly disabled>
 										</div>
 										<label class="col-sm-1 control-label">신청순번</label>
-										<div class="col-sm-1 text-left input-group">
+										<div class="col-sm-3 text-left input-group">
 											<input type="text" class="form-control" id="TB06080S_rqstSq" readonly disabled>
 										</div>
 										<label class="col-sm-1 control-label">거래순번</label>
-										<div class="col-sm-1 text-left input-group">
+										<div class="col-sm-3 text-left input-group">
 											<input type="text" class="form-control" id="TB06080S_trSq" readonly disabled>
 										</div>
 									</div>
@@ -159,12 +158,12 @@
 								<!-- row6 -->
 								<div class="row form-group form-inline text-right mb-1">
 									<div class="col-sm-12 form-group">
-										<label class="col-sm- control-label">화면번호</label>
-										<div class="col-sm-1 input-group">
+										<label class="col-sm-1 control-label">화면번호</label>
+										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control" id="TB06080S_scrnNo" readonly disabled>
 										</div>																	
 										<label class="col-sm-1 control-label">처리결과</label>
-										<div class="col-sm-1 input-group">
+										<div class="col-sm-3 input-group">
 											<select class="form-control" id="TB06080S_prcsRsltDcd" readonly disabled>									
 											</select>
 										</div>

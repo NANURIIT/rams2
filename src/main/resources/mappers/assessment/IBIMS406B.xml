@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS406BMapper">
     <select id="getExcSn" parameterType="com.nanuri.rams.business.common.dto.IBIMS406BDTO" resultType="int">
 		SELECT 
-		       IFNULL(MAX(A.INT_CALC_SEQ),0)+1 AS INT_CALC_SEQ	/* 이자계산순번 채번 */
+		       NVL(MAX(A.INT_CALC_SEQ),0)+1 AS INT_CALC_SEQ	/* 이자계산순번 채번 */
 		  FROM IBIMS406B A 	/* 딜실행기본 */
 		 WHERE 1 = 1
 		   AND A.PRDT_CD = #{prdtCd}
@@ -44,7 +44,7 @@
 		, #{excSn}               /* 실행일련번호 */
 		, (
 			SELECT 
-			       IFNULL(MAX(A.INT_CALC_SEQ),0)+1 AS INT_CALC_SEQ	/* 이자계산순번 채번 */
+			       NVL(MAX(A.INT_CALC_SEQ),0)+1 AS INT_CALC_SEQ	/* 이자계산순번 채번 */
 			  FROM IBIMS406B A 	/* 딜실행기본 */
 			 WHERE 1 = 1
 			   AND A.PRDT_CD = #{prdtCd}

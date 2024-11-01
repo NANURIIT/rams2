@@ -69,9 +69,9 @@
 									<div class="col-sm-2 form-group mb-1">	
 										<!-- 버튼영역 -->
 										<div class="col-sm-12 text-right">
-											<button class="btn btn-primary" onclick="getWorkflowList()">
+											<button class="btn btn-primary" onclick="TB06060Sjs.getWorkflowList()">
 												<i class="fa fa-search"></i>&nbsp;조회</button>
-											<button class="btn btn-default" type="button" onclick="resetAll()">
+											<button class="btn btn-default" type="button" onclick="TB06060Sjs.resetAll()">
 												<i class="fa fa-undo"></i>&nbsp;초기화
 											</button>
 										</div>
@@ -182,11 +182,13 @@
 						
 						<div class="tabs-container">
 							<ul class="nav nav-tabs" role="tablist" id="ramsTab">
-								<li><a class="nav-link active" data-toggle="tab" href="#tab-1">기업여신</a></li>
+								<li><a class="nav-link active" data-toggle="tab" href="#tab-1">대출채권/채무보증</a></li>
 								<li><a class="nav-link" data-toggle="tab" href="#tab-2">상품집합투자증권</a></li>
-								<li><a class="nav-link" data-toggle="tab" href="#tab-3">주식(출자포함) / 채권</a></li>
+								<li><a class="nav-link" data-toggle="tab" href="#tab-3">주식(출자포함)/채권</a></li>
 							</ul>
 							<div class="tab-content">
+								<!-- tab1 -->
+								<!-- 기업여신 -->
 								<div role="tabpanel" id="tab-1" class="tab-pane active">
 									<div class="panel-body flow-box">
 										<div class="col-sm-12 pd0">
@@ -198,8 +200,8 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB03020S'">Deal 정보 등록</button>
-													<!--<button class="btn btn-default" type="button" onclick="window.location.href=''">기업체등록</button>-->
+													<button class="btn btn-default" type="button" onclick="callPage('TB03020S', 'Deal 정보 등록');">Deal 정보 등록</button>
+													<!--<button class="btn btn-default" type="button" onclick="callPage(''">기업체등록</button>-->
 													<button class="btn btn-default" type="button" onclick="callTB06019P('TB06060S');">기업체 등록</button><br>
 												</div>
 												<div class="flow_item">
@@ -209,7 +211,7 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB06010S'">대출채권/채무보증 정보등록</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB06010S', '대출채권/채무보증 정보등록');">대출채권/채무보증 정보등록</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status" name="flow04">
@@ -218,7 +220,7 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB06040S'">약정 및 해지</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB06040S', '약정 및 해지');">약정 및 해지</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status" name="flow05">
@@ -227,7 +229,7 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07010S'">대출계약 실행</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07010S', '대출계약 실행');">대출계약 실행</button>
 												</div>
 											</div>
 										</div>
@@ -237,39 +239,40 @@
 													<div class="flow-status">
 														<p>상환</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07030S'">대출계약 상환</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07070S'">실행상환취소</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07030S', '대출계약 상환');">대출계약 상환</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07070S', '실행상환취소');">실행상환취소</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>수수료/비용</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB08040S'">수수료스케줄관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB08050S'">수수료수납처리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07190S'">수수료수납내역조회</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB08040S', '수수료스케줄관리');">수수료스케줄관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB08050S', '수수료수납처리');">수수료수납처리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07190S', '수수료수납내역조회');">수수료수납내역조회</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>결재/기타조회</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07120S'">자금품의결재</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07090S'">입금내역관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07170S'">입금내역조회</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07120S', '자금품의결재');">자금품의결재</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07090S', '입금내역관리');">입금내역관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07170S', '입금내역조회');">입금내역조회</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>원장관리</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07080S'">원장정정</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07150S'">조건변경</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07160S'">이수관처리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07080S', '원장정정');">원장정정</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07150S', '조건변경');">조건변경</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07160S', '이수관처리');">이수관처리</button>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 
-
+								<!-- tab2 -->
+								<!-- 상품집합투자증권 -->
 								<div role="tabpanel" id="tab-2" class="tab-pane">
 									<div class="panel-body flow-box">
 										<div class="col-sm-12 pd0">
@@ -281,8 +284,8 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB03020S'">Deal 정보 등록</button>
-													<!--<button class="btn btn-default" type="button" onclick="window.location.href=''">기업체등록</button>-->
+													<button class="btn btn-default" type="button" onclick="callPage('TB03020S', 'Deal 정보 등록');">Deal 정보 등록</button>
+													<!--<button class="btn btn-default" type="button" onclick="callPage(''">기업체등록</button>-->
 													<button class="btn btn-default" type="button" onclick="callTB06019P('TB06060S');">기업체 등록</button>
 												</div>
 												<div class="flow_item">
@@ -292,7 +295,7 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB06020S'">집합투자증권 정보등록</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB06020S', '집합투자증권 정보등록');">집합투자증권 정보등록</button>
 												</div>
 												
 												<div class="flow_item">
@@ -302,8 +305,8 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07020S'">기타투자 매수관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07040S'">기타투자 매도권리관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07020S', '기타투자 매수관리');">기타투자 매수관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07040S', '기타투자 매도권리관리');">기타투자 매도권리관리</button>
 												</div>
 												<div class="flow_item -none"></div>
 											</div>
@@ -314,39 +317,40 @@
 													<div class="flow-status">
 														<p>평가등록</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07030S'">대출계약 상환</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07070S'">실행상환취소</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07030S', '대출계약 상환');">대출계약 상환</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07070S', '실행상환취소');">실행상환취소</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>수수료/비용</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB08040S'">수수료스케줄관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB08050S'">수수료수납처리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07190S'">수수료수납내역조회</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB08040S', '수수료스케줄관리');">수수료스케줄관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB08050S', '수수료수납처리');">수수료수납처리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07190S', '수수료수납내역조회');">수수료수납내역조회</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>결재/기타조회</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07120S'">자금품의결재</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07090S'">입금내역관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07170S'">입금내역조회</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07120S', '자금품의결재');">자금품의결재</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07090S', '입금내역관리');">입금내역관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07170S', '입금내역조회');">입금내역조회</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>원장관리</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07080S'">원장정정</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07150S'">조건변경</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07160S'">이수관처리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07080S', '원장정정');">원장정정</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07150S', '조건변경');">조건변경</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07160S', '이수관처리');">이수관처리</button>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 
-
+								<!-- tab3 -->
+								<!-- 주식(출자포함)/채권 -->
 								<div role="tabpanel" id="tab-3" class="tab-pane">
 									<div class="panel-body flow-box">
 										<div class="col-sm-12 pd0">
@@ -368,7 +372,7 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB06030S'">주식(출자포함)/채권 정보등록</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB06030S', '주식(출자포함)/채권 정보등록');">주식(출자포함)/채권 정보등록</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status" name="flow05">
@@ -377,7 +381,7 @@
 															<span class="status-desc">상태 : <span class="status -wait">대기</span></span>
 														</div>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07010S'">대출계약 실행</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07010S', '대출계약 실행');">대출계약 실행</button>
 												</div>
 												<div class="flow_item -none"></div>
 											</div>
@@ -388,32 +392,32 @@
 													<div class="flow-status">
 														<p>평가등록</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07030S'">대출계약 상환</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07070S'">실행상환취소</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07030S', '대출계약 상환');">대출계약 상환</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07070S', '실행상환취소');">실행상환취소</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>수수료/비용</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB08040S'">수수료스케줄관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB08050S'">수수료수납처리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07190S'">수수료수납내역조회</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB08040S', '수수료스케줄관리');">수수료스케줄관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB08050S', '수수료수납처리');">수수료수납처리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07190S', '수수료수납내역조회');">수수료수납내역조회</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>결재/기타조회</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07120S'">자금품의결재</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07090S'">입금내역관리</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07170S'">입금내역조회</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07120S', '자금품의결재');">자금품의결재</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07090S', '입금내역관리');">입금내역관리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07170S', '입금내역조회');">입금내역조회</button>
 												</div>
 												<div class="flow_item">
 													<div class="flow-status">
 														<p>원장관리</p>
 													</div>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07080S'">원장정정</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07150S'">조건변경</button>
-													<button class="btn btn-default" type="button" onclick="window.location.href='TB07160S'">이수관처리</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07080S', '원장정정');">원장정정</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07150S', '조건변경');">조건변경</button>
+													<button class="btn btn-default" type="button" onclick="callPage('TB07160S', '이수관처리');">이수관처리</button>
 												</div>
 											</div>
 										</div>

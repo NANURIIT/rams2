@@ -40,8 +40,8 @@
 									</div>
 								</div>
 								<div class="col-sm-6 text-right">
-									<button class="btn btn-primary" type="button" onclick="srch();"><i class="fa fa-search"></i>&nbsp;조회</button>
-									<button class="btn btn-default" onclick="reset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>&nbsp;
+									<button class="btn btn-primary" type="button" onclick="TB07010Sjs.srch();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-default" onclick="TB07010Sjs.reset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>&nbsp;
 								</div>
 							</div>
 						</div>
@@ -120,7 +120,7 @@
 										</div>
 										<label class="col-sm-1 col-form-label text-right">약정금액</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control text-right" id="TB07010S_contractAmt" oninput="setLoanablAmt();" value="0" disabled>
+											<input type="text" class="form-control text-right" id="TB07010S_contractAmt" oninput="TB07010Sjs.setLoanablAmt();" value="0" disabled>
 										</div>
 										<label class="col-sm-1 col-form-label text-right">대출금액</label>
 										<div class="col-sm-3 input-group">
@@ -329,8 +329,8 @@
 										<label class="col-sm-1 col-form-label text-right">선취이자</label>
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control text-right" id="TB07010S_prcsIntrAmt" value="0" oninput="inputNumberFormat(this); calAcbkAmt();" disabled>
-											<button type="button" class="btn btn-default mg-l5" id="btnIntr" onclick="inqIntr();" disabled>이자조회</button>
-										</div>										
+											<button type="button" class="btn btn-default mg-l5" id="btnIntr" onclick="TB07010Sjs.inqIntr();" disabled>이자조회</button>
+										</div>
 										<label class="col-sm-1 col-form-label text-right">수수료</label>
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control text-right" id="TB07010S_feeAmt" value="0" oninput="inputNumberFormat(this); calAcbkAmt(); feeReset();">
@@ -376,7 +376,7 @@
 										</div>
 										<div class="col-sm-4 input-group">
 										</div>
-										
+
 									</div>
 								</div> -->
 							</div>
@@ -385,12 +385,12 @@
 				</div>
 				<!-- end of ibox -->
 				<div class="tabs-container mb-1">
-			        <ul class="nav nav-tabs" role="tablist" id="ramsTab">
+			        <ul class="nav nav-tabs" role="tablist" id="TB07010S_ramsTab">
 			            <li><a class="nav-link" data-toggle="tab" href="#tab-1">수수료수납대장</a></li>
 			        </ul>
 			        <div class="tab-content">
 			            <!-- 수수료수납대장 -->
-			            <div role="tabpanel" class="tab-pane " id="tab-1">
+			            <div role="tabpanel" class="tab-pane " id="TB07010S_tab-1">
 			                <div class="panel-body">
 			                    <div class="row">
 			                        <div class="col-lg-12">
@@ -401,7 +401,7 @@
 											<label class="col-sm-5 col-form-label">※ 실행일자 이전 수수료수납 대상만 조회됩니다. (수납완료건은 제외)</label>
 										</div>
 										<div class="text-right" style="padding-right:5px;">
-											<button class="btn btn-success" type="button" id="btnSave" onclick="save();"><i class="fa fa-save"></i>&nbsp;실행</button>
+											<button class="btn btn-success" type="button" id="btnSave" onclick="TB07010Sjs.save();"><i class="fa fa-save"></i>&nbsp;실행</button>
 										</div>
 			                        </div>
 			                    </div>
@@ -411,10 +411,10 @@
 			    </div>
 				<div class="clearfix mt-2">
 					<div class="float-left">
-						<button class="btn btn-warning" onclick="showAlert119();">스케줄관리</button>
+						<button class="btn btn-warning" onclick="TB07010Sjs.showAlert119();">스케줄관리</button>
 					</div>
-					<div class="float-right">			
-						<button class="btn btn-warning" onclick="ldgMovePage();">실행완료(원장조회)</button>
+					<div class="float-right">
+						<button class="btn btn-warning" onclick="TB07010Sjs.ldgMovePage();">실행완료(원장조회)</button>
 					</div>
 				</div>
 

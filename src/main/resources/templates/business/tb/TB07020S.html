@@ -50,9 +50,9 @@
 									</div>
 								</div>
 								<div class="col-sm-4 text-right">
-									<button class="btn btn-primary" type="button" onclick="getBuyList();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-primary" type="button" onclick="TB07020Sjs.getBuyList();"><i class="fa fa-search"></i>&nbsp;조회</button>
 									<!-- <button id="" class="btn btn-info" onclick=""><i class="fa fa-arrow-right"></i>&nbsp;다음</button> -->
-									<button id="" class="btn btn-default" onclick="compClear();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+									<button id="" class="btn btn-default" onclick="TB07020Sjs.compClear();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
 						</div>
@@ -68,8 +68,8 @@
 								<label class="col-sm-1">처리구분</label>
 								<div class="col-sm-3 input-group">
 									<div class="btn-group col-sm-6 pd0" role="group" aria-label="">
-										<button class="btn btn-s toggleBtn1 btn-info" onclick="btnAdd();">등록</button>
-										<button class="btn btn-s toggleBtn2 btn-default" onclick="btnCancel();">취소</button>
+										<button class="btn btn-s toggleBtn1 btn-info" onclick="TB07020Sjs.btnAdd();">등록</button>
+										<button class="btn btn-s toggleBtn2 btn-default" onclick="TB07020Sjs.btnCancel();">취소</button>
 									</div>
 									<div class="col-sm-6 input-group">
 										<input type="checkbox" value="" id="" name="">
@@ -87,12 +87,12 @@
 								</div>
 								<label class="col-sm-1 col-form-label text-right">좌수</label>
 								<div class="col-sm-3 input-group">
-									<input type="text" class="form-control text-right" id="TB07020S_trQnt" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this), calcTrAmt(), calcTrslAmt(), setHoldPrpsDcd();">
+									<input type="text" class="form-control text-right" id="TB07020S_trQnt" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this), TB07020Sjs.calcTrAmt(), TB07020Sjs.calcTrslAmt(), TB07020Sjs.setHoldPrpsDcd();">
 								</div>
 								<label class="col-sm-1">지분율</label>
 								<div class="col-sm-3 text-left input-group">
-									<input type="text" class="form-control text-right"  id="TB07020S_qotaRt" value="0.00" onclick="setHoldPrpsDcd();" readonly>%
-								</div>						
+									<input type="text" class="form-control text-right"  id="TB07020S_qotaRt" value="0.00" onclick="TB07020Sjs.setHoldPrpsDcd();" readonly>%
+								</div>
 							</div>
 						</div>
 						<!-- row3 -->
@@ -107,13 +107,13 @@
 
 								<label class="col-sm-1">거래단가</label>
 								<div class="col-sm-3 input-group">
-											<input type="text" class="form-control text-right" id="TB07020S_trUnpr" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this), calcTrAmt(), calcTrslAmt();">
+											<input type="text" class="form-control text-right" id="TB07020S_trUnpr" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this), TB07020Sjs.calcTrAmt(), TB07020Sjs.calcTrslAmt();">
 								</div>
 								<label class="col-sm-1">평균단가</label>
 								<div class="col-sm-3 input-group">
 									<input type="text" class="form-control text-right" id="TB07020S_avrUnpr" value="0" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this);" readonly>
 								</div>
-								
+
 								<!-- <label class="col-sm-1">증권보관</label>
 								<div class="col-sm-3 input-group">
 											<select class="form-control" id="TB07020S_sctyCstdDcd">
@@ -136,7 +136,7 @@
 								</div>
 								<label class="col-sm-1">거래금액</label>
 								<div class="col-sm-3 input-group">
-									<input type="text" class="form-control text-right" id="TB07020S_trAmt" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this), calcTrAmt();" readonly>
+									<input type="text" class="form-control text-right" id="TB07020S_trAmt" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this), TB07020Sjs.calcTrAmt();" readonly>
 								</div>
 								<label class="col-sm-1">약정금액</label>
 								<div class="col-sm-3 input-group">
@@ -158,7 +158,7 @@
 								</div>
 								<label class="col-sm-1">매매환율</label>
 								<div class="col-sm-3 input-group">
-									<input type="text" class="form-control text-right" id="TB07020S_trdeExrt"  oninput="this.value = this.value.replace(/[^0-9.]/g, '');" onkeyup="calcTrslAmt();">
+									<input type="text" class="form-control text-right" id="TB07020S_trdeExrt"  oninput="this.value = this.value.replace(/[^0-9.]/g, '');" onkeyup="TB07020Sjs.calcTrslAmt();">
 								</div>
 								<label class="col-sm-1">매수가능금액</label>
 								<div class="col-sm-3 input-group">
@@ -274,7 +274,7 @@
 						<!-- row10 -->
 						<div class="row form-group form-inline text-right mb-3">
 							<div class="col-sm-12 form-group">
-								
+
 								<label class="col-sm-1">보유좌수</label>
 								<div class="col-sm-3 input-group">
 									<input type="text" class="form-control text-right" id="TB07020S_hldgShqt" value="" oninput="this.value = this.value.replace(/[^0-9]/g, '');" onkeyup="inputNumberFormat(this);" readonly>
@@ -343,7 +343,7 @@
 								<div class="row">
 							<div class="col-sm-12 text-right">
 								<button class="btn btn-info" onclick="testAlert('저장을 완료하였습니다.')"><i class="fa fa-save"></i>&nbsp;엑셀저장</button>
-								<button class="btn btn-success" onclick="showAlert();"><i class="fa fa-check"></i>&nbsp;실행</button>
+								<button class="btn btn-success" onclick="TB07020Sjs.showAlert();"><i class="fa fa-check"></i>&nbsp;실행</button>
 							</div>
 						</div>
 					</div>

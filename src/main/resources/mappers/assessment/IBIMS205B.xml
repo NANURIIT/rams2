@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="getBssAsstMngmNo" parameterType="String" resultType="String">
-            SELECT LPAD(IFNULL(MAX(BSS_ASST_MNGM_NO), 0) + 1, 16, '0') AS BSS_ASST_MNGM_NO 
+            SELECT LPAD(NVL(MAX(BSS_ASST_MNGM_NO), 0) + 1, 16, '0') AS BSS_ASST_MNGM_NO 
               FROM IBIMS205B
      </select>
 	
@@ -58,7 +58,7 @@
                )
         VALUES (
                  (
-                  SELECT LPAD(IFNULL(MAX(A.BSS_ASST_MNGM_NO), 0) + 1, 16, '0') 
+                  SELECT LPAD(NVL(MAX(A.BSS_ASST_MNGM_NO), 0) + 1, 16, '0') 
                     FROM IBIMS205B A
                  )                     
                , #{prdtCd}                     
@@ -71,7 +71,7 @@
                , #{crryAmt}                  
                , #{aplcExchR}              
                , #{crevAmt}             
-               , DEFAULT                       
+               , SYSDATE                       
                , #{hndEmpno}                   
                , #{hndTmnlNo}                  
                , #{hndTrId}                    
@@ -89,7 +89,7 @@
     	    , APLC_EXCH_R       = #{aplcExchR}
     	    , CRP_NM            = #{crpNm}
     	    , CREV_AMT          = #{crevAmt}
-    	    , HND_DETL_DTM      = DEFAULT
+    	    , HND_DETL_DTM      = SYSDATE
     	    , HND_EMPNO         = #{hndEmpno}
         WHERE PRDT_CD           = #{prdtCd}
           AND BSS_ASST_MNGM_NO  = #{bssAsstMngmNo}

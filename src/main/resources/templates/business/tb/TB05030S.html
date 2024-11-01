@@ -33,7 +33,7 @@
 								<span class="req"></span>결의협의체
 							</label>
 							<div class="col-sm-2 input-group">
-								<select class="form-control" name="account" id="TB05030S_R016" onchange="chngInspctPrgrsStCd(this)">
+								<select class="form-control" name="account" id="TB05030S_R016" onchange="TB05030Sjs.chngInspctPrgrsStCd(this)">
 								</select>
 							</div>
 							<!-- 결의년도 -->
@@ -42,14 +42,14 @@
 							</label>
 							<div class="col-sm-2 input-group">
 								<input type="number" class="touchspin" value="2023" data-bts-min="2010" data-bts-max="2100"
-									   id="TB05030S_stdYr" onchange="fnStdYrChng(this);" oninput="numberCheckMaxLength(this)" style="padding: 6px 9px;"  maxlength="4"/>
+									   id="TB05030S_stdYr" onchange="TB05030Sjs.fnStdYrChng(this);" oninput="numberCheckMaxLength(this)" style="padding: 6px 9px;"  maxlength="4"/>
 							</div>
 							<!-- 회차 -->
 							<label class="col-sm-1 control-label">
 								<span class="req"></span>회차
 							</label>
 							<div class="col-sm-3 input-group">
-								<select class="form-control" id="TB05030S_inspctCnfrncSqcSq" onchange="chnginspctCnfrncSqcSq(this);"></select>
+								<select class="form-control" id="TB05030S_inspctCnfrncSqcSq" onchange="TB05030Sjs.chnginspctCnfrncSqcSq(this);"></select>
 							<!-- 전체(종료건포함) -->
 								<label class="control-label ml-2" for="TB05030S_chkF">
 									<input type="checkbox" id="TB05030S_chkF" value="Y"> 전체(종료건포함)
@@ -57,7 +57,7 @@
 							</div>
 							<!-- 버튼영역 -->
 							<div class="col-sm-2 text-right">
-								<button class="btn btn-primary" onclick="searchCNFRNC();">
+								<button class="btn btn-primary" onclick="TB05030Sjs.searchCNFRNC();">
 									<i class="fa fa-search"></i>&nbsp;조회
 								</button>
 								<button class="btn btn-warning" onclick="testAlert('쪽지를 발송하였습니다.')">
@@ -93,7 +93,7 @@
 											class="fa fa-check"></i>&nbsp;확정</button>
 									<button class="btn btn-danger btn-xs" onclick="MMBRConfirm('cancel');" ><i
 											class="fa fa-undo"></i>&nbsp;확정취소</button>> -->
-											<button class="btn btn-success btn-xs" id="saveMmbrConfirm" onclick="MMBRConfirm('confirm');" disabled><i
+											<button class="btn btn-success btn-xs" id="saveMmbrConfirm" onclick="TB05030Sjs.MMBRConfirm('confirm');" disabled><i
 												class="fa fa-save"></i>&nbsp;저장</button>
 								</div>
 							</div>
@@ -110,9 +110,9 @@
 								<div id="gridIbDealInfo"></div>
 								<!-- 버튼영역 -->
 								<div class="col-sm-12 p-2 text-right">
-									<button class="btn btn-success btn-xs" id="btnConfirmDeal" onclick="ibDealConfirm('confirm')" disabled><i
+									<button class="btn btn-success btn-xs" id="btnConfirmDeal" onclick="TB05030Sjs.ibDealConfirm('confirm')" disabled><i
 											class="fa fa-check"></i>&nbsp;확정</button>
-									<button class="btn btn-danger btn-xs" id="btnCancelDeal" onclick="ibDealConfirm('cancel')" disabled><i
+									<button class="btn btn-danger btn-xs" id="btnCancelDeal" onclick="TB05030Sjs.ibDealConfirm('cancel')" disabled><i
 											class="fa fa-undo"></i>&nbsp;확정취소</button>
 								</div>
 								<div class="col-sm-12">

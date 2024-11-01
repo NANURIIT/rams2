@@ -4,7 +4,7 @@
 
     <select id="getMaxTrSn" parameterType="string" resultType="long">
 		SELECT 
-		       IFNULL(MAX(A.TR_SN),0)+1 AS TR_SN				/* 거래일련번호 채번 */
+		       NVL(MAX(A.TR_SN),0)+1 AS TR_SN				/* 거래일련번호 채번 */
 		  FROM IBIMS420B A 	/* 딜수수료수납내역 */
 		 WHERE 1 = 1
 		   AND A.PRDT_CD =  #{prdtCd} /*  'A000000001' */
@@ -164,7 +164,7 @@
 		, #{decdSttsDcd}        /* 결재상태구분코드 */
 		, #{prcsEmpno}     		/* 처리사원번호 */
 		, #{prcsTm}        		/* 처리시간 */
-		, DEFAULT				/* 조작상세일시 */
+	    , SYSDATE			/* 조작상세일시 */
 		, #{hndEmpno}			/* 조작사원번호 */
 		, #{hndTmnlNo}			/* 조작단말기번호 */
 		, #{hndTrId}			/* 조작거래ID */
@@ -240,24 +240,23 @@
 		   , C.TR_DT					/* 거래일자 */
 		   , C.RCTM_DT					/* 입금일자 */
 	    FROM IBIMS348B	A 				/* 딜승인수수료스케쥴기본 */
-	    LEFT OUTER JOIN IBIMS420B B 	/* 딜수수료수납내역 */
-		  ON B.PRDT_CD = A.PRDT_CD 		/* 종목코드 */
-		 AND B.FEE_SN  = A.FEE_SN		/* 수수료일련번호 */
-		 AND B.EXC_SN  = A.EXC_SN		/* 실행일련번호 */
-		 AND B.TR_SN   = 				/* 거래일련번호 */
-		     (
-	          SELECT MAX(TR_SN) 
-                FROM IBIMS420B V 
-               WHERE V.PRDT_CD = B.PRDT_CD 
-                 AND V.FEE_SN = B.FEE_SN 
-                 AND V.EXC_SN = B.EXC_SN 
-             )
-		LEFT OUTER JOIN IBIMS410B C 	/* 딜거래내역 */
-		  ON C.PRDT_CD = A.PRDT_CD		/* 종목코드 */
-		 AND C.TR_SN = A.TR_SN 			/* 거래일련번호 */
-		 AND C.EXC_SN = A.EXC_SN 		/* 실행일련번호 */
-		 AND C.TR_STAT_CD = '1'         /* 거래상태 1정상 */
-	   WHERE A.PRDT_CD = #{prdtCd}
+	       , IBIMS420B  B 				/* 딜수수료수납내역 */
+           , IBIMS410B  C 				/* 딜거래내역 */
+	   WHERE 1=1
+		 AND A.PRDT_CD = B.PRDT_CD(+) 		/* 종목코드 */
+		 AND A.FEE_SN  = B.FEE_SN(+)		/* 수수료일련번호 */
+		 AND A.EXC_SN  = B.EXC_SN(+)		/* 실행일련번호 */
+		 AND B.TR_SN(+)   = (   SELECT MAX(TR_SN) 
+				                FROM IBIMS420B V 
+				               WHERE V.PRDT_CD = B.PRDT_CD 
+				                 AND V.FEE_SN = B.FEE_SN 
+				                 AND V.EXC_SN = B.EXC_SN 
+				             )				/* 거래일련번호 */
+		 AND A.PRDT_CD 	= C.PRDT_CD(+)		/* 종목코드 */
+		 AND A.TR_SN 	= C.TR_SN(+) 		/* 거래일련번호 */
+		 AND A.EXC_SN 	= C.EXC_SN(+) 		/* 실행일련번호 */
+		 AND C.TR_STAT_CD(+) = '1'         /* 거래상태 1정상 */		             
+	     AND A.PRDT_CD = #{prdtCd}
 	   	 AND A.RGST_STTS_CD = '1'		/* 등록상태코드 */
 	   ORDER
 	      BY A.FEE_SN DESC
@@ -321,7 +320,7 @@
 	</select>
 
 	<select id="getTB07190SData" parameterType="com.nanuri.rams.business.common.vo.IBIMS420BVO" resultType="com.nanuri.rams.business.common.vo.IBIMS420BVO">
-        SELECT A.PRDT_CD
+ 		SELECT A.PRDT_CD
     		 , A.TR_SN
     		 , A.EXC_SN
     		 , A.FEE_SN
@@ -387,27 +386,27 @@
     		 , G.EPRZ_CRDL_CTRC_AMT
 			 , H.FEE_NAME
           FROM IBIMS420B A
-     LEFT JOIN IBIMS410B B
-            ON A.PRDT_CD = B.PRDT_CD 
-		   AND A.TR_SN = B.TR_SN
-		   AND A.EXC_SN = B.EXC_SN
-     LEFT JOIN IBIMS348B C
-            ON A.PRDT_CD = C.PRDT_CD
-		   AND A.FEE_SN = C.FEE_SN
-     LEFT JOIN IBIMS201B D
-            ON A.PRDT_CD = D.PRDT_CD
-     LEFT JOIN IBIMS101B E
-            ON D.DEAL_NO = E.DEAL_NO 
-     LEFT JOIN IBIMS010B F
-            ON D.TR_OTHR_DSCM_NO = F.ARDY_BZEP_NO
-     LEFT JOIN IBIMS401B G
-    		ON A.PRDT_CD = G.PRDT_CD
-	 LEFT JOIN IBIMS421B H
-    		ON A.EPRZ_CRDL_FEE_KND_CD = H.FEE_KND_CD
-		   AND A.ACTS_CD = H.ACT_CD
+     		 , IBIMS410B B
+     		 , IBIMS348B C
+			 , IBIMS201B D
+             , IBIMS101B E
+             , IBIMS010B F
+             , IBIMS401B G
+    		 , IBIMS421B H
          WHERE 1=1
-           AND D.LAST_YN = '1'
-           AND E.LAST_YN = '1'
+           AND A.PRDT_CD 				= B.PRDT_CD(+) 
+		   AND A.TR_SN 					= B.TR_SN(+)
+		   AND A.EXC_SN 				= B.EXC_SN(+)
+		   AND A.PRDT_CD 				= C.PRDT_CD(+)
+		   AND A.FEE_SN 				= C.FEE_SN(+)
+		   AND A.PRDT_CD 				= D.PRDT_CD(+)
+		   AND D.LAST_YN(+) 			= '1'
+		   AND D.DEAL_NO 				= E.DEAL_NO(+) 
+		   AND E.LAST_YN(+) 			= '1'
+		   AND D.TR_OTHR_DSCM_NO 		= F.ARDY_BZEP_NO(+)
+		   AND A.PRDT_CD 				= G.PRDT_CD(+)	
+		   AND A.EPRZ_CRDL_FEE_KND_CD 	= H.FEE_KND_CD(+)
+		   AND A.ACTS_CD 				= H.ACT_CD(+)	
 		<if test="actsCd != ''">
 		   AND A.ACTS_CD = #{actsCd} 
 		</if>
@@ -423,7 +422,6 @@
 		<if test="ardyBzepNo != ''">
 		   AND F.ARDY_BZEP_NO = #{ardyBzepNo}
 		</if>
-		   
            <!-- AND A.TR_DT &lt; #{prevDate}
            AND A.TR_DT &gt; #{nextDate}
         <if test="dealNo != ''">

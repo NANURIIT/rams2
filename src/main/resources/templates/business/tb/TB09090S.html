@@ -27,7 +27,7 @@
 								<label class="col-sm-1 control-label">보고기준날짜</label>
 								<div class="col-sm-2 input-group">
 									<span class="input-group date"> 
-										<input type="text" class="form-control" id="TB09090S_stdDt" name="start" value="" onchange="getStdDtDate(event.target.value);" readonly>
+										<input type="text" class="form-control" id="TB09090S_stdDt" name="start" value="" onchange="TB09090Sjs.getStdDtDate(event.target.value);" readonly>
 										<span class="input-group-addon"> <i
 											class="fa fa-calendar"></i>
 									</span>
@@ -54,7 +54,7 @@
 										id="TB09090S_dprtNm" name="" placeholder="전체" readonly>
 								</div>
 								<div class="col-sm-5 text-right">
-									<button class="btn btn-primary" onclick="getCpcList();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-primary" onclick="TB09090Sjs.getCpcList();"><i class="fa fa-search"></i>&nbsp;조회</button>
 									<button class="btn btn-default" onclick="resetParam()">
 										<i class="fa fa-undo"></i>&nbsp;초기화
 									</button>
@@ -138,8 +138,8 @@
 										<label>* 확정 처리는 각 부서 부서장만 가능<br>
 											* 확정취소 처리는 감사실, 신용리스크실, 경영기획팀만 가능</label>
 										<div class="col-sm-13 text-right mb-2">
-											<button class="btn btn-default" id="dcsnY" onclick="dcsnCheck()">&nbsp;확정</button>
-											<button class="btn btn-default" id="dcsnN" onclick="dcsnCancel()">&nbsp;확정취소
+											<button class="btn btn-default" id="dcsnY" onclick="TB09090Sjs.dcsnCheck()">&nbsp;확정</button>
+											<button class="btn btn-default" id="dcsnN" onclick="TB09090Sjs.dcsnCancel()">&nbsp;확정취소
 											</button>
 										</div>
 									</div>
@@ -203,20 +203,20 @@
 														id="TB09090S1_dprtNm" name="" placeholder="전체" readonly>
 												</div>
 												<div class="col-sm-6 text-right">
-													<button class="btn btn-default" onclick="nnGetCpcDetail();">
+													<button class="btn btn-default" onclick="TB09090Sjs.nnGetCpcDetail();">
 														&nbsp;조회</button>
 													<!-- <button class="btn btn-default" disabled>&nbsp;다음
 													</button> -->
-													<button class="btn btn-default" onclick="resetGridData()">
+													<button class="btn btn-default" onclick="TB09090Sjs.resetGridData()">
 														<i class="fa fa-undo"></i>&nbsp;초기화
 													</button>
 												</div>
 											</div>
 										</div>
 										<div class="table-responsive" style="height: 344px;">
-											<div id="colCpc1" ></div>
-											<div id="colCpc2" ></div>
-											<div id="colCpc3" ></div>
+											<div id="TB09090S_colCpc1" ></div>
+											<div id="TB09090S_colCpc2" ></div>
+											<div id="TB09090S_colCpc3" ></div>
 											<!-- <table class="table table-bordered table-hover" id="table1" style="display: none;width: 1300%;">
 												
 												<thead class="text-center">
@@ -921,10 +921,10 @@
 									<!-- <button class="btn btn-default" onclick="testAlert('저장을 완료하였습니다.')">
 										<i class="fa fa-save"></i>&nbsp;엑셀코드명저장
 									</button> -->
-									<button class="btn btn-default" id="uploadExcel" onclick="cpcExcelDownload();">
+									<button class="btn btn-default" id="uploadExcel" onclick="TB09090Sjs.cpcExcelDownload();">
 										<i class="fa fa-save"></i>&nbsp;서식다운로드
 									</button>
-									<button class="btn btn-default" id="export-btn" onclick="pqExportExcel();">
+									<button class="btn btn-default" id="export-btn" onclick="TB09090Sjs.pqExportExcel();">
 										<i class="fa fa-save"></i>&nbsp;엑셀저장
 									</button>
 									<button class="btn btn-default" id="TB09090S_upload_btn">
@@ -933,7 +933,7 @@
 									<div style="display:none;">
 										<input type="file" class="custom-file-input" id="upload-file-input-TB09090S" name="uploadfile" accept="*">
 									</div>
-									<button class="btn btn-default" id="TB09090S_dl_btn" onclick="insertCpc1Data();">
+									<button class="btn btn-default" id="TB09090S_dl_btn" onclick="TB09090Sjs.insertCpc1Data();">
 										저장
 									</button>
 								</div>

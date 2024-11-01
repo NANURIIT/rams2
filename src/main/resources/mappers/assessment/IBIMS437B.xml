@@ -3,18 +3,18 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS437BMapper">
 
     <select id="getOvduDailyDtls" parameterType="com.nanuri.rams.business.common.dto.IBIMS437BDTO" resultType="com.nanuri.rams.business.common.dto.IBIMS437BDTO">
-	SELECT 437b.AFCT_MNGM_NO                 /* 사후관리번호 */
-	     , 437b.OVDU_SEQ                     /* 연체순번  */
-		  , 437b.OVDU_OCRNC_DT                 /* 연체발생일 */
-		  , 437b.CRDL_BLCE_AMT                /* 여신잔액금액 */
-		  , 437b.RDMP_PRNA                    /* 상환원금액 */
-	 	  , 437b.RDMP_INTR_AMT                 /* 상환이자금액 */
-		  , 437b.OVDU_PRNA_AMT                /* 연체원금액 */
-		  , 437b.OVDU_INTR_AMT                 /* 연체이자금액 */
-	  FROM IBIMS437B 437b                     /* 연체내역 */
+	SELECT A.AFCT_MNGM_NO                 /* 사후관리번호 */
+	     , A.OVDU_SEQ                     /* 연체순번  */
+		  , A.OVDU_OCRNC_DT                 /* 연체발생일 */
+		  , A.CRDL_BLCE_AMT                /* 여신잔액금액 */
+		  , A.RDMP_PRNA                    /* 상환원금액 */
+	 	  , A.RDMP_INTR_AMT                 /* 상환이자금액 */
+		  , A.OVDU_PRNA_AMT                /* 연체원금액 */
+		  , A.OVDU_INTR_AMT                 /* 연체이자금액 */
+	  FROM IBIMS437B A                     /* 연체내역 */
 	 WHERE 1=1
-      AND 437b.AFCT_MNGM_NO = #{afctMngmNo}
-	   AND 437b.EXC_SEQ     = #{excSeq}
-	   AND 437b.DEAL_NO      = #{dealNo}
+      AND A.AFCT_MNGM_NO = #{afctMngmNo}
+	   AND A.EXC_SEQ     = #{excSeq}
+	   AND A.DEAL_NO      = #{dealNo}
 	</select>
 </mapper>

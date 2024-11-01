@@ -49,7 +49,7 @@
 			 , BUSI_NMCP_CPL_TXTN_YN	/* 사업부수수료과세여부 */
 			 , FEE_STDR_AMT				/* 수수료기준금액 */
 			 , FEE_TRGT_CTNS         	/* 수수료대상내용 */			    
-			 , IFNULL(PRCS_CPLT_YN, '0') AS PRCS_CPLT_YN /* 처리완료여부 */
+			 , NVL(PRCS_CPLT_YN, '0') AS PRCS_CPLT_YN /* 처리완료여부 */
 			 , CRRY_CD					/* 통화코드 */			 
 			 , FEE_RT                   /* 수수료율      */
 			 , FEE_AMT                  /* 수수료금액    */
@@ -84,7 +84,7 @@
 		  FROM IBIMS348B A 	/* 딜승인수수료스케쥴기본 */
 		 WHERE 1 = 1
 		   AND A.PRDT_CD  = #{prdtCd} /*  'A000000001' */
-		   AND IFNULL(A.PRCS_CPLT_YN, '0') = '0'
+		   AND NVL(A.PRCS_CPLT_YN, '0') = '0'
 		   <if test = "prarDt != null and prarDt == ''">
 		   AND A.PRAR_DT &lt;= #{prarDt}
 		   </if>
@@ -347,13 +347,13 @@
 			
     <update id="updateFeeScxInfo" parameterType="com.nanuri.rams.business.common.vo.IBIMS348BVO">
 		UPDATE IBIMS348B	/* 딜승인수수료스케쥴기본 */
-		   SET FEE_RCIV_DT  	 = IFNULL(TRIM(#{feeRcivDt}), DATE_FORMAT(now(), '%Y%m%d')) /* 수수료수납일자 */
+		   SET FEE_RCIV_DT  	 = NVL(TRIM(#{feeRcivDt}), TO_CHAR(SYSDATE, 'YYYYMMDD')) /* 수수료수납일자 */
 		     , FEE_RCIV_AMT 	 = #{feeRcivAmt}   	  /* 수수료수납금액 */
 		     , TR_SN        	 = #{trSn}         	  /* 거래일련번호 */
 		     , PRCS_CPLT_YN 	 = #{prcsCpltYn}   	  /* 처리완료여부 */
-		     , HND_DETL_DTM 	 = DEFAULT         	  /* 조작상세일시 */
-			 , FNNR_RCOG_STRT_DT = IFNULL(#{fnnrRcogStrtDt}, FNNR_RCOG_STRT_DT)  /* 인식시작일자 */
-             , FNNR_RCOG_END_DT  = IFNULL(#{fnnrRcogEndDt}, FNNR_RCOG_END_DT)   /* 인식종료일자 */
+		     , HND_DETL_DTM 	 = SYSDATE         	  /* 조작상세일시 */
+			 , FNNR_RCOG_STRT_DT = NVL(#{fnnrRcogStrtDt}, FNNR_RCOG_STRT_DT)  /* 인식시작일자 */
+             , FNNR_RCOG_END_DT  = NVL(#{fnnrRcogEndDt}, FNNR_RCOG_END_DT)   /* 인식종료일자 */
 		 WHERE PRDT_CD = #{prdtCd}            /* 상품코드 */
 		   AND FEE_SN  = #{feeSn}	          /* 수수료일련번호 */
     </update>
@@ -364,9 +364,9 @@
 		     , FEE_RCIV_AMT 	 = #{feeRcivAmt}   	  /* 수수료수납금액 */
 		     , TR_SN        	 = #{trSn}         	  /* 거래일련번호 */
 		     , PRCS_CPLT_YN 	 = #{prcsCpltYn}   	  /* 처리완료여부 */
-		     , HND_DETL_DTM 	 = DEFAULT         	  /* 조작상세일시 */
-			 , FNNR_RCOG_STRT_DT = IFNULL(#{fnnrRcogStrtDt}, FNNR_RCOG_STRT_DT)  /* 인식시작일자 */
-             , FNNR_RCOG_END_DT  = IFNULL(#{fnnrRcogEndDt}, FNNR_RCOG_END_DT)   /* 인식종료일자 */
+		     , HND_DETL_DTM 	 = SYSDATE         	  /* 조작상세일시 */
+			 , FNNR_RCOG_STRT_DT = NVL(#{fnnrRcogStrtDt}, FNNR_RCOG_STRT_DT)  /* 인식시작일자 */
+             , FNNR_RCOG_END_DT  = NVL(#{fnnrRcogEndDt}, FNNR_RCOG_END_DT)   /* 인식종료일자 */
 		 WHERE PRDT_CD = #{prdtCd}            /* 상품코드 */
 		   AND FEE_SN  = #{feeSn}	          /* 수수료일련번호 */
     </update>
@@ -461,7 +461,7 @@
 			, #{dcRt}				    /* 할인율 */
 			, #{rpsrNm}				    /* 대표자명 */
 			, #{rgstBdcd}			    /* 등록부점코드 */
-			, NOW()					    /* 조작상세일시 */
+			, SYSDATE					    /* 조작상세일시 */
 			, #{hndEmpno}			    /* 조작사원번호 */
 			, #{hndTmnlNo}			    /* 조작단말기번호 */
 			, #{hndTrId}			    /* 조작거래ID */
@@ -559,7 +559,7 @@
 			, #{item.dcRt}				    /* 할인율 */
 			, #{item.rpsrNm}				    /* 대표자명 */
 			, #{item.rgstBdcd}			    /* 등록부점코드 */
-			, NOW()					    /* 조작상세일시 */
+			, SYSDATE					    /* 조작상세일시 */
 			, #{item.hndEmpno}			    /* 조작사원번호 */
 			, #{item.hndTmnlNo}			    /* 조작단말기번호 */
 			, #{item.hndTrId}			    /* 조작거래ID */
@@ -594,7 +594,7 @@
 			, ACTS_CD 				= #{actsCd}					/* 계정과목코드 */
 			, RPSR_NM 				= #{rpsrNm}					/* 대표자명 */
 			, RGST_BDCD 			= #{rgstBdcd}				/* 등록부점코드 */
-			, HND_DETL_DTM 			= NOW()						/* 조작상세일시 */
+			, HND_DETL_DTM 			= SYSDATE						/* 조작상세일시 */
 			, HND_EMPNO 			= #{hndEmpno}				/* 조작사원번호 */
 			, HND_TMNL_NO 			= #{hndTmnlNo}				/* 조작단말기번호 */
 			, HND_TR_ID 			= #{hndTrId}				/* 조작거래ID */
@@ -607,7 +607,7 @@
 	<update  id="deleteFeeSch" parameterType="com.nanuri.rams.business.common.vo.IBIMS348BVO">
 	   UPDATE IBIMS348B											/* 딜승인수수료스케쥴기본 */
 	   	  SET RGST_STTS_CD 			= #{rgstSttsCd} 			/* 등록상태코드 */
-			, HND_DETL_DTM 			= NOW()						/* 조작상세일시 */
+			, HND_DETL_DTM 			= SYSDATE						/* 조작상세일시 */
 			, HND_EMPNO 			= #{hndEmpno}				/* 조작사원번호 */
 			, HND_TMNL_NO 			= #{hndTmnlNo}				/* 조작단말기번호 */
 			, HND_TR_ID 			= #{hndTrId}				/* 조작거래ID */
@@ -627,7 +627,7 @@
      
 	<!-- 수수료일련번호 채번 -->
 	<select id="getFeeSn" parameterType="string" resultType="int">
-	  SELECT IFNULL(MAX(FEE_SN), 0) + 1 AS feeSn /* 수수료일련번호 */
+	  SELECT NVL(MAX(FEE_SN), 0) + 1 AS feeSn /* 수수료일련번호 */
 		FROM IBIMS348B				  /* 딜승인수수료스케쥴기본 */
 	   WHERE PRDT_CD = #{prdtCd}	  /* 종목코드 */
 	</select>

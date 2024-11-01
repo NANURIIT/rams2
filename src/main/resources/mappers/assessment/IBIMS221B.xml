@@ -103,15 +103,17 @@
                   BSS_ASST_MNGM_NO                                  				<!-- 기초자산관리번호 -->
                 , PRDT_CD                                           				<!-- 상품코드 -->
                 , BSS_ASST_PRC                                      				<!-- 기초자산가격 -->
+                , HND_DETL_DTM
                 , HND_EMPNO                                         				<!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       				<!-- 조작단말기번호 -->
                 , HND_TR_ID                                         				<!-- 조작거래id -->
                 , GUID                                              				<!-- guid -->
                )
         VALUES (
-                 (SELECT LPAD(MAX(A.BSS_ASST_MNGM_NO)+1,16,'0') FROM IBIMS221B A)	<!-- 기초자산관리번호 -->
+                 (SELECT LPAD(TO_CHAR(TO_NUMBER(MAX(A.BSS_ASST_MNGM_NO))+1),16,'0') FROM IBIMS221B A)	<!-- 기초자산관리번호 -->
                , #{prdtCd}                                          				<!-- 상품코드 -->
                , #{bssAsstPrc}                                      				<!-- 기초자산가격 -->
+               , SYSDATE
                , #{hndEmpno}                                        				<!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       				<!-- 조작단말기번호 -->
                , #{hndTrId}                                         				<!-- 조작거래id -->
@@ -124,6 +126,7 @@
        UPDATE IBIMS221B
           SET PRDT_CD                                           = #{prdtCd}                                          <!-- 상품코드 -->
             , BSS_ASST_PRC                                      = #{bssAsstPrc}                                      <!-- 기초자산가격 -->
+            , HND_DETL_DTM                                      = SYSDATE
             , HND_EMPNO                                         = #{hndEmpno}                                        <!-- 조작사원번호 -->
             , HND_TMNL_NO                                       = #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
             , HND_TR_ID                                         = #{hndTrId}                                         <!-- 조작거래id -->

@@ -87,9 +87,9 @@
 									</div>
 								</div> -->
 								<div class="col-sm text-right">
-									<button class="btn btn-primary" type="button" onclick="getDealList();"><i
+									<button class="btn btn-primary" type="button" onclick="TB06020Sjs.getDealList();"><i
 											class="fa fa-search"></i>&nbsp;조회</button>
-									<button class="btn btn-default" onclick="resetSearchRequiment();"><i
+									<button class="btn btn-default" onclick="TB06020Sjs.resetSearchRequiment();"><i
 											class="fa fa-undo"></i>&nbsp;초기화</button>&nbsp;
 								</div>
 							</div>
@@ -538,9 +538,9 @@
 						</div>
 						<div class="ibox">
 							<div class="text-right">
-								<button class="btn btn-default" type="button" onclick="managePrdtCd(0);"
+								<button class="btn btn-default" type="button" onclick="TB06020Sjs.managePrdtCd(0);"
 									style="margin-left:2px; margin-right:2px;" id="regPrdt" disabled>종목 등록</button>
-								<button class="btn btn-default" type="button" onclick="managePrdtCd(1);"
+								<button class="btn btn-default" type="button" onclick="TB06020Sjs.managePrdtCd(1);"
 									style="margin-left:2px; margin-right:2px;" id="delPrdt" disabled>종목 삭제</button>
 							</div>
 						</div>
@@ -551,15 +551,14 @@
 
 
 				<div class="tabs-container mb-1">
-					<ul class="nav nav-tabs" role="tablist" id="ramsTab">
-						<li><a class="nav-link active" data-toggle="tab" href="#tab-1">셀다운 승인조건</a></li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-2" onclick="setLstMrtg();">담보/보증 정보</a>
-						</li>
-						<li><a class="nav-link" data-toggle="tab" href="#tab-3" onclick="setAtchFle();">첨부파일</a></li>
+					<ul class="nav nav-tabs" role="tablist" id="TB06020S_ramsTab">
+						<li><a class="nav-link active" data-toggle="tab" href="#TB06020S_tab-1">셀다운 승인조건</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB06020S_tab-2" onclick="TB06020Sjs.setLstMrtg();">담보/보증 정보</a></li>
+						<li><a class="nav-link" data-toggle="tab" href="#TB06020S_tab-3" onclick="TB06020Sjs.setAtchFle();">첨부파일</a></li>
 					</ul>
 					<div class="tab-content">
 						<!-- 셀다운 승인조건 -->
-						<div role="tabpanel" class="tab-pane active" id="tab-1">
+						<div role="tabpanel" class="tab-pane active" id="TB06020S_tab-1">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-12">
@@ -631,7 +630,7 @@
 							</div>
 						</div>
 						<!-- 담보정보 -->
-						<div role="tabpanel" class="tab-pane " id="tab-2">
+						<div role="tabpanel" class="tab-pane " id="TB06020S_tab-2">
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-lg-12">
@@ -686,7 +685,7 @@
 							</div>
 						</div>
 						<!-- 첨부파일 -->
-						<div role="tabpanel" class="tab-pane " id="tab-3">
+						<div role="tabpanel" class="tab-pane " id="TB06020S_tab-3">
 							<div class="panel-body">
 								<div class="row">
 									<!-- 첨부파일 start -->

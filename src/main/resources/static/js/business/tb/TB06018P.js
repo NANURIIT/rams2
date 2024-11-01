@@ -7,9 +7,25 @@ var sdvdCd;
  * @param {string} prefix 결과전달 ID의 prefix
  */
 function callTB06018P(prefix) {
+	const selectedFile =  loadFile(prefix);
+	({ ldvdCd, mdvdCd, sdvdCd } = selectedFile);
+
 	$('#TB06018P_prefix').val(prefix);
 	$('#modal-TB06018P').modal('show');
+	indexChangeHandler("TB06018P");
 	makeTable();
+	
+}
+
+/* js파일 동적으로 로드 */
+function loadFile(prefix){
+	const files = {
+		TB06010S: () => TB06010Sjs, //prefix가 TB06010S이면 TB06010Sjs로드
+		TB06020S: () => TB06020Sjs,
+		TB06030S: () => TB06030Sjs
+	}
+
+	return files[prefix]?files[prefix](): null
 }
 
 /**

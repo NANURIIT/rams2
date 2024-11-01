@@ -2,8 +2,9 @@
  * 모달 팝업 show
  */
 function callTB04012P(prefix){
-	$('#TB04012S_prefix').val(prefix);
+	$('#TB04012P_prefix').val(prefix);
 	$('#modal-TB04012P').modal('show');
+	indexChangeHandler("TB04012P");
 }
 
 /**

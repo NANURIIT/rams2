@@ -65,9 +65,9 @@
                , #{cclcRsnCd}                              <!-- 해지사유코드 -->
                , #{cclcDt}                                 <!-- 해지일자 -->
                , #{cclcRsnCtns}                            <!-- 해자사유내용 -->
-               , DATE_FORMAT(NOW(), '%Y%m%d')               <!-- 등록일자 -->
+               , TO_CHAR(SYSDATE, 'YYYYMMDD')               <!-- 등록일자 -->
                , DEFAULT                                   <!-- 삭제여부 -->
-               , DEFAULT                                   <!-- 조작상세일시 -->
+               , SYSDATE                                   <!-- 조작상세일시 -->
                , #{hndEmpno}                               <!-- 조작사원번호 -->
                , #{hndTmnlNo}                              <!-- 조작단말기번호 -->
                , #{hndTrId}                                <!-- 조작거래id -->
@@ -80,7 +80,7 @@
 		     , CCLC_RSN_CD   = #{cclcRsnCd}   <!-- 해지사유코드 --> 
 		     , CCLC_DT       = #{cclcDt}      <!-- 해지일자 -->
 		     , CCLC_RSN_CTNS = #{cclcRsnCtns} <!-- 해자사유내용 -->
-		     , HND_DETL_DTM  = DEFAULT        <!-- 조작상세일시 -->
+		     , HND_DETL_DTM  = SYSDATE        <!-- 조작상세일시 -->
 		 WHERE PRDT_CD = #{prdtCd}            <!-- 상품코드 -->
     </update>
 

@@ -49,7 +49,7 @@
       , #{item.prfdRankCrryCd}
       , #{item.prfdRankAmt}
       , #{item.krwTrslPrfdRankAmt}
-      , DEFAULT
+      , SYSDATE
       , #{item.hndEmpno}                                        <!-- 조작사원번호 -->
       , 'TB06013P'                                       <!-- 조작단말기번호 -->
       , 'registPrfd'                                         <!-- 조작거래id -->

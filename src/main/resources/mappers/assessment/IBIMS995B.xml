@@ -9,10 +9,10 @@
          , JOB_TYPE                                /* JOB TYPE */
          , OBJECT_NAME                             /* SOURCE FULL NAME */
          , ARGUMENT                                /* ARGUMENT */
-         , IFNULL(CONFIRM_YN,'N') AS CONFIRM_YN    /* CONFIRM_YN */
+         , NVL(CONFIRM_YN,'N') AS CONFIRM_YN    /* CONFIRM_YN */
          , DESCRIPTION                             /* 작업 설명 */
          , REGISTER_DAY                            /* 최초 등록일 */
-         , IFNULL(TRIM(LAST_UPDATE_DAY),REGISTER_DAY) AS LAST_UPDATE_DAY /* 최종 수정일 */
+         , NVL(LAST_UPDATE_DAY,REGISTER_DAY) AS LAST_UPDATE_DAY /* 최종 수정일 */
          , HND_DETL_DTM                            /* 조작상세일시 */
          , HND_EMPNO                               /* 조작사원번호 */
          , HND_TMNL_NO                             /* 조작단말기번호 */
@@ -24,8 +24,8 @@
             END AS JOB_TYPE_NAME                   /* JOB TYPE NAME*/
       FROM IBIMS995B
      WHERE 1=1
-		   AND JOB_ID LIKE CONCAT('%',#{jobId},'%')
-		   AND JOB_NAME LIKE CONCAT('%',#{jobName},'%')
+		   AND JOB_ID LIKE '%' || #{jobId} || '%'
+		   AND JOB_NAME LIKE '%' || #{jobName} || '%'
   	</select>    
 
     <!-- 배치JOB MASTER 입력  -->
@@ -57,7 +57,7 @@
                 , #{description}                   /* 작업 설명 */
                 , #{registerDay}                   /* 최초 등록일 */
                 , #{lastUpdateDay}                 /* 최종 수정일 */
-                , NOW()                            /* 조작상세일시 */
+                , SYSDATE                            /* 조작상세일시 */
                 , #{hndEmpno}                      /* 조작사원번호 */
                 , #{hndTmnlNo}                     /* 조작단말기번호 */
                 , #{hndTrId}                       /* 조작거래ID */
@@ -80,7 +80,7 @@
                                   WHERE JOB_ID = #{jobId}
                                 )                                /* 최초 등록일 */
             , LAST_UPDATE_DAY = #{lastUpdateDay}                 /* 최종 수정일 */
-            , HND_DETL_DTM    = NOW()                            /* 조작상세일시 */
+            , HND_DETL_DTM    = SYSDATE                            /* 조작상세일시 */
             , HND_EMPNO       = #{hndEmpno}                      /* 조작사원번호 */
             , HND_TMNL_NO     = #{hndTmnlNo}                     /* 조작단말기번호 */
             , HND_TR_ID       = #{hndTrId}                       /* 조작거래ID */

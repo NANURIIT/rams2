@@ -57,7 +57,7 @@
                      , X.PRDT_CD
                   FROM IBIMS209B X
                  WHERE X.PRDT_CD = #{prdtCd}
-                 LIMIT 1
+                   AND ROWNUM = 1
                ) AS I209B
             ON I209B.DEAL_NO = IBIMS208B.DEAL_NO
          WHERE 1=1
@@ -100,6 +100,7 @@
                 , SDWN_CTNS                                         <!-- 샐다운내용 -->
                 , ETC_APVL_CND_CTNS                                 <!-- 기타승인조건내용 -->
                 , APVL_CND_ACT_CTNS                                 <!-- 승인조건활동내용 -->
+                , HND_DETL_DTM                                      <!-- 조작상세일시 -->  
                 , HND_EMPNO                                         <!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
                 , HND_TR_ID                                         <!-- 조작거래id -->
@@ -134,6 +135,7 @@
                , #{sdwnCtns}                                        <!-- 샐다운내용 -->
                , #{etcApvlCndCtns}                                  <!-- 기타승인조건내용 -->
                , #{apvlCndActCtns}                                  <!-- 승인조건활동내용 -->
+               , SYSDATE                                            <!-- 조작상세일시 --> 
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->

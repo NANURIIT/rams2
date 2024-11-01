@@ -77,6 +77,7 @@
                 , INTR_CLC_END_DE_DCD                               <!-- 이자계산종료일구분코드 -->
                 , INTR_HDWT_CLC_YN                                  <!-- 이자수기계산여부 -->
                 , INTR_RDMP_FRQC_MNUM                               <!-- 이자상환주기개월수 -->
+                , HND_DETL_DTM                                      <!-- 조작상세일시 -->
                 , HND_EMPNO                                         <!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
                 , HND_TR_ID                                         <!-- 조작거래id -->
@@ -112,6 +113,7 @@
                , #{intrClcEndDeDcd}                                 <!-- 이자계산종료일구분코드 -->
                , #{intrHdwtClcYn}                                   <!-- 이자수기계산여부 -->
                , #{intrRdmpFrqcMnum}                                <!-- 이자상환주기개월수 -->
+               , SYSDATE                                            <!-- 조작상세일시-->
                , #{hndEmpno}                                        <!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
                , #{hndTrId}                                         <!-- 조작거래id -->
@@ -151,6 +153,7 @@
             , INTR_CLC_END_DE_DCD                               = #{intrClcEndDeDcd}                                 <!-- 이자계산종료일구분코드 -->
             , INTR_HDWT_CLC_YN                                  = #{intrHdwtClcYn}                                   <!-- 이자수기계산여부 -->
             , INTR_RDMP_FRQC_MNUM                               = #{intrRdmpFrqcMnum}                                <!-- 이자상환주기개월수 -->
+            , HND_DETL_DTM                                      = SYSDATE                                            <!-- 조작상세일시-->
             , HND_EMPNO                                         = #{hndEmpno}                                        <!-- 조작사원번호 -->
             , HND_TMNL_NO                                       = #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
             , HND_TR_ID                                         = #{hndTrId}                                         <!-- 조작거래id -->

@@ -42,7 +42,7 @@
 								</div>
 								<label class="col-sm-1 col-form-label text-right">적용환율</label>
 								<div class="col-sm-2 input-group">
-									<input type="text" class="form-control text-right" id="TB07030S_aplcExchR" value="1.00" oninput="calculator('aplcExchR'); inputNumberFormat(this); restrictDecimalDigits(this, 4)" maxlength="9">
+									<input type="text" class="form-control text-right" id="TB07030S_aplcExchR" value="1.00" oninput="TB07030Sjs.calculator('aplcExchR'); inputNumberFormat(this); restrictDecimalDigits(this, 4)" maxlength="9">
 									<!-- <select class="form-control" id="repoAplyExrtDcd">
 										<option>전체</option>
 									</select> -->
@@ -77,8 +77,8 @@
 									</select> -->
 								</div>
 								<div class="col-sm-2 text-right">
-									<button class="btn btn-primary" type="button" onclick="srch();"><i class="fa fa-search"></i>&nbsp;조회</button>
-									<button id="" class="btn btn-default" onclick="reset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
+									<button class="btn btn-primary" type="button" onclick="TB07030Sjs.srch();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button id="" class="btn btn-default" onclick="TB07030Sjs.reset();"><i class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
 						</div>
@@ -128,7 +128,7 @@
 									<div class="ibox-title">
 										<h5>▶ 상환대상상세내역</h5>
 										<div class="ibox-tools">
-											<button type="button" class="btn btn-default btn-xs" id="" onclick="calPrarAmt();">상환금액계산</button>
+											<button type="button" class="btn btn-default btn-xs" id="" onclick="TB07030Sjs.calPrarAmt();">상환금액계산</button>
 											<!-- <button type="button" class="btn btn-default btn-xs" id="exelDown"><i class="fa fa-file-excel-o"></i>&nbsp;엑셀저장</button>
 											<div style="display: none;">
 												<input type="file" class="custom-file-input" id="upload-file-input-TB07030S" name="uploadfile" accept="*">
@@ -315,7 +315,7 @@
 										</div> -->
 										<label class="col-sm-1 col-form-label text-right">현금입금</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control text-right" id="TB07030S_dealCashAmt" value="0" oninput="inputNumberFormat(this); calculator('acptPtclSmtlAmt');">
+											<input type="text" class="form-control text-right" id="TB07030S_dealCashAmt" value="0" oninput="inputNumberFormat(this); TB07030Sjs.calculator('acptPtclSmtlAmt');">
 										</div>
 									</div>
 								</div>
@@ -343,7 +343,7 @@
 										</div> -->
 										<label class="col-sm-1 col-form-label text-right">은행입금</label>
 										<div class="col-sm-3 input-group">
-											<input type="text" class="form-control text-right" id="TB07030S_dealAltnAmt" value="0" oninput="inputNumberFormat(this); calculator('acptPtclSmtlAmt');">
+											<input type="text" class="form-control text-right" id="TB07030S_dealAltnAmt" value="0" oninput="inputNumberFormat(this); TB07030Sjs.calculator('acptPtclSmtlAmt');">
 										</div>
 									</div>
 								</div>
@@ -413,7 +413,7 @@
 							</div>
 							<div class="col-sm-6 text-right pd0">
 								<button class="btn btn-info mg-l5" type="button" onclick="testAlert('조회서출력을 완료하였습니다.')"><i class="fa fa-print"></i>&nbsp;이자조회서출력</button>
-								<button class="btn btn-success mg-l5" type="button" onclick="save();"><i class="fa fa-check"></i>&nbsp;상환</button>
+								<button class="btn btn-success mg-l5" type="button" onclick="TB07030Sjs.save();"><i class="fa fa-check"></i>&nbsp;상환</button>
 							</div>
 						</div>
 					</div>

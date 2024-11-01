@@ -1,6 +1,8 @@
 var ldvdCd;
 var mdvdCd;
 var sdvdCd;
+
+
 $(document).ready(function () {
 	
 });
@@ -12,7 +14,11 @@ $(document).ready(function () {
 function callAC01140P(prefix) {
 	$('#prefix').val(prefix);
 	$('#modal-AC01140P').modal('show');
+	
 	makeTable();
+	
+
+	
 }
 
 /**
@@ -23,6 +29,12 @@ function modalClose_AC01140P() {
 }
 
 function makeTable(){
+	
+	if($('#prefix').val() == "TB04010S") {
+		ldvdCd = TB04010Sjs.ldvdCd;
+		mdvdCd = TB04010Sjs.mdvdCd;
+		sdvdCd = TB04010Sjs.sdvdCd;
+	}
 	var html = "";
 	
 	$.each(sdvdCd, function(key, value) {
@@ -103,12 +115,12 @@ function setDvdCdId(e){
 	}
 
 	if($('#prefix').val() == "TB04010S") {
-
+		
 		$('#TB04010S_I029').val(ldvdCdVl).prop("selected", true).change();	// 투자상품대분류
 
 		$('#TB04010S_I030').val(mdvdCdVl).prop("selected", true).change();	// 투자상품중분류
 
-		$('#TB04010S_I029').val(sdvdCdVl).prop("selected", true).change();	// 투자상품소분류
+		$('#TB04010S_I031').val(sdvdCdVl).prop("selected", true).change();	// 투자상품소분류
 
 	}
 

@@ -13,7 +13,7 @@
               , A.HND_TMNL_NO                 /* 조작단말기번호 */          
               , A.HND_TR_ID                   /* 조작거래id */      
               , A.GUID                        /* guid */  
-              , "u"                  AS  queryType
+              , 'u'                  AS  queryType
           FROM IBIMS204B A
          WHERE A.PRDT_CD = #{prdtCd}
          ORDER BY A.APLY_MNUM ASC;
@@ -35,15 +35,15 @@
                 ) 
                 SELECT
                     #{prdtCd},
-                    IFNULL((SELECT MAX(A.FEE_SN) FROM IBIMS204B A) + 1, 1),
+                    NVL((SELECT MAX(A.FEE_SN) FROM IBIMS204B A) + 1, 1),
                     #{item.aplyMnum},
                     #{item.mdwyRdmpFeeRto},
-                    DATE_FORMAT(now(), '%Y-%m-%d'),
+                    SYSDATE,
                     #{hndEmpno},
                     #{hndTmnlNo},
                     #{hndTrId},
                     #{guid}
-                FROM dual
+                FROM dualZ
                 WHERE NOT EXISTS (
                     SELECT 1
                     FROM IBIMS204B B
@@ -59,7 +59,7 @@
         <foreach collection="mdwyRdmpFeeRtoList" item="item" separator=";">
             UPDATE IBIMS204B
                SET  MDWY_RDMP_FEE_RTO = #{item.mdwyRdmpFeeRto}
-                  , HND_DETL_DTM = DATE_FORMAT(now(), '%Y-%m-%d')
+                  , HND_DETL_DTM = SYSDATE
                   , HND_EMPNO = #{hndEmpno}
                   , HND_TMNL_NO = #{hndTmnlNo}
                   , HND_TR_ID = #{hndTrId}
@@ -84,7 +84,7 @@
                 WHERE APLY_MNUM = (
                     SELECT MIN(APLY_MNUM)
                     FROM IBIMS204B
-                    WHERE APLY_MNUM &gt;= TIMESTAMPDIFF(MONTH, #{stdrDt}, #{endDt})
+                    WHERE APLY_MNUM &gt;= MONTHS_BETWEEN(TO_DATE(#{stdrDt}, 'YYYYMMDD'), TO_DATE(#{endDt}, 'YYYYMMDD'))
                     AND PRDT_CD = #{prdtCd}
                 )
             )
@@ -94,13 +94,13 @@
                 WHERE APLY_MNUM = (
                     SELECT MIN(APLY_MNUM)
                     FROM IBIMS204B
-                    WHERE APLY_MNUM &gt;= TIMESTAMPDIFF(MONTH, #{stdrDt}, #{endDt})
+                    WHERE APLY_MNUM &gt;= MONTHS_BETWEEN(TO_DATE(#{stdrDt}, 'YYYYMMDD'), TO_DATE(#{endDt}, 'YYYYMMDD'))
                     AND PRDT_CD = #{prdtCd}
                 )
                 AND PRDT_CD = #{prdtCd}
             )
             ELSE (
-                SELECT DISTINCT  MAX(MDWY_RDMP_FEE_RTO) 
+                SELECT DISTINCT MAX(MDWY_RDMP_FEE_RTO) 
                 FROM IBIMS204B
             )
         END AS MDWY_RDMP_FEE_RTO

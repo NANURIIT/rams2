@@ -89,7 +89,7 @@
           #{prdtCd}
         , (
            SELECT
-      			IFNULL(MAX(A.RGST_SN),0)+1 AS RGST_SN
+      			NVL(MAX(A.RGST_SN),0)+1 AS RGST_SN
 		     FROM IBIMS401H A 	/* 약정기본이력 */
 			WHERE 1 = 1
 			  AND A.PRDT_CD =  #{prdtCd}
@@ -165,7 +165,7 @@
         , #{invJdgmComtNo}
         , #{bdbtAlwcRcknLmtStdrDcd}
         , #{ctrcCclcDcd}
-        , DEFAULT
+        , SYSDATE
         , #{hndEmpno}
         , #{hndTmnlNo}
         , #{hndTrId}

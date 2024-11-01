@@ -3,7 +3,7 @@
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS407BMapper">
 
     <select id="getFincList" parameterType="com.nanuri.rams.business.common.dto.IBIMS407BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS407BVO">
-        SELECT A.PRDT_CD                        /* 상품코드 */
+ 		SELECT A.PRDT_CD                        /* 상품코드 */
              , A.TR_SN                          /* 거래일련번호 */
              , A.EXC_SN                         /* 실행일련번호 */
              , A.TR_DT                          /* 거래일자 */
@@ -47,14 +47,20 @@
                                                 /* 거래부서명 */
              , E.STDR_EXRT                      /* 기준환율 */
           FROM IBIMS407B A
-     LEFT JOIN IBIMS201B B ON A.PRDT_CD = B.PRDT_CD AND B.LAST_YN = '1'
-     LEFT JOIN IBIMS993B C ON A.NS_FND_CD = C.FND_CD
-     LEFT JOIN IBIMS994B E ON B.TR_CRRY_CD = E.CRNCY_CD AND A.TR_DT = E.STDR_DT
-     LEFT JOIN IBIMS992B D ON A.STL_XTNL_ISTT_CD = D.FNLT_CD
+     		 , IBIMS201B B  
+             , IBIMS993B C 
+     		 , IBIMS994B E 
+             , IBIMS992B D 
          WHERE 1=1
+           AND A.PRDT_CD 			= B.PRDT_CD(+) 
+           AND B.LAST_YN(+) 		= '1'
+           AND A.NS_FND_CD 		  	= C.FND_CD(+)
+           AND B.TR_CRRY_CD 	  	= E.CRNCY_CD(+) 
+           AND A.TR_DT 			  	= E.STDR_DT(+)
+           AND A.STL_XTNL_ISTT_CD 	= D.FNLT_CD(+)
            AND A.NS_FND_CD = #{nsFndCd}
            AND A.PRDT_CD = #{prdtCd}
-           AND A.TR_DT LIKE IFNULL(NULLIF(#{trDt}, ''), '%')
+           AND A.TR_DT LIKE NVL(NULLIF(#{trDt}, ''), '%')
          ORDER BY A.TR_DT ASC, A.PRDT_CD, A.TR_SN DESC
     </select>
 

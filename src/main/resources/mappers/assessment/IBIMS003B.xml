@@ -50,8 +50,8 @@
           FROM RAA94B A
          WHERE A.DLT_F != 'Y'
         <if test="rghtCdNm != null and rghtCdNm != ''">
-           AND rght_cd_nm LIKE CONCAT('%', #{rghtCdNm}, '%')	<!-- 권한코드명 -->
-            OR rght_cd LIKE CONCAT('%', #{rghtCdNm}, '%')
+           AND rght_cd_nm LIKE '%'|| #{rghtCdNm}||'%'	<!-- 권한코드명 -->
+            OR rght_cd    LIKE '%'|| #{rghtCdNm}||'%'
         </if>
     </select>
 	
@@ -82,22 +82,22 @@
 		  FROM IBIMS003B
 		 WHERE 1=1
 		 <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(empno)">
-           AND EMPNO LIKE CONCAT('%', #{empno}, '%')
+           AND EMPNO LIKE '%'|| #{empno}|| '%'
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(empNm)">
-           AND EMP_NM LIKE CONCAT('%', #{empNm}, '%')
+           AND EMP_NM LIKE '%'|| #{empNm}|| '%'
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dprtCd)">
-           AND DPRT_CD LIKE CONCAT('%', #{dprtCd}, '%')
+           AND DPRT_CD LIKE '%'|| #{dprtCd}|| '%'
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dprtNm)">
-           AND DPRT_NM LIKE CONCAT('%', #{dprtNm}, '%')
+           AND DPRT_NM LIKE '%'|| #{dprtNm}|| '%'
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(bdCd)">
-           AND BD_CD LIKE CONCAT('%', #{bdCd}, '%')
+           AND BD_CD LIKE '%'|| #{bdCd}|| '%'
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(bdNm)">
-           AND BD_NM LIKE CONCAT('%', #{bdNm}, '%')
+           AND BD_NM LIKE '%'|| #{bdNm}|| '%'
          </if>
 	</select>
 	
@@ -152,33 +152,33 @@
 
     <!-- 사용자괸리 - 사용자검색 -->
     <select id="selectUser" parameterType="com.nanuri.rams.business.common.dto.IBIMS003BDTO" resultType="com.nanuri.rams.business.common.vo.IBIMS003BVO">
-          SELECT IFNULL(EMPNO, '')              			AS EMPNO					<!-- 사원번호 -->
-        	   , IFNULL(EMP_NM, '')         				AS EMP_NM                   <!-- 사원명 -->
-        	   , IFNULL((SELECT CD_VL_NM
+          SELECT NVL(EMPNO, '')              			AS EMPNO					<!-- 사원번호 -->
+        	   , NVL(EMP_NM, '')         				AS EMP_NM                   <!-- 사원명 -->
+        	   , NVL((SELECT CD_VL_NM
         		           FROM IBIMS002B
         		          WHERE CMNS_CD_GRP = 'R030'
         		            AND CD_VL_ID = A.USR_DCD), '')	AS USR_DCD_NM				<!-- 사용자구분명 -->
-        	   , IFNULL(ATH_CD, '')        					AS ATH_CD					<!-- 권한코드 -->
-        	   , IFNULL((SELECT ATH_CD_NM
+        	   , NVL(ATH_CD, '')        					AS ATH_CD					<!-- 권한코드 -->
+        	   , NVL((SELECT ATH_CD_NM
         		           FROM IBIMS006B
         		          WHERE ATH_CD = A.ATH_CD), '')		AS ATH_CD_NM				<!-- 권한코드명 -->
-        	   , IFNULL(DPRT_CD, '')						AS DPRT_CD					<!-- 부서코드 -->
-               , IFNULL(OSDT_DCD, '')                       AS OSDT_DCD					<!-- 직책구분코드 -->
-        	   , IFNULL(RGST_RSN, '')						AS RGST_RSN					<!-- 등록사유 -->
-        	   , IFNULL(APLY_STRT_DT, '')					AS APLY_STRT_DT				<!-- 적용시작일자 -->
-        	   , IFNULL(APLY_END_DT, '')					AS APLY_END_DT				<!-- 적용종료일자 -->
-        	   , IFNULL(DEL_YN, '')							AS DEL_YN					<!-- 삭제여부 -->
-        	   , IFNULL((SELECT EMP_NM
+        	   , NVL(DPRT_CD, '')						AS DPRT_CD					<!-- 부서코드 -->
+               , NVL(OSDT_DCD, '')                       AS OSDT_DCD					<!-- 직책구분코드 -->
+        	   , NVL(RGST_RSN, '')						AS RGST_RSN					<!-- 등록사유 -->
+        	   , NVL(APLY_STRT_DT, '')					AS APLY_STRT_DT				<!-- 적용시작일자 -->
+        	   , NVL(APLY_END_DT, '')					AS APLY_END_DT				<!-- 적용종료일자 -->
+        	   , NVL(DEL_YN, '')							AS DEL_YN					<!-- 삭제여부 -->
+        	   , NVL((SELECT EMP_NM
         		           FROM IBIMS003B
         		          WHERE EMPNO = A.DEL_EMPNO), '')	AS DEL_EMP_NM				<!-- 삭제사원명 -->
                , A.RGST_EMPNO
-        	   , IFNULL((SELECT EMP_NM
+        	   , NVL((SELECT EMP_NM
         		           FROM IBIMS003B
         		          WHERE EMPNO = A.RGST_EMPNO), '')	AS RGST_EMP_NM				<!-- 등록사원명 -->
                , A.RGST_DT																<!-- 등록일자 -->
                , A.HND_DETL_DTM															<!-- 조작상세일시 -->
                , A.HND_EMPNO															<!-- 조작사원번호 -->
-        	   , IFNULL((SELECT EMP_NM
+        	   , NVL((SELECT EMP_NM
         		           FROM IBIMS003B
         		          WHERE EMPNO = A.HND_EMPNO), '')	AS HND_EMP_NM				<!-- 조작사원명 -->
           FROM IBIMS003B A
@@ -187,8 +187,8 @@
         	 AND A.ATH_CD = #{athCd}
         	 </if>
         	 <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(empNm)">
-        	 AND (A.EMP_NM LIKE CONCAT('%', #{empNm}, '%')
-        	  OR  A.EMPNO LIKE CONCAT('%', #{empNm}, '%'))
+        	 AND (A.EMP_NM LIKE '%'|| #{empNm}|| '%')
+        	  OR  (A.EMPNO LIKE '%'|| #{empNm}|| '%')
         	 </if>
         	 <if test='delYn == 0'>
         	 AND A.DEL_YN  ='N'

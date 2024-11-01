@@ -59,7 +59,7 @@
                , #{item.trOthrDscmNo}               										<!-- 거래상대방식별번호 -->
                , #{item.itrRelrChrCd}               										<!-- 이해관계자성격코드 -->
                , #{item.itrRelrShpCd}               										<!-- 이해관계자형태코드 -->
-               , DEFAULT                       												<!-- 조작상세일시 -->
+               , SYSDATE                       												<!-- 조작상세일시 -->
                , #{item.hndEmpno}                   										<!-- 조작사원번호 -->
                , #{item.hndTmnlNo}                  										<!-- 조작단말기번호 -->
                , #{item.hndTrId}                    										<!-- 조작거래id -->

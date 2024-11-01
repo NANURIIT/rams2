@@ -54,7 +54,7 @@
 								<label class="col-sm-1 col-form-label">거래일자</label>
 								<div class="col-sm-3 input-group">
 									<div class="col-sm-12 input-group date px-0">
-										<input type="text" class="form-control" id="TB07070S_trDt" name="" value="" placeholder="YYYY-MM-DD">
+										<input type="text" class="form-control" id="TB07070S_trDt" oninput="this.value = this.value.replace(/[^0-9-]/g, '');" value="" placeholder="YYYY-MM-DD">
 										<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 									</div>
 								</div>
@@ -75,9 +75,9 @@
 
 							<div class="col-sm-1-5 text-right pl-0">
 
-								<button class="btn btn-primary" type="button" onclick="srch();">
+								<button class="btn btn-primary" type="button" onclick="TB07070Sjs.srch();">
 									<i class="fa fa-search"></i>&nbsp;조회</button>
-								<button id="" class="btn btn-default" onclick="reset();">
+								<button id="" class="btn btn-default" onclick="TB07070Sjs.reset();">
 									<i class="fa fa-undo"></i>&nbsp;초기화</button>
 
 							</div>

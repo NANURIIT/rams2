@@ -68,13 +68,13 @@
            AND A.SQ = (
            			   SELECT MAX(SQ)
            			     FROM IBIMS224B
-           			    WHERE DEAL_NO LIKE CONCAT('%', #{dealNo} , '%')
+           			    WHERE DEAL_NO LIKE '%' || #{dealNo} || '%'
                       )
         
-           AND A.DEAL_NO LIKE CONCAT('%', #{dealNo} , '%') 
+           AND A.DEAL_NO LIKE '%' || #{dealNo} || '%' 
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNm)">
-           AND B.DEAL_NM LIKE CONCAT('%', #{dealNm} , '%') 
+           AND B.DEAL_NM LIKE '%' || #{dealNm} || '%' 
          </if>
          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(decdDptDcd)">
            AND A.DECD_DPT_DCD = #{decdDptDcd} 
@@ -111,7 +111,7 @@
           and B.DPRT_CD  = A.DECD_DPT_DCD 
       where A.DEAL_NO = #{dealNo}
       AND A.SQ  = (
-                  SELECT MAX(CAST(SQ AS INTEGER))
+                  SELECT MAX(SQ)
                     FROM IBIMS224B
                     WHERE DEAL_NO = #{dealNo}
                 )
@@ -161,10 +161,7 @@
                 , GUID                                    															<!-- guid -->
                )
         VALUES (
-	              CONCAT(CASE WHEN #{issLtrDcd} = 1 THEN 'LOI'
-	                          WHEN #{issLtrDcd} = 2 THEN 'LOC'
-	                          ELSE 'LOI' END
-	                     , #{decdDptDcd} , DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'))                                      <!-- 발급관리번호 -->
+                (DECODE(#{issLtrDcd}, 1, 'LOI', 2, 'LOC', 'LOI') || #{decdDptDcd} || TO_CHAR(SYSDATE, 'YYYYMMDDhh24mmss'))             <!-- 발급관리번호 -->
                , #{issSttsCd}                              															<!-- 발급상태코드 -->
                , #{dealNo}                                 															<!-- 딜번호 -->
 				       , #{sq}                               														        <!-- 일련번호 -->
@@ -206,7 +203,7 @@
 	</insert>
 
   <select id='getMaxSQ' resultType="String" parameterType="com.nanuri.rams.business.common.vo.TB04050SVO">
-      SELECT COALESCE(MAX(CAST(SQ AS INTEGER)), 0) + 1
+      SELECT NVL(MAX(SQ), 0) + 1
       FROM IBIMS224B
       WHERE DEAL_NO = #{dealNo}
   </select>

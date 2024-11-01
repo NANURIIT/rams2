@@ -193,11 +193,11 @@
         INSERT INTO IBIMS820B  /* 기업여신월별결산내역 */
              SELECT   SUBSTR(#{stdrDt},1,6)      AS STDR_YM                   /* 기준년월            */             
                     , A.PRDT_CD                  AS PRDT_CD                   /* 상품코드            */   
-                    , ((SELECT IFNULL(MAX(X.RGST_SN), 0)
+                    , ((SELECT NVL(MAX(X.RGST_SN), 0)
                           FROM IBIMS820B X  /* 기업여신월별결산내역 */
                          WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                            AND X.PRDT_CD = A.PRDT_CD
-                      ) + ROWNUM())              AS RGST_SN                   /* 등록일련번호         */
+                      ) + ROWNUM)                AS RGST_SN                   /* 등록일련번호         */
                     , A.MNGM_BDCD                AS BDCD                      /* 부점코드            */
                     , ''                         AS ACCT_SYNS_CD              /* 회계적용코드         */
                     , ''                         AS STTM_NO                   /* 전표번호            */
@@ -249,7 +249,7 @@
         INSERT INTO IBIMS820B  /* 기업여신월별결산내역 */
              SELECT  SUBSTR(#{stdrDt},1,6)       AS STDR_YM                   /* 기준년월            */             
                     , Y.PRDT_CD                  AS PRDT_CD                   /* 상품코드            */   
-                    , ((SELECT IFNULL(MAX(X.RGST_SN), 0)
+                    , ((SELECT NVL(MAX(X.RGST_SN), 0)
                           FROM IBIMS820B X  /* 기업여신월별결산내역 */
                          WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                            AND X.PRDT_CD = Y.PRDT_CD
@@ -299,7 +299,7 @@
                                      WHEN D.INTR_CALC_STRT_DT &gt; F.MN_TFDY THEN D.INTR_CALC_STRT_DT
                                      ELSE F.MN_TFDY
                                       END) AS THMN_DCNT_STRT_DT   /* 당월일수시작일자(이수관일자 또는 월초일) */
-                             , (CASE WHEN (IFNULL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) THEN D.INTR_CALC_END_DT /* 해지일자 */
+                             , (CASE WHEN (NVL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) THEN D.INTR_CALC_END_DT /* 해지일자 */
                                      WHEN D.INTR_CALC_END_DT &lt; F.MN_LSTD THEN D.INTR_CALC_END_DT
                                      ELSE F.MN_LSTD
                                       END) AS THMN_DCNT_END_DT   /* 당월일수종료일자(재무인식종료일자 또는 월말일) */
@@ -308,9 +308,9 @@
                            , IBIMS811B B             /* 딜월별잔액 */
                            , IBIMS410B C             /* 딜거래내역 */
                            , IBIMS406B D             /* 여신이자계산내역 */
-                           , (SELECT DATE_FORMAT( STR_TO_DATE(#{stdrDt}, '%Y%m%d'), '%Y%m01')                                                      AS MN_TFDY      /* 월초일 */
-                                                , DATE_FORMAT(LAST_DAY(STR_TO_DATE(#{stdrDt}, '%Y%m%d')), '%Y%m%d')                                AS MN_LSTD      /* 월말일 */
-                                                , DATE_FORMAT(LAST_DAY(DATE_SUB(STR_TO_DATE(#{stdrDt}, '%Y%m%d'), INTERVAL 1 MONTH)), '%Y%m%d')    AS BFMN_LSTD    /* 전월말일 */
+                           , (SELECT SUBSTR(#{stdrDt}, 1, 6) || '01'                                                       AS MN_TFDY      /* 월초일 */
+                                   , TO_CHAR(LAST_DAY(TO_DATE(#{stdrDt}, 'YYYYMMDD')), 'YYYYMMDD')                          AS MN_LSTD      /* 월말일 */
+                                   , TO_CHAR(LAST_DAY(ADD_MONTHS(TO_DATE(#{stdrDt}, 'YYYYMMDD'), -1)), 'YYYYMMDD')          AS BFMN_LSTD    /* 전월말일 */
                                 FROM DUAL
                                      ) F 
                        WHERE 1 = 1
@@ -324,7 +324,7 @@
                          AND B.PRDT_CD  = C.PRDT_CD 
                          AND B.EXC_SN   = C.EXC_SN
                          AND (C.TR_STAT_CD	= '1' /* 거래상태코드 1-정상 */
-                          OR IFNULL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) /* 해지일자가 해당월인 대상 */
+                          OR NVL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) /* 해지일자가 해당월인 대상 */
                          AND C.ETPR_CRDT_GRNT_TR_KIND_CD IN ('10','20')  /* 거래종류코드 : 실행,상환 */
                          AND C.TR_INT_AMT	&gt; 0 /* 거래이자금액 */
                          AND C.PRDT_CD = D.PRDT_CD 
@@ -352,7 +352,7 @@
         INSERT INTO IBIMS820B  /* 기업여신월별결산내역 */
              SELECT  SUBSTR(#{stdrDt},1,6)      AS STDR_YM                   /* 기준년월            */             
                    , Y.PRDT_CD                  AS PRDT_CD                   /* 상품코드            */   
-                   , ((SELECT IFNULL(MAX(X.RGST_SN), 0)
+                   , ((SELECT NVL(MAX(X.RGST_SN), 0)
                         FROM IBIMS820B X  /* 기업여신월별결산내역 */
                         WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                           AND X.PRDT_CD = Y.PRDT_CD
@@ -402,7 +402,7 @@
                                     WHEN D.FNNR_RCOG_STRT_DT &gt; F.MN_TFDY THEN D.FNNR_RCOG_STRT_DT
                                     ELSE F.MN_TFDY
                                      END) AS THMN_DCNT_STRT_DT   /* 당월일수시작일자(이수관일자 또는 월초일) */
-                             ,(CASE WHEN (IFNULL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) THEN D.FNNR_RCOG_END_DT /* 해지일자 */
+                             ,(CASE WHEN (NVL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) THEN D.FNNR_RCOG_END_DT /* 해지일자 */
                                     WHEN D.FNNR_RCOG_END_DT &lt; F.MN_LSTD THEN D.FNNR_RCOG_END_DT
                                     ELSE F.MN_LSTD
                                      END) AS THMN_DCNT_END_DT   /* 당월일수종료일자(재무인식종료일자 또는 월말일) */
@@ -411,9 +411,9 @@
                                , IBIMS811B B             /* 딜월별잔액 */
                                , IBIMS410B C             /* 딜거래내역 */
                                , IBIMS420B D             /* 딜수수료수납내역 */
-                               , (SELECT  DATE_FORMAT(STR_TO_DATE(#{stdrDt}, '%Y%m%d'), '%Y%m01')                                          AS MN_TFDY      /* 월초일 */
-                                        , DATE_FORMAT(LAST_DAY(STR_TO_DATE(#{stdrDt}, '%Y%m%d')), '%Y%m%d')                                AS MN_LSTD      /* 월말일 */
-                                        , DATE_FORMAT(LAST_DAY(DATE_SUB(STR_TO_DATE(#{stdrDt}, '%Y%m%d'), INTERVAL 1 MONTH)), '%Y%m%d')    AS BFMN_LSTD    /* 전월말일 */
+                               , (SELECT SUBSTR(#{stdrDt}, 1, 6) || '01'                                                       AS MN_TFDY      /* 월초일 */
+                                      , TO_CHAR(LAST_DAY(TO_DATE(#{stdrDt}, 'YYYYMMDD')), 'YYYYMMDD')                          AS MN_LSTD      /* 월말일 */
+                                      , TO_CHAR(LAST_DAY(ADD_MONTHS(TO_DATE(#{stdrDt}, 'YYYYMMDD'), -1)), 'YYYYMMDD')          AS BFMN_LSTD    /* 전월말일 */
                                     FROM DUAL
                                   ) F
                           WHERE 1 = 1
@@ -425,7 +425,7 @@
                             AND B.PRDT_CD  = C.PRDT_CD 
                             AND B.EXC_SN   = C.EXC_SN 
                             AND (C.TR_STAT_CD	= '1' /* 거래상태코드 1-정상 */
-                             OR IFNULL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) /* 해지일자가 해당월인 대상 */
+                             OR NVL(E.CCLC_DT, '20000101') BETWEEN F.MN_TFDY AND F.MN_LSTD) /* 해지일자가 해당월인 대상 */
                             AND C.TR_FEE_AMT	&gt; 0   /* 거래수수료금액 */
                             AND C.PRDT_CD = D.PRDT_CD 
                             AND C.TR_SN   = D.TR_SN   
@@ -450,7 +450,7 @@
         INSERT INTO IBIMS820B  /* 기업여신월별결산내역 */
              SELECT   SUBSTR(#{stdrDt},1,6)      AS STDR_YM                   /* 기준년월            */             
                     , A.PRDT_CD                  AS PRDT_CD                   /* 상품코드            */   
-                    , ((SELECT IFNULL(MAX(X.RGST_SN), 0)
+                    , ((SELECT NVL(MAX(X.RGST_SN), 0)
                           FROM IBIMS820B X  /* 기업여신월별결산내역 */
                          WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                            AND X.PRDT_CD = A.PRDT_CD

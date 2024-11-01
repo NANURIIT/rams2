@@ -142,7 +142,7 @@
 			     , SGL_INV_YN = #{sglInvYn}  /* 단독투자여부 */
 			     , RGST_DT = #{rgstDt}  /* 등록일자 */
 			     , CHNG_DT = #{chngDt}  /* 변경일자 */
-			     , HND_DETL_DTM = current_timestamp()  /* 조작상세일시 */
+			     , HND_DETL_DTM = SYSDATE  /* 조작상세일시 */
 			     , HND_EMPNO = #{hndEmpno}  /* 조작사원번호 */
 			     , HND_TMNL_NO = #{hndTmnlNo}  /* 조작단말기번호 */
 			     , HND_TR_ID = #{hndTrId}  /* 조작거래id */
@@ -315,19 +315,19 @@
             , IB201B.SGL_INV_YN                                        <!-- 단독투자여부 -->
             , ROUND(IB994B.STDR_EXRT, 2) AS STDR_EXRT                  <!-- 기준환율 -->
             , 10000000000 AS WHOL_ISSU_SHQT                            <!-- 전체발행좌수 -->
-            , IFNULL(IB402B.BUY_SHQT,0) - IFNULL(IB402B.SLL_SHQT,0) AS HLDG_SHQT <!-- 보유좌수 -->
-            , IFNULL(IB401B.EPRZ_CRDL_CTRC_AMT, 0) AS EPRZ_CRDL_CTRC_AMT <!-- 기업여신약정금액-->
-            , IFNULL(IB402B.KRW_TRSL_EXC_AMT, 0) AS KRW_TRSL_EXC_AMT     <!-- 원화환산실행금액-->
-            , IFNULL(CASE WHEN IB402B.KRW_TRSL_EXC_AMT IS NULL THEN IB401B.EPRZ_CRDL_CTRC_AMT
+            , NVL(IB402B.BUY_SHQT,0) - NVL(IB402B.SLL_SHQT,0) AS HLDG_SHQT <!-- 보유좌수 -->
+            , NVL(IB401B.EPRZ_CRDL_CTRC_AMT, 0) AS EPRZ_CRDL_CTRC_AMT <!-- 기업여신약정금액-->
+            , NVL(IB402B.KRW_TRSL_EXC_AMT, 0) AS KRW_TRSL_EXC_AMT     <!-- 원화환산실행금액-->
+            , NVL(CASE WHEN IB402B.KRW_TRSL_EXC_AMT IS NULL THEN IB401B.EPRZ_CRDL_CTRC_AMT
                           ELSE IB401B.EPRZ_CRDL_CTRC_AMT - IB402B.KRW_TRSL_EXC_AMT
                       END, 0) AS KRW_TRSL_EXC_BLCE                       <!-- 매수가능금액-->
-            , ROUND(IFNULL(IB402B.AVR_UNPR,0),2) AS AVR_UNPR                      <!-- 평균단가 -->
-            , ROUND(ROUND(IFNULL(IB402B.AVR_UNPR,0),2) * (IFNULL(IB402B.BUY_SHQT,0) - IFNULL(IB402B.SLL_SHQT,0)),2) AS EVL_PFLS_AMT <!-- 평가손익금액 -->
-            , ROUND(ROUND(IFNULL(IB402B.AVR_UNPR,0),2) * IFNULL(IB402B.SLL_SHQT,0),2) AS TRAD_PFLS_AMT  <!-- 매매손익금액  -->
+            , ROUND(NVL(IB402B.AVR_UNPR,0),2) AS AVR_UNPR                      <!-- 평균단가 -->
+            , ROUND(ROUND(NVL(IB402B.AVR_UNPR,0),2) * (NVL(IB402B.BUY_SHQT,0) - NVL(IB402B.SLL_SHQT,0)),2) AS EVL_PFLS_AMT <!-- 평가손익금액 -->
+            , ROUND(ROUND(NVL(IB402B.AVR_UNPR,0),2) * NVL(IB402B.SLL_SHQT,0),2) AS TRAD_PFLS_AMT  <!-- 매매손익금액  -->
             FROM IBIMS201B IB201B
             LEFT JOIN IBIMS994B IB994B
               ON IB201B.TR_CRRY_CD = IB994B.CRNCY_CD
-            <!-- AND IB994B.STDR_DT = TO_CHAR(NOW(), 'YYYYmmDD') -->
+            <!-- AND IB994B.STDR_DT = TO_CHAR(SYSDATE, 'YYYYmmDD') -->
              AND IB994B.STDR_DT =
                  (
                   SELECT MAX(V.STDR_DT)
@@ -341,10 +341,10 @@
            WHERE 1=1
              AND IB201B.LAST_YN = '1'
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtCd)">
-                AND IB201B.PRDT_CD                                 LIKE CONCAT('%', #{prdtCd}, '%')
+                AND IB201B.PRDT_CD                                 LIKE '%' || #{prdtCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtNm)">
-                AND IB201B.PRDT_NM                                 LIKE CONCAT('%', #{prdtNm}, '%')
+                AND IB201B.PRDT_NM                                 LIKE '%' || #{prdtNm} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNo)">
                 AND IB201B.DEAL_NO                                 = #{dealNo}
@@ -525,17 +525,17 @@
             , IB201B.EARLY_REPAY_YN                                    /*  중도상환여부  */
             , IB201B.SGL_INV_YN                                        /*  단독투자여부  */
             , ROUND(IB994B.STDR_EXRT, 2) AS STDR_EXRT                  /*  기준환율  */
-            , IFNULL(IB402B.BUY_SHQT,0) - IFNULL(IB402B.SLL_SHQT,0) AS HLDG_SHQT /*  보유좌수  */
-            , IFNULL(IB401B.EPRZ_CRDL_CTRC_AMT, 0) AS EPRZ_CRDL_CTRC_AMT /*  기업여신약정금액 */
-            , IFNULL(IB402B.KRW_TRSL_EXC_AMT, 0) AS KRW_TRSL_EXC_AMT     /*  원화환산실행금액 */
-            , IFNULL(CASE WHEN IB402B.KRW_TRSL_EXC_AMT IS NULL THEN IB401B.EPRZ_CRDL_CTRC_AMT
+            , NVL(IB402B.BUY_SHQT,0) - NVL(IB402B.SLL_SHQT,0) AS HLDG_SHQT /*  보유좌수  */
+            , NVL(IB401B.EPRZ_CRDL_CTRC_AMT, 0) AS EPRZ_CRDL_CTRC_AMT /*  기업여신약정금액 */
+            , NVL(IB402B.KRW_TRSL_EXC_AMT, 0) AS KRW_TRSL_EXC_AMT     /*  원화환산실행금액 */
+            , NVL(CASE WHEN IB402B.KRW_TRSL_EXC_AMT IS NULL THEN IB401B.EPRZ_CRDL_CTRC_AMT
                           ELSE IB401B.EPRZ_CRDL_CTRC_AMT - IB402B.KRW_TRSL_EXC_AMT
                       END, 0) AS KRW_TRSL_EXC_BLCE                       /*  매수가능금액 */
-            , ROUND(IFNULL(IB402B.AVR_UNPR,0),2) AS AVR_UNPR                      /*  평균단가  */
-            , ROUND(ROUND(IFNULL(IB402B.AVR_UNPR,0),2) * (IFNULL(IB402B.BUY_SHQT,0) - IFNULL(IB402B.SLL_SHQT,0)),2) AS EVL_PFLS_AMT /*  평가손익금액  */
-            , ROUND(ROUND(IFNULL(IB402B.AVR_UNPR,0),2) * IFNULL(IB402B.SLL_SHQT,0),2) AS TRAD_PFLS_AMT  /*  매매손익금액   */
+            , ROUND(NVL(IB402B.AVR_UNPR,0),2) AS AVR_UNPR                      /*  평균단가  */
+            , ROUND(ROUND(NVL(IB402B.AVR_UNPR,0),2) * (NVL(IB402B.BUY_SHQT,0) - NVL(IB402B.SLL_SHQT,0)),2) AS EVL_PFLS_AMT /*  평가손익금액  */
+            , ROUND(ROUND(NVL(IB402B.AVR_UNPR,0),2) * NVL(IB402B.SLL_SHQT,0),2) AS TRAD_PFLS_AMT  /*  매매손익금액   */
             , IB201B.PRG_STTS_CD                                                                        /*  진행상태코드  */
-            , IFNULL(
+            , NVL(
                        (
 		                SELECT CD_VL_NM
 		                  FROM IBIMS002B
@@ -544,7 +544,7 @@
 		             	), '') AS PRG_STTS_NM															/* 진행상태코드명 */
             , IB010B.BZEP_NAME                                                                          /* 거래상대방명 */
             , IB201B.MNGM_BDCD                                                                          /* 부서코드  */
-            , ( SELECT DPRT_NM FROM IBIMS003B WHERE DPRT_CD =  IB201B.MNGM_BDCD LIMIT 1) AS DPRT_NM     /* 부서명  */
+            , ( SELECT DPRT_NM FROM IBIMS003B WHERE DPRT_CD =  IB201B.MNGM_BDCD AND ROWNUM = 1) AS DPRT_NM     /* 부서명  */
             , IB201B.CHRR_EMPNO                                        									/* 담당자번호 */																			    /*  담당자사원번호  */
             , ( SELECT EMP_NM  FROM IBIMS003B WHERE EMPNO =  IB201B.CHRR_EMPNO ) AS EMP_NM2             /* 담당자명  */
 		    , NVL(IB201B.APVL_AMT, s112b.APVL_AMT) AS APVL_AMT 											/* 승인금액 */
@@ -553,7 +553,7 @@
             FROM IBIMS201B IB201B
             LEFT JOIN IBIMS994B IB994B
               ON IB201B.TR_CRRY_CD = IB994B.CRNCY_CD
-            /*  AND IB994B.STDR_DT = TO_CHAR(NOW(), 'YYYYmmDD')  */
+            /*  AND IB994B.STDR_DT = TO_CHAR(SYSDATE, 'YYYYmmDD')  */
              AND IB994B.STDR_DT =
                  (
                   SELECT MAX(V.STDR_DT)
@@ -582,10 +582,10 @@
      WHERE 1=1
            AND IB201B.LAST_YN = '1'
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtCd)">
-                AND IB201B.PRDT_CD                                 LIKE CONCAT('%', #{prdtCd}, '%')
+                AND IB201B.PRDT_CD                                 LIKE '%' || #{prdtCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtNm)">
-                AND IB201B.PRDT_NM                                 LIKE CONCAT('%', #{prdtNm}, '%')
+                AND IB201B.PRDT_NM                                 LIKE '%' || #{prdtNm} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNo)">
                 AND IB201B.DEAL_NO                                 = #{dealNo}
@@ -768,10 +768,10 @@
            WHERE 1=1
              AND LAST_YN = '1'
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtCd)">
-             AND PRDT_CD                                 LIKE CONCAT('%', #{prdtCd}, '%')
+             AND PRDT_CD                                 LIKE '%' || #{prdtCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtNm)">
-             AND PRDT_NM                                 LIKE CONCAT('%', #{prdtNm}, '%')
+             AND PRDT_NM                                 LIKE '%' || #{prdtNm} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(ibDealNo)">
              AND DEAL_NO                                 = #{ibDealNo}
@@ -1085,6 +1085,7 @@
             , DSHN_RT_GRD_CD                                    <!-- 기업여신부도율등급코드 -->
             , RGST_DT                                           <!-- 등록일자 -->
             , CHNG_DT                                           <!-- 변경일자 -->
+            , HND_DETL_DTM                                      <!-- 조작상세일시 -->
             , HND_EMPNO                                         <!-- 조작사원번호 -->
             , HND_TMNL_NO                                       <!-- 조작단말기번호 -->
             , HND_TR_ID                                         <!-- 조작거래id -->
@@ -1094,7 +1095,9 @@
             )
             VALUES (
             #{prdtCd}                                          <!-- 상품코드 -->
-            , LPAD(nextval(IBIMS201B_SQ), 10, 0)   			    <!-- 일련번호 -->
+            , ( SELECT LPAD(NVL(MAX(SN), 0) + 1, 10, '0') 
+                FROM IBIMS201B	   			                        <!-- 일련번호 -->
+              )
             , #{lastYn}                                          <!-- 최종여부 -->
             , #{prdtNm}                                          <!-- 상품명 -->
             , #{prdtDsc}                                         <!-- 상품설명 -->
@@ -1232,6 +1235,7 @@
             , #{dshnRtGrdCd}                                     <!-- 기업여신부도율등급코드 -->
             , #{rgstDt}                                          <!-- 등록일자 -->
             , #{chngDt}                                          <!-- 변경일자 -->
+            , SYSDATE                                            <!-- 조작상세일시 -->
             , #{hndEmpno}                                        <!-- 조작사원번호 -->
             , #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
             , #{hndTrId}                                         <!-- 조작거래id -->
@@ -1242,19 +1246,22 @@
         </insert>
 
         <select id="getPrdtCdSq" parameterType="String" resultType="String">
-            SELECT CASE WHEN A.COUNT = '' THEN CONCAT(#{pageDcd}, '000000001')
-                        ELSE (
-                            SELECT CONCAT(#{pageDcd}, LPAD(CAST(SUBSTRING(ib.PRDT_CD, 2, 10) AS INTEGER) + 1, 9, 0)) AS pageDcd
-                            FROM IBIMS201B ib
-                            WHERE SUBSTRING(ib.PRDT_CD, 1, 1) = #{pageDcd}
-                            ORDER BY ib.PRDT_CD DESC
-                            LIMIT 1
-                        )
+            SELECT CASE WHEN A.COUNT = 0 THEN #{pageDcd} || '000000001'
+                        ELSE ( SELECT pageDcd
+                                 FROM (
+                                          SELECT #{pageDcd} || LPAD(TO_CHAR(TO_NUMBER(SUBSTR(ib.PRDT_CD, 2, 10)) + 1), 9, 0) AS pageDcd
+                                          FROM IBIMS201B ib
+                                          WHERE SUBSTR(ib.PRDT_CD, 1, 1) = #{pageDcd}
+                                          ORDER BY ib.PRDT_CD DESC
+                                      )
+                                WHERE 1=1
+                                  AND ROWNUM = 1
+                        ) 
                        END AS pageDcd
             FROM (
                      SELECT COUNT(PRDT_CD) AS COUNT
                      FROM IBIMS201B
-                     WHERE SUBSTRING(PRDT_CD, 1, 1) LIKE #{pageDcd}
+                     WHERE SUBSTR(PRDT_CD, 1, 1) LIKE #{pageDcd}
                  ) A
         </select>
 
@@ -1268,47 +1275,42 @@
         <select id="checkDealSearch" parameterType="com.nanuri.rams.business.common.vo.IBIMS201BVO"
                 resultType="com.nanuri.rams.business.common.vo.IBIMS201BVO">
             SELECT A.DEAL_NO AS DEAL_NO 															 <!-- 딜번호 -->
-                 , IFNULL(C.RGST_DT, '') AS RGST_DT 												 <!-- 등록일자 -->
-                 , IFNULL(
+                 , NVL(C.RGST_DT, '') AS RGST_DT 												 <!-- 등록일자 -->
+                 , NVL(
                           (SELECT CD_VL_NM
                              FROM IBIMS002B AS s002b
                             WHERE CMNS_CD_GRP = 'I011'
                               AND s002b.CD_VL_ID = s103b.MTR_PRG_STTS_DCD
                      ), '') AS PRG_STTS_CD_NM														 <!-- 심사진행상태코드 -->
-                 , IFNULL(
+                 , NVL(
                           (SELECT CD_VL_NM
                              FROM IBIMS002B AS s002b
                             WHERE CMNS_CD_GRP = 'I008'
                               AND s002b.CD_VL_ID = D.CNSB_DCD
                      ), '') AS CNSB_DCD      										 				 <!-- 협의체구분코드 -->
-                 , IFNULL(A.PRDT_CD, '') AS PRDT_CD													 <!-- 상품코드 -->
-                 , IFNULL(A.PRDT_NM, '') AS PRDT_NM 												 <!-- 상품명 -->
-                 , IFNULL((SELECT MAX(B.ENTP_HNGL_NM)
+                 , NVL(A.PRDT_CD, '') AS PRDT_CD													 <!-- 상품코드 -->
+                 , NVL(A.PRDT_NM, '') AS PRDT_NM 												 <!-- 상품명 -->
+                 , NVL((SELECT MAX(B.ENTP_HNGL_NM)
                              FROM IBIMS114B B
                             WHERE B.BSNS_RGST_NO = A.TR_OTHR_DSCM_NO), '') AS ENTP_HNGL_NM 			 <!-- 업체한글명 -->										 <!-- 업체한글명 -->
                  , A.PRDT_LCLS_CD																	 <!-- 기업여신상품대분류코드 -->
-                 , IFNULL(s002b_1.CD_VL_NM , '') AS PRDT_LCLS_CD_NM  								 <!-- 기업여신상품대분류코드명 -->
+                 , NVL(s002b_1.CD_VL_NM , '') AS PRDT_LCLS_CD_NM  								 <!-- 기업여신상품대분류코드명 -->
                  , A.PRDT_MDCL_CD																	 <!-- 기업여신상품중분류코드 -->
-                 , IFNULL(s002b_2.CD_VL_NM , '') AS PRDT_MDCL_CD_NM									 <!-- 기업여신상품중분류코드명 -->
+                 , NVL(s002b_2.CD_VL_NM , '') AS PRDT_MDCL_CD_NM									 <!-- 기업여신상품중분류코드명 -->
                  , A.PRDT_CLSF_CD																	 <!-- 기업여신상품분류코드 -->
-                 , IFNULL(s002b_3.CD_VL_NM , '') AS PRDT_CLSF_CD_NM									 <!-- 기업여신상품분류코드명 -->
+                 , NVL(s002b_3.CD_VL_NM , '') AS PRDT_CLSF_CD_NM									 <!-- 기업여신상품분류코드명 -->
                  , A.IB_PRDT_CLSF_CD																 <!-- IB상품분류코드 -->
-                 , IFNULL(s002b_4.CD_VL_NM, '') AS IB_PRDT_CLSF_CD_NM								 <!-- IB상품분류코드명 -->
-                 , IFNULL(
+                 , NVL(s002b_4.CD_VL_NM, '') AS IB_PRDT_CLSF_CD_NM								 <!-- IB상품분류코드명 -->
+                 , NVL(
                           (SELECT sum(s12b.APVL_AMT)				AS LST_DEAL_SUM_RCG_AMT			 <!-- 승인금액 -->
                              FROM IBIMS112B s12b													 <!-- 위원회안건내역(협의체안건정보) -->
                             WHERE 1=1
-                              AND s12b.DEAL_NO = A.DEAL_NO
-                          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNo)">
-                              AND s12b.DEAL_NO			= #{dealNo}									 <!-- 딜번호 -->
-                          </if>
-                            GROUP BY s12b.DEAL_NO
-                            ORDER BY CNSB_DCD DESC, RSLTN_YR  DESC, CNSB_SQ DESC, SN DESC
-                        LIMIT 1), '') AS sumRcgAmt  	 											 <!-- 딜승인금액 -->
-                 , IFNULL(A.APVL_AMT , '') AS APVL_AMT											 	 <!-- 종목승인금액 -->
-                 , IFNULL(D.APVL_DT , '') AS APVL_DT  												 <!-- 승인일자 -->
-                 , IFNULL(A.ACTS_CD  , '') AS ACTS_CD  												 <!-- 계정과목코드 -->
-                 , IFNULL(A.PRG_STTS_CD  , '') AS PRG_STTS_CD  										 <!-- 진행상태코드 -->
+                              AND s12b.DEAL_NO = A.DEAL_NO)
+                            , '') AS sumRcgAmt  	 											 <!-- 딜승인금액 -->
+                 , NVL(A.APVL_AMT , '') AS APVL_AMT											 	 <!-- 종목승인금액 -->
+                 , NVL(D.APVL_DT , '') AS APVL_DT  												 <!-- 승인일자 -->
+                 , NVL(A.ACTS_CD  , '') AS ACTS_CD  												 <!-- 계정과목코드 -->
+                 , NVL(A.PRG_STTS_CD  , '') AS PRG_STTS_CD  										 <!-- 진행상태코드 -->
                  , (SELECT MAX(EMP_NM)
                       FROM IBIMS003B s003b
                      WHERE EMPNO = A.CHRR_EMPNO) AS CHRR_EMPNM								 		 <!-- 담당자사원번호 -->
@@ -1317,7 +1319,7 @@
 				    SELECT C.DPRT_NM
 					  FROM IBIMS003B C
 					 WHERE C.DPRT_CD = A.MNGM_BDCD
-                     LIMIT 1					 
+             AND ROWNUM = 1				 
 				   ) AS DPRT_NM                                                                      <!-- 부서명 -->
 				, i401b.EPRZ_CRDL_CTRC_AMT	 /* 기업여신약정금액 */
 			    , (SELECT SUM(V.DEAL_EXC_AMT) FROM IBIMS402B V WHERE V.PRDT_CD = A.PRDT_CD AND V.LDG_STTS_CD = '1' ) AS DEAL_EXC_AMT /* 투자금액 */
@@ -1354,34 +1356,34 @@
            WHERE 1 = 1
              AND A.LAST_YN = '1'
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNo)">
-             AND A.DEAL_NO LIKE CONCAT('%', #{dealNo}, '%')
+             AND A.DEAL_NO LIKE '%' || #{dealNo} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtCd)">
-             AND A.PRDT_CD LIKE CONCAT('%', #{prdtCd}, '%')
+             AND A.PRDT_CD LIKE '%' || #{prdtCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtLclsCd)">
-             AND A.PRDT_LCLS_CD LIKE CONCAT('%', #{prdtLclsCd}, '%')
+             AND A.PRDT_LCLS_CD LIKE '%' || #{prdtLclsCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtMdclCd)">
-             AND A.PRDT_MDCL_CD LIKE CONCAT('%', #{prdtMdclCd}, '%')
+             AND A.PRDT_MDCL_CD LIKE '%' || #{prdtMdclCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtClsfCd)">
-             AND A.PRDT_CLSF_CD LIKE CONCAT('%', #{prdtClsfCd}, '%')
+             AND A.PRDT_CLSF_CD LIKE '%' || #{prdtClsfCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(ibPrdtClsfCd)">
-             AND A.IB_PRDT_CLSF_CD LIKE CONCAT('%', #{ibPrdtClsfCd}, '%')
+             AND A.IB_PRDT_CLSF_CD LIKE '%' || #{ibPrdtClsfCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(cnsbDcd)">
-             AND D.CNSB_DCD LIKE CONCAT('%', #{cnsbDcd}, '%')
+             AND D.CNSB_DCD LIKE '%' || #{cnsbDcd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prgSttsCd)">
-             AND A.PRG_STTS_CD LIKE CONCAT('%', #{prgSttsCd}, '%')
+             AND A.PRG_STTS_CD LIKE '%' || #{prgSttsCd} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(chrrEmpno)">
-             AND A.CHRR_EMPNO LIKE CONCAT('%', #{chrrEmpno}, '%')
+             AND A.CHRR_EMPNO LIKE '%' || #{chrrEmpno} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(trOthrDscmNo)">
-             AND A.TR_OTHR_DSCM_NO LIKE CONCAT('%', #{trOthrDscmNo}, '%')
+             AND A.TR_OTHR_DSCM_NO LIKE '%' || #{trOthrDscmNo} || '%'
             </if>
             <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(rgstDt)">
              AND C.RGST_DT <![CDATA[>=]]> #{rgstDt}
@@ -1403,47 +1405,42 @@
                 resultType="com.nanuri.rams.business.common.vo.IBIMS201BVO">
                         SELECT A.DEAL_NO AS DEAL_NO 												 /*  딜번호 */
                  , A.DEAL_NM AS DEAL_NM             
-                 , IFNULL(C.RGST_DT, '') AS RGST_DT 												 /*  등록일자 */
-                 , IFNULL(
+                 , NVL(C.RGST_DT, '') AS RGST_DT 												 /*  등록일자 */
+                 , NVL(
                           (SELECT CD_VL_NM
                              FROM IBIMS002B AS s002b
                             WHERE CMNS_CD_GRP = 'I011'
                               AND s002b.CD_VL_ID = s103b.MTR_PRG_STTS_DCD
                      ), '') AS PRG_STTS_CD_NM														 /*  심사진행상태코드 */
-                 , IFNULL(
+                 , NVL(
                           (SELECT CD_VL_NM
                              FROM IBIMS002B AS s002b
                             WHERE CMNS_CD_GRP = 'I008'
                               AND s002b.CD_VL_ID = D.CNSB_DCD
                      ), '') AS CNSB_DCD      										 				 /*  협의체구분코드 */
-                 , IFNULL(A.PRDT_CD, '') AS PRDT_CD													 /*  상품코드 */
-                 , IFNULL(A.PRDT_NM, '') AS PRDT_NM 												 /*  상품명 */
-                 , IFNULL((SELECT MAX(B.ENTP_HNGL_NM)
+                 , NVL(A.PRDT_CD, '') AS PRDT_CD													 /*  상품코드 */
+                 , NVL(A.PRDT_NM, '') AS PRDT_NM 												 /*  상품명 */
+                 , NVL((SELECT MAX(B.ENTP_HNGL_NM)
                              FROM IBIMS114B B
                             WHERE B.BSNS_RGST_NO = A.TR_OTHR_DSCM_NO), '') AS ENTP_HNGL_NM 			 /*  업체한글명 */
                  , A.PRDT_LCLS_CD																	 /*  기업여신상품대분류코드 */
-                 , IFNULL(s002b_1.CD_VL_NM , '') AS PRDT_LCLS_CD_NM  								 /*  기업여신상품대분류코드명 */
+                 , NVL(s002b_1.CD_VL_NM , '') AS PRDT_LCLS_CD_NM  								 /*  기업여신상품대분류코드명 */
                  , A.PRDT_MDCL_CD																	 /*  기업여신상품중분류코드 */
-                 , IFNULL(s002b_2.CD_VL_NM , '') AS PRDT_MDCL_CD_NM									 /*  기업여신상품중분류코드명 */
+                 , NVL(s002b_2.CD_VL_NM , '') AS PRDT_MDCL_CD_NM									 /*  기업여신상품중분류코드명 */
                  , A.PRDT_CLSF_CD																	 /*  기업여신상품분류코드 */
-                 , IFNULL(s002b_3.CD_VL_NM , '') AS PRDT_CLSF_CD_NM									 /*  기업여신상품분류코드명 */
+                 , NVL(s002b_3.CD_VL_NM , '') AS PRDT_CLSF_CD_NM									 /*  기업여신상품분류코드명 */
                  , A.IB_PRDT_CLSF_CD																 /*  IB상품분류코드 */
-                 , IFNULL(s002b_4.CD_VL_NM, '') AS IB_PRDT_CLSF_CD_NM								 /*  IB상품분류코드명 */
-                 , IFNULL(
+                 , NVL(s002b_4.CD_VL_NM, '') AS IB_PRDT_CLSF_CD_NM								 /*  IB상품분류코드명 */
+                 , NVL(
                           (SELECT sum(s12b.APVL_AMT)				AS LST_DEAL_SUM_RCG_AMT			 /*  승인금액 */
-                             FROM IBIMS112B s12b													 /*  위원회안건내역(협의체안건정보) */
-                            WHERE 1=1
-                              AND s12b.DEAL_NO = A.DEAL_NO
-                          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNo)">
-                              AND s12b.DEAL_NO			= #{dealNo}									 /*  딜번호 */
-                          </if>
-                            GROUP BY s12b.DEAL_NO
-                            ORDER BY CNSB_DCD DESC, RSLTN_YR  DESC, CNSB_SQ DESC, SN DESC
-                        LIMIT 1), '') AS sumRcgAmt  	 											 /*  딜승인금액  */
-                 , IFNULL(A.APVL_AMT , '') AS APVL_AMT											 	 /*  종목승인금액 */
-                 , IFNULL(D.APVL_DT , '') AS APVL_DT  												 /*  승인일자 */
-                 , IFNULL(A.ACTS_CD  , '') AS ACTS_CD  												 /*  계정과목코드 */
-                 , IFNULL(A.PRG_STTS_CD  , '') AS PRG_STTS_CD  										 /*  진행상태코드 */
+                                  FROM IBIMS112B s12b													 /*  위원회안건내역(협의체안건정보) */
+                                  WHERE 1=1
+                                    AND s12b.DEAL_NO = A.DEAL_NO)
+                          , '') AS sumRcgAmt  	 											 /*  딜승인금액  */
+                 , NVL(A.APVL_AMT , '') AS APVL_AMT											 	 /*  종목승인금액 */
+                 , NVL(D.APVL_DT , '') AS APVL_DT  												 /*  승인일자 */
+                 , NVL(A.ACTS_CD  , '') AS ACTS_CD  												 /*  계정과목코드 */
+                 , NVL(A.PRG_STTS_CD  , '') AS PRG_STTS_CD  										 /*  진행상태코드 */
                  , (SELECT MAX(EMP_NM)
                       FROM IBIMS003B s003b
                      WHERE EMPNO = A.CHRR_EMPNO) AS CHRR_EMPNM								 		 /*  담당자사원번호 */
@@ -1452,7 +1449,7 @@
 				    SELECT C.DPRT_NM
 					  FROM IBIMS003B C
 					 WHERE C.DPRT_CD = A.MNGM_BDCD
-                     LIMIT 1					 
+             AND ROWNUM = 1					 
 				   ) AS DPRT_NM                                                                      /*  부서명 */
 			    , (SELECT SUM(NVL(DEAL_EXC_AMT,0)) FROM IBIMS402B WHERE PRDT_CD = A.PRDT_CD ) AS DEAL_EXC_AMT /* 투자금액 */
 			    , (SELECT SUM(NVL(DEAL_EXC_BLCE,0)) FROM IBIMS402B WHERE PRDT_CD = A.PRDT_CD ) AS DEAL_EXC_BLCE /* 투자잔액 */
@@ -1490,16 +1487,16 @@
              AND Q.CTRC_CCLC_DCD         = '1'
              AND Q.EPRZ_CRDL_LDG_STTS_CD = '1'
              <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(dealNo)">
-              AND A.DEAL_NO LIKE CONCAT('%', #{dealNo}, '%')
+              AND A.DEAL_NO LIKE '%' || #{dealNo} || '%'
              </if>
              <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(prdtCd)">
-              AND A.PRDT_CD LIKE CONCAT('%', #{prdtCd}, '%')
+              AND A.PRDT_CD LIKE '%' || #{prdtCd} || '%'
              </if>
              <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(mngmBdcd)">
-              AND A.MNGM_BDCD LIKE CONCAT('%', #{mngmBdcd}, '%')
+              AND A.MNGM_BDCD LIKE '%' || #{mngmBdcd} || '%'
              </if>
              <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(chrrEmpno)">
-              AND A.CHRR_EMPNO LIKE CONCAT('%', #{chrrEmpno}, '%')
+              AND A.CHRR_EMPNO LIKE '%' || #{chrrEmpno} || '%'
              </if>
              <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(ctrcDt1)">
               AND #{ctrcDt1} BETWEEN Q.CTRC_DT AND Q.CTRC_EXP_DT
@@ -1632,13 +1629,15 @@
                   , B.CTRC_EXP_DT 						                    /*약정만기일자*/
                   , B.EPRZ_CRDL_CTRC_AMT 				                  /*기업여신약정금액*/
                   , B.EPRZ_CRDL_APVL_AMT 				                  /*기업여신승인금액*/
-                  , (
-                      SELECT DEAL_EXC_BLCE
-                      FROM IBIMS402B ib
-                      WHERE PRDT_CD = A.PRDT_CD
-                      ORDER BY EXC_SN DESC
-                      LIMIT 1
-                  ) AS DEAL_EXC_BLCE                              /*대출잔액*/
+                  , (SELECT DEAL_EXC_BLCE
+                      FROM (
+                              SELECT ib.DEAL_EXC_BLCE
+                              FROM IBIMS402B ib
+                              WHERE PRDT_CD = A.PRDT_CD
+                              ORDER BY EXC_SN DESC
+                          )
+                     WHERE 1=1
+                       AND ROWNUM = 1) AS DEAL_EXC_BLCE           /*대출잔액*/
                   , A.APVL_AMT 						                        /*승인금액*/
                   , A.INTR_BNAO_DCD 					                    /*이자선후취구분코드*/
                   , A.PAI_RDMP_DCD 					                      /*원리금상환구분코드*/

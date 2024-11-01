@@ -15,7 +15,7 @@
 </th:block>
 
 <th:block layout:fragment="modalpopup">
-	<th:block th:replace="business/tb/TB06070P :: TB06070P"></th:block> <!-- TB06070P 팝업 화면 -->  
+	<th:block th:replace="business/tb/TB06070P :: TB06070P"></th:block> <!-- TB06070P 팝업 화면 -->
 </th:block>
 
 <th:block layout:fragment="customContent">
@@ -37,18 +37,18 @@
 									<input type="text" class="form-control" style="width:200px;" id="TB06070S_prdtName" readonly>
 								</div>
 								<div class="col-sm-7 text-right">
-									<button class="btn btn-primary" type="button" id="" onclick="getDetailInfo();"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-primary" type="button" id="" onclick="TB06070Sjs.getDetailInfo();"><i class="fa fa-search"></i>&nbsp;조회</button>
 									<button id="" class="btn btn-default" onclick=""><i class="fa fa-undo"></i>&nbsp;초기화</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="ibox">
 					<div class="ibox-content" style="min-height: 800px">
 						<div class="tabs-container">
-							<ul class="nav nav-tabs" role="tablist" id="ramsTab">
+							<ul class="nav nav-tabs" role="tablist" id="TB06070S_ramsTab">
 								<li><a class="nav-link active" data-toggle="tab" href="#tab-1">계정과목분류</a></li>
 								<li><a class="nav-link" data-toggle="tab" href="#tab-2">상품기본정보</a></li>
 							</ul>
@@ -550,7 +550,7 @@
 										</div>
 									</div>
 								</div>
-							</div>	
+							</div>
 						</div>
 						<div class="ibox form-inline">
 							<div class="col-sm-12 text-right pd0">
@@ -561,7 +561,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
 	</div>

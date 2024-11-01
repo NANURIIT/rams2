@@ -56,6 +56,7 @@
                 , ERN_RT                                            							<!-- 수익율 -->
                 , ERN_PRD_MNUM                                      							<!-- 수익기간개월수 -->
                 , DEL_YN                                            							<!-- 삭제여부 -->
+                , HND_DETL_DTM
                 , HND_EMPNO                                         							<!-- 조작사원번호 -->
                 , HND_TMNL_NO                                       							<!-- 조작단말기번호 -->
                 , HND_TR_ID                                         							<!-- 조작거래id -->
@@ -112,6 +113,7 @@
                , #{ernRt}                                           							<!-- 수익율 -->
                , #{ernPrdMnum}                                      							<!-- 수익기간개월수 -->
                , 'N'                                                							<!-- 삭제여부 -->
+               , SYSDATE
                , #{hndEmpno}                                        							<!-- 조작사원번호 -->
                , #{hndTmnlNo}                                       							<!-- 조작단말기번호 -->
                , #{hndTrId}                                         							<!-- 조작거래id -->
@@ -171,6 +173,7 @@
             , ERN_RT                                            = #{ernRt}                                           <!-- 수익율 -->
             , ERN_PRD_MNUM                                      = #{ernPrdMnum}                                      <!-- 수익기간개월수 -->
             , DEL_YN                                            = #{delYn}                                           <!-- 삭제여부 -->
+            , HND_DETL_DTM                                      = SYSDATE
             , HND_EMPNO                                         = #{hndEmpno}                                        <!-- 조작사원번호 -->
             , HND_TMNL_NO                                       = #{hndTmnlNo}                                       <!-- 조작단말기번호 -->
             , HND_TR_ID                                         = #{hndTrId}                                         <!-- 조작거래id -->

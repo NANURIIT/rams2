@@ -290,9 +290,9 @@
         UNION
         SELECT 
               /* , T.EPRZ_CRDL_PRDT_LCLS_CD                                     AS rptsCtrtTpCd                          계약유형1 (유동성/신용공여형) = 기업여신상품대분류코드  */ 
-              /* , IFNULL(s002b_1.CD_VL_NM , '')                                AS PRDT_LCLS_CD_NM                       기업여신상품대분류코드명 */
+              /* , NVL(s002b_1.CD_VL_NM , '')                                AS PRDT_LCLS_CD_NM                       기업여신상품대분류코드명 */
               /* , T.EPRZ_CRDL_PRDT_MDCL_CD                                     AS rptsCtrtTpDetlCd                      계약유형2 (매입약정 등) = 기업여신상품중분류코드  */ 
-              /* , IFNULL(s002b_2.CD_VL_NM , '')                                AS PRDT_MDCL_CD_NM	                     기업여신상품중분류코드명 */
+              /* , NVL(s002b_2.CD_VL_NM , '')                                AS PRDT_MDCL_CD_NM	                     기업여신상품중분류코드명 */
 	          /* , T.PF_LOAN_YN                                                 AS PF_LOAN_YN                            PF대출여부*/
 
 
@@ -301,7 +301,7 @@
               , NULL                                                            AS rgstSn                               /* 등록일련번호  */ 
               , NULL                                                            AS bssAsstMngmNo                        /* 기초자산관리번호 */ 
               , NULL                                                            AS rptsIemMngmNo                        /* 보고서항목관리번호 */ 
-              , IFNULL(             
+              , NVL(             
                     (SELECT MAX(B1.ENTP_HNGL_NM)                
                        FROM IBIMS114B B1                
                       WHERE B1.BSNS_RGST_NO = A.TR_OTHR_DSCM_NO), '')           AS cmpNm 	                            /* 회사명 */
@@ -469,8 +469,8 @@
                   SELECT s701b_2.DPRT_CD
                     FROM IBIMS701B s701b_2
                    WHERE s701b_2.DPRT_CD = A.FRS_MNGM_BDCD
-                )
-	;</select>
+                );
+    </select>
 
     <!-- 금융감독원보고서내역 CPC1 보고서양식 조회 -->
     <!-- <select id="nnSelectIBIMS701B" resultType="com.nanuri.rams.business.common.vo.IBIMS701BVO">
@@ -616,7 +616,7 @@
                 (   #{item.stdrYm}
                 ,   #{item.dprtCd}
                 ,   (
-                        IFNULL(
+                        NVL(
                                 (SELECT MAX(A.RGST_SN) FROM IBIMS701B A) + 1
                               , 0
                               )
@@ -743,7 +743,7 @@
                 ,   #{item.jobChrrNm}
                 ,   #{item.dptNm}
                 ,   #{item.cplcCtns}
-                ,   #{item.hndDetlDtm}
+                ,   SYSDATE
                 ,   #{item.hndEmpno}
                 ,   #{item.hndTmnlNo}
                 ,   #{item.hndTrId}

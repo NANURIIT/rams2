@@ -23,7 +23,7 @@
 			<div class="col-lg-12">
 				<div class="ibox">
 					<div class="ibox-content mb-2">
-					
+
 						<!-- 요청정보 -->
 						<div class="ibox">
 							<div class="ibox-title">
@@ -76,7 +76,7 @@
 												<label class="col-sm-5">LOC</label>
 											</div>
 											<div class="col-sm-4 input-group">
-												<!-- 
+												<!--
 												<input type="radio" value="" id="" name="radio1">
 												<label class="col-sm-5 pd0">기타</label>
 												 -->
@@ -91,7 +91,7 @@
 								<!-- row2 -->
 								<div class="row form-group form-inline text-right mb-1">
 									<div class="col-sm-12 form-group">
-										
+
 										<label class="col-sm-1">발급상태</label>
 										<div class="col-sm-3 input-group">
 											<select class="form-control" id="TB04050S_L004">
@@ -100,7 +100,7 @@
 										<label class="col-sm-1">발급액</label>
 										<div class="col-sm-3 input-group input-h">
 											<select class="form-control col-sm-4" id="TB04050S_I027_1">
-												<!-- <option value="">전체</option> -->									
+												<!-- <option value="">전체</option> -->
 											</select>
 											<input type="text" class="form-control text-right" id="TB04050S_issAmt" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"  onchange="inputNumberFormat2(this);">
 										</div>
@@ -114,13 +114,13 @@
 								<!-- row3 -->
 								<div class="row form-group form-inline text-right mb-1">
 									<div class="col-sm-12 form-group">
-										
+
 										<label class="col-sm-1">유효일자</label>
 										<div class="col-sm-3 input-group date">
 											<input type="text" class="form-control" id="TB04050S_valtDt" value="" placeholder="yyyy-mm-dd" oninput="this.value = this.value.replace(/[^0-9-]/g, '')">
 											<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										</div>
-										
+
 										<label class="col-sm-1">담당자</label>
 										<div class="col-sm-3 input-group">
 											<input type="text" class="form-control" style="width:30px;" id="TB04050S_empNm">
@@ -155,8 +155,8 @@
 								</div>
 							</div>
 						</div>
-						<!-- 요청정보 end -->			
-						
+						<!-- 요청정보 end -->
+
 						<!-- Deal 기본정보 -->
 						<div class="row">
 							<div class="col-sm-12">
@@ -479,11 +479,11 @@
 							</div>
 						</div>
 
-						
+
 						<div class="ibox form-inline">
 							<!-- 버튼영역 -->
 							<div class="col-sm-12 text-right pd0">
-								<button class="btn btn-success mg-l5" type="button" onclick="saveLoi();"><i class="fa fa-save"></i>&nbsp;저장</button>
+								<button class="btn btn-success mg-l5" type="button" onclick="TB04050Sjs.saveLoi();"><i class="fa fa-save"></i>&nbsp;저장</button>
 								<button class="btn btn-info mg-l5" type="button" onclick="testAlert('출력이 완료되었습니다.')"><i class="fa fa-print"></i>&nbsp;출력</button>
 							</div>
 						</div>
