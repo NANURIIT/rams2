@@ -1650,4 +1650,5 @@ function testest () {
 	// if(nowTabId === nowTitleId && url != "/TB02010S"){
 	// 	console.log("2010S로 가줄래?");
 	// }
+	
 }
