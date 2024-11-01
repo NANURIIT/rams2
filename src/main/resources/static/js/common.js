@@ -1643,8 +1643,9 @@ function testest () {
 		console.log("2010S로 가줄래?");
 		window.location.href = "/TB02010S"
 	}else{
+		console.log("콜 페이지 호출");
 		console.log(result_id[result_id.length - 1]);
-		callPage(result_id[result_id.length - 1]);
+		// callPage(result_id[result_id.length - 1]);
 	}
 
 	// if(nowTabId === nowTitleId && url != "/TB02010S"){
