@@ -1650,28 +1650,5 @@ function testest () {
 	// if(nowTabId === nowTitleId && url != "/TB02010S"){
 	// 	console.log("2010S로 가줄래?");
 	// }
+	
 }
-// $(document).ajaxComplete(function (event, xhr, settings) {
-//     const $this = $(".input-group.date input[class='form-control']");
-// 	if(($this.val()).length === 8){
-		
-// 	}else{
-// 		$this.val(newFormatDate($this.val()));
-// 	}
-// });
-
-// // function formatData () {
-// // 	const $this = $(".input-group.date input[class='form-control']");
-// //     $this.val(formatDate($this.val()));
-// // }
-
-// function newFormatDate (date){
-
-// 	console.log(date);
-// 	let resultStr;
-// 	if(date.length === 8){
-// 		return formatDate(date);
-// 	}else{
-// 		return;
-// 	}
-// }
