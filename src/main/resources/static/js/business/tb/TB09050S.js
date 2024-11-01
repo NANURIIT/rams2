@@ -1,4 +1,4 @@
-const TB08060Sjs = (function () {
+const TB09050Sjs = (function () {
   $(document).ready(function () {
     pqGrid();
     // $('#disabledView').find('input').prop('disabled', true);
@@ -212,8 +212,8 @@ const TB08060Sjs = (function () {
    */
 
   return {
-    getSettlementList: getSettlementList,
-    reset_TB08060S: reset_TB08060S,
-    saveSettlement: saveSettlement,
+    // getSettlementList: getSettlementList,
+    // reset_TB08060S: reset_TB08060S,
+    // saveSettlement: saveSettlement,
   };
 })();
