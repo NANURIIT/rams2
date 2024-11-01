@@ -9,7 +9,7 @@ function callPage(menuId, pageName) {
     // 이미 생성되었다가 지워진 탭이면 탭을 재생성
     else if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
         $('#myTab').append(`
-                    <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
+                    <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
                         <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target=""
                             type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">
                             ${pageName}
@@ -65,7 +65,7 @@ function callPage(menuId, pageName) {
             // 새로운 탭 생성
             $('#myTab').append(`
                     <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
+                            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target=""
                                 type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
                             </button>
                             <span class="fa fa-close" role="presentation" style="cursor: pointer;" onclick="removeTab('${menuId}')"></span>
