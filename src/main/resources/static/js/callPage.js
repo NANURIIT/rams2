@@ -3,40 +3,38 @@ function callPage(menuId, pageName) {
     const url = window.location.pathname;
     console.log(url);
 
-    
-
     if (url === "/" + menuId) {
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
         return;
     } else
-        if($('#myTab li').length >= 10){
+        if ($('#myTab li').length >= 10) {
             Swal.fire({
                 icon: 'warning'
                 , title: "10개 이상의 페이지를 여실 수 없습니다!"
             })
             return;
         } else
-        // 이미 생성되었다가 지워진 탭이면 탭을 재생성
-        if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
-            $(".main-tab").removeClass("active");
-            $('#myTab').append(`
-            <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
-                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
+            // 이미 생성되었다가 지워진 탭이면 탭을 재생성
+            if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
+                $('#myTab').append(`
+                <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
+                    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target=""
+                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">
+                        ${pageName}
                     </button>
-                    <span class="ui-icon ui-icon-close" role="presentation" style="cursor: pointer;" onclick="removeTab('${menuId}')"></span>
-            </li>
-        `);
-            // 무브탭 실행
-            moveTab(menuId);
-            return;
-        } else
-            // 화면에 띄워져있는 탭일경우 무브탭 실행
-            if ($(`div[data-titleId="/${menuId}"]`).length != 0) {
+                    <span class="fa fa-close" role="presentation" style="cursor: pointer;" onclick="removeTab('${menuId}')"></span>
+                </li>
+            `);
                 // 무브탭 실행
                 moveTab(menuId);
                 return;
-            }
+            } else
+                // 화면에 띄워져있는 탭일경우 무브탭 실행
+                if ($(`div[data-titleId="/${menuId}"]`).length != 0) {
+                    // 무브탭 실행
+                    moveTab(menuId);
+                    return;
+                }
 
     history.pushState(null, '', '/' + menuId);
 
@@ -183,7 +181,7 @@ function moveTab(menuId) {
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
         return;
     }
-    
+
     $(".main-tab").removeClass("active");
 
     $("#myTab li button").removeClass('active');
