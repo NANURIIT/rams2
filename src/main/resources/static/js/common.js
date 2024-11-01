@@ -1614,11 +1614,11 @@ function testest () {
 	const nowTitleId = $(`div[data-titleId="${url}"]`).attr('data-titleId');
 	const chk_menu = $(`div[data-menuid="/TB02010S"`).attr('data-menuid')
 
-	console.log("체크메뉴" ,chk_menu);
+	// console.log("체크메뉴" ,chk_menu);
 	
-	console.log("url:"+url);
-	console.log("nowTabId:"+nowTabId);
-	console.log("nowTitleId"+nowTitleId);
+	// console.log("url:"+url);
+	// console.log("nowTabId:"+nowTabId);
+	// console.log("nowTitleId"+nowTitleId);
 	
 	let url_ref = document.referrer
 	let result_id = url_ref.split("/");
@@ -1640,16 +1640,16 @@ function testest () {
 	// window.location.href = "/TB02010S"
 
 	if(chk_menu === undefined){
-		console.log("2010S로 가줄래?");
+		// console.log("2010S로 가줄래?");
 		window.location.href = "/TB02010S"
-	}else{
-		console.log("콜 페이지 호출");
-		console.log(result_id[result_id.length - 1]);
-		// callPage(result_id[result_id.length - 1]);
+	}
+
+	if(chk_menu != undefined && url_ref.indexOf("/TB") != -1 && url_ref.indexOf("TB02010S") === -1 && url === "/TB02010S"){
+		// console.log(result_id[result_id.length - 1]);
+		callPage(result_id[result_id.length - 1]);
 	}
 
 	// if(nowTabId === nowTitleId && url != "/TB02010S"){
 	// 	console.log("2010S로 가줄래?");
 	// }
-	
 }
