@@ -282,28 +282,28 @@
 
     <!-- 메뉴별권한관리 메뉴명 조회 -->
 	<select id="selectMenuList" parameterType="string" resultType="com.nanuri.rams.business.common.vo.IBIMS005BVO$MenuListVO">
-		  SELECT      A.MENU_NM 												<!-- 메뉴명 -->
-					|| IF(B.MENU_NM != '', ' > '|| B.MENU_NM, '')
-				    || IF(C.MENU_NM != '', ' > '|| C.MENU_NM, '')
-				    AS MENU_NAME
-			   , NVL(A.MENU_ID, '')	AS LV1_ID							<!-- 메뉴ID -->
-			   , NVL(B.MENU_ID, '')	AS LV2_ID							<!-- 메뉴ID -->
-			   , NVL(C.MENU_ID, '')	AS LV3_ID							<!-- 메뉴ID -->
-			FROM IBIMS005B A
-	  INNER JOIN IBIMS005B B
-			  ON A.MENU_ID = B.HGRK_MENU_ID
-			 AND A.MENU_LVL = 1												<!-- 메뉴레벨 -->
-			 AND B.MENU_LVL = 2
-	   LEFT JOIN IBIMS005B C
-			  ON B.MENU_ID = C.HGRK_MENU_ID
-			 AND C.MENU_LVL = 3
-		   WHERE 1=1
-             AND B.DEL_YN != 'Y'
+		SELECT A.MENU_NM ||
+                    CASE WHEN B.MENU_NM IS NOT NULL THEN ' > ' || B.MENU_NM ELSE '' END ||
+                    CASE WHEN C.MENU_NM IS NOT NULL THEN ' > ' || C.MENU_NM ELSE '' END
+                AS MENU_NAME
+	          , NVL(A.MENU_ID, '') AS LV1_ID                   /* 메뉴ID */
+	          , NVL(B.MENU_ID, '') AS LV2_ID                   /* 메뉴ID */
+	          , NVL(C.MENU_ID, '') AS LV3_ID                   /* 메뉴ID */
+           FROM IBIMS005B A
+          INNER JOIN IBIMS005B B
+             ON A.MENU_ID = B.HGRK_MENU_ID
+            AND A.MENU_LVL = 1                                   /* 메뉴레벨 */
+            AND B.MENU_LVL = 2
+           LEFT JOIN IBIMS005B C
+             ON B.MENU_ID = C.HGRK_MENU_ID
+            AND C.MENU_LVL = 3
+          WHERE 1=1
+            AND B.DEL_YN != 'Y'
         <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(menuNm)">
 			 AND (
-					 A.MENU_NM LIKE '%'|| #{menuNm} ,'%')				<!-- 메뉴명 -->
-		    	  OR B.MENU_NM LIKE '%'|| #{menuNm} ,'%')				<!-- 메뉴명 -->
-		       	  OR C.MENU_NM LIKE '%'|| #{menuNm} ,'%')				<!-- 메뉴명 -->
+					 A.MENU_NM LIKE '%'|| #{menuNm} || '%'				<!-- 메뉴명 -->
+		    	  OR B.MENU_NM LIKE '%'|| #{menuNm} || '%'				<!-- 메뉴명 -->
+		       	  OR C.MENU_NM LIKE '%'|| #{menuNm} || '%'				<!-- 메뉴명 -->
 				 )
 		</if>
 	     ORDER BY A.SORT_NO ASC
