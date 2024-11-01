@@ -1,7 +1,7 @@
 function callPage(menuId, pageName) {
 
     const url = window.location.pathname;
-    console.log(url);
+    // console.log(url);
 
     if (url === "/" + menuId) {
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
@@ -143,8 +143,8 @@ function callPage(menuId, pageName) {
                             } else
                                 // 나머지 공통 플러그인은 재실행
                                 if (($($script[j]).attr('src')).split('/')[1] != "business") {
-                                    console.log("가져왔어요?");
-                                    console.log($($this[i]).attr('src'));
+                                    // console.log("가져왔어요?");
+                                    // console.log($($this[i]).attr('src'));
                                     isDuplicateScript = false;
                                 }
                                 /**
@@ -157,8 +157,8 @@ function callPage(menuId, pageName) {
                         }
                     }
                     if (!isDuplicateScript) {
-                        console.log("무엇을 뿌렸는가");
-                        console.log($this[i]);
+                        // console.log("무엇을 뿌렸는가");
+                        // console.log($this[i]);
                         $('body').append($this[i]); // 중복된 스크립트가 아니면 body에 추가
                     }
                 }
