@@ -291,7 +291,7 @@
                         <!-- <li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08030M'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08030')}?'active':''">
                             <a th:href="@{/TB08030M}">PF사후관리</a>
                         </li> -->
-						<li class="active-ex" th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08030M'" th:classappend="${#httpServletRequest.requestURI.contains('/TB0803')}?'active':''">
+						<li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08030M'" th:classappend="${#httpServletRequest.requestURI.contains('/TB0803')}?'active':''">
 							<a class="left-ex" aria-expanded="false">PF사후관리<span class="fa arrow"></span></a>
 							<ul class="nav nav-third-level collapse" th:classappend="${#httpServletRequest.requestURI.contains('/TB08031')}?'in':''" aria-expanded="false" th:style="${#httpServletRequest.requestURI.contains('/TB0803')}?'':'height: 0px;'">
 								<li th:each="menuId : ${menuList}" th:if="${menuId.MENU_ID} == 'TB08031S'" th:classappend="${#httpServletRequest.requestURI.contains('/TB08031')}?'active':''">

@@ -51,7 +51,7 @@ const TB08060Sjs = function () {
 		 * E036 : 기업여신결산구분코드
 		*******************************************************************/
 
-		selectBox = getSelectBoxList('TB08060S', 'E008/E038', false);
+		selectBox = getSelectBoxList('TB08060S', '/E008/E038', false);
 
 		eprzCrdlFeeKndCdList = selectBox.filter(function (item) {
 			return item.cmnsGrpCd === 'E008';

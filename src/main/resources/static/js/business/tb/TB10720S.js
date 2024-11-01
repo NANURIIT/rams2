@@ -171,7 +171,7 @@ const TB10720Sjs = function () {
      *******************************************************************/
     function reset() {
         $('#TB10720S_stdrDt').val(getToday());
-        window.location.reload();
+        grd_TB10720S.setData([]);
     }
 
     // 유효성체크
