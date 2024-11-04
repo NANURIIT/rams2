@@ -192,7 +192,7 @@
 			 , 2
 			 , #{urlClsfCd}
 			 , #{urlNm}
-			 , SUBSTR(MENU_ID,3,5)
+			 , SUBSTR(#{menuId},3,5)
  			 , 'Y'
 			 , TO_CHAR(SYSDATE, 'YYYYMMDD')
 			 , 'N'
