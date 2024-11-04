@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/ramsLayout}"
+>
+  <th:block layout:fragment="script">
+    <script th:src="@{js/common.js}"></script>
+    <script th:src="@{js/business/tb/TB02020S.js}"></script>
+  </th:block>
+
+  <th:block layout:fragment="customContent">
+    <!-- DPR 조회  -->
+    <div class="wrapper wrapper-content animated fadeIn">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="ibox">
+            <!-- 조회조건영역 -->
+            <div class="ibox-content i-filter">
+              <div class="row form-group form-inline text-right">
+                <div class="col-sm-12 input-group"></div>
+              </div>
+            </div>
+            <!-- 조회결과 -->
+            <div class="ibox-content h-default">
+              <div class="ibox">
+                <div class="ibox-title">
+                  <h5>▶ 딜 정보</h5>
+                </div>
+                <div class="ibox-content mb-2">
+                  <div class="tableFixHeader4">
+                    <div id="gridDealInfo"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="ibox">
+                    <div class="ibox-title">
+                      <h5>▶ 맵 정보</h5>
+                    </div>
+                    <div class="ibox-content">
+                      <div class="tableFixHeader4">
+                        <div id="gridMapInfo"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="ibox">
+                    <div class="ibox-title">
+                      <h5>▶ 맵 이력</h5>
+                    </div>
+                    <div class="ibox-content">
+                      <div class="tableFixHeader4">
+                        <div id="gridMapRecInfo"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ibox -->
+        </div>
+      </div>
+      <!-- row -->
+    </div>
+  </th:block>
+</html>
