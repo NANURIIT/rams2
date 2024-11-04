@@ -6,17 +6,10 @@ function callPage(menuId, pageName) {
         // 현재탭과 클릭한 탭이 같을시 아무런 작동안함
         return;
     }
-    else if ($('#myTab li').length >= 10) {
-        Swal.fire({
-            icon: 'warning'
-            , title: "10개 이상의 페이지를 여실 수 없습니다!"
-        })
-        return;
-    }
     // 이미 생성되었다가 지워진 탭이면 탭을 재생성
     else if ($(`div[data-titleId="/${menuId}"]`).length != 0 && $(`li[data-tabId="/${menuId}"]`).length === 0) {
         $('#myTab').append(`
-                    <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
+                    <li class="nav-item main-tab" role="presentation" data-tabId="/${menuId}">
                         <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target=""
                             type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">
                             ${pageName}
@@ -32,6 +25,13 @@ function callPage(menuId, pageName) {
     else if ($(`div[data-titleId="/${menuId}"]`).length != 0) {
         // 무브탭 실행
         moveTab(menuId);
+        return;
+    }
+    else if ($('#myTab li').length >= 10) {
+        Swal.fire({
+            icon: 'warning'
+            , title: "10개 이상의 페이지를 여실 수 없습니다!"
+        })
         return;
     }
 
@@ -65,7 +65,7 @@ function callPage(menuId, pageName) {
             // 새로운 탭 생성
             $('#myTab').append(`
                     <li class="nav-item main-tab active" role="presentation" data-tabId="/${menuId}">
-                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target=""
+                            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target=""
                                 type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true" onclick="moveTab('${menuId}');">${pageName}
                             </button>
                             <span class="fa fa-close" role="presentation" style="cursor: pointer;" onclick="removeTab('${menuId}')"></span>
