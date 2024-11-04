@@ -2,22 +2,24 @@ const TB06050Sjs = (function() {
 
     $(document).ready(function () {
 
-        // setRadioGroup();
+        setRadioGroup();
 
     });
 
     /**
     * 라디오 버튼 기본값 활성화
     */
-    // function setRadioGroup () {
-    //     $("input[type='radio'][name^='radioGroup-'][value='Y']").prop("checked", true)
-    // }
+    function setRadioGroup () {
+        $("input[type='radio'][name^='radioGroup-'][value='N']").prop("checked", true)
+    }
 
 
     /**
     * SPPI검토 조회
     */
     function getSPPIData() {
+
+
 
         let paramData = {
             nsFndCd: $('#TB06050S_nsFndCd-readonly').val()
@@ -53,6 +55,17 @@ const TB06050Sjs = (function() {
                 } else {
 
                 }
+
+                const inputs = $("#TB06050S_selectedData input")
+
+                for(let i = 0; i < inputs.length; i++){
+                    if(!$(inputs[i]).val()){
+                        alert("선택된 상품이 없습니다!(스위트 알럿으로 누군가 수정좀 부탁드립니다...<(_ _)>)");
+                        return;
+                    }else{
+                        continue;
+                    }
+                }
             }, error: function () {
 
             }
@@ -63,6 +76,17 @@ const TB06050Sjs = (function() {
     * 실행
     */
     function mergeSPPIData() {
+
+        const inputs = $("#TB06050S_selectedData input")
+
+        for(let i = 0; i < inputs.length; i++){
+            if(!$(inputs[i]).val()){
+                alert("데이터 선택부터 하라 인간!(스위트 알럿으로 누군가 수정좀 부탁드립니다...<(_ _)>)");
+                return;
+            }else{
+                continue;
+            }
+        }
 
         let url;
 
@@ -145,6 +169,7 @@ const TB06050Sjs = (function() {
         $("input[type='text']").val("");
         $("input[type='radio']").prop("checked", false);
         $("select").val("");
+        setRadioGroup();
     }
 
 	return {
@@ -152,7 +177,8 @@ const TB06050Sjs = (function() {
 		 * 사용 할 함수 정의
 		 */
 		getSPPIData : getSPPIData
-	,	reset : reset
+	    , reset : reset
+        , mergeSPPIData : mergeSPPIData
 	}
 
 })();
