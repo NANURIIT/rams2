@@ -311,4 +311,24 @@
 				, C.SORT_NO ASC
 	</select>
 
+    <select id="createRamsNav" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        SELECT T1.MENU_ID, T1.MENU_NM , T1.HGRK_MENU_ID, T1.SCRN_APLY_SHP_CD, T1.MENU_LVL
+          FROM IBIMS005B T1
+     LEFT JOIN (
+            SELECT MENU_ID
+              FROM IBIMS007B
+             WHERE 1=1
+               AND ATH_CD = (SELECT ATH_CD FROM IBIMS003B WHERE EMPNO = #{empno})
+             GROUP
+                BY MENU_ID
+        ) T2
+            ON T1.MENU_ID = T2.MENU_ID
+         WHERE 1=1
+           AND T1.APLY_YN = 'Y'
+           AND T1.DEL_YN = 'N'
+           AND T1.MENU_LVL IS NOT NULL
+         ORDER
+            BY T1.MENU_LVL, CASE WHEN T1.MENU_ID LIKE 'TB%' THEN 0 ELSE 1 END, T1.MENU_ID
+    </select>
+
 </mapper>

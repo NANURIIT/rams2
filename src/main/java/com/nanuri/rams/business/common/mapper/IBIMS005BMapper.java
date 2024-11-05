@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.common.mapper;
 
+import com.nanuri.rams.business.common.dto.IBIMS005BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO.MainMenuVo;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO.SubMenuVo;
@@ -41,5 +42,7 @@ public interface IBIMS005BMapper {
 	public int updateSubHgRnkMenuId(MainMenuVo requestDto);
 	
 	public TitleVo getTitle(String menuId);
+
+	public List<IBIMS005BDTO> createRamsNav(String param);
 
 }

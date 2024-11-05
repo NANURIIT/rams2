@@ -1,5 +1,7 @@
 package com.nanuri.rams.business.common.vo;
 
+import java.util.List;
+
 import com.nanuri.rams.business.common.dto.IBIMS005BDTO;
 
 import com.nanuri.rams.business.common.dto.RAA93BDTO;
@@ -58,5 +60,6 @@ public class IBIMS005BVO {
     private String hndEmpNm;
     private String hndlDprtCd;
     
-    
+    private List<IBIMS005BDTO> menuList;
+
 }
