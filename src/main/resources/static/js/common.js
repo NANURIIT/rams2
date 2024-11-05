@@ -25,15 +25,6 @@ $(function () {
 	});
 	$('.input-group.clockpicker').clockpicker({
 	});
-	// setGridFromRamstab();
-
-	testest();
-
-	// const pageCode = location.
-
-	// if(){
-
-	// }
 });
 
 /**
@@ -1600,27 +1591,4 @@ function indexChangeHandler (prefix) {
 	$(`div[id*="modal-"]`).css('z-index', '');
 	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
 	$(`#modal-${prefix}`).attr('style', 'z-index: 4000 !important;');
-}
-
-
-
-
-/**
- * 페이지처리함수
- */
-function testest () {
-
-	const url = window.location.pathname;
-	const chk_menu = $(`div[data-menuid="/TB02010S"`).attr('data-menuid')
-
-	let url_ref = document.referrer
-	let result_id = url_ref.split("/");
-
-	if(chk_menu === undefined){
-		window.location.href = "/TB02010S"
-	}else if(chk_menu != undefined && url_ref.indexOf("/TB") != -1 && url_ref.indexOf("TB02010S") === -1 && url === "/TB02010S"){
-		const titleNm = $(`li[data-sidetabid="${result_id[result_id.length - 1]}"] a`).html();
-		callPage(result_id[result_id.length - 1], titleNm);
-	}
-
 }
