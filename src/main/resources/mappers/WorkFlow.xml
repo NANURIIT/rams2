@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nanuri.rams.business.common.mapper.WorkFlowMapper">
+
+    <!--테이블 PK찾기-->
+    <select id="getPKList" parameterType="String" resultType="String">
+        SELECT 
+            cols.constraint_name, 
+            cols.column_name
+        FROM 
+            all_cons_columns cols
+        JOIN 
+            all_constraints cons
+        ON 
+            cols.constraint_name = cons.constraint_name
+        WHERE 
+            cons.constraint_type = 'P'
+            AND cons.table_name = #{tableNm}
+            AND cons.owner = 'RAMS'
+    </select>
+
+    <!--WF맵 등록-->
+    <insert id="wfMapRgst" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        INSERT INTO WF_MAP
+        (
+            WF_MAP_ID               /*  워크플로우 맵ID  */
+            , WF_MAP_NM              /*  맵명  */
+            , JOB_TABLE              /*  작업테이블명  */
+            , JOB_TABLE_KEY          /*  작업테이블 KEY컬럼명  */
+            , REG_DTTM               /*  등록일시  */
+            , REG_USER_ID            /*  등록자  */
+            , CHG_DTTM               /*  변경일시  */
+            , CHG_USER_ID            /*  변경자  */
+        )
+        VALUES 
+        (
+            #{wfMapId}          
+            , #{wfMapNm}      	
+            , #{jobTable}        
+            , #{jobTableKey}
+            , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS') 
+            , #{regUserId}          
+            , #{chgDttm}              
+            , #{chgUserId}             
+        )
+    </insert>
+
+    <!--WF스텝 등록-->
+    <insert id="wfStepRgst" parameterType="java.util.List">
+        INSERT INTO WF_STEP
+            (
+                WF_MAP_ID   /*  워크플로우 맵ID  */
+                ,STEP_ID     /*  워크플로우 스텝ID  */
+                ,NEXT_STEP_ID   /*  워크플로우 다음스텝ID  */
+                ,RTN_STEP_ID   /*  워크플로우 반송스텝ID  */
+                ,STEP_NM   /*  워크플로우 스텝명  */
+                ,WF_AUTH_ID   /*  워크플로우 권한ID  */
+                ,EXC_AUTH_EMP   /*  예외권한 사원번호  */
+                ,EXC_AUTH_DEPT   /*  예외권한 부서코드  */
+            )
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                #{item.wfMapId}
+                , #{item.stepId}
+                , #{item.nextStepId}
+                , #{item.rtnStepId}
+                , #{item.stepNm}
+                , #{item.wfAuthId}
+                , #{item.excAuthEmp}
+                , #{item.exAuthDept}
+            )
+        </foreach>
+    </insert>
+
+    <!--WF 등록-->
+    <insert id="wfRgst" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        INSERT INTO WF
+            (
+                WF_ID           /*  워크플로우 ID  */
+                , WF_MAP_ID     /*  워크플로우 맵ID  */
+                , WF_STEP_ID    /*  워크플로우 스텝ID  */
+                , APRV_EMP_NO   /*  결재자 사원번호  */
+                , APRV_DTTM     /*  결재일시  */
+                , RTN_YN        /*  반송여부  */
+                , RTN_CNTS      /*  반송사유  */
+                , EXC_AUTH_CD   /*  예외권한코드(0:사용안함|1:특정인|2:특정부서|3:ALL)  */
+                , MEMO_CNTS     /*  결재사유  */
+                , ETC           /*  기타  */
+                , JOB_CNTS      /*  업무내역  */
+            )
+        VALUES
+            (
+                #{wfId}
+                , #{wfMapId}
+                , #{wfStepId}
+                , #{aprvEmpNo}
+                , #{aprvDttm}
+                , #{rtnYn}
+                , #{rtnCnts}
+                , #{excAuthCd}
+                , #{memoCnts}
+                , #{jobCnts}
+            )
+    </insert>
+
+    <!--WF_ID 찾기-->
+    <select id="getWfId" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="String">
+        SELECT WF_ID
+        FROM WF
+        WHERE ETC = #{etc}
+    </select>
+
+    <!--업무테이블 상태 업데이트(IBIMS101B)-->
+    <update id="mergeIBIMS101B">
+        MERGE INTO IBIMS101B A
+        USING (
+            SELECT 
+                A.DEAL_NO,
+                A.SN,
+                B.WF_ID,
+                '02' AS WF_STATE
+            FROM IBIMS101B A
+            JOIN WF B ON A.DEAL_NO || A.SN = TRIM(B.ETC)
+        ) B
+        ON (
+            A.DEAL_NO = B.DEAL_NO
+            AND A.SN = B.SN
+        )
+        WHEN MATCHED THEN 
+            UPDATE 
+            SET A.WF_ID = B.WF_ID,
+                A.WF_STATE = '02'
+    </update>
+
+    <!--WF_HIS 등록-->
+    <insert id="wfHisRgst" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        INSERT INTO WF_HIS (
+            	 WF_ID        /*  워크플로우 ID  */
+                ,APRV_DTTM    /*  결재일시 */
+                ,WF_MAP_ID    /*  워크플로우 맵ID  */
+                ,WF_STEP_ID   /*  워크플로우 스텝ID  */
+                ,APRV_EMP_NO  /*  결재자 사원번호  */
+                ,RTN_YN       /*  반송여부  */
+                ,RTN_CNTS     /*  반송사유  */
+                ,EXC_AUTH_CD  /*  예외권한코드(0:사용안함|1:특정인|2:특정부서|3:ALL)  */
+                ,MEMO_CNTS    /*  결재사유  */
+                ,ETC          /*  기타  */
+                ,JOB_CNTS     /*  업무내역  */
+        )
+        SELECT 
+            WF_ID, 
+            TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISSSSS') AS APRV_DTTM, 
+            WF_MAP_ID, 
+            WF_STEP_ID, 
+            #{aprvEmpNo} AS APRV_EMP_NO,         
+            #{rtnYn} AS RTN_YN,                 
+            #{rtnCnts} AS RTN_CNTS,              
+            EXC_AUTH_CD, 
+            #{memoCnts} AS MEMO_CNTS,           
+            #{etc} AS ETC,                       
+            JOB_CNTS
+        FROM WF
+        WHERE WF_ID = #{wfId}
+    </insert>
+
+    <!--다음 스텝 ID 찾기-->
+    <select id="getNxtStepId" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="String">
+        SELECT 
+            A.WF_ID                             /*  워크플로우 ID  */
+            , A.WF_MAP_ID                       /*  워크플로우 맵ID  */
+            , CASE WHEN A.RTN_YN = 'Y' THEN B.RTN_STEP_ID 
+                    ELSE B.NEXT_STEP_ID 
+                    END AS NEXT_STEP_ID         /*  다음 스텝ID  */
+        FROM  WF A
+            ,WF_STEP B
+        WHERE A.WF_MAP_ID  = B.WF_MAP_ID
+        AND   A.WF_STEP_ID = B.STEP_ID
+        AND   A.WF_ID = #{wfId}
+    </select>
+
+    <!--WF 상태 변경 (결재)-->
+    <update id="aprvWf" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        MERGE INTO WF A
+        USING ( 
+            SELECT 
+                WF_ID                                                               /*  워크플로우 ID  */
+                , WF_MAP_ID                                                         /*  워크플로우 맵ID  */
+                , #{wfStepId} AS WF_STEP_ID                                         /*  워크플로우 스텝ID  */
+                , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS')        AS APRV_DTTM        /*  결재일시  */
+                , #{rtnYn}                                      AS RTN_YN           /*  반송여부  */
+                , #{rtnCnts}                                    AS RTN_CNTS         /*  반송사유  */
+                , #{memoCnts}                                   AS MEMO_CNTS        /*  결재사유  */
+                , #{etc}                                        AS ETC              /*  기타  */
+            FROM  WF 
+            WHERE WF_ID = #{wfId}
+        ) B
+        ON (
+                A.WF_ID = B.WF_ID
+        )
+        WHEN MATCHED THEN 
+            UPDATE SET A.WF_STEP_ID = B.WF_STEP_ID
+                    ,A.APRV_DTTM  = B.APRV_DTTM
+                    ,A.RTN_YN     = B.RTN_YN
+                    ,A.RTN_CNTS   = B.RTN_CNTS
+                    ,A.MEMO_CNTS  = B.MEMO_CNTS
+                    ,A.ETC        = B.ETC
+    </update>
+
+</mapper>
