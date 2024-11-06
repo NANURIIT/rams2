@@ -27,46 +27,6 @@ const TB02030Sjs = (function(){
 
 		$("#gridWfMapList").pqGrid(obj_WfMap);
 		wfMapObj = $("#gridWfMapList").pqGrid('instance');
-
-        //이벤트 리스너 등록
-        // $( "#gridWfMapList" ).pqGrid({
-        //     // rowRightClick: function( event, ui ) {
-        //     //     console.log("더블클릭된 행 이벤트 실행");
-
-        //     //     // 더블클릭된 행의 데이터 가져오기
-        //     //     if (ui.rowData) {
-        //     //         let clickedRowData = ui.rowData;
-
-        //     //         // 디버그용 콘솔 출력
-        //     //         console.log("더블클릭된 행 데이터:", clickedRowData);
-        //     //     }
-        //     // },
-        //     cellClick: function(event, ui) {
-
-        //         if (ui.dataIndx === "rowCheck") {
-        //             // 클릭 이벤트가 끝난 후 체크 상태 반영을 위해 약간의 지연 추가
-        //             setTimeout(function() {
-        //                 let isChecked = ui.rowData.rowCheck; // 클릭 후의 상태 가져오기
-                    
-        //             // 행 데이터의 다른 칼럼 값을 변경
-        //             if (isChecked) {
-
-        //                 //if(updateWfMapRowYn = "Y"){
-        //                 //    ui.rowData.rowState = "U"; // "rowState" 값 변경
-        //                 //}else if(deleteWfMapRowYn = "Y"){
-        //                 //    ui.rowData.rowState = "D"; // "rowState" 값 변경
-        //                // }
-        //             } else {
-        //                 ui.rowData.rowState = ""; // "rowState" 값 변경
-        //             }
-        
-        //             // 변경 사항 반영
-        //             $("#gridWfMapList").pqGrid("refreshRow", { rowIndx: ui.rowIndx });
-                    
-        //         }, 0);
-        //         }
-        //     }    
-        // });
         
 
         //WF 스텝관리
@@ -174,7 +134,7 @@ const TB02030Sjs = (function(){
             },
         },
         { 	
-			title    : "워크플로우맵ID", 
+			title    : "워크플로우 맵ID", 
 			dataType : "string", 
 			dataIndx : "wfMapId", 
 			align    : "center",
@@ -262,7 +222,6 @@ const TB02030Sjs = (function(){
                     $.each(data, function(key, value){
                         var newRow = {
                             rowCheck : false,  
-                            //wfMapId : "",
                             stepId : value.stepId,
                             stepNm : value.stepNm,
                             nextStepId : value.nextStepId,
@@ -390,8 +349,8 @@ const TB02030Sjs = (function(){
           jobTableKey : "",
           regUserId : "",
           regDttm : "",
-          chgDttm : false,
-          chgUserId : false,
+          chgDttm : "",
+          chgUserId : "",
         }
 
         $("#gridWfMapList").pqGrid("addRow", {
@@ -406,29 +365,69 @@ const TB02030Sjs = (function(){
      * 행삭제 버튼 클릭
      */
     function deleteWfMapRow() {
- 
         let gridData = $("#gridWfMapList").pqGrid("option", "dataModel.data");
-    
+        
+        // 선택된 행을 저장할 배열
         let rowsToDelete = [];
-        let WfMapList = [];
-
-        // 체크된 행의 인덱스를 수집
-        for (let i = 0; i < gridData.length; i++) {
-            if (gridData[i].rowCheck === true) {
-                rowsToDelete.push(i);
+        let rowsToDeleteEmpty = [];
+    
+        // 모든 행을 순회하여 rowCheck가 true인 행만 선택
+        gridData.forEach(function(row, index) {
+            if (row.rowCheck) { // 체크박스가 선택된 경우만 처리
+                // 체크박스를 제외한 데이터만 확인 (rowCheck는 데이터 판단에서 제외)
+                if (isRowEmpty(row)) {
+                    // 빈 행이면 바로 삭제
+                    console.log("빈 row를 바로 삭제합니다.");
+                    rowsToDeleteEmpty.push(index); // 빈 행의 인덱스만 저장
+                } else {
+                    // 데이터가 있는 행인 경우 삭제 서비스에 필요한 데이터 저장
+                    rowsToDelete.push({
+                        rowData: row,
+                        rowIndx: index
+                    });
+                }
+            }else{
+                Swal.fire({
+                    icon: 'info',
+                    title: '삭제를 실행하려면 먼저 체크박스를 선택하세요',
+                })
             }
-        }
+        });
+    
+        // 빈 행을 먼저 삭제
+        rowsToDeleteEmpty.forEach(function(index) {
+            $("#gridWfMapList").pqGrid("deleteRow", { rowIndx: index });
+        });
+    
+        // 만약 데이터가 있는 행이 하나라도 있다면 삭제 여부 확인
+        if (rowsToDelete.length > 0) {
+            Swal.fire({
+                title: '정말 삭제하시겠습니까?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소',
+                reverseButtons: true // 버튼 순서 변경
+            }).then((result) => {
+                if (result.isConfirmed) {
+  
+                    console.log("rowsToDelete : ", rowsToDelete)
+    
 
-        // 인덱스를 역순으로 정렬하여 삭제
-        for (let j = rowsToDelete.length - 1; j >= 0; j--) {
-            $("#gridWfMapList").pqGrid("deleteRow", { rowIndx: rowsToDelete[j] });
-        }
+                    //deleteWfMap(rowsToDelete);
 
-        // 삭제된 후 그리드 다시 그리기
-        $("#gridWfMapList").pqGrid("refreshDataAndView");
-            
-        //deleteWfMap(WfMapList);
+                    // 삭제된 후 그리드 다시 그리기
+                    //$("#gridWfMapList").pqGrid("refreshDataAndView");
+                    
+                  
+                }
+            });
+        } else {
+            console.log("선택된 항목이 없습니다.");
+        }
     }
+    
+    
 
     /**
      * 행삭제 ajax
@@ -442,9 +441,84 @@ const TB02030Sjs = (function(){
      * Wf 맵관리
      * 저장 버튼 클릭
      */
-    function saveWfMapRow(params) {
+    function clickSaveWfMapButton() {
+    
+        // 현재 그리드의 모든 행 데이터를 가져오기
+        let allData = $("#gridWfMapList").pqGrid("option", "dataModel").data;
+        let clickedWfMapRows = [];
+
+        
+        // 모든 행을 순회하여 rowCheck가 true인 행만 선택
+        allData.forEach(function(row) {
+            let wfMapId = row["wfMapId"];
+            if (row.rowCheck) {
+
+                if (!row["wfMapId"]) {
+                    console.log("test123456");
+                    // wfMapId 값이 없으면 경고 메시지를 표시하고 함수 종료
+                    openPopup({
+                        title: "실패",
+                        text: "워크플로우 맵ID를 입력해주세요.",
+                        type: "error",
+                        callback: function () {
+                            console.log("test!!!!!!!!");
+                            $(document).on("click", ".confirm", function () {
+                                console.log("test22222");
+                            });
+                          },
+                    });
+                    return;
+                    
+                }
+
+                clickedWfMapRows.push({
+                    wfMapId: row["wfMapId"],
+                    wfMapNm: row["wfMapNm"],
+                    jobTable: row["jobTable"],
+                    jobTableKey: row["jobTableKey"],
+                    regUserId: row["regUserId"],
+                    regDttm: row["regDttm"]
+                });
+            }
+        });
+        
+        if(clickedWfMapRows.length > 0){
+            // 디버그용 콘솔 출력
+            console.log("체크된 행 데이터:", clickedWfMapRows);
+            saveWfMapData(clickedWfMapRows);
+        }
         
     }
+
+    /**
+     * WF맵 저장 ajax
+     * @param {WF맵 리스트} wfMapList
+     */
+    function saveWfMapData(wfMapList){
+        console.log("wfMapList : ", wfMapList)
+        // ajaxCall({
+        //     url: "/",
+        //     method: "POST",
+        //     data: wfMapList,
+        //     success: function (data, status, settings) {
+        //       Swal.fire({
+        //         icon: "success",
+        //         title: "권한저장이 완료되었습니다",
+        //         text: "",
+        //         confirmButtonText: "확인",
+        //       });
+        //     },
+        //     fail: function (response) {
+        //       let message = response.responseJSON.message;
+        //       openPopup({
+        //         title: "실패",
+        //         type: "error",
+        //         text: message,
+        //       });
+        //     },
+        //   });
+    }
+    
 
 
 
@@ -519,11 +593,28 @@ const TB02030Sjs = (function(){
 
     }
 
+    // 입력 값이 있는지 확인 (빈 값을 판단하는 조건)
+    function isRowEmpty(row) {
+        // rowCheck 칼럼을 제외한 다른 칼럼들만 체크
+        for (let key in row) {
+            if (key !== "rowCheck"&& !key.startsWith("pq_")) { // rowCheck와 pq_로 시작하는 시스템 칼럼 제외
+                let value = row[key];
+    
+                // 빈 문자열, null, undefined, false, NaN 등을 빈 값으로 간주
+                if (value !== "" && value !== null && value !== undefined && value !== false && !Number.isNaN(value)) {
+                    return false; // 값이 하나라도 있으면 false
+                }
+            }
+        }
+        return true; // 모든 값이 비어 있으면 true 반환
+    }
+
 
     return{
         searchButtonClick : searchButtonClick,
         addWfMapRow : addWfMapRow,
         deleteWfMapRow : deleteWfMapRow,
+        clickSaveWfMapButton : clickSaveWfMapButton,
         addWfStepRow : addWfStepRow,
         deleteWfStepRow : deleteWfStepRow, 
     }
