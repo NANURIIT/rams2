@@ -1,49 +1,102 @@
 const TB03030Sjs = (function () {
-  let arrPqGridDealInfo;
-  let arrPqGridMapInfo;
-  let arrPqGridMapRecInfo;
+  let pqGridWfDealInfo;
+  let pqGridMapInfo;
+  let pqGridMapRecInfo;
 
   $(document).ready(function () {
     renderGrid(); // 그리드 렌더링
+    getWfDealInfo(); // 딜정보 데이터 세팅
   });
 
   // 그리드 렌더링함수
   function renderGrid() {
     let arrPqGridObj = [
       {
-        height: 145,
-        maxHeight: 145,
-        id: "gridDealInfo",
-        colModel: colDealInfo,
+        height: 200,
+        maxHeight: 200,
+        id: "TB02020_gridWfDealInfo",
+        colModel: colWfDealInfo,
       },
       ,
       {
-        height: 145,
-        maxHeight: 145,
-        id: "gridMapInfo",
+        height: 300,
+        maxHeight: 300,
+        id: "TB02020_gridMapInfo",
         colModel: colMapInfo,
       },
       {
-        height: 145,
-        maxHeight: 145,
-        id: "gridMapRecInfo",
+        height: 300,
+        maxHeight: 300,
+        id: "TB02020_gridMapRecInfo",
         colModel: colMapRecInfo,
       },
     ];
     setPqGrid(arrPqGridObj);
 
-    arrPqGridDealInfo = $("#gridDealInfo").pqGrid("instance");
-    arrPqGridMapInfo = $("#gridMapInfo").pqGrid("instance");
-    arrPqGridMapRecInfo = $("#gridMapRecInfo").pqGrid("instance");
+    pqGridWfDealInfo = $("#TB02020_gridWfDealInfo").pqGrid("instance");
+    pqGridMapInfo = $("#TB02020_gridMapInfo").pqGrid("instance");
+    pqGridMapRecInfo = $("#TB02020_gridMapRecInfo").pqGrid("instance");
+  }
+
+  // 딜 정보 데이터 가져오기
+  function getWfDealInfo() {
+    var param = {};
+
+    $.ajax({
+      type: "GET",
+      url: "",
+      data: param,
+      dataType: "json",
+      success: function (data) {
+        pqGridWfDealInfo.setData(data);
+        //TODO: 건수 클릭 시 목록 보이기
+        pqGridWfDealInfo.option("cellDblClick", function (event, ui) {
+          getMapInfo();
+          getMapRecInfo();
+        });
+      },
+    });
+  }
+
+  // 맵 관리 데이터 가져오기
+  function getMapInfo(params) {
+    var param = {};
+
+    $.ajax({
+      type: "GET",
+      url: "",
+      data: param,
+      dataType: "json",
+      success: function (data) {
+        pqGridMapInfo.setData(data);
+        //TODO: 행 클릭 시 담당자 변경 팝업 띄우기
+        pqGridMapInfo.option("rowDblClick", function (event, ui) {});
+      },
+    });
+  }
+
+  // 맵 이력 데이터 가져오기
+  function getMapRecInfo(params) {
+    var param = {};
+
+    $.ajax({
+      type: "GET",
+      url: "",
+      data: param,
+      dataType: "json",
+      success: function (data) {
+        pqGridMapRecInfo.setData(data);
+      },
+    });
   }
   /* ***********************************그리드 컬럼******************************** */
 
-  /* 딜기본정보 그리드 */
-  let colDealInfo = [
+  /* 딜 정보 그리드 */
+  let colWfDealInfo = [
     {
-      title: "순번",
+      title: "순서",
       dataType: "string",
-      dataIndx: "entpHnglNm",
+      dataIndx: "",
       align: "left",
       filter: { crules: [{ condition: "range" }] },
       render: function (ui) {
@@ -53,34 +106,34 @@ const TB03030Sjs = (function () {
     {
       title: "결재단계",
       dataType: "string",
-      dataIndx: "wfStepNm",
+      dataIndx: "",
       align: "center",
       filter: { crules: [{ condition: "range" }] },
     },
     {
       title: "등록건수",
       dataType: "string",
-      dataIndx: "rgstCount",
-      align: "center",
+      dataIndx: "regMapCount",
+      align: "",
       filter: { crules: [{ condition: "range" }] },
     },
     {
       title: "수정건수",
       dataType: "string",
-      dataIndx: "mdfyCount",
+      dataIndx: "",
       align: "center",
       filter: { crules: [{ condition: "range" }] },
     },
     {
       title: "삭제건수",
       dataType: "string",
-      dataIndx: "delCount",
+      dataIndx: "",
       align: "center",
       filter: { crules: [{ condition: "range" }] },
     },
   ];
 
-  /* 맵관리 그리드 */
+  /* 맵 관리 그리드 */
   let colMapInfo = [
     {
       title: "결재일자",
@@ -136,7 +189,7 @@ const TB03030Sjs = (function () {
     },
   ];
 
-  /* 결재이력 그리드 */
+  /* 맵 이력 그리드 */
   let colMapRecInfo = [
     {
       title: "결재일자",
