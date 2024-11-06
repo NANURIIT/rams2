@@ -30,4 +30,6 @@ public interface WorkFlowMapper {
 
     public int aprvWf(WorkFlowDTO workFlowDTO);                 //WF 상태 변경 (결재)
 
+    public String getWfMapId(WorkFlowDTO workFlowDTO);          //해당 테이블 작업 WF_ID 찾기
+
 }

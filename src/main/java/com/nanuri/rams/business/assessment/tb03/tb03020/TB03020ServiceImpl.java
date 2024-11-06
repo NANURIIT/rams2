@@ -19,9 +19,12 @@ import com.nanuri.rams.business.common.mapper.IBIMS116BMapper;
 import com.nanuri.rams.business.common.mapper.RAA01BMapper;
 import com.nanuri.rams.business.common.mapper.RAA02BMapper;
 import com.nanuri.rams.business.common.mapper.RAC02BMapper;
+import com.nanuri.rams.business.common.mapper.WorkFlowMapper;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
 import com.nanuri.rams.business.common.vo.IBIMS101BVO;
 import com.nanuri.rams.business.common.vo.AS04220SVO.DealInfo;
+import com.nanuri.rams.com.WF.WorkFlow;
+import com.nanuri.rams.com.dto.WorkFlowDTO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
 import lombok.RequiredArgsConstructor;
@@ -48,6 +51,10 @@ public class TB03020ServiceImpl implements TB03020Service {
 	/* 로그인 사용자 정보 */
 	private final AuthenticationFacade facade;
 
+	/* WF */
+	private final WorkFlow workFlow;
+	private final WorkFlowMapper workFlowMapper;
+
 	@Override
 	public IBIMS101BVO getBscDealDetail(IBIMS101BDTO dealInfo) {
 		IBIMS101BVO returnVal = ibims101BMapper.getBscDealDetail(dealInfo);
@@ -57,6 +64,7 @@ public class TB03020ServiceImpl implements TB03020Service {
 
 	@Override
 	public String saveDeal(IBIMS101BDTO dealInfo) {
+
 		dealInfo.setHndEmpno(facade.getDetails().getEno());
 		/* 딜번호 채번 */
 		LocalDateTime now = LocalDateTime.now();
@@ -117,6 +125,12 @@ public class TB03020ServiceImpl implements TB03020Service {
 		dealInfo.setDecdDt(time);								// 결재일자
 		dealInfo.setDcfcBdcd(facade.getDetails().getBdCd());	// 결재자부점코드
 		dealInfo.setDcfcEmpNo(facade.getDetails().getEno());	// 결재자사번
+
+		dealInfo.setWfId("WF01");							// 워크플로우 ID
+		dealInfo.setWfState("01");						// 워크플로우 상태
+
+		wfRgstIBIMS101B(dealInfo);
+
 		// 딜 정보 저장
 		ibims101BMapper.saveDeal(dealInfo);
 		
@@ -243,4 +257,23 @@ public class TB03020ServiceImpl implements TB03020Service {
 		return dealNo;
 	}
 
+	//IBIMS101B WorkFlow 등록
+	public int wfRgstIBIMS101B(IBIMS101BDTO dealInfo){
+
+		WorkFlowDTO workFlowDTO = new WorkFlowDTO();
+		workFlowDTO.setJobTable("IBIMS101B");
+
+		String wfMapId = workFlowMapper.getWfMapId(workFlowDTO);
+
+		workFlowDTO.setWfMapId(wfMapId);						//todo: WF 맵 ID 공통코드 없음
+		workFlowDTO.setWfStepId("01");					//WF 스텝 ID (결재 요청 시 01 최초 부여)
+		workFlowDTO.setAprvEmpNo(dealInfo.getChrrEmpno());		//결재자 사원번호
+		workFlowDTO.setRtnYn("N");						//반송여부
+		// workFlowDTO.setAprvDttm(dealInfo.getdtt);
+		workFlowDTO.setJobCnts(dealInfo.getDealNm());			//작업내용(DEAL_NM)
+		workFlowDTO.setExcAuthCd("0"); 				//예외권한코드(0:사용안함|1:특정인|2:특정부서|3:ALL)
+		workFlowDTO.setEtc(dealInfo.getDealNo() + dealInfo.getSn());	//etc (PK + PK 문자열 조합)
+
+		return workFlow.wfRgst(workFlowDTO);
+	}
 }

@@ -1,5 +1,7 @@
 package com.nanuri.rams.com.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -37,6 +39,8 @@ public class WorkFlowDTO {
 
     private String dealNo;              //딜번호
     private String lastYn;              //최종여부
+
+    private List<String> pkList;        //pk값 
 
 
 }

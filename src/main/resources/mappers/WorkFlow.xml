@@ -95,11 +95,12 @@
                 , #{wfMapId}
                 , #{wfStepId}
                 , #{aprvEmpNo}
-                , #{aprvDttm}
+                , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS')
                 , #{rtnYn}
                 , #{rtnCnts}
                 , #{excAuthCd}
                 , #{memoCnts}
+                , #{etc}
                 , #{jobCnts}
             )
     </insert>
@@ -150,15 +151,15 @@
         )
         SELECT 
             WF_ID, 
-            TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISSSSS') AS APRV_DTTM, 
+            APRV_DTTM, 
             WF_MAP_ID, 
             WF_STEP_ID, 
-            #{aprvEmpNo} AS APRV_EMP_NO,         
-            #{rtnYn} AS RTN_YN,                 
-            #{rtnCnts} AS RTN_CNTS,              
+            APRV_EMP_NO,         
+            RTN_YN,                 
+            RTN_CNTS,              
             EXC_AUTH_CD, 
-            #{memoCnts} AS MEMO_CNTS,           
-            #{etc} AS ETC,                       
+            MEMO_CNTS,           
+            ETC,                       
             JOB_CNTS
         FROM WF
         WHERE WF_ID = #{wfId}
@@ -206,5 +207,12 @@
                     ,A.MEMO_CNTS  = B.MEMO_CNTS
                     ,A.ETC        = B.ETC
     </update>
+
+    <!--WF_ID 찾기-->
+    <select id="getWfMapId" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="String">
+        SELECT WF_MAP_ID
+        FROM WF_MAP
+        WHERE JOB_TABLE = #{jobTable}
+    </select>
 
 </mapper>

@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +69,23 @@ public class WorkFlow {
 	 * @return
 	 */
     public int wfRgst(WorkFlowDTO workFlowDTO){
-        return workFlowMapper.wfRgst(workFlowDTO);
+
+        UUID wfId = UUID.randomUUID();
+
+        log.debug("wfId.toString(): " + wfId.toString());
+
+        workFlowDTO.setWfId(wfId.toString());
+
+        int wfRgstRslt = workFlowMapper.wfRgst(workFlowDTO);
+
+        int wfHisRgstRslt = 0;
+        if(wfRgstRslt > 0){
+            wfHisRgstRslt = workFlowMapper.wfHisRgst(workFlowDTO);
+
+        }else{
+            log.debug("WF 등록 실패!!!!");
+        }
+
+        return wfHisRgstRslt;
     }
 }
