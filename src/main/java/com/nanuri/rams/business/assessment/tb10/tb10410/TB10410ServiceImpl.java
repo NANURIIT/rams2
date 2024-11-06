@@ -1,8 +1,10 @@
 package com.nanuri.rams.business.assessment.tb10.tb10410;
 
+import com.nanuri.rams.business.common.dto.IBIMS005BDTO;
 import com.nanuri.rams.business.common.mapper.IBIMS005BMapper;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO.MainMenuVo;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO.SubMenuVo;
+import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +23,50 @@ public class TB10410ServiceImpl implements TB10410Service {
 
 	private final IBIMS005BMapper ibims005BMapper;
 	
-	
+	// 2024-11-06	김건우
+
+	@Override
+	public List<IBIMS005BDTO> hgrkMenuInq(String param){
+		return ibims005BMapper.hgrkMenuInq(param);
+	};
+
+	@Override
+	public List<IBIMS005BDTO> hgrkGroupMenuInq(String param){
+		return ibims005BMapper.hgrkGroupMenuInq(param);
+	};
+
+	@Override
+	public int insertMenu (List<IBIMS005BDTO> param){
+
+		List<IBIMS005BDTO> list = param;
+		int result = 0;
+
+		// 작성자 세팅
+		for(int i = 0; i < list.size(); i++){
+			list.get(i).setHndEmpno(facade.getDetails().getEno());
+		}
+
+		return ibims005BMapper.insertMenu(list);
+	};
+
+	@Override
+	public int updateMenu (List<IBIMS005BDTO> param){
+
+		List<IBIMS005BDTO> list = param;
+		int result = 0;
+
+		// 작성자 세팅
+		for(int i = 0; i < list.size(); i++){
+			list.get(i).setHndEmpno(facade.getDetails().getEno());
+		}
+
+		return ibims005BMapper.updateMenu(list);
+	};
+
+	//////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////
+
 	@Override
 	public List<MainMenuVo> selectMainMenuList(String menuNm) {
 		
@@ -105,6 +150,6 @@ public class TB10410ServiceImpl implements TB10410Service {
 			}
 		}
         return count > 0;
-	}
+	}	
 
 }

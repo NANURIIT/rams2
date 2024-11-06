@@ -172,28 +172,12 @@ const TB10210Sjs = (function () {
     {
       title: "메뉴레벨",
       dataType: "string",
-      dataIndx: "cdVlId",
+      dataIndx: "menuLvl",
       editable: false,
       align: "left",
-      halign: "menuLvl",
+      halign: "center",
       width: "5%",
       filter: { crules: [{ condition: "range" }] },
-    },
-    {
-      dataIndx: "useYn",
-      align: "center",
-      halign: "center",
-      title: "사용가능여부",
-      width: "7%",
-      menuIcon: false,
-      type: "checkBoxSelection",
-      editor: false,
-      dataType: "bool",
-      editable: "true",
-      cb: {
-        all: false,
-        header: false,
-      },
     },
     {
       dataIndx: "modifyYn",
@@ -286,7 +270,7 @@ const TB10210Sjs = (function () {
    */
   function setGrid_TB10210S() {
     //그룹코드
-    var obj_authCdTb = {
+    let obj_authCdTb = {
       height: 220,
       maxHeight: 220,
       showTitle: false,
@@ -306,7 +290,7 @@ const TB10210Sjs = (function () {
     authCdTbObj = $("#authCodeTable").pqGrid("instance");
 
     //상세코드
-    var obj_authCdMenuTb = {
+    let obj_authCdMenuTb = {
       height: 220,
       maxHeight: 220,
       showTitle: false,
@@ -381,18 +365,18 @@ const TB10210Sjs = (function () {
       },
       success: function (authCode) {
         //let html = '';
-        var rowList = [];
+        let rowList = [];
 
         if (authCode.length > 0) {
           $.each(authCode, function (key, value) {
-            var aplyYn = true;
+            let aplyYn = true;
             if (value.aplyYn === "Y") {
               aplyYn = true;
             } else {
               aplyYn = false;
             }
 
-            var newRow = {
+            let newRow = {
               authCdState: false,
               athCd: value.athCd,
               athCdNm: value.athCdNm,
@@ -423,7 +407,7 @@ const TB10210Sjs = (function () {
   function addAuthCodeRow() {
     // $('.auth_code_input').focus();
 
-    var newRow = {
+    let newRow = {
       authCdState: false,
       athCd: "",
       athCdNm: "",
@@ -447,11 +431,11 @@ const TB10210Sjs = (function () {
    */
   function clickDetailButton() {
     $(document).on("click", "button[name='detail_btn']", function () {
-      var rowIndex = $(this).data("row-indx");
+      let rowIndex = $(this).data("row-indx");
 
-      var rowData = authCdTbObj.getRowData({ rowIndx: rowIndex });
+      let rowData = authCdTbObj.getRowData({ rowIndx: rowIndex });
 
-      var rghtCd = rowData.athCd;
+      let rghtCd = rowData.athCd;
       getAuthCodeMenu(rghtCd);
     });
   }
@@ -466,7 +450,7 @@ const TB10210Sjs = (function () {
       url: "/getAuthCodeMenu?rghtCd=" + rghtCd,
       success: function (authCodeMenu) {
         //let html = '';
-        var rowList = [];
+        let rowList = [];
 
         if (authCodeMenu.length > 0) {
           $.each(authCodeMenu, function (key, value) {
@@ -496,21 +480,16 @@ const TB10210Sjs = (function () {
             // html += '   <td style="text-align:center;">' + value.hndEmpNm + '</td>';
             // html += '</tr>';
 
-            var useYn = true;
-            var modifyYn = true;
-            if (isEmpty(value.mdfyRghtCcd)) {
-              useYn = false;
+            let modifyYn = false;
+
+            if (value.mdfyRghtCcd === "1") {
               modifyYn = false;
-            } else if (value.mdfyRghtCcd === "1") {
-              useYn = true;
-              modifyYn = false;
-            } else {
-              useYn = true;
+            } else if (value.mdfyRghtCcd === "2"){
               modifyYn = true;
             }
 
-            var hndDt = "";
-            var hndTm = "";
+            let hndDt = "";
+            let hndTm = "";
             if (isEmpty(value.hndDetlDtm)) {
               hndDt = "";
               hndTm = "";
@@ -519,12 +498,11 @@ const TB10210Sjs = (function () {
               hndTm = value.hndDetlDtm.substring(10, value.hndDetlDtm.length);
             }
 
-            var newRow = {
+            let newRow = {
               menuId: value.menuId,
               menuNm: value.menuNm,
               rghtCd: rghtCd,
               menuLvl: value.menuLvl,
-              useYn: useYn,
               modifyYn: modifyYn,
               hndDt: hndDt,
               hndTm: hndTm,
@@ -551,6 +529,7 @@ const TB10210Sjs = (function () {
     let authCodeList = [];
     for (let i = 0; i < tr.length; i++) {
       let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input");
+      console.log(deleteCheckBox);
       if (deleteCheckBox.is(":checked")) {
         authCodeList.push(deleteCheckBox.attr("id"));
       }
@@ -563,7 +542,7 @@ const TB10210Sjs = (function () {
    * @param {권한코드 리스트} authCodeList
    */
   function deleteRow(authCodeList) {
-    ajaxCall({
+    $.ajax({
       method: "patch",
       url: "/deleteAuthCode",
       data: authCodeList,
@@ -723,7 +702,7 @@ const TB10210Sjs = (function () {
     let authCode = $(tr[0]).find("td:eq(3)").text();
 
     for (let i = 0; i < tr.length; i++) {
-      var authCodeMenu = {};
+      let authCodeMenu = {};
 
       let menuUseYn = $(tr[i])
         .find("td:eq(5)")
@@ -776,7 +755,7 @@ const TB10210Sjs = (function () {
    */
   function saveMenu(authCodeMenuList, authCode) {
     ajaxCall({
-      method: "post",
+      method: "Post",
       url: "/registerAuthCodeMenu",
       data: authCodeMenuList,
       success: function () {
