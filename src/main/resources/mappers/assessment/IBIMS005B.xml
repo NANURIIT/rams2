@@ -311,4 +311,29 @@
 				, C.SORT_NO ASC
 	</select>
 
+    <!-- 네비게이션 설계 -->
+    <select id="createRamsNav" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        SELECT T1.MENU_ID               /* 메뉴ID */
+             , T1.MENU_NM               /* 메뉴명 */
+             , T1.HGRK_MENU_ID          /* 상위메뉴ID */
+             , T1.SCRN_APLY_SHP_CD      /* 화면적용형태코드 */
+             , T1.MENU_LVL              /* 메뉴레벨 */
+          FROM IBIMS005B T1
+     LEFT JOIN (
+            SELECT MENU_ID
+              FROM IBIMS007B
+             WHERE 1=1
+               AND ATH_CD = (SELECT ATH_CD FROM IBIMS003B WHERE EMPNO = #{empno})
+             GROUP
+                BY MENU_ID
+        ) T2
+            ON T1.MENU_ID = T2.MENU_ID
+         WHERE 1=1
+           AND T1.APLY_YN = 'Y'
+           AND T1.DEL_YN = 'N'
+           AND T1.MENU_LVL IS NOT NULL
+         ORDER
+            BY T1.MENU_LVL, CASE WHEN T1.MENU_ID LIKE 'TB%' THEN 0 ELSE 1 END, T1.MENU_ID
+    </select>
+
 </mapper>
