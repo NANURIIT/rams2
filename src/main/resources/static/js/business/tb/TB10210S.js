@@ -1,4 +1,4 @@
-const TB09090Sjs = (function () {
+const TB10210Sjs = (function () {
   let authCdTbObj;
   let authCdMenuTbObj;
 
