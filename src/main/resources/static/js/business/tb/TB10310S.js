@@ -94,7 +94,7 @@ const TB10310Sjs = (function () {
       html += "</tr>";
     } else if (data.length > 0) {
       $.each(data, function (key, value) {
-        html += '<tr ondblclick="selectMenuRow(this);">';
+        html += '<tr ondblclick="TB10310Sjs.selectMenuRow(this);">';
         html += '<td style="text-align:right;">' + value.rowNum + "</td>";
         html += "<td>" + value.menuName + "</td>";
         html += "<td>" + value.lv2Id + "</td>";
@@ -351,5 +351,6 @@ const TB10310Sjs = (function () {
   return {
     findClickbutton: findClickbutton,
     saveUseMenu: saveUseMenu,
+    selectMenuRow: selectMenuRow,
   };
 })();
