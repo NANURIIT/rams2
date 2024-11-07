@@ -11,6 +11,7 @@ import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.mapper.IBIMS100BMapper;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
+import com.nanuri.rams.com.dto.WorkFlowDTO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
 import lombok.RequiredArgsConstructor;
@@ -80,6 +81,16 @@ public class TB02010ServiceImpl implements TB02010Service {
 	@Override
 	public int deleteIBIMS100BInfo(IBIMS100BDTO deleteInfo) {
 		return ibims100BMapper.deleteIBIMS100BInfo(deleteInfo);
+	}
+
+	@Override
+	public List<WorkFlowDTO> workFlowInq(WorkFlowDTO param){
+
+		String wfAuthId = param.getWfAuthId();					//WF STEP 권한
+
+		
+
+		return null;
 	}
 
 }
