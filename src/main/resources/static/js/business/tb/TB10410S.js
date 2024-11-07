@@ -15,12 +15,12 @@ const TB10410Sjs = (function () {
   /**
    * PQGRID
    */
-
   /**
-   * UPDATE INSERT 구분용 전역변수
-   */
-  let hgrkMenuDbData = [];
-  let hgrkGroupMenuDbData = [];
+     * UPDATE INSERT 구분용 전역변수
+     */
+  let hgrkMenuDbData;
+  let hgrkGroupMenuDbData;
+  
 
 
   /**
@@ -159,7 +159,7 @@ const TB10410Sjs = (function () {
         editor: {
           type: "select",
           options: Yn
-        },
+        }
       },
     ]
 
@@ -396,14 +396,21 @@ const TB10410Sjs = (function () {
       success: function (data) {
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
+          const temp = data;
+          
+          hgrkMenuDbData = data;
+          console.log("이건 왜 안 찍혀", hgrkMenuDbData[26]);
+
           let grid = $('#TB10410S_hgrkMenuColModel').pqGrid('instance');
-          grid.setData(data);
+          grid.setData(temp);
           grid.getData();
 
+
           //  저장 실행시 비교 데이타 저장
-          for(let i = 0; i < grid.pdata.length; i++){
-            hgrkMenuDbData.push(grid.pdata[i]);
-          }
+          // for(let i = 0; i < testGrid.length; i++){
+          //   hgrkMenuDbData.push(testGrid[i]);
+          // }
+
           
         }
         // 데이터 없을시 확인가능한 alert 실행
@@ -467,10 +474,18 @@ const TB10410Sjs = (function () {
    */
   function SaveHgrkMenu() {
 
-    const saveData = $('#TB10410S_hgrkMenuColModel').pqGrid('instance').pdata;
+    // const saveData = $('#TB10410S_hgrkMenuColModel').pqGrid('instance').pdata;
+    console.log(hgrkMenuDbData[26])
+    
+    const saveData = $('#TB10410S_hgrkMenuColModel').pqGrid('option', 'dataModel.data');
 
     let updateData = []
     let insertData = []
+
+    
+    console.log("바꾼 데이터")
+    console.log(saveData[26]);
+    
 
     // 수정된 로우 모으기
     for (let i = 0; i < hgrkMenuDbData.length; i++) {
@@ -505,6 +520,8 @@ const TB10410Sjs = (function () {
       })
     }
 
+    hgrkMenuDbData = []
+
     // 저장 후 조회
     // hgrkMenuInq();
   }
@@ -519,6 +536,10 @@ const TB10410Sjs = (function () {
 
     let updateData = []
     let insertData = []
+
+    console.log(saveData[26]);
+    console.log(hgrkGroupMenuDbData[26]);
+    
 
     // 수정된 로우 모으기
     for (let i = 0; i < hgrkGroupMenuDbData.length; i++) {
@@ -553,6 +574,8 @@ const TB10410Sjs = (function () {
       })
     }
 
+    hgrkGroupMenuDbData = [];
+
     // 저장 후 조회
     // hgrkGroupMenuInq();
   }
@@ -564,8 +587,6 @@ const TB10410Sjs = (function () {
    * @param {List} insertData 저장이벤트에서 구분된 insertData
    */
   function insertMenu(insertData) {
-
-    console.log(insertData);
 
     if(insertData.length === 0){
       return 1;
