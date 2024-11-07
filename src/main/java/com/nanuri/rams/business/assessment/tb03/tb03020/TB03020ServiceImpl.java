@@ -265,14 +265,14 @@ public class TB03020ServiceImpl implements TB03020Service {
 
 		String wfMapId = workFlowMapper.getWfMapId(workFlowDTO);
 
-		workFlowDTO.setWfMapId(wfMapId);						//todo: WF 맵 ID 공통코드 없음
-		workFlowDTO.setWfStepId("01");					//WF 스텝 ID (결재 요청 시 01 최초 부여)
-		workFlowDTO.setAprvEmpNo(dealInfo.getChrrEmpno());		//결재자 사원번호
-		workFlowDTO.setRtnYn("N");						//반송여부
+		workFlowDTO.setWfMapId(wfMapId);									//todo: WF 맵 ID 공통코드 없음
+		workFlowDTO.setWfStepId("01");								//WF 스텝 ID (결재 요청 시 01 최초 부여)
+		workFlowDTO.setAprvEmpNo(dealInfo.getChrrEmpno());					//결재자 사원번호
+		workFlowDTO.setRtnYn("N");									//반송여부
 		// workFlowDTO.setAprvDttm(dealInfo.getdtt);
-		workFlowDTO.setJobCnts(dealInfo.getDealNm());			//작업내용(DEAL_NM)
-		workFlowDTO.setExcAuthCd("0"); 				//예외권한코드(0:사용안함|1:특정인|2:특정부서|3:ALL)
-		workFlowDTO.setEtc(dealInfo.getDealNo() + dealInfo.getSn());	//etc (PK + PK 문자열 조합)
+		workFlowDTO.setJobCnts(dealInfo.getDealNm());						//작업내용(DEAL_NM)
+		workFlowDTO.setExcAuthCd("0"); 							//예외권한코드(0:사용안함|1:특정인|2:특정부서|3:ALL)
+		workFlowDTO.setEtc(dealInfo.getDealNo() + dealInfo.getSn());		//etc (PK + PK 문자열 조합)
 
 		return workFlow.wfRgst(workFlowDTO);
 	}
