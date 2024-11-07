@@ -14,7 +14,7 @@ public interface WorkFlowMapper {
     
     public List<String> getPKList(String tableNm);              //테이블 PK 찾기
 
-    public int wfMapRgst(WorkFlowDTO workFlowDTO);              //WF맵 등록
+    public int wfMapRgst(List<WorkFlowDTO> workFlowDTOs);       //WF맵 등록
 
     public int wfStepRgst(List<WorkFlowDTO> workFlowDTOs);      //WF스텝 등록
 
@@ -31,5 +31,7 @@ public interface WorkFlowMapper {
     public int aprvWf(WorkFlowDTO workFlowDTO);                 //WF 상태 변경 (결재)
 
     public String getWfMapId(WorkFlowDTO workFlowDTO);          //해당 테이블 작업 WF_ID 찾기
+
+    public List<WorkFlowDTO> workFlowInq(WorkFlowDTO wfAuthId);      //WF목록 조회(오늘의 할 일)
 
 }

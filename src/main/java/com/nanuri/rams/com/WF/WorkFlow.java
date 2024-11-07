@@ -40,18 +40,45 @@ public class WorkFlow {
 	 * @param WorkFlowDTO
 	 * @return
 	 */
-    public int wfMapRgst(WorkFlowDTO workFlowDTO){
+    public int wfMapRgst(List<WorkFlowDTO> workFlowDTOs){
 
-        String tableNm = workFlowDTO.getJobTable();         //작업 테이블 명
+        // String tableNm = workFlowDTO.getJobTable();         //작업 테이블 명
 
-        List<String> pkList = new ArrayList<>();            //테이블 PK리스트
+        // List<String> pkList = new ArrayList<>();            //테이블 PK리스트
 
-        pkList = workFlowMapper.getPKList(tableNm);
-        String jobTableKey = String.join("||", pkList);
+        // pkList = workFlowMapper.getPKList(tableNm);
+        // String jobTableKey = String.join("||", pkList);
 
-        workFlowDTO.setJobTableKey(jobTableKey);
+        // workFlowDTO.setJobTableKey(jobTableKey);
 
-        return workFlowMapper.wfMapRgst(workFlowDTO);
+        // return workFlowMapper.wfMapRgst(workFlowDTO);
+
+        List<WorkFlowDTO> paramList = new ArrayList<>();
+
+        for(int i=0; i < workFlowDTOs.size(); i++){
+            WorkFlowDTO workFlowDTO = workFlowDTOs.get(i);
+            WorkFlowDTO paramDTO = new WorkFlowDTO();
+
+            String tableNm = workFlowDTO.getJobTable();         //작업 테이블 명
+
+            List<String> pkList = new ArrayList<>();            //테이블 PK리스트
+
+            pkList = workFlowMapper.getPKList(tableNm);
+            String jobTableKey = String.join("||", pkList);
+
+            paramDTO.setJobTableKey(jobTableKey);                   //작업테이블 PK
+            paramDTO.setJobTable(tableNm);                          //작업테이블 
+            paramDTO.setWfMapId(workFlowDTO.getWfMapId());          //WF_MAP ID
+            paramDTO.setWfMapNm(workFlowDTO.getWfMapNm());          //WF_MAP 명
+            paramDTO.setRegUserId(workFlowDTO.getRegUserId());      //등록자
+            paramDTO.setChgDttm(workFlowDTO.getChgDttm());          //변경일시
+            paramDTO.setChgUserId(workFlowDTO.getChgUserId());      //변경자
+
+            paramList.add(paramDTO);
+
+        }
+
+        return workFlowMapper.wfMapRgst(paramList);
     }
 
     /**

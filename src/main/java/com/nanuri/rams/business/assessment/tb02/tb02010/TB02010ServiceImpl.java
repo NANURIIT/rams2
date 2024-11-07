@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.mapper.IBIMS100BMapper;
+import com.nanuri.rams.business.common.mapper.WorkFlowMapper;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
+import com.nanuri.rams.com.WF.WorkFlow;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 
@@ -22,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class TB02010ServiceImpl implements TB02010Service {
 	
 	private final IBIMS100BMapper ibims100BMapper;
+
+	private final WorkFlowMapper workFlowMapper;
 	
 	private final AuthenticationFacade facade; 
 
@@ -85,12 +89,7 @@ public class TB02010ServiceImpl implements TB02010Service {
 
 	@Override
 	public List<WorkFlowDTO> workFlowInq(WorkFlowDTO param){
-
-		String wfAuthId = param.getWfAuthId();					//WF STEP 권한
-
-		
-
-		return null;
+		return workFlowMapper.workFlowInq(param);
 	}
 
 }

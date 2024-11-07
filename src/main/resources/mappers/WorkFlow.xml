@@ -19,8 +19,7 @@
             AND cons.owner = 'RAMS'
     </select>
 
-    <!--WF맵 등록-->
-    <insert id="wfMapRgst" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
+    <!-- <insert id="wfMapRgst" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
         INSERT INTO WF_MAP
         (
             WF_MAP_ID               /*  워크플로우 맵ID  */
@@ -43,6 +42,33 @@
             , #{chgDttm}              
             , #{chgUserId}             
         )
+    </insert> -->
+    <!--WF맵 등록-->
+    <insert id="wfMapRgst" parameterType="java.util.List">
+        INSERT INTO WF_MAP
+        (
+            WF_MAP_ID               /*  워크플로우 맵ID  */
+            , WF_MAP_NM              /*  맵명  */
+            , JOB_TABLE              /*  작업테이블명  */
+            , JOB_TABLE_KEY          /*  작업테이블 KEY컬럼명  */
+            , REG_DTTM               /*  등록일시  */
+            , REG_USER_ID            /*  등록자  */
+            , CHG_DTTM               /*  변경일시  */
+            , CHG_USER_ID            /*  변경자  */
+        )
+        VALUES 
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{wfMapId}          
+            , #{wfMapNm}      	
+            , #{jobTable}        
+            , #{jobTableKey}
+            , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS') 
+            , #{regUserId}          
+            , #{chgDttm}              
+            , #{chgUserId}             
+        )
+        </foreach>
     </insert>
 
     <!--WF스텝 등록-->
@@ -213,6 +239,27 @@
         SELECT WF_MAP_ID
         FROM WF_MAP
         WHERE JOB_TABLE = #{jobTable}
+    </select>
+
+    <!--WF 조회(오늘의 할 일)-->
+    <select id="workFlowInq" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        SELECT 	  wf.WF_MAP_ID 					/*작업ID*/
+                , wf.WF_STEP_ID 				/*작업단계*/
+                , wf.APRV_EMP_NO 				/*결재자(신청자)*/
+                , wf.APRV_DTTM 					/*결재일자(신청일자)*/
+                , wf.ETC 						/*etc(작업테이블PK)*/
+                , m.WF_MAP_NM                   /*WF맵 명(업무구분)*/
+                , m.JOB_TABLE 					/*작업테이블*/
+                , m.JOB_TABLE_KEY 				/*작업테이블KEY*/
+                , wf.JOB_CNTS 					/*작업내용(작업명)*/
+        FROM WF wf
+        JOIN WF_MAP m 
+        ON m.WF_MAP_ID = wf.WF_MAP_ID 
+        JOIN WF_STEP s 
+        ON wf.WF_MAP_ID = s.WF_MAP_ID 
+        AND wf.WF_STEP_ID = s.STEP_ID 
+        WHERE s.WF_AUTH_ID = #{wfAuthId}
+        ORDER BY APRV_DTTM
     </select>
 
 </mapper>
