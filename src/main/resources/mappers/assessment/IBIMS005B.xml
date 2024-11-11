@@ -46,6 +46,7 @@
        ORDER BY A.MENU_ID
     </select>
 
+    <!-- 신메뉴등록 -->
     <insert id="insertMenu" parameterType="java.util.List">
         INSERT INTO IBIMS005B (
             MENU_ID
@@ -78,9 +79,9 @@
           , #{item.menuNm}
           , #{item.shtnNm}
           , #{item.hgrkMenuId}
-          , 'M'
+          , SUBSTR(#{item.hgrkMenuId}, LENGTH(#{item.hgrkMenuId}), 1)
           , #{item.sortNo}
-          , 1
+          , (SELECT (NVL(MAX(MENU_LVL), 0) + 1) FROM IBIMS005B WHERE MENU_ID = #{item.hgrkMenuId})
           , #{item.urlClsfCd}
           , #{item.urlNm}
           , #{item.urlVrbCntn}
@@ -100,28 +101,50 @@
         </foreach>
     </insert>
 
-    <update id="updateMenu" parameterType="java.util.List">
-        <foreach collection="list" item="item" separator=";">
+    <!-- 메뉴수정 -->
+    <update id="updateMenu" parameterType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
         UPDATE IBIMS005B
-           SET MENU_NM = #{item.menuNm}
-             , SORT_NO = #{item.sortNo}
-             , URL_VRB_CNTN = #{item.urlVrbCntn}
-             , URL_CLSF_CD = #{item.urlClsfCd}
-             , URL_NM = #{item.urlNm}
-             , SHTN_NM = #{item.shtnNm}
-             , APLY_YN = #{item.aplyYn}
-             , APLY_DT = SYSDATE
-             , DEL_YN = #{item.delYn}
-             , DEL_DT = SYSDATE
+           SET MENU_NM = #{menuNm}
+             , SORT_NO = #{sortNo}
+             , URL_VRB_CNTN = #{urlVrbCntn}
+             , URL_CLSF_CD = #{urlClsfCd}
+             , URL_NM = #{urlNm}
+             , SHTN_NM = #{shtnNm}
+             , APLY_YN = #{aplyYn}
+             <if test="aplyYn != null and aplyYn !=''">
+             /* , APLY_DT = TO_CHAR(SYSDATE, 'YYYYMMDD') */
+             </if>
+             , DEL_YN = #{delYn}
+             <if test="delYn != null and delYn !=''">
+             /* , DEL_DT = TO_CHAR(SYSDATE, 'YYYYMMDD') */
+             </if>
              , HND_DETL_DTM = SYSDATE
-             , HND_EMPNO = #{item.hndEmpno}
-             , HND_TMNL_NO = #{item.hndTmnlNo}
-             , HND_TR_ID = #{item.hndTrId}
-             , GUID = #{item.guid}
+             , HND_EMPNO = #{hndEmpno}
+             , HND_TMNL_NO = #{hndTmnlNo}
+             , HND_TR_ID = #{hndTrId}
+             , GUID = #{guid}
          WHERE 1=1
-           AND MENU_ID = #{item.menuId}
-        </foreach>
+           AND MENU_ID = #{menuId}
     </update>
+
+    <!-- 메뉴별권한관리조회 -->
+    <select id="selectMenuListFromTB10310S" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        SELECT LTRIM(SYS_CONNECT_BY_PATH(T1.MENU_NM, ' &gt; '), ' &gt; ') AS menuNm
+             , T1.MENU_ID
+          FROM IBIMS005B T1
+         WHERE T1.SCRN_APLY_SHP_CD = 'S'
+           AND T1.APLY_YN = 'Y'
+           AND T1.DEL_YN = 'N'
+           AND (
+                T1.MENU_ID LIKE '%' || #{param} || '%'
+                OR T1.MENU_NM LIKE '%' || #{param} || '%'
+                )
+         START
+          WITH T1.HGRK_MENU_ID IS NULL
+       CONNECT BY PRIOR T1.MENU_ID = T1.HGRK_MENU_ID
+         ORDER
+            BY T1.HGRK_MENU_ID, T1.MENU_ID;
+    </select>
 
     <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
