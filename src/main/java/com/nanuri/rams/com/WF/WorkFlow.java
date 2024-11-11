@@ -115,4 +115,8 @@ public class WorkFlow {
 
         return wfHisRgstRslt;
     }
+
+    public int wfAuthIdCheck(WorkFlowDTO param){
+        return workFlowMapper.wfAuthIdCheck(param);
+    }
 }

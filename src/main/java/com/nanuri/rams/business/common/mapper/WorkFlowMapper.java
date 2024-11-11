@@ -34,4 +34,6 @@ public interface WorkFlowMapper {
 
     public List<WorkFlowDTO> workFlowInq(WorkFlowDTO wfAuthId);      //WF목록 조회(오늘의 할 일)
 
+    public int wfAuthIdCheck(WorkFlowDTO wfAuthId);             //WF_STEP 권한 체크
+
 }

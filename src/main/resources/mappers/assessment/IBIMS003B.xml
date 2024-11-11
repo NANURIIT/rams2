@@ -225,4 +225,11 @@
            AND EMPNO = #{empno}									  <!-- 사원번호 -->
     </update>
 
+    <!--권한코드 조회-->
+    <select id="atcCdInq" parameterType="string" resultType="string">
+      SELECT ATH_CD 
+      FROM IBIMS003B 
+      WHERE EMPNO = #{empno}
+    </select>
+
 </mapper>

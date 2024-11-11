@@ -1,6 +1,8 @@
 const TB03020Sjs = (function(){
 	
 	var loginUserId = '';
+
+	let wfId_TB03020S;
 	let pqGridObjEnopList;
 
 	$(document).ready(function() {
@@ -11,6 +13,20 @@ const TB03020Sjs = (function(){
 		loadInvstGdsSdvdCd();
 		setKeyFunction_TB03020S();
 		rendorGrid();
+
+		var ibDealNo_TB02010S = sessionStorage.getItem("ibDealNo_TB02010S").substring(0, 17);
+
+		if(ibDealNo_TB02010S){
+			//alert(ibDealNo_TB02010S);
+
+			$('#selectedMngDealNo').val(ibDealNo_TB02010S);
+			getBscDealDetail();
+		}else{
+			//alert("없음");
+		}
+
+		//athCdCheck_TB03020S();
+
 		$("#selectedMngDealNo").focus();
 		//getDealNo();
 	});
@@ -198,6 +214,37 @@ const TB03020Sjs = (function(){
 
 	}
 
+	/* 권한에 따라 등록, 결제승인, 반송 버튼 표시 여부 결정 */
+	function athCdCheck_TB03020S(){
+
+		var wfMapId = "WF01";			//todo: 권한테이블 만들어지면 하드코딩 없애야 함
+		var wfAuthId = $('#TB03020S_athCd').val();
+
+		var paramData = {
+			wfMapId,
+			wfAuthId
+		}
+
+		$.ajax({
+			type: "GET",
+			url: "/wfAuthIdCheck",
+			data: paramData,
+			dataType: "json",
+			// contentType: "application/json; charset=UTF-8",
+			success: function(data) {
+				// alert(data);
+
+				if(data > 0){
+
+				}else{
+					$("#confirmDeal").hide();
+					$("#rejectDeal").hide();
+				}
+			}
+		});
+
+	}
+
 	/* 공동영업관리자 정보 행삭제 */
 	function mngPListDelRow() {
 		/* 그리드 체크 갯수 */
@@ -274,6 +321,10 @@ const TB03020Sjs = (function(){
 				$('#TB03020S_chrg_dprtCd').val(data.dprtCd);
 				$('#TB03020S_chrg_empNm').val(data.empNm);
 				$('#TB03020S_chrg_eno').val(data.eno);
+				$('#TB03020S_athCd').val(data.athCd);
+				// alert(data.athCd);
+
+				athCdCheck_TB03020S();
 			}
 		});
 	}

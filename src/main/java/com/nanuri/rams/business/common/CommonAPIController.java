@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +30,9 @@ import com.nanuri.rams.business.common.dto.RAA20BDTO;
 import com.nanuri.rams.business.common.dto.RAA98ADTO;
 import com.nanuri.rams.business.common.dto.RAB98BDTO;
 import com.nanuri.rams.business.common.vo.RAA20BVO;
+import com.nanuri.rams.com.WF.WorkFlow;
 import com.nanuri.rams.com.dto.FileDTO;
+import com.nanuri.rams.com.dto.WorkFlowDTO;
 import com.nanuri.rams.com.utils.FileUtil;
 
 import io.netty.util.internal.StringUtil;
@@ -42,6 +45,9 @@ import lombok.extern.slf4j.Slf4j;
 public class CommonAPIController {
 	
 	private final CommonService commonService;
+
+	@Autowired
+	private final WorkFlow workFlow;
 	
 	@Autowired
 	private FileUtil fileUtils;
@@ -268,6 +274,11 @@ public class CommonAPIController {
 	@GetMapping(value = "/getFndList")
 	public List<IBIMS993BDTO> getFndList(IBIMS993BDTO param) {
 		return commonService.getFndList(param);
+	}
+
+	@GetMapping(value = "/wfAuthIdCheck")
+	public int wfAuthIdCheck(WorkFlowDTO param){
+		return workFlow.wfAuthIdCheck(param);
 	}
 
 }

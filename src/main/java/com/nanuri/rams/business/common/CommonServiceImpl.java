@@ -110,6 +110,7 @@ public class CommonServiceImpl implements CommonService {
 		user.put("HdqtNm", facade.getDetails().getBdNm());
 		user.put("rghtCd", facade.getDetails().getRghtCd());
 		user.put("pstn", facade.getDetails().getOpstDcd());
+		user.put("athCd", facade.getDetails().getRghtCd());
 
 		return user;
 	}
