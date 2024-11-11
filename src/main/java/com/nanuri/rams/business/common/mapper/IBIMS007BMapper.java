@@ -1,6 +1,7 @@
 package com.nanuri.rams.business.common.mapper;
 
 import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.selectUseMenuVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +11,26 @@ import java.util.Optional;
 
 @Mapper
 public interface IBIMS007BMapper {
+
+	/**
+	 * 2024-11-07 김건우
+	 */
+
+	/**
+	 * TB10310S
+	 * 메뉴별권한페이지 권한조회
+	 */
+	public List<IBIMS007BVO> selectAthCdListFromMenu(String param);
+
+	/**
+	 * TB10310S
+	 * 메뉴별권한페이지 권한수정
+	 */
+	public int updateAth(List<IBIMS007BDTO> param);
+
+	/**
+	 * 2024-11-07 김건우 끝
+	 */
     
     public List<selectUseMenuVO> selectAvailableMenu(Map<String, String> menuId);			// RAA95B 수정 조회 가능 여부 조회
 	public int insertUseMenu(selectUseMenuVO dtoList);									// RAA95B 수정 조회 가능 여부 저장

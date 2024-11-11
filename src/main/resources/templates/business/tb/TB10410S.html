@@ -24,7 +24,7 @@
 									</div>
 								</div>
 								<div class="col-sm-9 text-left">
-									<button class="btn btn-primary" type="button" id="menuSearch"><i class="fa fa-search"></i>&nbsp;조회</button>
+									<button class="btn btn-primary" type="button" onclick="TB10410Sjs.hgrkMenuInq();"><i class="fa fa-search"></i>&nbsp;조회</button>
 								</div>
 							</div>
 	   					</div>
@@ -35,13 +35,13 @@
 							<div class="ibox-title">
 								<h5>▶ 상위메뉴</h5>
 								<div class="ibox-tools">		                       		
-									<button class="btn btn-default btn-xs" type="button" onclick="TB10410Sjs.addMenuRow();"><i class="fa fa-plus"></i>&nbsp;행추가</button>
-									<button class="btn btn-default btn-xs" type="button" onclick="TB10410Sjs.deleteMenuRow();"><i class="fa fa-minus"></i>&nbsp;행삭제</button>
-									<button class="btn btn-success btn-xs" type="button" onclick="TB10410Sjs.clickSaveMainMenu();"><i class="fa fa-save"></i>&nbsp;저장</button>
+									<button class="btn btn-default btn-xs" type="button" onclick="TB10410Sjs.pqGridAddNewRow($('#TB10410S_hgrkMenuColModel'));"><i class="fa fa-plus"></i>&nbsp;행추가</button>
+									<button class="btn btn-success btn-xs" type="button" onclick="TB10410Sjs.SaveHgrkMenu();"><i class="fa fa-save"></i>&nbsp;저장</button>
 								</div>
 							</div>
 							<div class="ibox-content">
-								<div class="tableFixHead">
+								<div id="TB10410S_hgrkMenuColModel"></div>
+								<!-- <div class="tableFixHead">
 									<table class="table table-bordered">
 										<colgroup>
 											<col style="width: 5%;">
@@ -58,7 +58,7 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th>삭제</th>
+												<th>삭제여부</th>
 												<th>메뉴ID</th>
 												<th>정렬번호</th>
 												<th>화면번호</th>
@@ -74,20 +74,20 @@
 										<tbody id="menuListTable">
 										</tbody>
 									</table>
-								</div>
+								</div> -->
 							</div>
 						</div><!-- ibox -->
 						<div class="ibox ">
 							<div class="ibox-title">
 								<h5>▶ 하위메뉴</h5>
 								<div class="ibox-tools">		                       		
-									<button class="btn btn-default btn-xs" type="button" onclick="TB10410Sjs.addSubMenuRow();"><i class="fa fa-plus"></i>&nbsp;행추가</button>
-									<button class="btn btn-default btn-xs" type="button" onclick="TB10410Sjs.deleteSubMenuRow();"><i class="fa fa-minus"></i>&nbsp;행삭제</button>
-									<button class="btn btn-success btn-xs" type="button" onclick="TB10410Sjs.clickSaveSubMenu();"><i class="fa fa-save"></i>&nbsp;저장</button>
+									<button class="btn btn-default btn-xs" type="button" onclick="TB10410Sjs.pqGridAddNewRow($('#TB10410S_menuColModel'));"><i class="fa fa-plus"></i>&nbsp;행추가</button>
+									<button class="btn btn-success btn-xs" type="button" onclick="TB10410Sjs.SaveHgrkGroupMenu();"><i class="fa fa-save"></i>&nbsp;저장</button>
 								</div>
 							</div>
 							<div class="ibox-content">
-								<div class="tableFixHead">
+								<div id="TB10410S_menuColModel"></div>
+								<!-- <div class="tableFixHead">
 									<table class="table table-bordered">
 										<colgroup>
 											<col style="width: 5%;">
@@ -104,7 +104,7 @@
 										</colgroup>
 										<thead>
 											<tr>
-												<th>삭제</th>
+												<th>삭제여부</th>
 												<th>메뉴ID</th>
 												<th>정렬번호</th>
 												<th>화면번호</th>
@@ -120,7 +120,7 @@
 										<tbody id="subMenuListTable">
 										</tbody>
 									</table>
-								</div>
+								</div> -->
 							</div>
 						</div><!-- ibox -->
 	   				</div>

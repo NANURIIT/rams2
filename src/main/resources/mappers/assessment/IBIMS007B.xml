@@ -2,26 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS007BMapper">
 
-	<!-- RAA95B 조회 및 수정 가능 여부 조회 -->
-	<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.vo.IBIMS007BVO$selectUseMenuVO" parameterType='java.util.Map'>
-		/* 권한별 메뉴화면 사용권한 조회 */
-		SELECT  ATH_CD					<!-- 권한코드 -->
-			  , SQ						<!-- 일련번호 -->
-			  , MENU_ID					<!-- 메뉴ID -->
-			  , MDFY_RGHT_CCD			<!-- 수정권한구분코드(1: 조회, 2: 수정가능) -->
-			  , HND_DETL_DTM
-		      , HND_EMPNO
-		FROM IBIMS007B A
-		WHERE 1=1
-		  <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(lv2Id)">
-		  AND MENU_ID = #{lv2Id}
-		  </if>
-		  <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(lv3Id)">
-		  AND MENU_ID = #{lv3Id}
-		  </if>
+	<!-- 2024-11-07 김건우 -->
+	<select id="selectAthCdListFromMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS007BVO">
+		SELECT T1.ATH_CD				/* 권한코드 */
+		     , T2.ATH_CD_NM   			/* 권한명 */
+		     , T2.ATH_CD_EXPL			/* 권한코드설명 */
+			 , T1.MDFY_RGHT_CCD			/* 수정권한구분코드 1:조회 2:수정가능 데이터없을시 권한X 인듯 */
+			 , T1.HND_DETL_DTM			/* 처리시간 */
+			 , (SELECT EMP_NM
+			      FROM IBIMS003B
+				 WHERE 1=1 
+				   AND EMPNO = T1.HND_EMPNO) AS hndEmpno	/* 처리자 */
+			 , T1.MENU_ID				/* 메뉴ID */
+			 , T1.SQ					/* 일련번호 */
+		  FROM IBIMS007B T1	/* 메뉴별권한코드 */
+	 LEFT JOIN IBIMS006B T2 /* 권한코드기본 */
+	        ON T1.ATH_CD = T2.ATH_CD
+	     WHERE 1=1
+		   AND T1.MENU_ID = #{menuId}
+		 ORDER
+		    BY T1.ATH_CD
 	</select>
 
-	<!-- RAA95B 조회 및 수정 가능 여부 저장 -->
+	<update id="updateAth" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO">
+		<foreach item="item" collection="list" separator=";">
+		UPDATE IBIMS007B
+		   SET MDFY_RGHT_CCD = #{item.mdfyRghtCcd}
+		     , HND_DETL_DTM = SYSDATE
+			 , HND_EMPNO = #{item.hndEmpno}
+			 , HND_TMNL_NO = #{item.hndTmnlNo}
+			 , HND_TR_ID = #{item.hndTrId}
+			 , GUID = #{item.guid}
+		 WHERE 1=1
+		   AND ATH_CD = #{item.athCd}
+		   AND SQ = #{item.sq}
+		   AND MENU_ID = #{item.menuId}
+	    </foreach>
+	</update>
+	<!-- 2024-11-07 김건우 끝 -->
+
+	<!-- 권한별 메뉴 조회 -->
+	<select id="selectAvailableMenu" resultType="com.nanuri.rams.business.common.vo.IBIMS007BVO$selectUseMenuVO" parameterType='java.util.Map'>
+		SELECT T1.ATH_CD					/* 권한코드 */
+			 , T1.SQ						/* 일련번호 */
+			 , T1.MENU_ID					/* 메뉴ID */
+			 , T1.MDFY_RGHT_CCD				/* 수정권한구분코드 (1: 조회, 2: 수정가능) */
+			 , T1.HND_DETL_DTM
+		     , T1.HND_EMPNO
+		  FROM IBIMS007B T1	/* 메뉴권한 */	
+     LEFT JOIN IBIMS005B T2	/* 메뉴기본 */
+	     	ON T1.MENU_ID = T2.MENU_ID 
+		 WHERE 1=1
+		   AND T2.APLY_YN = 'Y'
+		   AND T2.SCRN_APLY_SHP_CD = 'S'
+		   AND T1.ATH_CD = #{athCd}
+	  	 ORDER
+		  	BY T1.MENU_ID
+	</select>
+
+	
 	<insert id='insertUseMenu' parameterType='com.nanuri.rams.business.common.vo.IBIMS007BVO$selectUseMenuVO'>
 		INSERT INTO IBIMS007B (
 				  ATH_CD				<!-- 권한코드 -->
@@ -81,26 +120,13 @@
 
 	<update id="updateAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO">
 		UPDATE IBIMS007B
-		<set>
-			<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(athCd)">
-				ATH_CD = #{athCd},
-			</if>
-			<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(menuId)">
-				MENU_ID = #{menuId},
-			</if>
-			<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(mdfyRghtCcd)">
-				MDFY_RGHT_CCD = #{mdfyRghtCcd},
-			</if>
-			HND_DETL_DTM = DEFAULT,
-			HND_EMPNO = #{hndEmpno}
-		</set>
-		WHERE ATH_CD = #{athCd}
-		<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(menuId)">
+		   SET MDFY_RGHT_CCD = #{mdfyRghtCcd}
+			 , HND_DETL_DTM = SYSDATE
+			 , HND_EMPNO = #{hndEmpno}
+		WHERE 1=1
+		  AND ATH_CD = #{athCd}
 		  AND MENU_ID = #{menuId}
-		</if>
-		<if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(sq)">
 		  AND SQ = #{sq}
-		</if>
 	</update>
 
 	<delete id="deleteAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO">

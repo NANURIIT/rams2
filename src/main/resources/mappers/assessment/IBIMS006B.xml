@@ -13,14 +13,14 @@
 		     , A.DLT_DT											<!-- 삭제일자 -->
 		     , A.DLT_TM											<!-- 삭제시간 -->
 		     , A.DLT_EMPNO										<!-- 삭제자사번 -->
-             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYYMMDD'), '') AS HND_DT
-             , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24MISS'), '') AS HND_TM
-             , A.HND_EMPNO
-             , NVL((SELECT EMP_NM
-					   FROM IBIMS003B
-					   WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
-	  	  FROM IBIMS006B A
-	  	 WHERE A.DLT_YN != 'Y'
+         , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYYMMDD'), '') AS HND_DT
+         , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24MISS'), '') AS HND_TM
+         , A.HND_EMPNO
+         , NVL((SELECT EMP_NM
+                  FROM IBIMS003B
+                 WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
+	  	FROM IBIMS006B A
+	   WHERE A.DLT_YN != 'Y'
 	</select>
 
 	<select id="selectAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS006BVO">

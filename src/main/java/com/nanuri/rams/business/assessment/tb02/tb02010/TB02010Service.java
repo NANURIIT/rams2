@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
+import com.nanuri.rams.com.dto.WorkFlowDTO;
 
 
 @Service
@@ -29,5 +30,8 @@ public interface TB02010Service {
 	
 	// 오늘의할일변경(결재요청취소)
 	public int deleteIBIMS100BInfo(IBIMS100BDTO deleteInfo);	
+
+	// WF 작업내용 조회
+	public List<WorkFlowDTO> workFlowInq(WorkFlowDTO param);
 
 }

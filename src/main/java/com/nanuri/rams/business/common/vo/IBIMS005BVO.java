@@ -15,6 +15,8 @@ import lombok.ToString;
  * 메뉴기본 Table.IBIMS005B VO
  * */
 public class IBIMS005BVO {
+
+    private List<IBIMS005BDTO> menuList;
     
     @Getter
     @Setter
@@ -60,6 +62,4 @@ public class IBIMS005BVO {
     private String hndEmpNm;
     private String hndlDprtCd;
     
-    private List<IBIMS005BDTO> menuList;
-
 }

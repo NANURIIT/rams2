@@ -2,28 +2,155 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nanuri.rams.business.common.mapper.IBIMS005BMapper">
 
+	<!-- 2024-11-06	김건우 -->
     <!-- 상위메뉴 조회 -->
-    <select id="selectMainMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS005BVO$MainMenuVo">
-        SELECT A.MENU_ID																		<!-- 메뉴ID -->
-             , A.MENU_NM                                                                        <!-- 메뉴명 -->
-             , A.SORT_NO																		<!-- 정렬번호 -->
-             , A.URL_VRB_CNTN																	<!-- URL변수내용 -->
-             , A.SHTN_NM																		<!-- 단축명 -->
-             , A.URL_CLSF_CD																	<!-- URL분류코드 -->
-             , A.APLY_YN																		<!-- 적용여부 -->
-             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYY-MM-DD HH24:MI:SS'), '') AS HND_DETL_DTM		<!-- 조작상세일시 -->
+    <select id="hgrkMenuInq" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        SELECT A.MENU_ID																		/* 메뉴ID */
+             , A.MENU_NM                                                                        /* 메뉴명 */
+             , A.SORT_NO																		/* 정렬번호 */
+             , A.URL_VRB_CNTN																    /* URL변수내용 */
+             , A.URL_CLSF_CD																	/* URL분류코드 */
+             , A.URL_NM                                                                         /* URL명 */
+             , A.SHTN_NM																		/* 단축명 */
+             , A.APLY_YN																		/* 적용여부 */
+             , A.DEL_YN																		    /* 삭제여부 */
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYY-MM-DD HH24:MI:SS'), '') AS HND_DETL_DTM		/* 조작상세일시 */
              , NVL((SELECT EMP_NM
-                         FROM IBIMS003B
-                        WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM							<!-- 조작사원명 -->
+                      FROM IBIMS003B
+                     WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMPNO							    /* 조작사원명 */
+          FROM IBIMS005B A
+         WHERE 1=1
+           AND A.SCRN_APLY_SHP_CD = 'M'
+           AND A.MENU_ID LIKE '%' || #{menuId} || '%'                                                  /* 메뉴명 */
+         ORDER BY A.MENU_ID
+    </select>
+
+    <!-- 하위메뉴조회 -->
+    <select id="hgrkGroupMenuInq" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        SELECT A.MENU_ID																		/* 메뉴ID */
+             , A.MENU_NM                                                                        /* 메뉴명 */
+             , A.SORT_NO																		/* 정렬번호 */
+             , A.SHTN_NM																		/* 단축명 */
+             , A.URL_CLSF_CD																	/* URL분류코드 */
+             , A.URL_VRB_CNTN																	/* URL변수내용 */
+             , A.URL_NM                                                                         /* URL명 */
+             , A.APLY_YN																		/* 적용여부 */
+             , A.DEL_YN																		    /* 삭제여부 */
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYY-MM-DD HH24:MI:SS'), '') AS HND_DETL_DTM		/* 조작상세일시 */
+             , NVL((SELECT EMP_NM
+                      FROM IBIMS003B
+                     WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMPNO							    /* 조작사원명 */
         FROM IBIMS005B A
        WHERE 1=1
-         AND A.SCRN_APLY_SHP_CD = 'M'															<!-- 화면적용형태코드 -->
-         AND A.DEL_YN = 'N'																		<!-- 삭제여부 -->
-         <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(menuNm)">
-         AND A.MENU_NM LIKE '%'|| #{menuNm} || '%'										<!-- 메뉴명 -->
-         </if>
-       ORDER BY A.SORT_NO																		<!-- 정렬번호 -->
+         AND A.HGRK_MENU_ID = #{menuId}										                    /* 메뉴명 */
+       ORDER BY A.MENU_ID
     </select>
+
+    <!-- 신메뉴등록 -->
+    <insert id="insertMenu" parameterType="java.util.List">
+        INSERT INTO IBIMS005B (
+            MENU_ID
+          , MENU_NM
+          , SHTN_NM
+          , HGRK_MENU_ID
+          , SCRN_APLY_SHP_CD
+          , SORT_NO
+          , MENU_LVL
+          , URL_CLSF_CD
+          , URL_NM
+          , URL_VRB_CNTN
+          , USR_ATH_DCD
+          , APLY_YN
+          , APLY_DT
+          , DEL_YN
+          , DEL_DT
+          , DEL_TM
+          , DELT_EMPNO
+          , HND_DETL_DTM
+          , HND_EMPNO
+          , HND_TMNL_NO
+          , HND_TR_ID
+          , GUID
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+        (
+            #{item.menuId}
+          , #{item.menuNm}
+          , #{item.shtnNm}
+          , #{item.hgrkMenuId}
+          , SUBSTR(#{item.hgrkMenuId}, LENGTH(#{item.hgrkMenuId}), 1)
+          , #{item.sortNo}
+          , (SELECT (NVL(MAX(MENU_LVL), 0) + 1) FROM IBIMS005B WHERE MENU_ID = #{item.hgrkMenuId})
+          , #{item.urlClsfCd}
+          , #{item.urlNm}
+          , #{item.urlVrbCntn}
+          , #{item.usrAthDcd}
+          , #{item.aplyYn}
+          , #{item.aplyDt}
+          , #{item.delYn}
+          , #{item.delDt}
+          , #{item.delTm}
+          , #{item.deltEmpno}
+          , SYSDATE
+          , #{item.hndEmpno}
+          , #{item.hndTmnlNo}
+          , #{item.hndTrId}
+          , #{item.guid}
+        )
+        </foreach>
+    </insert>
+
+    <!-- 메뉴수정 -->
+    <update id="updateMenu" parameterType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        UPDATE IBIMS005B
+           SET MENU_NM = #{menuNm}
+             , SORT_NO = #{sortNo}
+             , URL_VRB_CNTN = #{urlVrbCntn}
+             , URL_CLSF_CD = #{urlClsfCd}
+             , URL_NM = #{urlNm}
+             , SHTN_NM = #{shtnNm}
+             , APLY_YN = #{aplyYn}
+             <if test="aplyYn != null and aplyYn !=''">
+             /* , APLY_DT = TO_CHAR(SYSDATE, 'YYYYMMDD') */
+             </if>
+             , DEL_YN = #{delYn}
+             <if test="delYn != null and delYn !=''">
+             /* , DEL_DT = TO_CHAR(SYSDATE, 'YYYYMMDD') */
+             </if>
+             , HND_DETL_DTM = SYSDATE
+             , HND_EMPNO = #{hndEmpno}
+             , HND_TMNL_NO = #{hndTmnlNo}
+             , HND_TR_ID = #{hndTrId}
+             , GUID = #{guid}
+         WHERE 1=1
+           AND MENU_ID = #{menuId}
+    </update>
+
+    <!-- 메뉴별권한관리조회 -->
+    <select id="selectMenuListFromTB10310S" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
+        SELECT LTRIM(SYS_CONNECT_BY_PATH(T1.MENU_NM, ' &gt; '), ' &gt; ') AS menuNm
+             , T1.MENU_ID
+          FROM IBIMS005B T1
+         WHERE T1.SCRN_APLY_SHP_CD = 'S'
+           AND T1.APLY_YN = 'Y'
+           AND T1.DEL_YN = 'N'
+           AND (
+                T1.MENU_ID LIKE '%' || #{param} || '%'
+                OR T1.MENU_NM LIKE '%' || #{param} || '%'
+                )
+         START
+          WITH T1.HGRK_MENU_ID IS NULL
+       CONNECT BY PRIOR T1.MENU_ID = T1.HGRK_MENU_ID
+         ORDER
+            BY T1.HGRK_MENU_ID, T1.MENU_ID;
+    </select>
+
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- ////////////////////////////////////////////////////////////////////////////////////////// -->
+
 
     <!-- 상위메뉴 등록 시 유효성 검증 -->
     <select id="getMainMenuInfo" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
@@ -119,8 +246,8 @@
 		   SET DEL_YN = 'Y'													<!-- 삭제여부 -->
 		   	 , DELT_EMPNO = #{deltEmpno}									<!-- 삭제자사번 -->
 		   	 , DEL_DT = TO_CHAR(SYSDATE, 'YYYYMMDD')						<!-- 삭제일자 -->
-		   	 , DEL_TM = TO_CHAR(SYSDATE, 'HH24MISS'')						<!-- 삭제시간 -->
-		WHERE MENU_ID IN
+		   	 , DEL_TM = TO_CHAR(SYSDATE, 'HH24MISS')						<!-- 삭제시간 -->
+		 WHERE MENU_ID IN
 		<foreach collection="list" item="menuId" index="index" open="(" separator="," close=")">
 			#{menuId}
 		</foreach>
@@ -128,25 +255,24 @@
 
     <!-- 하위메뉴 조회 -->
     <select id="selectSubMenuList" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS005BVO$MainMenuVo">
-    	SELECT
-    		   A.MENU_ID													    <!-- 메뉴ID -->
-    		 , A.SORT_NO														<!-- 정렬번호 -->
-    		 , A.URL_VRB_CNTN												    <!-- URL매개변수내용 -->
-    		 , A.MENU_NM														<!-- 메뉴명 -->
-    		 , A.SHTN_NM														<!-- 단축명 -->
-    		 , A.URL_NM														    <!-- URL명 -->
-    		 , A.URL_CLSF_CD													<!-- URL분류코드 -->
-    		 , A.APLY_YN
+    	SELECT A.MENU_ID													    /* 메뉴ID */
+    		 , A.SORT_NO														/* 정렬번호 */
+    		 , A.URL_VRB_CNTN												    /* URL매개변수내용 */
+    		 , A.MENU_NM														/* 메뉴명 */
+    		 , A.SHTN_NM														/* 단축명 */
+    		 , A.URL_NM														    /* URL명 */
+    		 , A.URL_CLSF_CD													/* URL분류코드 */
+    		 , A.APLY_YN                                                        /* 적용여부 */
+    		 , A.DEL_YN                                                         /* 삭제여부 */
              , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYY-MM-DD HH24:MI:SS'), '') AS HND_DETL_DTM
              , NVL((SELECT EMP_NM
-                         FROM IBIMS003B
-                        WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
-
+                      FROM IBIMS003B
+                     WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
  		  FROM IBIMS005B A
- 		 WHERE A.SCRN_APLY_SHP_CD = 'S' 									<!-- 화면적용형태코드 -->
-		   AND A.HGRK_MENU_ID = #{menuId}									<!-- 상위메뉴ID -->
- 		   AND A.DEL_YN = 'N'
-		 ORDER BY A.SORT_NO													<!-- 정렬번호 -->
+ 		 WHERE A.SCRN_APLY_SHP_CD = 'S' 									    /* 화면적용형태코드 */
+		   AND A.HGRK_MENU_ID = #{menuId}									    /* 상위메뉴ID */
+		 ORDER
+            BY A.SORT_NO
     </select>
 
     <!-- 하위메뉴 등록 시 유효성 검증 -->
@@ -247,22 +373,22 @@
 
     <!-- 권한별 메뉴관리 메뉴 호출 -->
     <select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS005BVO">
- 		SELECT A.SORT_NO												<!-- 정렬번호 -->
-             , A.MENU_ID												<!-- 메뉴ID -->
-             , A.MENU_NM												<!-- 메뉴명 -->
-             , NVL(A.MENU_LVL , '')	AS MENU_LVL						<!-- 메뉴레벨 -->
-             , NVL(B.MDFY_RGHT_CCD , '') AS MDFY_RGHT_CCD			<!-- 수정권한구분코드(1: 조회, 2: 수정가능) -->
-             , B.HND_DETL_DTM											<!-- 조작상세일시 -->
+ 		SELECT A.SORT_NO												/* 정렬번호 */
+             , A.MENU_ID												/* 메뉴ID */
+             , A.MENU_NM												/* 메뉴명 */
+             , A.MENU_LVL						                        /* 메뉴레벨 */
+             , NVL(B.MDFY_RGHT_CCD , '') AS MDFY_RGHT_CCD			    /* 수정권한구분코드(1: 조회, 2: 수정가능) */
+             , B.HND_DETL_DTM											/* 조작상세일시 */
              , NVL((SELECT EMP_NM
                        FROM IBIMS003B
-			          WHERE EMPNO = B.HND_EMPNO), '') AS HND_EMP_NM		<!-- 조작사원명 -->
+			          WHERE EMPNO = B.HND_EMPNO), '') AS HND_EMP_NM		/* 조작사원명 */
           FROM IBIMS005B A
      LEFT JOIN IBIMS007B B
-            ON A.MENU_ID = B.MENU_ID									<!-- 메뉴ID -->
-		   AND B.ATH_CD  = #{athCd}										<!-- 권한코드 -->
-         WHERE A.SCRN_APLY_SHP_CD = 'S'									<!-- 화면적용형태코드 -->
-           AND A.DEL_YN != 'Y'											<!-- 삭제여부 -->
-      ORDER BY A.SORT_NO												<!-- 정렬번호 -->
+            ON A.MENU_ID = B.MENU_ID									/* 메뉴ID */
+		   AND B.ATH_CD  = #{athCd}										/* 권한코드 */
+         WHERE A.SCRN_APLY_SHP_CD = 'S'									/* 화면적용형태코드 */
+           AND A.DEL_YN != 'Y'											/* 삭제여부 */
+      ORDER BY A.MENU_ID    											/* 정렬번호 */
     </select>
 
     <!-- 타이틀 조회 -->
@@ -311,7 +437,7 @@
 				, C.SORT_NO ASC
 	</select>
 
-    <!-- 네비게이션 설계 -->
+    <!-- 네비게이션 메뉴목록 -->
     <select id="createRamsNav" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
         SELECT T1.MENU_ID               /* 메뉴ID */
              , T1.MENU_NM               /* 메뉴명 */
