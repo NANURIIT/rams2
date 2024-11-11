@@ -6,6 +6,7 @@ import com.nanuri.rams.business.common.mapper.IBIMS006BMapper;
 import com.nanuri.rams.business.common.mapper.IBIMS007BMapper;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import com.nanuri.rams.business.common.vo.IBIMS006BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.menuUpdateRequestVO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;

@@ -2,6 +2,7 @@ package com.nanuri.rams.business.assessment.tb10.tb10210;
 
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import com.nanuri.rams.business.common.vo.IBIMS006BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.menuUpdateRequestVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

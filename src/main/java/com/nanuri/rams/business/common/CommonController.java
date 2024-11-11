@@ -20,6 +20,7 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 @Controller
 public class CommonController {
+    
     static final String lv1Path = "business/";
 
     private final CommonService commonService;

@@ -373,22 +373,26 @@
 
     <!-- 권한별 메뉴관리 메뉴 호출 -->
     <select id="selectAuthCodeMenu" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS005BVO">
- 		SELECT A.SORT_NO												/* 정렬번호 */
-             , A.MENU_ID												/* 메뉴ID */
-             , A.MENU_NM												/* 메뉴명 */
-             , A.MENU_LVL						                        /* 메뉴레벨 */
-             , NVL(B.MDFY_RGHT_CCD , '') AS MDFY_RGHT_CCD			    /* 수정권한구분코드(1: 조회, 2: 수정가능) */
-             , B.HND_DETL_DTM											/* 조작상세일시 */
+        SELECT #{athCd}                   AS athCd                      /* 권한코드 */
+             , T1.MENU_ID												/* 메뉴ID */
+             , T1.MENU_NM												/* 메뉴명 */
+             , T1.MENU_LVL						                        /* 메뉴레벨 */
+             , NVL(T2.MDFY_RGHT_CCD , '') AS mdfyRghtCcd			    /* 수정권한구분코드(1: 조회, 2: 수정가능) */
+             , NVL(TO_CHAR(T2.HND_DETL_DTM, 'YYYYMMDD'), '') AS hndDt
+             , NVL(TO_CHAR(T2.HND_DETL_DTM, 'HH24MISS'), '') AS hndTm
              , NVL((SELECT EMP_NM
                        FROM IBIMS003B
-			          WHERE EMPNO = B.HND_EMPNO), '') AS HND_EMP_NM		/* 조작사원명 */
-          FROM IBIMS005B A
-     LEFT JOIN IBIMS007B B
-            ON A.MENU_ID = B.MENU_ID									/* 메뉴ID */
-		   AND B.ATH_CD  = #{athCd}										/* 권한코드 */
-         WHERE A.SCRN_APLY_SHP_CD = 'S'									/* 화면적용형태코드 */
-           AND A.DEL_YN != 'Y'											/* 삭제여부 */
-      ORDER BY A.MENU_ID    											/* 정렬번호 */
+			          WHERE EMPNO = T2.HND_EMPNO), '') AS hndEmpno		/* 조작사원명 */
+          FROM IBIMS005B T1
+     LEFT JOIN IBIMS007B T2
+            ON T1.MENU_ID = T2.MENU_ID									/* 메뉴ID */
+           AND T2.ATH_CD = #{athCd}
+         WHERE 1=1
+           AND T1.APLY_YN = 'Y'
+           AND T1.DEL_YN = 'N'
+           AND T1.SCRN_APLY_SHP_CD = 'S'								/* 화면적용형태코드 */
+         ORDER 
+            BY T1.MENU_ID    											/* 정렬번호 */
     </select>
 
     <!-- 타이틀 조회 -->
@@ -451,7 +455,7 @@
              WHERE 1=1
                AND ATH_CD = (SELECT ATH_CD FROM IBIMS003B WHERE EMPNO = #{empno})
              GROUP
-                BY MENU_ID
+                BY MENU_ID  /* MENU_ID가 키값이 아닌상황임 */
         ) T2
             ON T1.MENU_ID = T2.MENU_ID
          WHERE 1=1

@@ -2,30 +2,58 @@ const TB10210Sjs = (function () {
   let authCdTbObj;
   let authCdMenuTbObj;
 
+
+  /**
+   * PQGRID SELECTBOX
+   */
+  const Yn = [
+    { "Y": "Y" }
+    , { "N": "N" }
+  ]
+
+  const mdfyRghtCcd = [
+    {
+      cdValue: undefined
+      , cdName: "권한없음"
+    },
+    {
+      cdValue: "1"
+      , cdName: "조회"
+    },
+    {
+      cdValue: "2"
+      , cdName: "수정가능"
+    }
+  ]
+  /**
+   * PQGRID SELECTBOX
+   */
+
+
+  /**
+   * PQGRID COLMODEL
+   */
   let colModel_authCdTb = [
     //체크박스
     {
-      dataIndx: "authCdState",
-      align: "center",
-      halign: "center",
-      title: "삭제",
-      menuIcon: false,
-      width: "3%",
-      type: "checkBoxSelection",
-      editor: false,
-      dataType: "bool",
-      editable: "true",
-      cb: {
-        all: false,
-        header: false,
-      },
+      title: "삭제여부",
+        dataIndx: "dltYn",
+        align: "center",
+        halign: "center",
+        type: "string",
+        editable: true,
+        width: "5%",
+        editor: {
+          type: "select",
+          options: Yn
+        },
     },
     {
       title: "권한코드",
       dataType: "string",
       dataIndx: "athCd",
       width: "5%",
-      editable: true,
+      editable: false,
       align: "left",
       halign: "center",
       width: "",
@@ -59,15 +87,18 @@ const TB10210Sjs = (function () {
       halign: "center",
       dataType: "string",
       dataIndx: "authCdBtn",
+      editable: false,
       width: "5%",
       render: function (ui) {
-        return (
-          "<button class='ui-button ui-corner-all ui-widget' name='detail_btn' data-row-indx='" +
-          ui.rowIndx +
-          "'><i class='fa fa-arrow-down'></i>&nbsp;상세</button>"
-        );
-
-        //return '<td style="text-align:center;"><button class="groupCodeDetail btn btn-warning btn-xs" name = "detail_btn" data-row-indx="' + ui.rowIndx + '"><i class="fa fa-arrow-down"></i>&nbsp;상세</button></td>'
+        if(ui.cellData === "new"){
+          return "";
+        }else{
+          return (
+            "<button class='ui-button ui-corner-all ui-widget' name='detail_btn' data-row-indx='" +
+            ui.rowIndx +
+            "'><i class='fa fa-arrow-down'></i>&nbsp;상세</button>"
+          );
+        }
       },
     },
     {
@@ -91,20 +122,17 @@ const TB10210Sjs = (function () {
       filter: { crules: [{ condition: "range" }] },
     },
     {
-      dataIndx: "aplyYn",
-      align: "center",
-      halign: "center",
       title: "적용여부",
-      width: "5%",
-      menuIcon: false,
-      type: "checkBoxSelection",
-      editor: false,
-      dataType: "bool",
-      editable: "true",
-      cb: {
-        all: false,
-        header: false,
-      },
+        dataIndx: "aplyYn",
+        align: "center",
+        halign: "center",
+        type: "string",
+        editable: true,
+        width: "5%",
+        editor: {
+          type: "select",
+          options: Yn
+        },
     },
     {
       title: "처리일자",
@@ -129,7 +157,7 @@ const TB10210Sjs = (function () {
     {
       title: "처리자",
       dataType: "string",
-      dataIndx: "hndEmpNm",
+      dataIndx: "hndEmpno",
       editable: false,
       align: "center",
       halign: "center",
@@ -162,7 +190,7 @@ const TB10210Sjs = (function () {
     {
       title: "권한코드",
       dataType: "string",
-      dataIndx: "rghtCd",
+      dataIndx: "athCd",
       editable: false,
       align: "left",
       halign: "center",
@@ -180,20 +208,23 @@ const TB10210Sjs = (function () {
       filter: { crules: [{ condition: "range" }] },
     },
     {
-      dataIndx: "modifyYn",
-      align: "center",
-      halign: "center",
       title: "수정가능여부",
-      width: "7%",
-      menuIcon: false,
-      type: "checkBoxSelection",
-      editor: false,
-      dataType: "bool",
-      editable: "true",
-      cb: {
-        all: false,
-        header: false,
-      },
+        dataIndx: "mdfyRghtCcd",
+        align: "center",
+        halign: "center",
+        dataType: "string",
+        editor: true,
+        editable: true,
+        editor: {
+          type: "select",
+          valueIndx: "cdValue",
+          labelIndx: "cdName",
+          options: mdfyRghtCcd
+        },
+        render: function (ui) {
+          let fSel = mdfyRghtCcd.find(({ cdValue }) => cdValue == ui.cellData);
+          return fSel ? fSel.cdName : ui.cellData;
+        }
     },
     {
       title: "처리일자",
@@ -218,7 +249,7 @@ const TB10210Sjs = (function () {
     {
       title: "처리자",
       dataType: "string",
-      dataIndx: "hndEmpNm",
+      dataIndx: "hndEmpno",
       editable: false,
       align: "center",
       halign: "center",
@@ -226,6 +257,52 @@ const TB10210Sjs = (function () {
       filter: { crules: [{ condition: "range" }] },
     },
   ];
+  /**
+   * PQGRID COLMODEL
+   */
+
+  /**
+   * pqgird addrow
+   * @param {} colModelSelector 
+   */
+  function pqGridAddNewRow(colModelSelector) {
+
+    let row = [];
+    let newRow = {};
+    const data = colModelSelector.pqGrid("instance");
+    const rowColumnsData = data.colModel;
+    const length = rowColumnsData.length;
+    for (let i = 0; i < length; i++) {
+      const title = rowColumnsData[i].title;
+      const dataIndx = rowColumnsData[i].dataIndx;
+      row.push(title);
+      if (title === "메뉴관리") {
+        newRow[dataIndx] = "new";
+      }
+      else {
+        newRow[dataIndx] = "";
+      }
+    }
+
+    colModelSelector.pqGrid("addRow", {
+      rowData: newRow,
+      checkEditable: false,
+    });
+
+    const rowIndx = colModelSelector.pqGrid("option", "dataModel.data").length - 1; // 마지막에 추가된 행의 인덱스
+    colModelSelector.pqGrid("option", "cellEditable", function (ui) {
+      // 새로 추가된 행(rowIndx)에서 특정 셀만 편집 가능하도록 설정
+      if (ui.rowIndx === rowIndx) {
+        if (ui.dataIndx === "권한코드") { // "메뉴관리" 컬럼만 편집 가능하게 설정
+          return true;
+        }
+      }
+    });
+
+    // 그리드를 새로 고침하여 편집 가능 설정 반영
+    colModelSelector.pqGrid("refresh");
+  }
+
 
   $(function () {
     //
@@ -234,31 +311,31 @@ const TB10210Sjs = (function () {
     getAuthCode();
 
     clickDetailButton();
-    doubleClickColumn();
+    // doubleClickColumn();
 
-    $(document).on("click", ".can_use_yn", function () {
-      let useCheckBox = $(this);
-      let modifyCheckBox = $(this)
-        .parent()
-        .parent()
-        .find("td:eq(5)")
-        .find(".can_modify_yn");
-      if (!useCheckBox.prop("checked") && modifyCheckBox.prop("checked")) {
-        modifyCheckBox.prop("checked", false);
-      }
-    });
+    // $(document).on("click", ".can_use_yn", function () {
+    //   let useCheckBox = $(this);
+    //   let modifyCheckBox = $(this)
+    //     .parent()
+    //     .parent()
+    //     .find("td:eq(5)")
+    //     .find(".can_modify_yn");
+    //   if (!useCheckBox.prop("checked") && modifyCheckBox.prop("checked")) {
+    //     modifyCheckBox.prop("checked", false);
+    //   }
+    // });
 
-    $(document).on("click", ".can_modify_yn", function () {
-      let useChecked = $(this)
-        .parent()
-        .parent()
-        .find("td:eq(4)")
-        .find(".can_use_yn");
-      let modifyChecked = $(this);
-      if (!useChecked.prop("checked") && modifyChecked.prop("checked")) {
-        useChecked.prop("checked", true);
-      }
-    });
+    // $(document).on("click", ".can_modify_yn", function () {
+    //   let useChecked = $(this)
+    //     .parent()
+    //     .parent()
+    //     .find("td:eq(4)")
+    //     .find(".can_use_yn");
+    //   let modifyChecked = $(this);
+    //   if (!useChecked.prop("checked") && modifyChecked.prop("checked")) {
+    //     useChecked.prop("checked", true);
+    //   }
+    // });
   });
 
   /*******************************************************************
@@ -347,6 +424,7 @@ const TB10210Sjs = (function () {
   /*******************************************************************
    *** 상단 그리드 event
    *******************************************************************/
+  
   /**
    * 권한목록 조회 ajax
    */
@@ -368,34 +446,41 @@ const TB10210Sjs = (function () {
         let rowList = [];
 
         if (authCode.length > 0) {
-          $.each(authCode, function (key, value) {
-            let aplyYn = true;
-            if (value.aplyYn === "Y") {
-              aplyYn = true;
-            } else {
-              aplyYn = false;
-            }
 
-            let newRow = {
-              authCdState: false,
-              athCd: value.athCd,
-              athCdNm: value.athCdNm,
-              athCdExpl: value.athCdExpl,
-              rgstDt: formatDate(value.rgstDt),
-              rgstEmpNm: value.rgstEmpNm,
-              aplyYn: aplyYn,
-              hndDt: value.hndDt,
-              hndTm: value.hndTm,
-              hndEmpNm: value.hndEmpNm,
-            };
+          $('#authCodeTable').pqGrid('instance').setData(authCode);
 
-            rowList.push(newRow);
-          });
-          authCdTbObj.option("dataModel.data", rowList);
-          authCdTbObj.refreshDataAndView();
+          // $.each(authCode, function (key, value) {
+          //   let aplyYn = true;
+          //   if (value.aplyYn === "Y") {
+          //     aplyYn = true;
+          //   } else {
+          //     aplyYn = false;
+          //   }
+
+          //   let newRow = {
+          //     authCdState: false,
+          //     athCd: value.athCd,
+          //     athCdNm: value.athCdNm,
+          //     athCdExpl: value.athCdExpl,
+          //     rgstDt: formatDate(value.rgstDt),
+          //     rgstEmpNm: value.rgstEmpNm,
+          //     aplyYn: aplyYn,
+          //     hndDt: value.hndDt,
+          //     hndTm: value.hndTm,
+          //     hndEmpNm: value.hndEmpNm,
+          //   };
+
+          //   rowList.push(newRow);
+          // });
+          // authCdTbObj.option("dataModel.data", rowList);
+          // authCdTbObj.refreshDataAndView();
         } else {
-          authCdTbObj.option("strNoRows", "조회된 데이터가 없습니다.");
-          authCdTbObj.refreshDataAndView();
+          Swal.fire({
+            icon: 'warning'
+            , title: '조회된 정보가 없습니다!'
+          })
+          // authCdTbObj.option("strNoRows", "조회된 데이터가 없습니다.");
+          // authCdTbObj.refreshDataAndView();
         }
       },
     });
@@ -453,110 +538,117 @@ const TB10210Sjs = (function () {
         let rowList = [];
 
         if (authCodeMenu.length > 0) {
-          $.each(authCodeMenu, function (key, value) {
-            // html += '<tr>';
-            // html += '   <td>' + (key + 1) + '</td>';
-            // html += '   <td>' + value.menuId + '</td>';
-            // html += '   <td>' + value.menuNm + '</td>';
-            // html += '   <td>'+ rghtCd +'</td>';
-            // html += '   <td>' + value.menuLvl + '</td>';
-            // if (isEmpty(value.mdfyRghtCcd)) {
-            //     html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" onclick="checkboxUseYn(this);"><input type="hidden" class="use_hidden_yn" value="N"></td>';
-            //     html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" onclick="checkboxModifyYn(this);"><input type="hidden" class="modify_hidden_yn" value="N"></td>';
-            // } else if(value.mdfyRghtCcd === '1') {
-            //     html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" checked onclick="checkboxUseYn(this);"><input type="hidden" class="use_hidden_yn" value="Y"></td>';
-            //     html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" onclick="checkboxModifyYn(this);"><input type="hidden" class="modify_hidden_yn" value="N"></td>';
-            // } else {
-            //     html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" checked onclick="checkboxUseYn(this);"><input type="hidden" class="use_hidden_yn" value="Y"></td>';
-            //     html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" checked onclick="checkboxModifyYn(this);"><input type="hidden" class="modify_hidden_yn" value="Y"></td>';
-            // }
-            // if (isEmpty(value.hndDetlDtm)) {
-            // 	html += '   <td style="text-align:center;"></td>';
-            // 	html += '   <td style="text-align:center;"></td>';
-            // } else {
-            // 	html += '   <td style="text-align:center;">' + value.hndDetlDtm.substring(0, 10) + '</td>';
-            // 	html += '   <td style="text-align:center;">' + value.hndDetlDtm.substring(10, value.hndDetlDtm.length) + '</td>';
-            // }
-            // html += '   <td style="text-align:center;">' + value.hndEmpNm + '</td>';
-            // html += '</tr>';
 
-            let modifyYn = false;
+          $('#authCodeMenuTable').pqGrid('instance').setData(authCodeMenu);
 
-            if (value.mdfyRghtCcd === "1") {
-              modifyYn = false;
-            } else if (value.mdfyRghtCcd === "2"){
-              modifyYn = true;
-            }
+          // $.each(authCodeMenu, function (key, value) {
+          //   // html += '<tr>';
+          //   // html += '   <td>' + (key + 1) + '</td>';
+          //   // html += '   <td>' + value.menuId + '</td>';
+          //   // html += '   <td>' + value.menuNm + '</td>';
+          //   // html += '   <td>'+ rghtCd +'</td>';
+          //   // html += '   <td>' + value.menuLvl + '</td>';
+          //   // if (isEmpty(value.mdfyRghtCcd)) {
+          //   //     html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" onclick="checkboxUseYn(this);"><input type="hidden" class="use_hidden_yn" value="N"></td>';
+          //   //     html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" onclick="checkboxModifyYn(this);"><input type="hidden" class="modify_hidden_yn" value="N"></td>';
+          //   // } else if(value.mdfyRghtCcd === '1') {
+          //   //     html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" checked onclick="checkboxUseYn(this);"><input type="hidden" class="use_hidden_yn" value="Y"></td>';
+          //   //     html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" onclick="checkboxModifyYn(this);"><input type="hidden" class="modify_hidden_yn" value="N"></td>';
+          //   // } else {
+          //   //     html += '   <td><input style="width:100%;" class="can_use_yn" type="checkbox" checked onclick="checkboxUseYn(this);"><input type="hidden" class="use_hidden_yn" value="Y"></td>';
+          //   //     html += '   <td><input style="width:100%;" class="can_modify_yn" type="checkbox" checked onclick="checkboxModifyYn(this);"><input type="hidden" class="modify_hidden_yn" value="Y"></td>';
+          //   // }
+          //   // if (isEmpty(value.hndDetlDtm)) {
+          //   // 	html += '   <td style="text-align:center;"></td>';
+          //   // 	html += '   <td style="text-align:center;"></td>';
+          //   // } else {
+          //   // 	html += '   <td style="text-align:center;">' + value.hndDetlDtm.substring(0, 10) + '</td>';
+          //   // 	html += '   <td style="text-align:center;">' + value.hndDetlDtm.substring(10, value.hndDetlDtm.length) + '</td>';
+          //   // }
+          //   // html += '   <td style="text-align:center;">' + value.hndEmpNm + '</td>';
+          //   // html += '</tr>';
 
-            let hndDt = "";
-            let hndTm = "";
-            if (isEmpty(value.hndDetlDtm)) {
-              hndDt = "";
-              hndTm = "";
-            } else {
-              hndDt = value.hndDetlDtm.substring(0, 10);
-              hndTm = value.hndDetlDtm.substring(10, value.hndDetlDtm.length);
-            }
+          //   let modifyYn = false;
 
-            let newRow = {
-              menuId: value.menuId,
-              menuNm: value.menuNm,
-              rghtCd: rghtCd,
-              menuLvl: value.menuLvl,
-              modifyYn: modifyYn,
-              hndDt: hndDt,
-              hndTm: hndTm,
-              hndEmpNm: value.hndEmpNm,
-            };
+          //   if (value.mdfyRghtCcd === "1") {
+          //     modifyYn = false;
+          //   } else if (value.mdfyRghtCcd === "2"){
+          //     modifyYn = true;
+          //   }
 
-            rowList.push(newRow);
-          });
-          authCdMenuTbObj.option("dataModel.data", rowList);
-          authCdMenuTbObj.refreshDataAndView();
+          //   let hndDt = "";
+          //   let hndTm = "";
+          //   if (isEmpty(value.hndDetlDtm)) {
+          //     hndDt = "";
+          //     hndTm = "";
+          //   } else {
+          //     hndDt = value.hndDetlDtm.substring(0, 10);
+          //     hndTm = value.hndDetlDtm.substring(10, value.hndDetlDtm.length);
+          //   }
+
+          //   let newRow = {
+          //     menuId: value.menuId,
+          //     menuNm: value.menuNm,
+          //     rghtCd: rghtCd,
+          //     menuLvl: value.menuLvl,
+          //     modifyYn: modifyYn,
+          //     hndDt: hndDt,
+          //     hndTm: hndTm,
+          //     hndEmpNm: value.hndEmpNm,
+          //   };
+
+          //   rowList.push(newRow);
+          // });
+          // authCdMenuTbObj.option("dataModel.data", rowList);
+          // authCdMenuTbObj.refreshDataAndView();
         } else {
-          authCdMenuTbObj.option("strNoRows", "조회된 데이터가 없습니다.");
-          authCdMenuTbObj.refreshDataAndView();
+          Swal.fire({
+            icon: 'warning'
+            , title: '조회된 정보가 없습니다!'
+          })
+          // authCdMenuTbObj.option("strNoRows", "조회된 데이터가 없습니다.");
+          // authCdMenuTbObj.refreshDataAndView();
         }
       },
     });
   }
 
-  /**
-   * 행삭제 버튼 클릭
-   */
-  function clickDeleteButton() {
-    let tr = $("#authCodeTable").children();
-    let authCodeList = [];
-    for (let i = 0; i < tr.length; i++) {
-      let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input");
-      console.log(deleteCheckBox);
-      if (deleteCheckBox.is(":checked")) {
-        authCodeList.push(deleteCheckBox.attr("id"));
-      }
-    }
-    deleteRow(authCodeList);
-  }
+  // /**
+  //  * 행삭제 버튼 클릭
+  //  */
+  // function clickDeleteButton() {
+  //   let tr = $("#authCodeTable").children();
+  //   let authCodeList = [];
+  //   for (let i = 0; i < tr.length; i++) {
+  //     let deleteCheckBox = $(tr[i]).find("td:eq(0)").find("input");
+  //     console.log(deleteCheckBox);
+  //     if (deleteCheckBox.is(":checked")) {
+  //       authCodeList.push(deleteCheckBox.attr("id"));
+  //     }
+  //   }
+  //   deleteRow(authCodeList);
+  // }
 
-  /**
-   * 행삭제 ajax
-   * @param {권한코드 리스트} authCodeList
-   */
-  function deleteRow(authCodeList) {
-    $.ajax({
-      method: "patch",
-      url: "/deleteAuthCode",
-      data: authCodeList,
-      success: function () {
-        getAuthCode();
-        Swal.fire({
-          icon: "success",
-          title: "권한삭제가 완료되었습니다",
-          text: "",
-          confirmButtonText: "확인",
-        });
-      },
-    });
-  }
+  // /**
+  //  * 행삭제 ajax
+  //  * @param {권한코드 리스트} authCodeList
+  //  */
+  // function deleteRow(authCodeList) {
+  //   $.ajax({
+  //     method: "patch",
+  //     url: "/deleteAuthCode",
+  //     data: authCodeList,
+  //     success: function () {
+  //       getAuthCode();
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "권한삭제가 완료되었습니다",
+  //         text: "",
+  //         confirmButtonText: "확인",
+  //       });
+  //     },
+  //   });
+  // }
 
   /**
    * 권한코드 저장버튼 클릭 event
@@ -808,8 +900,9 @@ const TB10210Sjs = (function () {
   return {
     searchButtonClick: searchButtonClick,
     addAuthCodeRow: addAuthCodeRow,
-    clickDeleteButton: clickDeleteButton,
+    // clickDeleteButton: clickDeleteButton,
     clickAuthSaveButton: clickAuthSaveButton,
     clickSaveMenuButton: clickSaveMenuButton,
+    pqGridAddNewRow: pqGridAddNewRow
   };
 })();

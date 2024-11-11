@@ -51,7 +51,7 @@ public interface IBIMS005BMapper {
 	 */
 	public List<IBIMS005BDTO> createRamsNav(String param);
 
-	/*
+	/*	
 	 * 메뉴별권한관리 조회
 	 */
 	public List<IBIMS005BDTO> selectMenuListFromTB10310S(String param);

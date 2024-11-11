@@ -29,6 +29,13 @@ public interface IBIMS007BMapper {
 	public int updateAth(List<IBIMS007BDTO> param);
 
 	/**
+	 * callPage에서 권한확인
+	 * @param menuId
+	 * @return
+	 */
+	public int chkAthCd(IBIMS007BDTO param);
+
+	/**
 	 * 2024-11-07 김건우 끝
 	 */
     

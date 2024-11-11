@@ -39,6 +39,20 @@
 		   AND MENU_ID = #{item.menuId}
 	    </foreach>
 	</update>
+
+	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO" resultType="int">
+		SELECT COUNT(MENU_ID)
+		  FROM IBIMS007B
+		 WHERE 1=1
+		   AND MENU_ID = #{menuId}
+		   AND ATH_CD = (
+						SELECT ATH_CD
+						  FROM IBIMS003B
+					     WHERE 1=1
+						   AND EMPNO = #{athCd}	/* 사원번호를 코드값에 세팅했음 */
+		   				)
+	</select>
+
 	<!-- 2024-11-07 김건우 끝 -->
 
 	<!-- 권한별 메뉴 조회 -->
@@ -96,8 +110,8 @@
 	<select id="selectAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO" resultType="com.nanuri.rams.business.common.dto.IBIMS007BDTO">
 		SELECT *
 		  FROM IBIMS007B
-		 WHERE ATH_CD = #{athCd}		<!-- 권한코드 -->
-		   AND MENU_ID = #{menuId}		<!-- 메뉴ID -->
+		 WHERE ATH_CD = #{athCd}		/* 권한코드 */
+		   AND MENU_ID = #{menuId}		/* 메뉴ID */
 	</select>
 
 	<insert id="insertAuthCodeMenu" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO">

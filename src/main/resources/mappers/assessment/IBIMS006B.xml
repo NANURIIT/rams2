@@ -24,32 +24,32 @@
 	</select>
 
 	<select id="selectAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS006BVO">
-        SELECT A.ATH_CD											<!-- 권한코드 -->
-             , A.ATH_CD_NM										<!-- 권한코드명 -->
-             , A.ATH_CD_EXPL									<!-- 권한코드설명 -->
-             , A.ATH_DCD										<!-- 권한구분코드 -->
-             , A.APLY_YN										<!-- 적용여부 -->
-             , A.DLT_YN											<!-- 삭제여부 -->
-             , A.DLT_DT											<!-- 삭제일자 -->
-             , A.DLT_TM											<!-- 삭제시간 -->
-             , A.DLT_EMPNO										<!-- 삭제자사번 -->
+        SELECT A.ATH_CD								        /* 권한코드 */
+             , A.ATH_CD_NM						        /* 권한코드명 */
+             , A.ATH_CD_EXPL					        /* 권한코드설명 */
+             , A.ATH_DCD							        /* 권한구분코드 */
+             , A.APLY_YN							        /* 적용여부 */
+             , A.DLT_YN								        /* 삭제여부 */
+             , A.DLT_DT								        /* 삭제일자 */
+             , A.DLT_TM								        /* 삭제시간 */
+             , A.DLT_EMPNO						        /* 삭제자사번 */
              , A.RGST_DT
              , A.RGST_EMPNO
              , NVL((SELECT EMP_NM
-					   FROM IBIMS003B
-					   WHERE EMPNO = A.RGST_EMPNO), '') AS RGST_EMP_NM
+					            FROM IBIMS003B
+					           WHERE EMPNO = A.RGST_EMPNO), '') AS RGST_EMP_NM
              , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYYMMDD'), '') AS HND_DT
              , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24MISS'), '') AS HND_TM
              , A.HND_EMPNO
              , NVL((SELECT EMP_NM
-					   FROM IBIMS003B
-					   WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
+					            FROM IBIMS003B
+					           WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
           FROM IBIMS006B A
-         WHERE A.DLT_YN != 'Y'
-        <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(athCdNm)">
-           AND A.ATH_CD_NM LIKE '%'|| #{athCdNm}|| '%'	<!-- 권한코드명 -->
-            OR A.ATH_CD LIKE '%'|| #{athCdNm}|| '%'
-        </if>
+         WHERE 1=1
+           AND (
+                A.ATH_CD LIKE '%'|| #{athCd} || '%'           /* 권한코드 */
+             OR A.ATH_CD_NM LIKE '%'|| #{athCdNm} || '%'	    /* 권한코드명 */
+                )
     </select>
     
     <select id="getAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS006BDTO">
