@@ -46,11 +46,11 @@
 		 WHERE 1=1
 		   AND MENU_ID = #{menuId}
 		   AND ATH_CD = (
-						SELECT ATH_CD
-						  FROM IBIMS003B
-					     WHERE 1=1
-						   AND EMPNO = #{athCd}	/* 사원번호를 코드값에 세팅했음 */
-		   				)
+							SELECT MAX(ATH_CD)
+							  FROM IBIMS006B
+							 WHERE 1=1
+							   AND ATH_CD_NM = #{athCd}
+						)
 	</select>
 
 	<!-- 2024-11-07 김건우 끝 -->

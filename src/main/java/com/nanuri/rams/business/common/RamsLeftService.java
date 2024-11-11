@@ -12,6 +12,4 @@ public interface RamsLeftService {
 
     public List<IBIMS005BDTO> createRamsNav(String param);
 
-    public int chkAthCd(IBIMS007BDTO param);
-
 }

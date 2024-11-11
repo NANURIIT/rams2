@@ -127,9 +127,6 @@ function chkPrevPage() {
     let url_ref = document.referrer
     let result_id = url_ref.split("/");
 
-    // 권한확인
-    chkAthCd(result_id[result_id.length - 1]);
-
     if (chk_menu === undefined) {
         window.location.href = "/TB02010S"
     } else if (chk_menu != undefined && url_ref.indexOf("/TB") != -1 && url_ref.indexOf("TB02010S") === -1 && url === "/TB02010S") {
@@ -137,33 +134,6 @@ function chkPrevPage() {
         callPage(result_id[result_id.length - 1], titleNm);
     }
 }
-
-/**
- * 권한확인 
- * @param {String} menuId 
- */
-function chkAthCd(menuId) {
-
-    const param = {
-        menuId: menuId
-    }
-
-    /**
-     * url로 접근시 권한확인
-     */
-    $.ajax({
-        type: "POST",
-        url: "/chkAthCd",
-        contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(param),
-        success: function (data) {
-            if (data === 0) {
-                window.location.href = "/TB02010S"
-            }
-        }
-    });
-}
-
 
 /**
  * 탭에 화면 추가하기

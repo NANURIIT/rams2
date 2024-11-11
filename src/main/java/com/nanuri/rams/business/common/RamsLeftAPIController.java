@@ -27,12 +27,4 @@ public class RamsLeftAPIController {
         return ramsLeftService.createRamsNav(param);
     }
 
-    /**
-     * 페이지 이동시 권한확인
-     */
-    @PostMapping(value = "/chkAthCd")
-    public int chkAthCd(@RequestBody IBIMS007BDTO param) {
-        return ramsLeftService.chkAthCd(param);
-    }
-
 }

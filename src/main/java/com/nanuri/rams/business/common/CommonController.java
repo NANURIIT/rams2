@@ -3,6 +3,7 @@ package com.nanuri.rams.business.common;
 import java.util.List;
 import java.util.Map;
 
+import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,14 @@ public class CommonController {
         log.debug("call html path : " + path);
         IBIMS005BVO.TitleVo vo = commonService.getTitle(urlNm);
         model.addAttribute("title", vo);
+
+        IBIMS007BDTO ibims007bdto = new IBIMS007BDTO();
+        ibims007bdto.setMenuId(path);
+        ibims007bdto.setAthCd(facade.getDetails().getRghtCd().getText());
+        if(commonService.chkAthCd(ibims007bdto) == 0){
+            path = "/TB02010S";
+            return path;
+        }
 
         List<Map<String, Object>> menuListM = commonService.getMenuListM(facade.getDetails().getRghtCd());
         List<Map<String, Object>> menuList = commonService.getMenuList(facade.getDetails().getRghtCd());
