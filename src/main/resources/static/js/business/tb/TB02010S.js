@@ -3,6 +3,8 @@ const TB02010Sjs = (function(){
 	let pqGridObj_TB02010S;				//PQGRID OBJECT
 
 	$(document).ready(function() {
+
+		sessionStorage.clear();
 		//console.log(JSON.stringify(colM_TB02010S));
 		//getAthCd_TB02010S();
 		setPqGrid_TB02010S();

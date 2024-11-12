@@ -14,11 +14,11 @@ const TB03020Sjs = (function(){
 		setKeyFunction_TB03020S();
 		rendorGrid();
 
-		var ibDealNo_TB02010S = sessionStorage.getItem("ibDealNo_TB02010S").substring(0, 17);
+		var ibDealNo_TB02010S = sessionStorage.getItem("ibDealNo_TB02010S");
 
 		if(ibDealNo_TB02010S){
 			//alert(ibDealNo_TB02010S);
-
+			ibDealNo_TB02010S = ibDealNo_TB02010S.substring(0, 17);
 			$('#selectedMngDealNo').val(ibDealNo_TB02010S);
 			getBscDealDetail();
 		}else{
@@ -217,11 +217,12 @@ const TB03020Sjs = (function(){
 	/* 권한에 따라 등록, 결제승인, 반송 버튼 표시 여부 결정 */
 	function athCdCheck_TB03020S(){
 
-		var wfMapId = "WF01";			//todo: 권한테이블 만들어지면 하드코딩 없애야 함
+		//var wfMapId = "WF01";			//todo: 권한테이블 만들어지면 하드코딩 없애야 함
 		var wfAuthId = $('#TB03020S_athCd').val();
+		var wfId = sessionStorage.getItem("wfID_TB02010S");
 
 		var paramData = {
-			wfMapId,
+			wfId,
 			wfAuthId
 		}
 

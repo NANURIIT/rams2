@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,7 +127,11 @@ public class TB03020ServiceImpl implements TB03020Service {
 		dealInfo.setDcfcBdcd(facade.getDetails().getBdCd());	// 결재자부점코드
 		dealInfo.setDcfcEmpNo(facade.getDetails().getEno());	// 결재자사번
 
-		dealInfo.setWfId("WF01");							// 워크플로우 ID
+		UUID wfId = UUID.randomUUID();
+
+        log.debug("wfId.toString(): " + wfId.toString());
+
+		dealInfo.setWfId(wfId.toString());						// 워크플로우 ID
 		dealInfo.setWfState("01");						// 워크플로우 상태
 
 		wfRgstIBIMS101B(dealInfo);
@@ -265,6 +270,7 @@ public class TB03020ServiceImpl implements TB03020Service {
 
 		String wfMapId = workFlowMapper.getWfMapId(workFlowDTO);
 
+		workFlowDTO.setWfId(dealInfo.getWfId());							//WF_ID
 		workFlowDTO.setWfMapId(wfMapId);									//todo: WF 맵 ID 공통코드 없음
 		workFlowDTO.setWfStepId("01");								//WF 스텝 ID (결재 요청 시 01 최초 부여)
 		workFlowDTO.setAprvEmpNo(dealInfo.getChrrEmpno());					//결재자 사원번호
