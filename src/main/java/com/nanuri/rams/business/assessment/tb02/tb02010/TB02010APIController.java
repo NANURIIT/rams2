@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
@@ -64,6 +65,9 @@ public class TB02010APIController {
 	public int deleteInfo(IBIMS100BDTO deleteInfo) {
 		return tb02010Service.deleteIBIMS100BInfo(deleteInfo);
 	}
+
+	// @GetMapping(value = "/atcCdInq")
+	// public IBIMS003BDTO
 	
 
 	

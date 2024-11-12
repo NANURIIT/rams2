@@ -19,7 +19,7 @@ public interface TB03020Service {
 
 	public int reqApproveDeal(IBIMS100BVO.selectVO toDoInfo);
 
-	public int cnfmDeal(Map<String, String> dealInfo);
+	public int cnfmDeal(IBIMS101BDTO dealInfo);
 
 	public int rejtDeal(String mngDealNo);
 	
