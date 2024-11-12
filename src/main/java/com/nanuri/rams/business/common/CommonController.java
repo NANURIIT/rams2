@@ -45,21 +45,20 @@ public class CommonController {
         ibims007bdto.setAthCd(facade.getDetails().getEno());
 
         log.debug("체크########", facade.getDetails().getEno());
-        
-        if(commonService.chkAthCd(ibims007bdto) == 0){
-            return "/TB02010S";
-        }
 
         model.addAttribute("menuListM", menuListM); // 화면권한리스트
         model.addAttribute("menuList", menuList); // 화면권한리스트
         model.addAttribute("userAuth", userAuth); // 접속자 정보
 
-        
         // 세션에서 bzDd 값을 가져와 모델에 추가
         String bzDd = (String) session.getAttribute("bzDd");
         model.addAttribute("bzDd", bzDd);
 
-        return path;
+        if(commonService.chkAthCd(ibims007bdto) == 0){
+            return "/TB02010S";
+        }else {
+            return path;
+        }
     }
 
 }
