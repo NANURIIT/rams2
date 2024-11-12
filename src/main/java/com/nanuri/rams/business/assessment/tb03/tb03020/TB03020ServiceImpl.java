@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,7 +127,11 @@ public class TB03020ServiceImpl implements TB03020Service {
 		dealInfo.setDcfcBdcd(facade.getDetails().getBdCd());	// 결재자부점코드
 		dealInfo.setDcfcEmpNo(facade.getDetails().getEno());	// 결재자사번
 
-		dealInfo.setWfId("WF01");							// 워크플로우 ID
+		UUID wfId = UUID.randomUUID();
+
+        log.debug("wfId.toString(): " + wfId.toString());
+
+		dealInfo.setWfId(wfId.toString());						// 워크플로우 ID
 		dealInfo.setWfState("01");						// 워크플로우 상태
 
 		wfRgstIBIMS101B(dealInfo);
@@ -167,77 +172,103 @@ public class TB03020ServiceImpl implements TB03020Service {
 
 	// 결재승인
 	@Override
-	public int cnfmDeal(Map<String, String> dealInfo){
+	public int cnfmDeal(IBIMS101BDTO dealInfo){
 
-		/* String -> BigDecimal 형변환 */
-		BigDecimal tlAmt = new BigDecimal(dealInfo.get("tlAmt"));
-		BigDecimal crncyAmt = new BigDecimal(dealInfo.get("crncyAmt"));
+		// /* String -> BigDecimal 형변환 */
+		// BigDecimal tlAmt = new BigDecimal(dealInfo.get("tlAmt"));
+		// BigDecimal crncyAmt = new BigDecimal(dealInfo.get("crncyAmt"));
 
-		/* RAA01B RAA02B INSERT를 위한 DTO 인스턴스화 */
-		RAA01BDTO raa01BDTO = new RAA01BDTO();
-		RAA02BDTO raa02BDTO = new RAA02BDTO();
-		IBIMS100BVO.selectVO ibims100BVO = new IBIMS100BVO.selectVO();
+		// /* RAA01B RAA02B INSERT를 위한 DTO 인스턴스화 */
+		// RAA01BDTO raa01BDTO = new RAA01BDTO();
+		// RAA02BDTO raa02BDTO = new RAA02BDTO();
+		// IBIMS100BVO.selectVO ibims100BVO = new IBIMS100BVO.selectVO();
 
-		// RAA01B INSERT
-		raa01BDTO.setIbDealNo(dealInfo.get("ibDealNo"));
-		raa01BDTO.setIbDealNm(dealInfo.get("ibDealNm"));
-		raa01BDTO.setTlAmt(tlAmt);
-		raa01BDTO.setPtcpAmt(dealInfo.get("ptcpAmt"));
-		raa01BDTO.setTlErnAmt(dealInfo.get("tlErnAmt"));
-		raa01BDTO.setWrtErnAmt(dealInfo.get("wrtErnAmt"));
-		raa01BDTO.setEntpRnm(dealInfo.get("entpRnm"));
-		raa01BDTO.setWrtDt(dealInfo.get("wrtDt"));
-		raa01BDTO.setMtrtDt(dealInfo.get("mtrtDt"));
-		raa01BDTO.setInvstNtnCd(dealInfo.get("invstNtnCd"));
-		raa01BDTO.setInvstCrncyCd(dealInfo.get("invstCrncyCd"));
-		raa01BDTO.setCrncyAmt(crncyAmt);
-		raa01BDTO.setInvstGdsLdvdCd(dealInfo.get("invstGdsLdvdCd"));
-		raa01BDTO.setInvstGdsMdvdCd(dealInfo.get("invstGdsMdvdCd"));
-		raa01BDTO.setInvstGdsSdvdCd(dealInfo.get("invstGdsSdvdCd"));
-		raa01BDTO.setInvstGdsDtlsDvdCd(dealInfo.get("invstGdsDtlsDvdCd"));
-		raa01BDTO.setCoprtnTypCd(dealInfo.get("coprtnTypCd"));
-		raa01BDTO.setHdqtCd(dealInfo.get("hdqtCd"));
-		raa01BDTO.setDprtCd(dealInfo.get("dprtCd"));
-		raa01BDTO.setChrgPEno(dealInfo.get("chrgPEno"));
-		raa01BDTO.setHndlDprtCd(facade.getDetails().getDprtCd());
-		raa01BDTO.setHndlPEno(facade.getDetails().getEno());
+		// // RAA01B INSERT
+		// raa01BDTO.setIbDealNo(dealInfo.get("ibDealNo"));
+		// raa01BDTO.setIbDealNm(dealInfo.get("ibDealNm"));
+		// raa01BDTO.setTlAmt(tlAmt);
+		// raa01BDTO.setPtcpAmt(dealInfo.get("ptcpAmt"));
+		// raa01BDTO.setTlErnAmt(dealInfo.get("tlErnAmt"));
+		// raa01BDTO.setWrtErnAmt(dealInfo.get("wrtErnAmt"));
+		// raa01BDTO.setEntpRnm(dealInfo.get("entpRnm"));
+		// raa01BDTO.setWrtDt(dealInfo.get("wrtDt"));
+		// raa01BDTO.setMtrtDt(dealInfo.get("mtrtDt"));
+		// raa01BDTO.setInvstNtnCd(dealInfo.get("invstNtnCd"));
+		// raa01BDTO.setInvstCrncyCd(dealInfo.get("invstCrncyCd"));
+		// raa01BDTO.setCrncyAmt(crncyAmt);
+		// raa01BDTO.setInvstGdsLdvdCd(dealInfo.get("invstGdsLdvdCd"));
+		// raa01BDTO.setInvstGdsMdvdCd(dealInfo.get("invstGdsMdvdCd"));
+		// raa01BDTO.setInvstGdsSdvdCd(dealInfo.get("invstGdsSdvdCd"));
+		// raa01BDTO.setInvstGdsDtlsDvdCd(dealInfo.get("invstGdsDtlsDvdCd"));
+		// raa01BDTO.setCoprtnTypCd(dealInfo.get("coprtnTypCd"));
+		// raa01BDTO.setHdqtCd(dealInfo.get("hdqtCd"));
+		// raa01BDTO.setDprtCd(dealInfo.get("dprtCd"));
+		// raa01BDTO.setChrgPEno(dealInfo.get("chrgPEno"));
+		// raa01BDTO.setHndlDprtCd(facade.getDetails().getDprtCd());
+		// raa01BDTO.setHndlPEno(facade.getDetails().getEno());
 
-		raa01BMapper.insertDealInfo(raa01BDTO);
+		// raa01BMapper.insertDealInfo(raa01BDTO);
 
-		// RAA02B INSERT
-		raa02BDTO.setIbDealNo(dealInfo.get("ibDealNo"));
-		raa02BDTO.setRiskInspctCcd("01");
-		raa02BDTO.setLstCCaseCcd("00");
-		raa02BDTO.setIbDealNm(dealInfo.get("ibDealNm"));
-		raa02BDTO.setPtcpAmt(dealInfo.get("ptcpAmt"));
-		raa02BDTO.setTlErnAmt(dealInfo.get("tlErnAmt"));
-		raa02BDTO.setWrtErnAmt(dealInfo.get("wrtErnAmt"));
-		raa02BDTO.setWrtDt(dealInfo.get("wrtDt"));
-		raa02BDTO.setMtrtDt(dealInfo.get("mtrtDt"));
-		raa02BDTO.setInvstNtnCd(dealInfo.get("invstNtnCd"));
-		raa02BDTO.setInvstCrncyCd(dealInfo.get("invstCrncyCd"));
-		raa02BDTO.setCrncyAmt(crncyAmt);
-		raa02BDTO.setInvstGdsLdvdCd(dealInfo.get("invstGdsLdvdCd"));
-		raa02BDTO.setInvstGdsMdvdCd(dealInfo.get("invstGdsMdvdCd"));
-		raa02BDTO.setInvstGdsSdvdCd(dealInfo.get("invstGdsSdvdCd"));
-		raa02BDTO.setInvstGdsDtlsDvdCd(dealInfo.get("invstGdsDtlsDvdCd"));
-		raa02BDTO.setCoprtnTypCd(dealInfo.get("coprtnTypCd"));
-		raa02BDTO.setHdqtCd(dealInfo.get("hdqtCd"));
-		raa02BDTO.setDprtCd(dealInfo.get("dprtCd"));
-		raa02BDTO.setChrgPEno(dealInfo.get("chrgPEno"));
-		raa02BDTO.setHndlDprtCd(facade.getDetails().getDprtCd());
-		raa02BDTO.setHndlPEno(facade.getDetails().getEno());
-		raa02BDTO.setFstRgstPDprtCd(facade.getDetails().getDprtCd());
+		// // RAA02B INSERT
+		// raa02BDTO.setIbDealNo(dealInfo.get("ibDealNo"));
+		// raa02BDTO.setRiskInspctCcd("01");
+		// raa02BDTO.setLstCCaseCcd("00");
+		// raa02BDTO.setIbDealNm(dealInfo.get("ibDealNm"));
+		// raa02BDTO.setPtcpAmt(dealInfo.get("ptcpAmt"));
+		// raa02BDTO.setTlErnAmt(dealInfo.get("tlErnAmt"));
+		// raa02BDTO.setWrtErnAmt(dealInfo.get("wrtErnAmt"));
+		// raa02BDTO.setWrtDt(dealInfo.get("wrtDt"));
+		// raa02BDTO.setMtrtDt(dealInfo.get("mtrtDt"));
+		// raa02BDTO.setInvstNtnCd(dealInfo.get("invstNtnCd"));
+		// raa02BDTO.setInvstCrncyCd(dealInfo.get("invstCrncyCd"));
+		// raa02BDTO.setCrncyAmt(crncyAmt);
+		// raa02BDTO.setInvstGdsLdvdCd(dealInfo.get("invstGdsLdvdCd"));
+		// raa02BDTO.setInvstGdsMdvdCd(dealInfo.get("invstGdsMdvdCd"));
+		// raa02BDTO.setInvstGdsSdvdCd(dealInfo.get("invstGdsSdvdCd"));
+		// raa02BDTO.setInvstGdsDtlsDvdCd(dealInfo.get("invstGdsDtlsDvdCd"));
+		// raa02BDTO.setCoprtnTypCd(dealInfo.get("coprtnTypCd"));
+		// raa02BDTO.setHdqtCd(dealInfo.get("hdqtCd"));
+		// raa02BDTO.setDprtCd(dealInfo.get("dprtCd"));
+		// raa02BDTO.setChrgPEno(dealInfo.get("chrgPEno"));
+		// raa02BDTO.setHndlDprtCd(facade.getDetails().getDprtCd());
+		// raa02BDTO.setHndlPEno(facade.getDetails().getEno());
+		// raa02BDTO.setFstRgstPDprtCd(facade.getDetails().getDprtCd());
 
-		raa02BMapper.insertDealInfo(raa02BDTO);
+		// raa02BMapper.insertDealInfo(raa02BDTO);
 		
-		// IBIMS100B UPDATE 개발중
-		ibims100BVO.setEmpno(dealInfo.get("pyntEno"));
-		ibims100BVO.setRmrk(dealInfo.get("ibDealNo"));
+		// // IBIMS100B UPDATE 개발중
+		// ibims100BVO.setEmpno(dealInfo.get("pyntEno"));
+		// ibims100BVO.setRmrk(dealInfo.get("ibDealNo"));
 
-		ibims100BMapper.updateIBIMS100BInfO(ibims100BVO);
+		// ibims100BMapper.updateIBIMS100BInfO(ibims100BVO);
 
-		return rac02BMapper.cnfmDeal(dealInfo.get("ibDealNo"));
+		// return rac02BMapper.cnfmDeal(dealInfo.get("ibDealNo"));
+
+		int result = 0;
+
+		WorkFlowDTO paramDto = new WorkFlowDTO();
+
+		String wfId = dealInfo.getWfId();				//워크플로우 ID
+		paramDto.setWfId(wfId);
+
+		String nextStepId = workFlowMapper.getNxtStepId(paramDto);
+
+		log.debug("nextStepId ::: " + nextStepId);
+
+		paramDto.setNextStepId(nextStepId);				//다음 STEP_ID
+		paramDto.setRtnYn("");					//반송여부
+		paramDto.setRtnCnts("");				//반송사유
+		paramDto.setMemoCnts("");				//결재사유
+
+		int aprvRslt = workFlowMapper.aprvWf(paramDto);
+		int update101Rslt = workFlowMapper.mergeIBIMS101B(paramDto);
+		int hisRslt = workFlowMapper.wfHisRgst(paramDto);
+
+		if(aprvRslt == 0 && update101Rslt == 0 && hisRslt == 0){
+			result = 1;
+		}
+
+		return result;
 	}
 
 	// 반송
@@ -265,6 +296,7 @@ public class TB03020ServiceImpl implements TB03020Service {
 
 		String wfMapId = workFlowMapper.getWfMapId(workFlowDTO);
 
+		workFlowDTO.setWfId(dealInfo.getWfId());							//WF_ID
 		workFlowDTO.setWfMapId(wfMapId);									//todo: WF 맵 ID 공통코드 없음
 		workFlowDTO.setWfStepId("01");								//WF 스텝 ID (결재 요청 시 01 최초 부여)
 		workFlowDTO.setAprvEmpNo(dealInfo.getChrrEmpno());					//결재자 사원번호

@@ -139,16 +139,17 @@
     </select>
 
     <!--업무테이블 상태 업데이트(IBIMS101B)-->
-    <update id="mergeIBIMS101B">
+    <update id="mergeIBIMS101B" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
         MERGE INTO IBIMS101B A
         USING (
             SELECT 
-                A.DEAL_NO,
-                A.SN,
-                B.WF_ID,
-                '02' AS WF_STATE
-            FROM IBIMS101B A
-            JOIN WF B ON A.DEAL_NO || A.SN = TRIM(B.ETC)
+			    A.DEAL_NO,
+			    A.SN,
+			    B.WF_ID,
+			    A.WF_STATE
+			FROM IBIMS101B A
+			JOIN WF B ON A.DEAL_NO || A.SN = TRIM(B.ETC)
+			WHERE B.WF_ID = #{wfId}
         ) B
         ON (
             A.DEAL_NO = B.DEAL_NO
@@ -157,7 +158,7 @@
         WHEN MATCHED THEN 
             UPDATE 
             SET A.WF_ID = B.WF_ID,
-                A.WF_STATE = '02'
+                A.WF_STATE = #{nextStepId}
     </update>
 
     <!--WF_HIS 등록-->
@@ -194,9 +195,7 @@
     <!--다음 스텝 ID 찾기-->
     <select id="getNxtStepId" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="String">
         SELECT 
-            A.WF_ID                             /*  워크플로우 ID  */
-            , A.WF_MAP_ID                       /*  워크플로우 맵ID  */
-            , CASE WHEN A.RTN_YN = 'Y' THEN B.RTN_STEP_ID 
+            CASE WHEN A.RTN_YN = 'Y' THEN B.RTN_STEP_ID 
                     ELSE B.NEXT_STEP_ID 
                     END AS NEXT_STEP_ID         /*  다음 스텝ID  */
         FROM  WF A
@@ -213,12 +212,12 @@
             SELECT 
                 WF_ID                                                               /*  워크플로우 ID  */
                 , WF_MAP_ID                                                         /*  워크플로우 맵ID  */
-                , #{wfStepId} AS WF_STEP_ID                                         /*  워크플로우 스텝ID  */
+                , #{nextStepId} AS WF_STEP_ID                                       /*  워크플로우 스텝ID  */
                 , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS')        AS APRV_DTTM        /*  결재일시  */
                 , #{rtnYn}                                      AS RTN_YN           /*  반송여부  */
                 , #{rtnCnts}                                    AS RTN_CNTS         /*  반송사유  */
                 , #{memoCnts}                                   AS MEMO_CNTS        /*  결재사유  */
-                , #{etc}                                        AS ETC              /*  기타  */
+                , ETC                                                               /*  기타  */
             FROM  WF 
             WHERE WF_ID = #{wfId}
         ) B
@@ -243,23 +242,45 @@
 
     <!--WF 조회(오늘의 할 일)-->
     <select id="workFlowInq" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="com.nanuri.rams.com.dto.WorkFlowDTO">
-        SELECT 	  wf.WF_MAP_ID 					/*작업ID*/
-                , wf.WF_STEP_ID 				/*작업단계*/
-                , wf.APRV_EMP_NO 				/*결재자(신청자)*/
-                , wf.APRV_DTTM 					/*결재일자(신청일자)*/
-                , wf.ETC 						/*etc(작업테이블PK)*/
-                , m.WF_MAP_NM                   /*WF맵 명(업무구분)*/
-                , m.JOB_TABLE 					/*작업테이블*/
-                , m.JOB_TABLE_KEY 				/*작업테이블KEY*/
-                , wf.JOB_CNTS 					/*작업내용(작업명)*/
-        FROM WF wf
-        JOIN WF_MAP m 
-        ON m.WF_MAP_ID = wf.WF_MAP_ID 
-        JOIN WF_STEP s 
-        ON wf.WF_MAP_ID = s.WF_MAP_ID 
-        AND wf.WF_STEP_ID = s.STEP_ID 
-        WHERE s.WF_AUTH_ID = #{wfAuthId}
-        ORDER BY APRV_DTTM
+        SELECT    wf.WF_ID                              /* WF ID */
+                , wf.WF_MAP_ID                          /* 작업ID */
+                , wf.WF_STEP_ID                         /* 작업단계 */
+                , wf.APRV_EMP_NO                        /* 결재자(신청자) */
+                , u.EMP_NM AS APRV_EMP_NM               /* 결재자(신청자)명 */
+                , u.DPRT_NM AS RQS_DPT                  /* 신청부서 */
+                , wf.APRV_DTTM                          /* 결재일자(신청일자) */
+                , wf.ETC                                /* etc(작업테이블PK) */
+                , m.WF_MAP_NM                           /* WF맵 명(업무구분) */
+                , m.JOB_TABLE                           /* 작업테이블 */
+                , m.JOB_TABLE_KEY                       /* 작업테이블KEY */
+                , wf.JOB_CNTS                           /* 작업내용(작업명) */
+            FROM WF wf
+            JOIN WF_MAP m ON m.WF_MAP_ID = wf.WF_MAP_ID
+            JOIN IBIMS003B u ON u.EMPNO = wf.APRV_EMP_NO
+            JOIN WF_STEP s1 ON wf.WF_MAP_ID = s1.WF_MAP_ID AND wf.WF_STEP_ID = s1.STEP_ID
+            JOIN WF_STEP s2 ON s1.NEXT_STEP_ID = s2.STEP_ID
+            WHERE s2.WF_AUTH_ID = #{wfAuthId}
+            ORDER BY wf.APRV_DTTM
+    </select>
+
+    <!--권한 체크-->
+    <select id="wfAuthIdCheck" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="int">
+        SELECT COUNT(*)  
+        FROM WF_STEP 
+        WHERE WF_MAP_ID = (
+            SELECT WF_MAP_ID 
+            FROM WF wf 
+            WHERE wf.WF_ID = #{wfId}
+        )
+        AND WF_AUTH_ID = #{wfAuthId}
+        AND STEP_ID = (
+            SELECT s.NEXT_STEP_ID 
+            FROM WF wf
+            JOIN WF_STEP s 
+            ON wf.WF_MAP_ID = s.WF_MAP_ID 
+            AND wf.WF_STEP_ID = s.STEP_ID 
+            WHERE wf.WF_ID = #{wfId}
+        );
     </select>
 
     <!-- WF 설정 WF Map 조회 -->

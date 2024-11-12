@@ -24,7 +24,7 @@ public interface WorkFlowMapper {
 
     public String getWfId(WorkFlowDTO workFlowDTO);             //WF_ID 찾기
 
-    public int mergeIBIMS101B();                                //IBIMS101B WF 업데이트
+    public int mergeIBIMS101B(WorkFlowDTO workFlowDTO);         //IBIMS101B WF 업데이트
 
     public int wfHisRgst(WorkFlowDTO workFlowDTO);              //WF_HIS 등록
 
@@ -43,4 +43,7 @@ public interface WorkFlowMapper {
     public int updateWfMapInfo(List<WfMapVo> updateInfo); //수정
 
     public List<WorkFlowDTO> getWfStepInfo(String wfMapId);      //step조회   
+    
+    public int wfAuthIdCheck(WorkFlowDTO wfAuthId);             //WF_STEP 권한 체크
+
 }

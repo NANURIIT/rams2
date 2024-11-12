@@ -40,6 +40,8 @@ public class WorkFlowDTO {
     private String dealNo;              //딜번호
     private String lastYn;              //최종여부
     private String rqsDpt;              //신청부서
+    private String empno;               //로그인 사원번호
+    private String aprvEmpNm;           //신청자명
 
     private List<String> pkList;        //pk값 
 

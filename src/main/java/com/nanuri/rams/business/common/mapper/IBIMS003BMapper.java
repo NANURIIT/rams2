@@ -61,4 +61,6 @@ public interface IBIMS003BMapper {
 
 	/* 사용자 검색 */
 	public List<IBIMS003BVO> selectUser (IBIMS003BDTO paramData);
+
+	public String atcCdInq(String empno);
 }

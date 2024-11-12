@@ -56,7 +56,7 @@ public class TB03020APIController {
 
 	// 결재승인
 	@PostMapping(value = "/cnfmDeal")
-	public int cnfmDeal(@RequestParam Map<String, String> dealInfo) {
+	public int cnfmDeal(@RequestBody IBIMS101BDTO dealInfo) {
 		return tb03020Service.cnfmDeal(dealInfo);
 	}
 
@@ -65,5 +65,6 @@ public class TB03020APIController {
 	public int rejtDeal(@RequestParam String mngDealNo) {
 		return tb03020Service.rejtDeal(mngDealNo);
 	}
+
 
 }

@@ -130,6 +130,8 @@
                 , HND_TMNL_NO          /*  조작단말기번호  */
                 , HND_TR_ID            /*  조작거래id  */
                 , GUID                 /*  guid  */
+                , WF_ID
+                , WF_STATE
                )
         VALUES (
                  #{dealNo}             /*  딜번호  */
@@ -212,6 +214,8 @@
                , ''                    /*  조작단말기번호  */
                , ''                    /*  조작거래id  */
                , ''                    /*  guid  */
+               , #{wfId}
+               , #{wfState}
                )
     </insert>
     
