@@ -390,9 +390,8 @@
          WHERE 1=1
            AND T1.APLY_YN = 'Y'
            AND T1.DEL_YN = 'N'
-           AND T1.SCRN_APLY_SHP_CD = 'S'								/* 화면적용형태코드 */
          ORDER 
-            BY T1.MENU_ID    											/* 정렬번호 */
+            BY T1.SCRN_APLY_SHP_CD, T1.MENU_ID    											/* 정렬번호 */
     </select>
 
     <!-- 타이틀 조회 -->

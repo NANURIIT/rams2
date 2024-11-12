@@ -30,6 +30,7 @@ public class CommonController {
     // 화면이동
     @GetMapping(value = "/{urlNm}")
     public String getPath(Model model, @PathVariable String urlNm, HttpSession session) {
+
         String path = lv1Path + urlNm.substring(0,2).toLowerCase() + "/" + urlNm;
         log.debug("call html path : " + path);
         IBIMS005BVO.TitleVo vo = commonService.getTitle(urlNm);
