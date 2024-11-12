@@ -50,11 +50,11 @@ public interface TB10310Service {
 	//  */
 	// public List<MenuListVO> getMenuList(String menuNm);
 	
-	// /**
-	//  * 권한별 메뉴화면 사용권한 조회
-	//  * @return
-	//  */
-	// public List<IBIMS006BVO> getMenuByAuth(MenuListVO paramData);
+	/**
+	 * 권한별 메뉴화면 사용권한 조회
+	 * @return
+	 */
+	public List<IBIMS006BVO> getMenuByAuth(MenuListVO paramData);
 	
 	// /**
 	//  * RAA95B 수정 조회 가능 여부 조회

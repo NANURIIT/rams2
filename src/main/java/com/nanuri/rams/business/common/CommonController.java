@@ -30,6 +30,7 @@ public class CommonController {
     // 화면이동
     @GetMapping(value = "/{urlNm}")
     public String getPath(Model model, @PathVariable String urlNm, HttpSession session) {
+
         String path = lv1Path + urlNm.substring(0,2).toLowerCase() + "/" + urlNm;
         log.debug("call html path : " + path);
         IBIMS005BVO.TitleVo vo = commonService.getTitle(urlNm);
@@ -44,6 +45,7 @@ public class CommonController {
         ibims007bdto.setAthCd(facade.getDetails().getEno());
 
         log.debug("체크########", facade.getDetails().getEno());
+<<<<<<< HEAD
         
         if(commonService.chkAthCd(ibims007bdto) == 0){
             return "/TB02010S";
@@ -61,6 +63,22 @@ public class CommonController {
         }
 
         
+=======
+
+        model.addAttribute("menuListM", menuListM); // 화면권한리스트
+        model.addAttribute("menuList", menuList); // 화면권한리스트
+        model.addAttribute("userAuth", userAuth); // 접속자 정보
+
+        // 세션에서 bzDd 값을 가져와 모델에 추가
+        String bzDd = (String) session.getAttribute("bzDd");
+        model.addAttribute("bzDd", bzDd);
+
+        if(commonService.chkAthCd(ibims007bdto) == 0){
+            return "/TB02010S";
+        }else {
+            return path;
+        }
+>>>>>>> 648ae00f4e5aaa5aa4503a31a5d2367b540cef13
     }
 
 }

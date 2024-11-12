@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
+import com.nanuri.rams.business.common.vo.WfMapVo;
 import com.nanuri.rams.com.dto.WFDTO;
 import com.nanuri.rams.com.dto.WFStepDTO;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
@@ -36,4 +38,11 @@ public interface WorkFlowMapper {
 
     public int wfAuthIdCheck(WorkFlowDTO wfAuthId);             //WF_STEP 권한 체크
 
+    public List<WFMapDTO> getWfMapInfo(String wfMapNm);              //Map 조회
+
+    public int deleteWfMapInfo(List<String> deleteInfo);                 //Map 삭제
+
+    public int updateWfMapInfo(List<WfMapVo> updateInfo); //수정
+
+    public List<WorkFlowDTO> getWfStepInfo(String wfMapId);      //step조회   
 }

@@ -62,11 +62,11 @@ public class TB10310APIController {
 	// 	return service.getMenuList(menuNm);
 	// }
 
-	// /* 권한별 메뉴화면 사용권한 조회 */
-	// @GetMapping(value="/menuByAuth")
-	// public List<IBIMS006BVO> menuByAuth(MenuListVO paramData) {
-	// 	return service.getMenuByAuth(paramData);
-	// }
+	/* 권한별 메뉴화면 사용권한 조회 */
+	@GetMapping(value="/menuByAuth")
+	public List<IBIMS006BVO> menuByAuth(MenuListVO paramData) {
+		return tb10310Service.getMenuByAuth(paramData);
+	}
 
 	// /* RAA95B 수정 조회 가능 여부 조회 */
 	// @GetMapping(value="/checkAvailableMenu")

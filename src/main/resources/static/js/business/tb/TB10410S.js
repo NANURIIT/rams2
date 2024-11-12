@@ -116,6 +116,7 @@ const TB10410Sjs = (function () {
         align: "center",
         halign: "center",
         dataType: "string",
+        dataIndx: "inqBtn",
         editable: false,
         width: "5%",
         render: function (ui) {
@@ -315,6 +316,16 @@ const TB10410Sjs = (function () {
         , id: 'TB10410S_hgrkMenuColModel'
         , colModel: setpqGridColModel(1)
         , editable: true
+        , cellClick: function (evt, ui) {
+          /**
+           * 특정컬럼 기존셀렉트된건 수정 안되는데 행추가를 사용했을 경우에 입력가능하게 하는거...ㅜㅜㅜ
+           */
+          if (ui.rowData.inqBtn === "new" && ui.column.dataIndx === "menuId") {
+            ui.column.editable = true;
+          } else if (ui.rowData.inqBtn != "new" && ui.column.dataIndx === "menuId") {
+            ui.column.editable = false;
+          }
+        }
       },
       {
         height: 270
@@ -322,6 +333,16 @@ const TB10410Sjs = (function () {
         , id: 'TB10410S_menuColModel'
         , colModel: setpqGridColModel(2)
         , editable: true
+        , cellClick: function (evt, ui) {
+          /**
+           * 특정컬럼 기존셀렉트된건 수정 안되는데 행추가를 사용했을 경우에 입력가능하게 하는거...ㅜㅜㅜ
+           */
+          if (!ui.rowData.hndEmpno && ui.column.dataIndx === "menuId") {
+            ui.column.editable = true;
+          } else if (ui.rowData.hndEmpno && ui.column.dataIndx === "menuId") {
+            ui.column.editable = false;
+          }
+        }
       },
     ];
 
@@ -352,6 +373,9 @@ const TB10410Sjs = (function () {
       }
       else if (title === "하위메뉴") {
         newRow[dataIndx] = "new";
+      }
+      else if (title === "삭제여부" || title === "적용여부") {
+        newRow[dataIndx] = "Y";
       }
       else {
         newRow[dataIndx] = "";
@@ -516,10 +540,6 @@ const TB10410Sjs = (function () {
     let updateData = []
     let insertData = []
 
-    console.log(saveData[26]);
-    console.log(hgrkGroupMenuDbData[26]);
-    
-
     // 수정된 로우 모으기
     for (let i = 0; i < hgrkGroupMenuDbData.length; i++) {
       if (saveData[i].pq_cellcls != undefined) {
@@ -583,6 +603,40 @@ const TB10410Sjs = (function () {
 
     if(insertData.length === 0){
       return result;
+    }
+
+    // 데이터 확인
+    for (let i = 0; i < insertData.length; i++) {
+      if (!insertData[i].menuId || insertData[i].menuId.indexOf(" ") > 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: '메뉴ID를 입력해주세요!'
+        });
+      }
+      else if (!insertData[i].urlVrbCntn || insertData[i].urlVrbCntn.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '화면번호를 입력해주세요!'
+          });
+      }
+      else if (!insertData[i].menuNm || insertData[i].menuNm.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '메뉴명을 입력해주세요!'
+          });
+      }
+      else if (!insertData[i].shtnNm || insertData[i].shtnNm.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '타이틀명을 입력해주세요!'
+          });
+      }
+      else if (!insertData[i].urlClsfCd || insertData[i].urlClsfCd.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'URL분류코드를 입력해주세요!'
+          });
+      }
     }
 
     $.ajax({

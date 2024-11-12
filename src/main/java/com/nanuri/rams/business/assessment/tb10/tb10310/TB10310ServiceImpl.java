@@ -105,17 +105,17 @@ public class TB10310ServiceImpl implements TB10310Service {
     //     return menuList;
     // }
 
-    // /* 권한별 메뉴화면 사용권한 조회 */
-    // @Override
-    // public List<IBIMS006BVO> getMenuByAuth(MenuListVO paramData) {
-    //     List<IBIMS006BVO> menuAuthList = ibims006BMapper.selectRghtCd();
-    //     for (IBIMS006BVO menu : menuAuthList) {
-    //         String hndlPEno = Optional.ofNullable(menu.getHndEmpno()).orElse("");
-    //         menu.setHndEmpno(hndlPEno);
-    //     }
+    /* 권한별 메뉴화면 사용권한 조회 */
+    @Override
+    public List<IBIMS006BVO> getMenuByAuth (MenuListVO paramData) {
+        List<IBIMS006BVO> menuAuthList = ibims006BMapper.selectRghtCd();
+        for (IBIMS006BVO menu : menuAuthList) {
+            String hndlPEno = Optional.ofNullable(menu.getHndEmpno()).orElse("");
+            menu.setHndEmpno(hndlPEno);
+        }
 
-    //     return menuAuthList;
-    // }
+        return menuAuthList;
+    }
 
     // /* RAA95B 수정 조회 가능 여부 조회 */
     // @Override

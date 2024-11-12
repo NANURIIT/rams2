@@ -38,7 +38,20 @@ const TB10210Sjs = (function () {
    * PQGRID COLMODEL
    */
   let colModel_authCdTb = [
-    //체크박스
+    {
+      title: "",
+      width: "3%",
+      editable: false,
+      render: function (ui) {
+        if (ui.cellData === "del") {
+          return (
+            `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10210Sjs.pqGridDeleteRow($('#authCodeTable'), '${ui.rowIndx}')">&nbsp;삭제</button>`
+          );
+        } else {
+          return;
+        }
+      },
+    },
     {
       title: "삭제여부",
       dataIndx: "dltYn",
@@ -268,9 +281,6 @@ const TB10210Sjs = (function () {
    */
   function pqGridAddNewRow(colModelSelector) {
 
-    console.log("짝똥");
-
-
     let row = [];
     let newRow = {};
     const data = colModelSelector.pqGrid("instance");
@@ -286,6 +296,9 @@ const TB10210Sjs = (function () {
       else if (title === "삭제여부" || title === "적용여부") {
         newRow[dataIndx] = "Y";
       }
+      else if (title === "") {
+        newRow[dataIndx] = "del"
+      }
       else {
         newRow[dataIndx] = "";
       }
@@ -296,6 +309,15 @@ const TB10210Sjs = (function () {
       checkEditable: false,
     });
 
+  }
+
+  /**
+   * pqDeleteRow
+   */
+  function pqGridDeleteRow(colModelSelector, rowIndx) {
+    colModelSelector.pqGrid("deleteRow", {
+      rowIndx: rowIndx
+    });
   }
 
 
@@ -387,14 +409,7 @@ const TB10210Sjs = (function () {
       },
       scrollModel: { autoFit: true },
       colModel: colModel_authCdMenuTb,
-      strNoRows: "조회된 데이터가 없습니다.",
-      cellClick: function (event, ui) {
-        if (ui.column.dataIndx === "useYn") {
-          //alert("useYn");
-        } else if (ui.column.dataIndx === "modifyYn") {
-          //alert("modifyYn");
-        }
-      },
+      strNoRows: "조회된 데이터가 없습니다."
     };
 
     $("#authCodeMenuTable").pqGrid(obj_authCdMenuTb);
@@ -719,6 +734,7 @@ const TB10210Sjs = (function () {
 
 
   }
+  
 
   /**
    * UPDATE
@@ -1054,5 +1070,6 @@ const TB10210Sjs = (function () {
     , mergeAthCd: mergeAthCd  // 권한코드 저장
     , updateMdfyRghtCcd: updateMdfyRghtCcd  // 메뉴코드내 권한 저장
     , clickDetailButton: clickDetailButton
+    , pqGridDeleteRow: pqGridDeleteRow
   };
 })();

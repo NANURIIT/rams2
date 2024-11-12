@@ -390,9 +390,8 @@
          WHERE 1=1
            AND T1.APLY_YN = 'Y'
            AND T1.DEL_YN = 'N'
-           AND T1.SCRN_APLY_SHP_CD = 'S'								/* 화면적용형태코드 */
          ORDER 
-            BY T1.MENU_ID    											/* 정렬번호 */
+            BY T1.SCRN_APLY_SHP_CD, T1.MENU_ID    											/* 정렬번호 */
     </select>
 
     <!-- 타이틀 조회 -->
@@ -443,27 +442,27 @@
 
     <!-- 네비게이션 메뉴목록 -->
     <select id="createRamsNav" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS005BDTO">
-        SELECT T1.MENU_ID               /* 메뉴ID */
-             , T1.MENU_NM               /* 메뉴명 */
-             , T1.HGRK_MENU_ID          /* 상위메뉴ID */
-             , T1.SCRN_APLY_SHP_CD      /* 화면적용형태코드 */
-             , T1.MENU_LVL              /* 메뉴레벨 */
-          FROM IBIMS005B T1
-     LEFT JOIN (
+        SELECT T2.MENU_ID               /* 메뉴ID */
+             , T2.MENU_NM               /* 메뉴명 */
+             , T2.HGRK_MENU_ID          /* 상위메뉴ID */
+             , T2.SCRN_APLY_SHP_CD      /* 화면적용형태코드 */
+             , T2.MENU_LVL              /* 메뉴레벨 */
+          FROM (
             SELECT MENU_ID
               FROM IBIMS007B
              WHERE 1=1
-               AND ATH_CD = (SELECT ATH_CD FROM IBIMS003B WHERE EMPNO = #{empno})
+               AND ATH_CD = (SELECT ATH_CD FROM IBIMS003B WHERE EMPNO = #{athCd})
              GROUP
                 BY MENU_ID  /* MENU_ID가 키값이 아닌상황임 */
-        ) T2
+        ) T1
+     LEFT JOIN IBIMS005B T2
             ON T1.MENU_ID = T2.MENU_ID
          WHERE 1=1
-           AND T1.APLY_YN = 'Y'
-           AND T1.DEL_YN = 'N'
-           AND T1.MENU_LVL IS NOT NULL
+           AND T2.APLY_YN = 'Y'
+           AND T2.DEL_YN = 'N'
+           AND T2.MENU_LVL IS NOT NULL
          ORDER
-            BY T1.MENU_LVL, CASE WHEN T1.MENU_ID LIKE 'TB%' THEN 0 ELSE 1 END, T1.MENU_ID
+            BY T2.MENU_LVL, T2.SORT_NO, CASE WHEN T2.MENU_ID LIKE 'TB%' THEN 0 ELSE 1 END, T2.MENU_ID
     </select>
 
 </mapper>

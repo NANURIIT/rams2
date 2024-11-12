@@ -47,7 +47,7 @@
     <insert id="wfMapRgst" parameterType="java.util.List">
         INSERT INTO WF_MAP
         (
-            WF_MAP_ID               /*  워크플로우 맵ID  */
+            WF_MAP_ID                /*  워크플로우 맵ID  */
             , WF_MAP_NM              /*  맵명  */
             , JOB_TABLE              /*  작업테이블명  */
             , JOB_TABLE_KEY          /*  작업테이블 KEY컬럼명  */
@@ -59,14 +59,14 @@
         VALUES 
         <foreach collection="list" item="item" index="index" separator=",">
         (
-            #{wfMapId}          
-            , #{wfMapNm}      	
-            , #{jobTable}        
-            , #{jobTableKey}
+            #{item.wfMapId}          
+            , #{item.wfMapNm}      	
+            , #{item.jobTable}        
+            , #{item.jobTableKey}
             , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS') 
-            , #{regUserId}          
-            , #{chgDttm}              
-            , #{chgUserId}             
+            , #{item.regUserId}          
+            , #{item.chgDttm}              
+            , #{item.chgUserId}             
         )
         </foreach>
     </insert>
@@ -283,4 +283,83 @@
         );
     </select>
 
+    <!-- WF 설정 WF Map 조회 -->
+    <select id="getWfMapInfo" parameterType="String" resultType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        SELECT WF_MAP_ID
+             , WF_MAP_NM
+             , JOB_TABLE
+             , JOB_TABLE_KEY
+             , REG_DTTM
+             , REG_USER_ID
+             , CHG_DTTM
+             , CHG_USER_ID
+          FROM WF_MAP
+         WHERE 1=1
+          <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(wfMapNm)">
+           AND WF_MAP_NM LIKE  '%'|| #{wfMapNm} || '%'    
+          </if>
+    </select>
+
+    <!-- WF Map 삭제 -->
+    <delete id="deleteWfMapInfo" parameterType="java.util.List">
+		DELETE
+		  FROM WF_MAP
+		 WHERE WF_MAP_ID IN
+        <foreach collection="list" item="wfMapId" open="(" separator="," close=")">
+        #{wfMapId}
+        </foreach>
+	</delete>
+
+    <!-- WF Map 수정 -->
+    <update id="updateWfMapInfo" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+        UPDATE WF_MAP	
+           SET CHG_DTTM				 = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS') 
+            <if test="item.wfMapId != null">
+              , WF_MAP_ID			 = #{item.wfMapId}
+            </if>
+            <if test="item.wfMapNm != null">
+              , WF_MAP_NM			 = #{item.wfMapNm}
+            </if>
+            <if test="item.jobTable != null">
+              , JOB_TABLE			 = #{item.jobTable}
+            </if>
+            <if test="item.jobTableKey != null">
+              , JOB_TABLE_KEY		 = #{item.jobTableKey}
+            </if>
+            <if test="item.regDttm != null">
+              , REG_DTTM			 = #{item.regDttm}
+            </if>
+            <if test="item.regUserId != null">
+              , REG_USER_ID			 = #{item.regUserId}
+            </if>
+            <if test="item.chgUserId != null">
+               , CHG_USER_ID		 = #{item.chgUserId}
+             </if>						
+		 WHERE WF_MAP_ID = #{item.originalWfMapId}								
+		</foreach>  							
+    </update>
+
+    <!--  -->
+    <select id="getWfStepInfo" parameterType="String" resultType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        SELECT WF_MAP_ID
+             , STEP_ID
+             , NEXT_STEP_ID
+             , RTN_STEP_ID
+             , STEP_NM
+             , WF_AUTH_ID
+             , EXC_AUTH_EMP
+             , EXC_AUTH_DEPT
+        FROM WF_STEP
+       WHERE WF_MAP_ID = #{wfMapId}
+    </select>
+
+    <!-- WF Map 삭제 -->
+    <delete id="deleteWfStepInfo" parameterType="java.util.List">
+		 DELETE FROM WF_STEP
+          WHERE 
+          <foreach collection="list" item="item" separator=" OR ">
+            (WF_MAP_ID = #{item.wfMapId} AND STEP_ID = #{item.stepId})
+          </foreach>
+	</delete>
 </mapper>
