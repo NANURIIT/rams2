@@ -37,7 +37,7 @@ public interface IBIMS005BMapper {
 	 * 메뉴업데이트
 	 * @param param
 	 */
-	public int updateMenu (List<IBIMS005BDTO> param);
+	public int updateMenu (IBIMS005BDTO param);
 
 	/**
 	 * 타이틀메뉴 가져오기
@@ -50,6 +50,11 @@ public interface IBIMS005BMapper {
 	 * 네비게이션 만들기
 	 */
 	public List<IBIMS005BDTO> createRamsNav(String param);
+
+	/*	
+	 * 메뉴별권한관리 조회
+	 */
+	public List<IBIMS005BDTO> selectMenuListFromTB10310S(String param);
 
 	//////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////

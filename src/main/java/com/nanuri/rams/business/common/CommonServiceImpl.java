@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
+import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS114BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS992BDTO;
@@ -77,6 +78,8 @@ public class CommonServiceImpl implements CommonService {
 	private final IBIMS992BMapper ibims992bMapper;
 
 	private final IBIMS993BMapper ibims993bMapper;
+
+	private final IBIMS007BMapper ibims007bMapper;
 	
 	/**
 	 * 셀렉트박스 코드, 밸류 취득
@@ -316,4 +319,11 @@ public class CommonServiceImpl implements CommonService {
 		}
 		
 	}
+
+	// 권한확인
+	@Override
+	public int chkAthCd(IBIMS007BDTO param){
+		return ibims007bMapper.chkAthCd(param);
+	};
+
 }

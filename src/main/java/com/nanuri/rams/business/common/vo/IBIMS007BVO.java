@@ -5,10 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
+@Getter
+@Setter
 /*
  * 메뉴별권한화면사용권한설정 Table.IBIMS007B VO
  * */
-public class IBIMS007BVO {
+public class IBIMS007BVO extends IBIMS007BDTO {
+
+	private String athCdNm;
+	private String athCdExpl;
+	private String menuNm;
+	private String menuLvl;
+	private String hndDt;
+	private String hndTm;
+	
     
 	@Getter
 	@Setter

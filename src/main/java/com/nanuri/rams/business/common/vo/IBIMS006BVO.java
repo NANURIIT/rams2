@@ -11,6 +11,7 @@ import lombok.Setter;
  * 권한별메뉴화면사용권한설정 VO
  */
 public class IBIMS006BVO extends IBIMS006BDTO {
+
     private String rgstEmpNm;
     private String hndDt;
     private String hndTm;
