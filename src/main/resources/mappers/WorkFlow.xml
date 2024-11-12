@@ -139,16 +139,17 @@
     </select>
 
     <!--업무테이블 상태 업데이트(IBIMS101B)-->
-    <update id="mergeIBIMS101B">
+    <update id="mergeIBIMS101B" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO">
         MERGE INTO IBIMS101B A
         USING (
             SELECT 
-                A.DEAL_NO,
-                A.SN,
-                B.WF_ID,
-                '02' AS WF_STATE
-            FROM IBIMS101B A
-            JOIN WF B ON A.DEAL_NO || A.SN = TRIM(B.ETC)
+			    A.DEAL_NO,
+			    A.SN,
+			    B.WF_ID,
+			    A.WF_STATE
+			FROM IBIMS101B A
+			JOIN WF B ON A.DEAL_NO || A.SN = TRIM(B.ETC)
+			WHERE B.WF_ID = #{wfId}
         ) B
         ON (
             A.DEAL_NO = B.DEAL_NO
@@ -157,7 +158,7 @@
         WHEN MATCHED THEN 
             UPDATE 
             SET A.WF_ID = B.WF_ID,
-                A.WF_STATE = '02'
+                A.WF_STATE = #{nextStepId}
     </update>
 
     <!--WF_HIS 등록-->
@@ -194,9 +195,7 @@
     <!--다음 스텝 ID 찾기-->
     <select id="getNxtStepId" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="String">
         SELECT 
-            A.WF_ID                             /*  워크플로우 ID  */
-            , A.WF_MAP_ID                       /*  워크플로우 맵ID  */
-            , CASE WHEN A.RTN_YN = 'Y' THEN B.RTN_STEP_ID 
+            CASE WHEN A.RTN_YN = 'Y' THEN B.RTN_STEP_ID 
                     ELSE B.NEXT_STEP_ID 
                     END AS NEXT_STEP_ID         /*  다음 스텝ID  */
         FROM  WF A
@@ -213,12 +212,12 @@
             SELECT 
                 WF_ID                                                               /*  워크플로우 ID  */
                 , WF_MAP_ID                                                         /*  워크플로우 맵ID  */
-                , #{wfStepId} AS WF_STEP_ID                                         /*  워크플로우 스텝ID  */
+                , #{nextStepId} AS WF_STEP_ID                                       /*  워크플로우 스텝ID  */
                 , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS')        AS APRV_DTTM        /*  결재일시  */
                 , #{rtnYn}                                      AS RTN_YN           /*  반송여부  */
                 , #{rtnCnts}                                    AS RTN_CNTS         /*  반송사유  */
                 , #{memoCnts}                                   AS MEMO_CNTS        /*  결재사유  */
-                , #{etc}                                        AS ETC              /*  기타  */
+                , ETC                                                               /*  기타  */
             FROM  WF 
             WHERE WF_ID = #{wfId}
         ) B

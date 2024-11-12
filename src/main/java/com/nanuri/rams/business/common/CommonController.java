@@ -47,18 +47,20 @@ public class CommonController {
         
         if(commonService.chkAthCd(ibims007bdto) == 0){
             return "/TB02010S";
+        }else{
+            model.addAttribute("menuListM", menuListM); // 화면권한리스트
+            model.addAttribute("menuList", menuList); // 화면권한리스트
+            model.addAttribute("userAuth", userAuth); // 접속자 정보
+
+            
+            // 세션에서 bzDd 값을 가져와 모델에 추가
+            String bzDd = (String) session.getAttribute("bzDd");
+            model.addAttribute("bzDd", bzDd);
+
+            return path;
         }
 
-        model.addAttribute("menuListM", menuListM); // 화면권한리스트
-        model.addAttribute("menuList", menuList); // 화면권한리스트
-        model.addAttribute("userAuth", userAuth); // 접속자 정보
-
         
-        // 세션에서 bzDd 값을 가져와 모델에 추가
-        String bzDd = (String) session.getAttribute("bzDd");
-        model.addAttribute("bzDd", bzDd);
-
-        return path;
     }
 
 }
