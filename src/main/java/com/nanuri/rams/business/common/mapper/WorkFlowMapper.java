@@ -36,6 +36,8 @@ public interface WorkFlowMapper {
 
     public List<WorkFlowDTO> workFlowInq(WorkFlowDTO wfAuthId);      //WF목록 조회(오늘의 할 일)
 
+    public int wfAuthIdCheck(WorkFlowDTO wfAuthId);             //WF_STEP 권한 체크
+
     public List<WFMapDTO> getWfMapInfo(String wfMapNm);              //Map 조회
 
     public int deleteWfMapInfo(List<String> deleteInfo);                 //Map 삭제
@@ -43,7 +45,4 @@ public interface WorkFlowMapper {
     public int updateWfMapInfo(List<WfMapVo> updateInfo); //수정
 
     public List<WorkFlowDTO> getWfStepInfo(String wfMapId);      //step조회   
-    
-    public int wfAuthIdCheck(WorkFlowDTO wfAuthId);             //WF_STEP 권한 체크
-
 }
