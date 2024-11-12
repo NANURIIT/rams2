@@ -25,19 +25,16 @@
 	</select>
 
 	<update id="updateAth" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO">
-		<foreach item="item" collection="list" separator=";">
 		UPDATE IBIMS007B
-		   SET MDFY_RGHT_CCD = #{item.mdfyRghtCcd}
+		   SET MDFY_RGHT_CCD = #{mdfyRghtCcd}
 		     , HND_DETL_DTM = SYSDATE
-			 , HND_EMPNO = #{item.hndEmpno}
-			 , HND_TMNL_NO = #{item.hndTmnlNo}
-			 , HND_TR_ID = #{item.hndTrId}
-			 , GUID = #{item.guid}
+			 , HND_EMPNO = #{hndEmpno}
+			 , HND_TMNL_NO = #{hndTmnlNo}
+			 , HND_TR_ID = #{hndTrId}
+			 , GUID = #{guid}
 		 WHERE 1=1
-		   AND ATH_CD = #{item.athCd}
-		   AND SQ = #{item.sq}
-		   AND MENU_ID = #{item.menuId}
-	    </foreach>
+		   AND ATH_CD = #{athCd}
+		   AND MENU_ID = #{menuId}
 	</update>
 
 	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO" resultType="int">
@@ -46,11 +43,64 @@
 		 WHERE 1=1
 		   AND MENU_ID = #{menuId}
 		   AND ATH_CD = (
-							SELECT MAX(ATH_CD)
-							  FROM IBIMS006B
+							SELECT ATH_CD
+							  FROM IBIMS003B
 							 WHERE 1=1
-							   AND ATH_CD_NM = #{athCd}
+							   AND EMPNO = #{athCd}
 						)
+	</select>
+
+	<update id="updateMdfyRghtCcd">
+		MERGE INTO IBIMS007B T
+      USING (
+             SELECT #{athCd}  AS ATH_CD
+				  , #{sq}  AS SQ
+				  , #{menuId}  AS MENU_ID
+				  , #{mdfyRghtCcd}  AS MDFY_RGHT_CCD
+				  , #{hndDetlDtm}  AS HND_DETL_DTM
+				  , #{hndEmpno}  AS HND_EMPNO
+				  , #{hndTmnlNo}  AS HND_TMNL_NO
+				  , #{hndTrId}  AS HND_TR_ID
+				  , #{guid}  AS GUID
+               FROM DUAL
+             ) S
+         ON (
+			T.ATH_CD = S.ATH_CD
+		AND T.MENU_ID = S.MENU_ID
+			)
+      WHEN MATCHED THEN
+        UPDATE SET T.MDFY_RGHT_CCD = S.MDFY_RGHT_CCD
+				 , T.HND_DETL_DTM = SYSDATE
+				 , T.HND_EMPNO = S.HND_EMPNO
+				 , T.HND_TMNL_NO = S.HND_TMNL_NO
+				 , T.HND_TR_ID = S.HND_TR_ID
+				 , T.GUID = S.GUID
+      WHEN NOT MATCHED THEN
+        INSERT ( ATH_CD
+			   , SQ
+			   , MENU_ID
+			   , MDFY_RGHT_CCD
+			   , HND_DETL_DTM
+			   , HND_EMPNO
+			   , HND_TMNL_NO
+			   , HND_TR_ID
+			   , GUID
+               )
+        VALUES ( S.ATH_CD
+			   , S.SQ
+			   , S.MENU_ID
+			   , S.MDFY_RGHT_CCD
+			   , SYSDATE
+			   , S.HND_EMPNO
+			   , S.HND_TMNL_NO
+			   , S.HND_TR_ID
+			   , S.GUID
+               )
+	</update>
+
+	<select id="ibims007bCreateSq" resultType="int">
+		SELECT NVL(MAX(SQ), 0) + 1
+		  FROM IBIMS007B
 	</select>
 
 	<!-- 2024-11-07 김건우 끝 -->

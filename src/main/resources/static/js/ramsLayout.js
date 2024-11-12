@@ -119,10 +119,8 @@ function createNav(empNo) {
  */
 function chkPrevPage() {
 
-    
     const url = window.location.pathname;
     const chk_menu = $(`div[data-menuid="/TB02010S"`).attr('data-menuid')
-
     
     let url_ref = document.referrer
     let result_id = url_ref.split("/");

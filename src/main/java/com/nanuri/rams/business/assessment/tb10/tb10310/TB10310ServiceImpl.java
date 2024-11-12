@@ -57,15 +57,21 @@ public class TB10310ServiceImpl implements TB10310Service {
 	 */
     @Override
     public int updateAth(List<IBIMS007BDTO> param){
+        
+        int result = 0;
 
         List<IBIMS007BDTO> list = param;
 
         // 작성자 세팅
 		for(int i = 0; i < list.size(); i++){
 			list.get(i).setHndEmpno(facade.getDetails().getEno());
+
+            ibims007BMapper.updateAth(list.get(i));
+
+            result = result + 1;
 		}
 
-        return ibims007BMapper.updateAth(param);
+        return result;
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////

@@ -26,14 +26,21 @@ public interface IBIMS007BMapper {
 	 * TB10310S
 	 * 메뉴별권한페이지 권한수정
 	 */
-	public int updateAth(List<IBIMS007BDTO> param);
+	public int updateAth(IBIMS007BDTO param);
 
 	/**
-	 * callPage에서 권한확인
+	 * 권한확인
 	 * @param menuId
 	 * @return
 	 */
 	public int chkAthCd(IBIMS007BDTO param);
+
+	/**
+	 * 메뉴코드내 권한 업데이트
+	 */
+	public int updateMdfyRghtCcd(IBIMS007BDTO param);
+
+	public int ibims007bCreateSq();		// 일련번호 생성
 
 	/**
 	 * 2024-11-07 김건우 끝

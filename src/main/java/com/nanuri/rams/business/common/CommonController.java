@@ -35,26 +35,30 @@ public class CommonController {
         IBIMS005BVO.TitleVo vo = commonService.getTitle(urlNm);
         model.addAttribute("title", vo);
 
-        IBIMS007BDTO ibims007bdto = new IBIMS007BDTO();
-        ibims007bdto.setMenuId(path);
-        ibims007bdto.setAthCd(facade.getDetails().getRghtCd().getText());
-        if(commonService.chkAthCd(ibims007bdto) == 0){
-            path = "/TB02010S";
-            return path;
-        }
-
         List<Map<String, Object>> menuListM = commonService.getMenuListM(facade.getDetails().getRghtCd());
         List<Map<String, Object>> menuList = commonService.getMenuList(facade.getDetails().getRghtCd());
         Map<String, Object> userAuth = commonService.getUserAuth();
+        
+        IBIMS007BDTO ibims007bdto = new IBIMS007BDTO();
+        ibims007bdto.setMenuId(urlNm);
+        ibims007bdto.setAthCd(facade.getDetails().getEno());
+
+        log.debug("체크########", facade.getDetails().getEno());
+        
+        if(commonService.chkAthCd(ibims007bdto) == 0){
+            return "/TB02010S";
+        }
 
         model.addAttribute("menuListM", menuListM); // 화면권한리스트
         model.addAttribute("menuList", menuList); // 화면권한리스트
         model.addAttribute("userAuth", userAuth); // 접속자 정보
 
+        
         // 세션에서 bzDd 값을 가져와 모델에 추가
         String bzDd = (String) session.getAttribute("bzDd");
         model.addAttribute("bzDd", bzDd);
 
         return path;
     }
+
 }

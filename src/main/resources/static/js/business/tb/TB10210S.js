@@ -1,6 +1,10 @@
 const TB10210Sjs = (function () {
+
   let authCdTbObj;
   let authCdMenuTbObj;
+
+  let setAthCd;
+  let searchParam;
 
 
   /**
@@ -37,16 +41,16 @@ const TB10210Sjs = (function () {
     //체크박스
     {
       title: "삭제여부",
-        dataIndx: "dltYn",
-        align: "center",
-        halign: "center",
-        type: "string",
-        editable: true,
-        width: "5%",
-        editor: {
-          type: "select",
-          options: Yn
-        },
+      dataIndx: "dltYn",
+      align: "center",
+      halign: "center",
+      type: "string",
+      editable: true,
+      width: "5%",
+      editor: {
+        type: "select",
+        options: Yn
+      },
     },
     {
       title: "권한코드",
@@ -56,8 +60,7 @@ const TB10210Sjs = (function () {
       editable: false,
       align: "left",
       halign: "center",
-      width: "",
-      filter: { crules: [{ condition: "range" }] },
+      filter: { crules: [{ condition: "range" }] }
     },
     {
       title: "권한명",
@@ -90,13 +93,11 @@ const TB10210Sjs = (function () {
       editable: false,
       width: "5%",
       render: function (ui) {
-        if(ui.cellData === "new"){
+        if (ui.cellData === "new") {
           return "";
-        }else{
+        } else {
           return (
-            "<button class='ui-button ui-corner-all ui-widget' name='detail_btn' data-row-indx='" +
-            ui.rowIndx +
-            "'><i class='fa fa-arrow-down'></i>&nbsp;상세</button>"
+            `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick='TB10210Sjs.clickDetailButton(${ui.rowIndx});'><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
           );
         }
       },
@@ -123,16 +124,16 @@ const TB10210Sjs = (function () {
     },
     {
       title: "적용여부",
-        dataIndx: "aplyYn",
-        align: "center",
-        halign: "center",
-        type: "string",
-        editable: true,
-        width: "5%",
-        editor: {
-          type: "select",
-          options: Yn
-        },
+      dataIndx: "aplyYn",
+      align: "center",
+      halign: "center",
+      type: "string",
+      editable: true,
+      width: "5%",
+      editor: {
+        type: "select",
+        options: Yn
+      },
     },
     {
       title: "처리일자",
@@ -202,29 +203,29 @@ const TB10210Sjs = (function () {
       dataType: "string",
       dataIndx: "menuLvl",
       editable: false,
-      align: "left",
+      align: "center",
       halign: "center",
       width: "5%",
       filter: { crules: [{ condition: "range" }] },
     },
     {
       title: "수정가능여부",
-        dataIndx: "mdfyRghtCcd",
-        align: "center",
-        halign: "center",
-        dataType: "string",
-        editor: true,
-        editable: true,
-        editor: {
-          type: "select",
-          valueIndx: "cdValue",
-          labelIndx: "cdName",
-          options: mdfyRghtCcd
-        },
-        render: function (ui) {
-          let fSel = mdfyRghtCcd.find(({ cdValue }) => cdValue == ui.cellData);
-          return fSel ? fSel.cdName : ui.cellData;
-        }
+      dataIndx: "mdfyRghtCcd",
+      align: "center",
+      halign: "center",
+      dataType: "string",
+      editor: true,
+      editable: true,
+      editor: {
+        type: "select",
+        valueIndx: "cdValue",
+        labelIndx: "cdName",
+        options: mdfyRghtCcd
+      },
+      render: function (ui) {
+        let fSel = mdfyRghtCcd.find(({ cdValue }) => cdValue == ui.cellData);
+        return fSel ? fSel.cdName : ui.cellData;
+      }
     },
     {
       title: "처리일자",
@@ -267,6 +268,9 @@ const TB10210Sjs = (function () {
    */
   function pqGridAddNewRow(colModelSelector) {
 
+    console.log("짝똥");
+
+
     let row = [];
     let newRow = {};
     const data = colModelSelector.pqGrid("instance");
@@ -279,6 +283,9 @@ const TB10210Sjs = (function () {
       if (title === "메뉴관리") {
         newRow[dataIndx] = "new";
       }
+      else if (title === "삭제여부" || title === "적용여부") {
+        newRow[dataIndx] = "Y";
+      }
       else {
         newRow[dataIndx] = "";
       }
@@ -289,18 +296,6 @@ const TB10210Sjs = (function () {
       checkEditable: false,
     });
 
-    const rowIndx = colModelSelector.pqGrid("option", "dataModel.data").length - 1; // 마지막에 추가된 행의 인덱스
-    colModelSelector.pqGrid("option", "cellEditable", function (ui) {
-      // 새로 추가된 행(rowIndx)에서 특정 셀만 편집 가능하도록 설정
-      if (ui.rowIndx === rowIndx) {
-        if (ui.dataIndx === "권한코드") { // "메뉴관리" 컬럼만 편집 가능하게 설정
-          return true;
-        }
-      }
-    });
-
-    // 그리드를 새로 고침하여 편집 가능 설정 반영
-    colModelSelector.pqGrid("refresh");
   }
 
 
@@ -310,7 +305,6 @@ const TB10210Sjs = (function () {
     setGrid_TB10210S();
     getAuthCode();
 
-    clickDetailButton();
     // doubleClickColumn();
 
     // $(document).on("click", ".can_use_yn", function () {
@@ -361,6 +355,16 @@ const TB10210Sjs = (function () {
       colModel: colModel_authCdTb,
       strNoRows: "조회된 데이터가 없습니다.",
       //pageModel: pageMdCdDtl
+      cellClick: function (evt, ui) {
+        /**
+         * 특정컬럼 기존셀렉트된건 수정 안되는데 행추가를 사용했을 경우에 입력가능하게 하는거...ㅜㅜㅜ
+         */
+        if (ui.rowData.authCdBtn === "new" && ui.column.dataIndx === "athCd") {
+          ui.column.editable = true;
+        } else if (ui.rowData.authCdBtn != "new" && ui.column.dataIndx === "athCd") {
+          ui.column.editable = false;
+        }
+      }
     };
 
     $("#authCodeTable").pqGrid(obj_authCdTb);
@@ -405,30 +409,33 @@ const TB10210Sjs = (function () {
     getAuthCode(searchKeyword);
   }
 
-  /**
-   * 변경 가능한 컬럼 더블클릭 했을시 input박스 생성
-   */
-  function doubleClickColumn() {
-    $(document).on("dblclick", ".update_column", function () {
-      let trClass = $(this).attr("class").split(" ")[1];
-      tdInputHTML =
-        '<input class="' +
-        trClass +
-        '_input" style="width: 100%;" type="text" value="' +
-        $(this).text() +
-        '">';
-      $(this).html(tdInputHTML);
-    });
-  }
+  // /**
+  //  * 변경 가능한 컬럼 더블클릭 했을시 input박스 생성
+  //  */
+  // function doubleClickColumn() {
+  //   $(document).on("dblclick", ".update_column", function () {
+  //     let trClass = $(this).attr("class").split(" ")[1];
+  //     tdInputHTML =
+  //       '<input class="' +
+  //       trClass +
+  //       '_input" style="width: 100%;" type="text" value="' +
+  //       $(this).text() +
+  //       '">';
+  //     $(this).html(tdInputHTML);
+  //   });
+  // }
 
   /*******************************************************************
    *** 상단 그리드 event
    *******************************************************************/
-  
+
   /**
    * 권한목록 조회 ajax
    */
   function getAuthCode(rghtCdNm) {
+
+    searchParam = rghtCdNm;
+
     let _url = "/getAuthCode";
     if (!isEmpty(rghtCdNm)) {
       _url += "?rghtCdNm=" + rghtCdNm;
@@ -487,42 +494,12 @@ const TB10210Sjs = (function () {
   }
 
   /**
-   * 행추가 버튼 클릭
-   */
-  function addAuthCodeRow() {
-    // $('.auth_code_input').focus();
-
-    let newRow = {
-      authCdState: false,
-      athCd: "",
-      athCdNm: "",
-      athCdExpl: "",
-      rgstDt: "",
-      rgstEmpNm: "",
-      aplyYn: "",
-      hndDt: "",
-      hndTm: "",
-      hndEmpNm: "",
-    };
-
-    $("#authCodeTable").pqGrid("addRow", {
-      rowData: newRow,
-      checkEditable: false,
-    });
-  }
-
-  /**
    * 권한코드 상세버튼 클릭
    */
-  function clickDetailButton() {
-    $(document).on("click", "button[name='detail_btn']", function () {
-      let rowIndex = $(this).data("row-indx");
-
-      let rowData = authCdTbObj.getRowData({ rowIndx: rowIndex });
-
+  function clickDetailButton(rowIndx) {
+      let rowData = authCdTbObj.getRowData({ rowIndx: rowIndx });
       let rghtCd = rowData.athCd;
       getAuthCodeMenu(rghtCd);
-    });
   }
 
   /**
@@ -530,6 +507,9 @@ const TB10210Sjs = (function () {
    * @param {권한코드} rghtCd
    */
   function getAuthCodeMenu(rghtCd) {
+
+    setAthCd = rghtCd;
+
     ajaxCall({
       method: "get",
       url: "/getAuthCodeMenu?rghtCd=" + rghtCd,
@@ -613,6 +593,161 @@ const TB10210Sjs = (function () {
     });
   }
 
+  /**
+   * INSERT UPDATE
+   */
+  function mergeAthCd() {
+
+    let paramData = [];
+
+    const pData = $('#authCodeTable').pqGrid('instance').pdata
+
+    for (let i = 0; i < pData.length; i++) {
+      if (pData[i].pq_cellcls != undefined) {
+        paramData.push(pData[i]);
+      }
+    }
+
+    if (paramData.length === 0) {
+      Swal.fire({
+        icon: 'warning'
+        , title: '수정사항이 없습니다!'
+      })
+      getAuthCode();
+      return;
+    }
+
+    // 최소한의 데이터를 작성했는지 체크
+    for (let i = 0; i < paramData.length; i++) {
+      if (paramData[i].authCdBtn === 'new') {
+        if (paramData[i].athCd === "" || paramData[i].athCd.indexOf(" ") > 0) {
+          Swal.fire({
+            icon: 'warning',
+            title: '권한코드를 입력해주세요!'
+          });
+          return;
+        } else if (paramData[i].athCdNm === "" || paramData[i].athCdNm.indexOf(" ") > 0) {
+          Swal.fire({
+            icon: 'warning',
+            title: '권한명을 입력해주세요!'
+          });
+          return;
+        } else if (paramData[i].athCdExpl === "" || paramData[i].athCdExpl.indexOf(" ") > 0) {
+          Swal.fire({
+            icon: 'warning',
+            title: '권한설명을 입력해주세요!'
+          });
+          return;
+        }
+      }
+    }
+
+    $.ajax({
+      method: "POST",
+      url: "/TB10210S/mergeAthCd",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(paramData),
+      success: function (data) {
+        // 데이터 존재시 pqgrid적용
+        if (data > 0) {
+          Swal.fire({
+            icon: 'success'
+            , title: '성공!'
+          })
+        }
+        // 데이터 없을시 확인가능한 alert 실행
+        else if (data === -7574) {
+          Swal.fire({
+            icon: 'warning'
+            , title: '이미 존재하는 권한코드 입니다!'
+          })
+        }
+      },
+      error: function (response) {
+
+      },
+      beforeSend: function() {
+        getAuthCode(searchParam);
+      }
+    });
+
+
+  }
+
+  function updateMdfyRghtCcd() {
+
+    let paramData = [];
+
+    const pData = $('#authCodeMenuTable').pqGrid('instance').pdata
+
+    for (let i = 0; i < pData.length; i++) {
+      if (pData[i].pq_cellcls != undefined && pData[i].mdfyRghtCcd != "") {
+        paramData.push(pData[i]);
+      }
+    }
+
+    if (paramData.length === 0) {
+      Swal.fire({
+        icon: 'warning'
+        , title: '수정사항이 없습니다!'
+      })
+      getAuthCode();
+      return;
+    }
+
+    $.ajax({
+      method: "POST",
+      url: "/TB10210S/updateMdfyRghtCcd",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(paramData),
+      success: function (data) {
+        // 데이터 존재시 pqgrid적용
+        if (data > 0) {
+          Swal.fire({
+            icon: 'success'
+            , title: '성공!'
+          })
+        }
+      },
+      error: function (response) {
+
+      },
+      beforeSend: function() {
+        getAuthCodeMenu(setAthCd);
+      }
+    });
+
+
+  }
+
+  /**
+   * UPDATE
+   */
+  // /**
+  //  * 행추가 버튼 클릭
+  //  */
+  // function addAuthCodeRow() {
+  //   // $('.auth_code_input').focus();
+
+  //   let newRow = {
+  //     authCdState: false,
+  //     athCd: "",
+  //     athCdNm: "",
+  //     athCdExpl: "",
+  //     rgstDt: "",
+  //     rgstEmpNm: "",
+  //     aplyYn: "",
+  //     hndDt: "",
+  //     hndTm: "",
+  //     hndEmpNm: "",
+  //   };
+
+  //   $("#authCodeTable").pqGrid("addRow", {
+  //     rowData: newRow,
+  //     checkEditable: false,
+  //   });
+  // }
+
   // /**
   //  * 행삭제 버튼 클릭
   //  */
@@ -650,259 +785,274 @@ const TB10210Sjs = (function () {
   //   });
   // }
 
-  /**
-   * 권한코드 저장버튼 클릭 event
-   */
-  function clickAuthSaveButton() {
-    let authCodeList = [];
-    let tr = $("#authCodeTable").children();
+  // /**
+  //  * 권한코드 저장버튼 클릭 event
+  //  */
+  // function clickAuthSaveButton() {
+  //   let authCodeList = [];
+  //   let tr = $("#authCodeTable").children();
 
-    for (let i = 0; i < tr.length; i++) {
-      let authCode = {};
-      let authCodeInput = $(tr[i]).find("td:eq(1)").find("input");
-      let authCodeNameInput = $(tr[i]).find("td:eq(2)").find("input");
-      let authExplainInput = $(tr[i]).find("td:eq(3)").find("input");
-      let authCodeUseYn = $(tr[i])
-        .find("td:eq(7)")
-        .find(".auth_code_use_yn")
-        .prop("checked");
-      let authCodeUseYnCheck = $(tr[i])
-        .find("td:eq(7)")
-        .find(".hidden_yn")
-        .val();
+  //   for (let i = 0; i < tr.length; i++) {
+  //     let authCode = {};
+  //     let authCodeInput = $(tr[i]).find("td:eq(1)").find("input");
+  //     let authCodeNameInput = $(tr[i]).find("td:eq(2)").find("input");
+  //     let authExplainInput = $(tr[i]).find("td:eq(3)").find("input");
+  //     let authCodeUseYn = $(tr[i])
+  //       .find("td:eq(7)")
+  //       .find(".auth_code_use_yn")
+  //       .prop("checked");
+  //     let authCodeUseYnCheck = $(tr[i])
+  //       .find("td:eq(7)")
+  //       .find(".hidden_yn")
+  //       .val();
 
-      if (authCodeInput.length === 1) {
-        if (!authCodeInput.val()) {
-          openPopup({
-            title: "실패",
-            text: "권한코드를 입력해주세요.",
-            type: "error",
-            callback: function () {
-              $(document).on("click", ".confirm", function () {
-                authCodeInput.focus();
-              });
-            },
-          });
-          return;
-        } else if (authCodeInput.val().length > 4) {
-          openPopup({
-            title: "실패",
-            text: "권한코드는 4자리 이하로 입력해주세요.",
-            type: "error",
-            callback: function () {
-              $(document).on("click", ".confirm", function () {
-                authCodeInput.focus();
-              });
-            },
-          });
-          return;
-        }
-        authCode.athCd = authCodeInput.val();
-      }
+  //     if (authCodeInput.length === 1) {
+  //       if (!authCodeInput.val()) {
+  //         openPopup({
+  //           title: "실패",
+  //           text: "권한코드를 입력해주세요.",
+  //           type: "error",
+  //           callback: function () {
+  //             $(document).on("click", ".confirm", function () {
+  //               authCodeInput.focus();
+  //             });
+  //           },
+  //         });
+  //         return;
+  //       } else if (authCodeInput.val().length > 4) {
+  //         openPopup({
+  //           title: "실패",
+  //           text: "권한코드는 4자리 이하로 입력해주세요.",
+  //           type: "error",
+  //           callback: function () {
+  //             $(document).on("click", ".confirm", function () {
+  //               authCodeInput.focus();
+  //             });
+  //           },
+  //         });
+  //         return;
+  //       }
+  //       authCode.athCd = authCodeInput.val();
+  //     }
 
-      if (authCodeNameInput.length === 1) {
-        if (!authCodeNameInput.val()) {
-          openPopup({
-            title: "실패",
-            text: "권한명를 입력해주세요.",
-            type: "error",
-            callback: function () {
-              $(document).on("click", ".confirm", function () {
-                authCodeNameInput.focus();
-              });
-            },
-          });
-          return;
-        }
-        authCode.athCdNm = authCodeNameInput.val();
-      }
+  //     if (authCodeNameInput.length === 1) {
+  //       if (!authCodeNameInput.val()) {
+  //         openPopup({
+  //           title: "실패",
+  //           text: "권한명를 입력해주세요.",
+  //           type: "error",
+  //           callback: function () {
+  //             $(document).on("click", ".confirm", function () {
+  //               authCodeNameInput.focus();
+  //             });
+  //           },
+  //         });
+  //         return;
+  //       }
+  //       authCode.athCdNm = authCodeNameInput.val();
+  //     }
 
-      if (authExplainInput.length === 1) {
-        if (!authExplainInput.val()) {
-          openPopup({
-            title: "실패",
-            text: "권한설명을 입력해주세요.",
-            type: "error",
-            callback: function () {
-              $(document).on("click", ".confirm", function () {
-                authCodeNameInput.focus();
-              });
-            },
-          });
-          return;
-        }
-        authCode.athCdExpl = authExplainInput.val();
-      }
+  //     if (authExplainInput.length === 1) {
+  //       if (!authExplainInput.val()) {
+  //         openPopup({
+  //           title: "실패",
+  //           text: "권한설명을 입력해주세요.",
+  //           type: "error",
+  //           callback: function () {
+  //             $(document).on("click", ".confirm", function () {
+  //               authCodeNameInput.focus();
+  //             });
+  //           },
+  //         });
+  //         return;
+  //       }
+  //       authCode.athCdExpl = authExplainInput.val();
+  //     }
 
-      if (
-        !authCodeUseYnCheck ||
-        (!authCodeUseYn && authCodeUseYnCheck === "Y") ||
-        (authCodeUseYn && authCodeUseYnCheck === "N")
-      ) {
-        authCode.aplyYn = authCodeUseYn ? "Y" : "N";
-      }
+  //     if (
+  //       !authCodeUseYnCheck ||
+  //       (!authCodeUseYn && authCodeUseYnCheck === "Y") ||
+  //       (authCodeUseYn && authCodeUseYnCheck === "N")
+  //     ) {
+  //       authCode.aplyYn = authCodeUseYn ? "Y" : "N";
+  //     }
 
-      if (!(Object.keys(authCode).length === 0)) {
-        authCode.oldAthCd = $(tr[i]).find("td:eq(0)").find("input").attr("id");
-        authCodeList.push(authCode);
-      }
-    }
+  //     if (!(Object.keys(authCode).length === 0)) {
+  //       authCode.oldAthCd = $(tr[i]).find("td:eq(0)").find("input").attr("id");
+  //       authCodeList.push(authCode);
+  //     }
+  //   }
 
-    if (authCodeList.length > 0) {
-      saveAuthCode(authCodeList);
-    }
-  }
-
-  /**
-   * 권한코드 저장 ajax
-   * @param {권한코드 리스트} authCodeList
-   */
-  function saveAuthCode(authCodeList) {
-    ajaxCall({
-      url: "/registerAuthCode",
-      method: "POST",
-      data: authCodeList,
-      success: function (data, status, settings) {
-        getAuthCode();
-        Swal.fire({
-          icon: "success",
-          title: "권한저장이 완료되었습니다",
-          text: "",
-          confirmButtonText: "확인",
-        });
-      },
-      fail: function (response) {
-        let message = response.responseJSON.message;
-        openPopup({
-          title: "실패",
-          type: "error",
-          text: message,
-        });
-      },
-    });
-  }
-
-  /*******************************************************************
-   *** 하단 그리드 event
-   *******************************************************************/
-  /**
-   * 메뉴 저장버튼 클릭
-   */
-  function clickSaveMenuButton() {
-    let authCodeMenuList = [];
-    let tr = $("#authCodeMenuTable").children();
-    let authCode = $(tr[0]).find("td:eq(3)").text();
-
-    for (let i = 0; i < tr.length; i++) {
-      let authCodeMenu = {};
-
-      let menuUseYn = $(tr[i])
-        .find("td:eq(5)")
-        .find(".can_use_yn")
-        .prop("checked");
-      let menuUseYnCheck = $(tr[i])
-        .find("td:eq(5)")
-        .find(".use_hidden_yn")
-        .val();
-      let menuModifyYn = $(tr[i])
-        .find("td:eq(6)")
-        .find(".can_modify_yn")
-        .prop("checked");
-      let menuModifyYnCheck = $(tr[i])
-        .find("td:eq(6)")
-        .find(".modify_hidden_yn")
-        .val();
-
-      if (
-        !menuUseYnCheck ||
-        (menuUseYn && menuUseYnCheck === "N") ||
-        (!menuUseYn && menuUseYnCheck === "Y")
-      ) {
-        authCodeMenu.chkUseYn = menuUseYn;
-      }
-
-      if (
-        !menuModifyYnCheck ||
-        (menuModifyYn && menuModifyYnCheck === "N") ||
-        (!menuModifyYn && menuModifyYnCheck === "Y")
-      ) {
-        authCodeMenu.chkUseYn = menuUseYn;
-        authCodeMenu.chkModifyYn = menuModifyYn;
-      }
-
-      if (!(Object.keys(authCodeMenu).length === 0)) {
-        authCodeMenu.menuId = $(tr[i]).find("td:eq(1)").text();
-        authCodeMenu.athCd = authCode;
-        authCodeMenuList.push(authCodeMenu);
-      }
-    }
-
-    if (authCodeMenuList.length > 0) {
-      saveMenu(authCodeMenuList, authCode);
-    }
-  }
+  //   if (authCodeList.length > 0) {
+  //     saveAuthCode(authCodeList);
+  //   }
+  // }
 
   /**
-   * 메뉴 저장 ajax
+   * 권한코드 저장
    */
-  function saveMenu(authCodeMenuList, authCode) {
-    ajaxCall({
-      method: "Post",
-      url: "/registerAuthCodeMenu",
-      data: authCodeMenuList,
-      success: function () {
-        getAuthCodeMenu(authCode);
-        Swal.fire({
-          icon: "success",
-          title: "저장이 완료되었습니다",
-          text: "",
-          confirmButtonText: "확인",
-        });
-      },
-      fail: function (response) {
-        let message = response.responseJSON.message;
-        openPopup({
-          title: "실패",
-          type: "error",
-          text: message,
-        });
-      },
-    });
-  }
+  // function saveAuthCode(){ 
 
-  /**
-   * 사용여부와 수정가능여부 클릭 모션
-   * @param {this} 체크박스 클릭 이벤트 발생한 <input>
-   */
-  function checkboxModifyYn(e) {
-    // 수정가능여부
-    let modifyYn = $(e);
-    let thisTr = modifyYn.parent().parent();
-    let checkedUseYn = thisTr.find("td:eq(5)").children();
-    if (modifyYn.is(":checked")) {
-      // 수정가능 여부를 체크(사용)할 때,
-      checkedUseYn.prop("checked", true); // 사용 여부도 체크를 한다.
-    }
-  }
-  function checkboxUseYn(e) {
-    // 사용여부
-    let useYn = $(e);
-    let thisTr = useYn.parent().parent();
-    let checkedModifyYn = thisTr.find("td:eq(6)").children();
-    if (!useYn.is(":checked")) {
-      // 사용 여부를 취소할 때,
-      if (checkedModifyYn.is(":checked")) {
-        // 수정가능 여부가 체크 되어 있으면,
-        checkedModifyYn.prop("checked", false); // 수정가능 여부를 취소한다.
-      }
-    }
-  }
+  // }
+
+  // /**
+  //  * 권한코드 저장 ajax
+  //  * @param {권한코드 리스트} authCodeList
+  //  */
+  // function saveAuthCode(authCodeList) {
+  //   ajaxCall({
+  //     url: "/registerAuthCode",
+  //     method: "POST",
+  //     data: authCodeList,
+  //     success: function (data, status, settings) {
+  //       getAuthCode();
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "권한저장이 완료되었습니다",
+  //         text: "",
+  //         confirmButtonText: "확인",
+  //       });
+  //     },
+  //     fail: function (response) {
+  //       let message = response.responseJSON.message;
+  //       openPopup({
+  //         title: "실패",
+  //         type: "error",
+  //         text: message,
+  //       });
+  //     },
+  //   });
+  // }
+
+  // /*******************************************************************
+  //  *** 하단 그리드 event
+  //  *******************************************************************/
+  // /**
+  //  * 메뉴 저장버튼 클릭
+  //  */
+  // function clickSaveMenuButton() {
+  //   let authCodeMenuList = [];
+  //   let tr = $("#authCodeMenuTable").children();
+  //   let authCode = $(tr[0]).find("td:eq(3)").text();
+
+  //   for (let i = 0; i < tr.length; i++) {
+  //     let authCodeMenu = {};
+
+  //     let menuUseYn = $(tr[i])
+  //       .find("td:eq(5)")
+  //       .find(".can_use_yn")
+  //       .prop("checked");
+  //     let menuUseYnCheck = $(tr[i])
+  //       .find("td:eq(5)")
+  //       .find(".use_hidden_yn")
+  //       .val();
+  //     let menuModifyYn = $(tr[i])
+  //       .find("td:eq(6)")
+  //       .find(".can_modify_yn")
+  //       .prop("checked");
+  //     let menuModifyYnCheck = $(tr[i])
+  //       .find("td:eq(6)")
+  //       .find(".modify_hidden_yn")
+  //       .val();
+
+  //     if (
+  //       !menuUseYnCheck ||
+  //       (menuUseYn && menuUseYnCheck === "N") ||
+  //       (!menuUseYn && menuUseYnCheck === "Y")
+  //     ) {
+  //       authCodeMenu.chkUseYn = menuUseYn;
+  //     }
+
+  //     if (
+  //       !menuModifyYnCheck ||
+  //       (menuModifyYn && menuModifyYnCheck === "N") ||
+  //       (!menuModifyYn && menuModifyYnCheck === "Y")
+  //     ) {
+  //       authCodeMenu.chkUseYn = menuUseYn;
+  //       authCodeMenu.chkModifyYn = menuModifyYn;
+  //     }
+
+  //     if (!(Object.keys(authCodeMenu).length === 0)) {
+  //       authCodeMenu.menuId = $(tr[i]).find("td:eq(1)").text();
+  //       authCodeMenu.athCd = authCode;
+  //       authCodeMenuList.push(authCodeMenu);
+  //     }
+  //   }
+
+  //   if (authCodeMenuList.length > 0) {
+  //     saveMenu(authCodeMenuList, authCode);
+  //   }
+  // }
+
+  // /**
+  //  * 메뉴 저장 ajax
+  //  */
+  // function saveMenu(authCodeMenuList, authCode) {
+  //   ajaxCall({
+  //     method: "Post",
+  //     url: "/registerAuthCodeMenu",
+  //     data: authCodeMenuList,
+  //     success: function () {
+  //       getAuthCodeMenu(authCode);
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "저장이 완료되었습니다",
+  //         text: "",
+  //         confirmButtonText: "확인",
+  //       });
+  //     },
+  //     fail: function (response) {
+  //       let message = response.responseJSON.message;
+  //       openPopup({
+  //         title: "실패",
+  //         type: "error",
+  //         text: message,
+  //       });
+  //     },
+  //   });
+  // }
+
+  // /**
+  //  * 사용여부와 수정가능여부 클릭 모션
+  //  * @param {this} 체크박스 클릭 이벤트 발생한 <input>
+  //  */
+  // function checkboxModifyYn(e) {
+  //   // 수정가능여부
+  //   let modifyYn = $(e);
+  //   let thisTr = modifyYn.parent().parent();
+  //   let checkedUseYn = thisTr.find("td:eq(5)").children();
+  //   if (modifyYn.is(":checked")) {
+  //     // 수정가능 여부를 체크(사용)할 때,
+  //     checkedUseYn.prop("checked", true); // 사용 여부도 체크를 한다.
+  //   }
+  // }
+
+
+  // function checkboxUseYn(e) {
+  //   // 사용여부
+  //   let useYn = $(e);
+  //   let thisTr = useYn.parent().parent();
+  //   let checkedModifyYn = thisTr.find("td:eq(6)").children();
+  //   if (!useYn.is(":checked")) {
+  //     // 사용 여부를 취소할 때,
+  //     if (checkedModifyYn.is(":checked")) {
+  //       // 수정가능 여부가 체크 되어 있으면,
+  //       checkedModifyYn.prop("checked", false); // 수정가능 여부를 취소한다.
+  //     }
+  //   }
+  // }
+
+
+
   return {
-    searchButtonClick: searchButtonClick,
-    addAuthCodeRow: addAuthCodeRow,
+    searchButtonClick: searchButtonClick
+    // addAuthCodeRow: addAuthCodeRow,
     // clickDeleteButton: clickDeleteButton,
-    clickAuthSaveButton: clickAuthSaveButton,
-    clickSaveMenuButton: clickSaveMenuButton,
-    pqGridAddNewRow: pqGridAddNewRow
+    // clickAuthSaveButton: clickAuthSaveButton,
+    // clickSaveMenuButton: clickSaveMenuButton,
+    , pqGridAddNewRow: pqGridAddNewRow
+    , mergeAthCd: mergeAthCd  // 권한코드 저장
+    , updateMdfyRghtCcd: updateMdfyRghtCcd  // 메뉴코드내 권한 저장
+    , clickDetailButton: clickDetailButton
   };
 })();
