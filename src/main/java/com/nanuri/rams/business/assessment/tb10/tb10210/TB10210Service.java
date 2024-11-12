@@ -1,9 +1,13 @@
 package com.nanuri.rams.business.assessment.tb10.tb10210;
 
+import com.nanuri.rams.business.common.dto.IBIMS006BDTO;
+import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import com.nanuri.rams.business.common.vo.IBIMS006BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.menuUpdateRequestVO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.text.ParseException;
 import java.util.List;
@@ -23,5 +27,8 @@ public interface TB10210Service {
 	
 	public boolean registerAuthCodeMenu(List<menuUpdateRequestVO> voList);
 
+	public int mergeAthCd(List<IBIMS006BDTO> param);
+
+	public int updateMdfyRghtCcd(List<IBIMS007BDTO> param);
 
 }

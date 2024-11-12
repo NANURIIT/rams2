@@ -39,7 +39,6 @@ public class TB10410ServiceImpl implements TB10410Service {
 	public int insertMenu (List<IBIMS005BDTO> param){
 
 		List<IBIMS005BDTO> list = param;
-		int result = 0;
 
 		// 작성자 세팅
 		for(int i = 0; i < list.size(); i++){
@@ -58,9 +57,11 @@ public class TB10410ServiceImpl implements TB10410Service {
 		// 작성자 세팅
 		for(int i = 0; i < list.size(); i++){
 			list.get(i).setHndEmpno(facade.getDetails().getEno());
+			ibims005BMapper.updateMenu(list.get(i));
+			result++;
 		}
 
-		return ibims005BMapper.updateMenu(list);
+		return result;
 	};
 
 	//////////////////////////////////////////////////////////////

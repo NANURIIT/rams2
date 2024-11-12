@@ -20,7 +20,7 @@ const TB10410Sjs = (function () {
      */
   let hgrkMenuDbData;
   let hgrkGroupMenuDbData;
-  
+  let prevParam;
 
 
   /**
@@ -71,6 +71,7 @@ const TB10410Sjs = (function () {
         halign: "center",
         dataType: "string",
         dataIndx: "menuId",
+        editable: false,
       },
       {
         title: "정렬번호",
@@ -115,6 +116,7 @@ const TB10410Sjs = (function () {
         align: "center",
         halign: "center",
         dataType: "string",
+        dataIndx: "inqBtn",
         editable: false,
         width: "5%",
         render: function (ui) {
@@ -125,7 +127,6 @@ const TB10410Sjs = (function () {
               `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.hgrkGroupMenuInq('${ui.rowData.menuId}')"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
             );
           }
-
         },
       },
       {
@@ -159,7 +160,10 @@ const TB10410Sjs = (function () {
         editor: {
           type: "select",
           options: Yn
-        }
+        },
+        // render: function () {
+        //   // console.log(hgrkMenuDbData);
+        // },
       },
     ]
 
@@ -203,6 +207,7 @@ const TB10410Sjs = (function () {
         halign: "center",
         dataType: "string",
         dataIndx: "menuId",
+        editable: false,
       },
       {
         title: "정렬번호",
@@ -306,18 +311,38 @@ const TB10410Sjs = (function () {
     // 그리드 옵션 생성
     let pqGridObjs = [
       {
-        height: 340
-        , maxHeight: 340
+        height: 270
+        , maxHeight: 270
         , id: 'TB10410S_hgrkMenuColModel'
         , colModel: setpqGridColModel(1)
         , editable: true
+        , cellClick: function (evt, ui) {
+          /**
+           * 특정컬럼 기존셀렉트된건 수정 안되는데 행추가를 사용했을 경우에 입력가능하게 하는거...ㅜㅜㅜ
+           */
+          if (ui.rowData.inqBtn === "new" && ui.column.dataIndx === "menuId") {
+            ui.column.editable = true;
+          } else if (ui.rowData.inqBtn != "new" && ui.column.dataIndx === "menuId") {
+            ui.column.editable = false;
+          }
+        }
       },
       {
-        height: 340
-        , maxHeight: 340
+        height: 270
+        , maxHeight: 270
         , id: 'TB10410S_menuColModel'
         , colModel: setpqGridColModel(2)
         , editable: true
+        , cellClick: function (evt, ui) {
+          /**
+           * 특정컬럼 기존셀렉트된건 수정 안되는데 행추가를 사용했을 경우에 입력가능하게 하는거...ㅜㅜㅜ
+           */
+          if (!ui.rowData.hndEmpno && ui.column.dataIndx === "menuId") {
+            ui.column.editable = true;
+          } else if (ui.rowData.hndEmpno && ui.column.dataIndx === "menuId") {
+            ui.column.editable = false;
+          }
+        }
       },
     ];
 
@@ -348,6 +373,9 @@ const TB10410Sjs = (function () {
       }
       else if (title === "하위메뉴") {
         newRow[dataIndx] = "new";
+      }
+      else if (title === "삭제여부" || title === "적용여부") {
+        newRow[dataIndx] = "Y";
       }
       else {
         newRow[dataIndx] = "";
@@ -396,22 +424,13 @@ const TB10410Sjs = (function () {
       success: function (data) {
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
-          const temp = data;
-          
-          hgrkMenuDbData = data;
-          console.log("이건 왜 안 찍혀", hgrkMenuDbData[26]);
 
           let grid = $('#TB10410S_hgrkMenuColModel').pqGrid('instance');
-          grid.setData(temp);
+          grid.setData(data);
           grid.getData();
 
+          hgrkMenuDbData = JSON.parse(JSON.stringify(data));
 
-          //  저장 실행시 비교 데이타 저장
-          // for(let i = 0; i < testGrid.length; i++){
-          //   hgrkMenuDbData.push(testGrid[i]);
-          // }
-
-          
         }
         // 데이터 없을시 확인가능한 alert 실행
         else {
@@ -434,6 +453,8 @@ const TB10410Sjs = (function () {
    */
   function hgrkGroupMenuInq(param) {
 
+    prevParam = param
+
     $.ajax({
       method: "POST",
       url: "/TB10410S/hgrkGroupMenuInq",
@@ -442,14 +463,12 @@ const TB10410Sjs = (function () {
       success: function (data) {
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
+          
           let grid = $('#TB10410S_menuColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
 
-          //  저장 실행시 비교 데이타 저장
-          for(let i = 0; i < grid.pdata.length; i++){
-            hgrkGroupMenuDbData.push(grid.pdata[i]);
-          }
+          hgrkGroupMenuDbData = JSON.parse(JSON.stringify(grid.pdata));
 
         }
         // 데이터 없을시 확인가능한 alert 실행
@@ -472,24 +491,16 @@ const TB10410Sjs = (function () {
   /**
    * 상위메뉴저장
    */
-  function SaveHgrkMenu() {
+  async function SaveHgrkMenu() {
 
-    // const saveData = $('#TB10410S_hgrkMenuColModel').pqGrid('instance').pdata;
-    console.log(hgrkMenuDbData[26])
-    
-    const saveData = $('#TB10410S_hgrkMenuColModel').pqGrid('option', 'dataModel.data');
+    const saveData = $('#TB10410S_hgrkMenuColModel').pqGrid('instance').pdata;
 
     let updateData = []
     let insertData = []
 
-    
-    console.log("바꾼 데이터")
-    console.log(saveData[26]);
-    
-
     // 수정된 로우 모으기
     for (let i = 0; i < hgrkMenuDbData.length; i++) {
-      if (saveData[i] != hgrkMenuDbData[i]) {
+      if (saveData[i].pq_cellcls != undefined) {
         updateData.push(saveData[i]);
       }
     }
@@ -499,51 +510,39 @@ const TB10410Sjs = (function () {
       insertData.push(saveData[i]);
     }
 
-    const updateResult = updateMenu(updateData);
-    const insertResult = insertMenu(insertData);
+    const updateResult = await updateMenu(updateData);
+    const insertResult = await insertMenu(insertData);
 
-    // 검사
-    if(updateResult > 0 && insertResult > 0){
-      Swal.fire({
-        icon: 'success'
-        ,title: "성공하셨소...(아무나 수정좀)"
-      })
-    }else if (updateResult < 0 || insertResult < 0) {
-      Swal.fire({
-        icon: 'error'
-        ,title: "실패임(아무나 수정좀)"
-      })
-    }else{
-      Swal.fire({
-        icon: 'warning'
-        ,title: "실패Yo(아무나 수정좀)"
-      })
+    while(true){
+      // 귀찮아서 반복문으로 체크했음
+      if(updateResult === undefined || insertResult === undefined){
+        wait(500);
+        continue;
+      }else{
+        successChk(updateResult, insertResult);
+        // 저장 후 조회
+        hgrkGroupMenuDbData = []
+        hgrkGroupMenuInq();
+        break;
+      }
     }
 
-    hgrkMenuDbData = []
-
-    // 저장 후 조회
-    // hgrkMenuInq();
   }
 
 
   /**
    * 하위메뉴저장
    */
-  function SaveHgrkGroupMenu() {
+  async function SaveHgrkGroupMenu() {
 
     const saveData = $('#TB10410S_menuColModel').pqGrid('instance').pdata;
 
     let updateData = []
     let insertData = []
 
-    console.log(saveData[26]);
-    console.log(hgrkGroupMenuDbData[26]);
-    
-
     // 수정된 로우 모으기
     for (let i = 0; i < hgrkGroupMenuDbData.length; i++) {
-      if (saveData[i] != hgrkGroupMenuDbData[i]) {
+      if (saveData[i].pq_cellcls != undefined) {
         updateData.push(saveData[i]);
       }
     }
@@ -553,14 +552,31 @@ const TB10410Sjs = (function () {
       insertData.push(saveData[i]);
     }
 
-    const updateResult = updateMenu(updateData);
-    const insertResult = insertMenu(insertData);
+    const updateResult = await updateMenu(updateData);
+    const insertResult = await insertMenu(insertData);
 
+    while(true){
+      // 귀찮아서 반복문으로 체크했음
+      if(updateResult === undefined || insertResult === undefined){
+        wait(500);
+        continue;
+      }else{
+        successChk(updateResult, insertResult);
+        // 저장 후 조회
+        hgrkGroupMenuDbData = [];
+        hgrkGroupMenuInq(prevParam);
+        break;
+      }
+    }
+    
+  }
+
+  function successChk (updateResult, insertResult) {
     // 검사
     if(updateResult > 0 && insertResult > 0){
       Swal.fire({
         icon: 'success'
-        ,title: "성공하셨소...(아무나 수정좀)"
+        ,title: "저장 성공"
       })
     }else if (updateResult < 0 || insertResult < 0) {
       Swal.fire({
@@ -569,15 +585,10 @@ const TB10410Sjs = (function () {
       })
     }else{
       Swal.fire({
-        icon: 'warning'
-        ,title: "실패Yo(아무나 수정좀)"
+        icon: 'error'
+        ,title: "실패"
       })
     }
-
-    hgrkGroupMenuDbData = [];
-
-    // 저장 후 조회
-    // hgrkGroupMenuInq();
   }
 
 
@@ -588,8 +599,44 @@ const TB10410Sjs = (function () {
    */
   function insertMenu(insertData) {
 
+    let result = 1;
+
     if(insertData.length === 0){
-      return 1;
+      return result;
+    }
+
+    // 데이터 확인
+    for (let i = 0; i < insertData.length; i++) {
+      if (!insertData[i].menuId || insertData[i].menuId.indexOf(" ") > 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: '메뉴ID를 입력해주세요!'
+        });
+      }
+      else if (!insertData[i].urlVrbCntn || insertData[i].urlVrbCntn.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '화면번호를 입력해주세요!'
+          });
+      }
+      else if (!insertData[i].menuNm || insertData[i].menuNm.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '메뉴명을 입력해주세요!'
+          });
+      }
+      else if (!insertData[i].shtnNm || insertData[i].shtnNm.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '타이틀명을 입력해주세요!'
+          });
+      }
+      else if (!insertData[i].urlClsfCd || insertData[i].urlClsfCd.indexOf(" ") > 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'URL분류코드를 입력해주세요!'
+          });
+      }
     }
 
     $.ajax({
@@ -601,17 +648,19 @@ const TB10410Sjs = (function () {
       success: function (data) {
         if (data > 0) {
           // 성공
-          return 1;
+          result = data;
         } else {
           // 저장된게 없긴함
-          return 0;
+          result = 0;
         }
       },
       error: function (response) {
         // 에러남 ㅋㅋ
-        return -1;
+        result = -1;
       },
     });
+
+    return result;
 
   }
 
@@ -621,8 +670,10 @@ const TB10410Sjs = (function () {
    */
   function updateMenu(updateData) {
 
+    let result = 1;
+
     if(updateData.length === 0){
-      return 1;
+      return result;
     }
 
     $.ajax({
@@ -634,17 +685,19 @@ const TB10410Sjs = (function () {
       success: function (data) {
         if (data > 0) {
           // 성공
-          return 1;
+          result = data;
         } else {
           // 저장된게 없긴함
-          return 0;
+          result = 0;
         }
       },
       error: function (response) {
         // 에러남 ㅋㅋ
-        return -1;
+        result = -1;
       },
     });
+
+    return result;
 
   }
 

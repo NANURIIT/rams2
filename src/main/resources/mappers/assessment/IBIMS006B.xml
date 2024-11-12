@@ -24,33 +24,113 @@
 	</select>
 
 	<select id="selectAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.vo.IBIMS006BVO">
-        SELECT A.ATH_CD											<!-- 권한코드 -->
-             , A.ATH_CD_NM										<!-- 권한코드명 -->
-             , A.ATH_CD_EXPL									<!-- 권한코드설명 -->
-             , A.ATH_DCD										<!-- 권한구분코드 -->
-             , A.APLY_YN										<!-- 적용여부 -->
-             , A.DLT_YN											<!-- 삭제여부 -->
-             , A.DLT_DT											<!-- 삭제일자 -->
-             , A.DLT_TM											<!-- 삭제시간 -->
-             , A.DLT_EMPNO										<!-- 삭제자사번 -->
+        SELECT A.ATH_CD								        /* 권한코드 */
+             , A.ATH_CD_NM						        /* 권한코드명 */
+             , A.ATH_CD_EXPL					        /* 권한코드설명 */
+             , A.ATH_DCD							        /* 권한구분코드 */
+             , A.APLY_YN							        /* 적용여부 */
+             , A.DLT_YN								        /* 삭제여부 */
+             , A.DLT_DT								        /* 삭제일자 */
+             , A.DLT_TM								        /* 삭제시간 */
+             , A.DLT_EMPNO						        /* 삭제자사번 */
              , A.RGST_DT
              , A.RGST_EMPNO
              , NVL((SELECT EMP_NM
-					   FROM IBIMS003B
-					   WHERE EMPNO = A.RGST_EMPNO), '') AS RGST_EMP_NM
-             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYYMMDD'), '') AS HND_DT
-             , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24MISS'), '') AS HND_TM
+					            FROM IBIMS003B
+					           WHERE EMPNO = A.RGST_EMPNO), '') AS RGST_EMP_NM
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYY-MM-DD'), '') AS HND_DT
+             , NVL(TO_CHAR(A.HND_DETL_DTM, 'HH24:MI:SS'), '') AS HND_TM
              , A.HND_EMPNO
              , NVL((SELECT EMP_NM
-					   FROM IBIMS003B
-					   WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
+					            FROM IBIMS003B
+					           WHERE EMPNO = A.HND_EMPNO), '') AS HND_EMP_NM
           FROM IBIMS006B A
-         WHERE A.DLT_YN != 'Y'
-        <if test="@com.nanuri.rams.com.utils.MybatisCheck@notEmpty(athCdNm)">
-           AND A.ATH_CD_NM LIKE '%'|| #{athCdNm}|| '%'	<!-- 권한코드명 -->
-            OR A.ATH_CD LIKE '%'|| #{athCdNm}|| '%'
-        </if>
+         WHERE 1=1
+           AND (
+                A.ATH_CD LIKE '%'|| #{athCd} || '%'           /* 권한코드 */
+             OR A.ATH_CD_NM LIKE '%'|| #{athCdNm} || '%'	    /* 권한코드명 */
+                )
     </select>
+
+    <select id="athCdvldChk" parameterType="String" resultType="int">
+      SELECT COUNT(ATH_CD)
+        FROM IBIMS006B
+       WHERE 1=1
+         AND ATH_CD = #{athCd}
+    </select>
+
+    <update id="mergeAthCd" parameterType="com.nanuri.rams.business.common.dto.IBIMS006BDTO">
+      MERGE INTO IBIMS006B T
+      USING (
+             SELECT #{athCd} AS ATH_CD,
+                    #{athCdNm} AS ATH_CD_NM,
+                    #{athCdExpl} AS ATH_CD_EXPL,
+                    #{athDcd} AS ATH_DCD,
+                    #{aplyYn} AS APLY_YN,
+                    #{rgstDt} AS RGST_DT,
+                    #{rgstTm} AS RGST_TM,
+                    #{rgstEmpno} AS RGST_EMPNO,
+                    #{dltYn} AS DLT_YN,
+                    #{dltDt} AS DLT_DT,
+                    #{dltTm} AS DLT_TM,
+                    #{dltEmpno} AS DLT_EMPNO,
+                    #{hndDetlDtm} AS HND_DETL_DTM,
+                    #{hndEmpno} AS HND_EMPNO,
+                    #{hndTmnlNo} AS HND_TMNL_NO,
+                    #{hndTrId} AS HND_TR_ID,
+                    #{guid} AS GUID
+               FROM DUAL
+             ) S
+         ON (T.ATH_CD = S.ATH_CD)
+      WHEN MATCHED THEN
+        UPDATE SET T.ATH_CD_NM = S.ATH_CD_NM,
+                   T.ATH_CD_EXPL = S.ATH_CD_EXPL,
+                   T.ATH_DCD = S.ATH_DCD,
+                   T.APLY_YN = S.APLY_YN,
+                   T.DLT_YN = S.DLT_YN,
+                   T.HND_DETL_DTM = SYSDATE,
+                   T.HND_EMPNO = S.HND_EMPNO,
+                   T.HND_TMNL_NO = S.HND_TMNL_NO,
+                   T.HND_TR_ID = S.HND_TR_ID,
+                   T.GUID = S.GUID
+      WHEN NOT MATCHED THEN
+        INSERT ( ATH_CD
+               , ATH_CD_NM
+               , ATH_CD_EXPL
+               , ATH_DCD
+               , APLY_YN
+               , RGST_DT
+               , RGST_TM
+               , RGST_EMPNO
+               , DLT_YN
+               , DLT_DT
+               , DLT_TM
+               , DLT_EMPNO
+               , HND_DETL_DTM
+               , HND_EMPNO
+               , HND_TMNL_NO
+               , HND_TR_ID
+               , GUID
+               )
+        VALUES ( S.ATH_CD
+               , S.ATH_CD_NM
+               , S.ATH_CD_EXPL
+               , S.ATH_DCD
+               , S.APLY_YN
+               , TO_CHAR(SYSDATE, 'YYYYMMDD')
+               , TO_CHAR(SYSDATE, 'HH24MISS')
+               , S.HND_EMPNO
+               , S.DLT_YN
+               , ''
+               , ''
+               , ''
+               , SYSDATE
+               , S.HND_EMPNO
+               , S.HND_TMNL_NO
+               , S.HND_TR_ID
+               , S.GUID
+               )
+    </update>
     
     <select id="getAuthCode" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS006BDTO">
         SELECT ATH_CD											<!-- 권한코드 -->
