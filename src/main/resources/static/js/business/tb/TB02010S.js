@@ -1,77 +1,106 @@
 const TB02010Sjs = (function(){
+
 	$(document).ready(function() {
-		selInfo();
+		//console.log(JSON.stringify(colM_TB02010S));
+		setPqGrid_TB02010S();
 	});
 	
+	function setPqGrid_TB02010S(){
+
+		let colM_TB02010S = [
+			{ 	
+				title    : "요청일시", 
+				dataType : "string",
+				dataIndx : "",
+				halign	 : "center", 
+				align    : "center", 
+				filter   : { crules: [{ condition: 'range' }] },
+			},
+			{ 	
+				title    : "요청부서", 
+				dataType : "string",
+				dataIndx : "",
+				halign	 : "center", 
+				align    : "center", 
+				filter   : { crules: [{ condition: 'range' }] },
+			},
+			{ 	
+				title    : "요청자", 
+				dataType : "string",
+				dataIndx : "",
+				halign	 : "center", 
+				align    : "center", 
+				filter   : { crules: [{ condition: 'range' }] },
+			},
+			{ 	
+				title    : "업무구분", 
+				dataType : "string",
+				dataIndx : "",
+				halign	 : "center", 
+				align    : "center", 
+				filter   : { crules: [{ condition: 'range' }] },
+			},
+			{ 	
+				title    : "내역", 
+				dataType : "string",
+				dataIndx : "",
+				halign	 : "center", 
+				align    : "center", 
+				filter   : { crules: [{ condition: 'range' }] },
+			},
+		]
+
+		let pqGridObjs_TB02010S = [
+			{
+				height: 500
+				, maxHeight: 500
+				, id: 'wfGrid_TB02010S'
+				, numberCell: { show: false }
+				, colModel: colM_TB02010S 		
+			},
+		]
+
+		setPqGrid(pqGridObjs_TB02010S);
+
+		selInfo();
+
+	}
+
 	// 오늘의할일 조회
 	function selInfo() {
 		
-		businessFunction();
-		
-		function businessFunction() {
-	
-			$.ajax({
-				type: "GET",
-				url: "/TB02010S/selInfo",
-				dataType: "json",
-				success: function(data) {
-					var html = '';
-					var infoList = data;
-					
-					var aprvWaitCnt = 0;
-					var aprvPrgrsCnt = 0;
-					var metCnt = 0;
-					
-					$('#TB02010S_selInfo').html(html);
-	
-					if (infoList.length > 0) {
-						$.each(infoList, function(key, value) {
-							
-							html += `<tr ondblclick="TB02010Sjs.sendPage('${value.menuId}','${value.workCtns}');" style="cursor: pointer;">`;
-							html += '<td>' + Number(key+1) + '</td>';								// 일련번호
-							html += '<td style="display:none;">' + value.workDcd + '</td>';			// 작업구분코드
-							html += '<td>' + value.workDcdNm + '</td>';								// 작업구분코드명
-							html += '<td>' + handleNullData(formatDate(value.prcsDt)) + '</td>';	// 작업일자
-							html += '<td>' + value.workCtns + '</td>';								// 작업설명
-							html += '<td>' + handleNullData(formatDate(value.rqstDt)) + '</td>';	// 요청일자
-							html += '<td>' + handleNullData(value.dprtNm) + '</td>';				// 요청부서
-							html += '<td>' + handleNullData(value.regEnoNm) + '</td>';				// 요청자
-							html += '<td>' + handleNullData(value.mtrNm) + '</td>';					// 사업명
-							html += '<td>' + handleNullData(value.dealNo) + '</td>';				// 딜관리번호
-							html += '<td style="display:none;">' + value.menuId + '</td>';			// menuId
-							html += '</tr>';
-							
-							if (isEmpty(value.prcsDt)) {
-								aprvWaitCnt ++;
-							} else {
-								aprvPrgrsCnt ++;
-							}
-						
-							if (value.workDcd == '02') { 
-								metCnt ++;
-							}
-						})
-					} else {
-						html += '<tr>';
-						html += '<td colspan="9" style="text-align: center">데이터가 없습니다.</td>';
-						html += '</tr>';
-					}
-					
-					$('#TB02010S_selInfo tr').each(function() {
-						var tr = $(this);
-						var td = tr.children();
-					});
-					
-					$('#TB02010S_appvWaitCnt').text(aprvWaitCnt + '건');
-					$('#TB02010S_appvPrgrsCnt').text(aprvPrgrsCnt + '건');
-					$('#TB02010S_rmCnt').text(metCnt);
-						
-					
-					$('#TB02010S_selInfo').html(html);
-				}
-				
-			});
+
+		var wfAuthId = $('#userDprtCd').val();
+		console.log("wfAuthId: " + wfAuthId);
+
+		var param = {
+			wfAuthId
 		}
+
+		$.ajax({
+			type: "GET",
+			url: "/TB02010S/selInfo",
+			data: param,
+			dataType: "json",
+			beforeSend: function () {
+				$("#wfGrid_TB02010S").pqGrid("setData", []);
+				$("#wfGrid_TB02010S").pqGrid("option", "strNoRows", "조회 중입니다...");
+				$("#wfGrid_TB02010S").pqGrid("refreshDataAndView");
+				// settlementObj.option("strNoRows", "조회 중입니다...");
+				// settlementObj.refreshDataAndView();
+			},
+			success: function(data) {
+				console.log(JSON.stringify(data));
+
+				$("#wfGrid_TB02010S").pqGrid("option", "strNoRows", "조회된 데이터가 없습니다.");
+
+				if(data.length > 0){
+					$("#wfGrid_TB02010S").pqGrid("setData", data);
+				}
+			}
+			
+		});
+		
 	}
 	
 	/**

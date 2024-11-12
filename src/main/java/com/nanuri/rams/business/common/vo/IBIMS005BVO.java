@@ -14,7 +14,9 @@ import lombok.ToString;
 /*
  * 메뉴기본 Table.IBIMS005B VO
  * */
-public class IBIMS005BVO {
+public class IBIMS005BVO extends IBIMS005BDTO {
+
+    private List<IBIMS005BDTO> menuList;
     
     @Getter
     @Setter
@@ -48,18 +50,10 @@ public class IBIMS005BVO {
         private String hgTitle;
     }
     
-    private int sortNo;
-    private String menuId;
-    private String menuNm;
-    private String rghtCd;
-    private String menuLvl;
-    private String dltF;
     private String mdfyRghtCcd;
-    private String hndDetlDtm;
-    private String hndlEmpno;
-    private String hndEmpNm;
     private String hndlDprtCd;
+    private String athCd;
+    private String hndDt;
+    private String hndTm;
     
-    private List<IBIMS005BDTO> menuList;
-
 }

@@ -120,6 +120,9 @@ public class IBIMS101BDTO {
     private String         mtrPrgSttsDcd;     // 안건진행상태코드
     private String         mtrPrgSttsDcdNm;   // 안건진행상태코드명
 
+    private String         wfId;              // 워크플로우ID
+    private String         wfState;           // 워크플로우 상태
+
     /* 공동영업관리자/협업부서 정보 */
     private List<IBIMS116BVO> enoPList;      // 공동영업관리자 목록
 

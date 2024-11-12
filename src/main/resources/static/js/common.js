@@ -1592,3 +1592,24 @@ function indexChangeHandler (prefix) {
 	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
 	$(`#modal-${prefix}`).attr('style', 'z-index: 4000 !important;');
 }
+
+/**
+ * PQGRID 줄추가
+ * @param {selector} colModelSelector	// 쿼리 셀렉터 아이디
+ */
+function pqGridAddNewRow(colModelSelector) {
+    let row = [];
+    let newRow = {};
+    const data = colModelSelector.pqGrid("instance");
+    const rowColumnsData = data.colModel;
+    const length = rowColumnsData.length;
+    for (let i = 0; i < length; i++) {
+      const title = rowColumnsData[i].title;
+      row.push(title);
+    }
+
+    colModelSelector.pqGrid("addRow", {
+      rowData: newRow,
+      checkEditable: false,
+    });
+}

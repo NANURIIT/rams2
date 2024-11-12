@@ -1,11 +1,13 @@
 package com.nanuri.rams.business.assessment.tb10.tb10210;
 
+import com.nanuri.rams.business.common.dto.IBIMS006BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.mapper.IBIMS005BMapper;
 import com.nanuri.rams.business.common.mapper.IBIMS006BMapper;
 import com.nanuri.rams.business.common.mapper.IBIMS007BMapper;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
 import com.nanuri.rams.business.common.vo.IBIMS006BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.menuUpdateRequestVO;
 import com.nanuri.rams.com.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
@@ -96,6 +98,53 @@ public class TB10210ServiceImpl implements TB10210Service {
             }
         }
         return count > 0;
+    }
+
+    @Override
+    public int mergeAthCd(List<IBIMS006BDTO> param){
+
+        int result = 0;
+        // 권한코드 중복체크
+        for(int i = 0; i < param.size(); i++){
+            if (param.get(i).getHndEmpno() == null || param.get(i).getHndEmpno().isEmpty()) {
+                if( ibims006BMapper.athCdvldChk(param.get(i).getAthCd()) > 0){
+                    result = -7574;
+                    break;
+                }
+            }
+            // 현재 작성자
+            param.get(i).setHndEmpno(facade.getDetails().getEno());
+
+            ibims006BMapper.mergeAthCd(param.get(i));
+
+            result = result + 1;
+        }
+
+        return result;
+    };
+
+    @Override
+    public int updateMdfyRghtCcd(List<IBIMS007BDTO> param) {
+
+        int result = 0;
+        
+        for(int i = 0; i < param.size(); i++){
+            if (param.get(i).getHndEmpno() == null || param.get(i).getHndEmpno().isEmpty()) {
+                int sq = ibims007BMapper.ibims007bCreateSq();
+                param.get(i).setSq(sq);
+            } else {
+
+            }
+            // 현재 작성자
+            param.get(i).setHndEmpno(facade.getDetails().getEno());
+
+            ibims007BMapper.updateMdfyRghtCcd(param.get(i));
+
+            result = result + 1;
+        }
+
+        return result;
+
     }
 
 }
