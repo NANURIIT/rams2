@@ -15,7 +15,16 @@ public class AuthenticationFacade {
 
     public EmpDetailsVO getDetails() {
         Authentication auth = getAuthentication();
-        return (EmpDetailsVO)auth.getPrincipal();
+        // return (EmpDetailsVO)auth.getPrincipal();
+
+        Object principal = auth.getPrincipal();
+
+        if (principal instanceof EmpDetailsVO) {
+            return (EmpDetailsVO) principal;
+        } else {
+            return null;
+        }
+
     }
 
 }

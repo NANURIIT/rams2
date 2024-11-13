@@ -38,11 +38,15 @@
 	</update>
 
 	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO" resultType="int">
-		SELECT COUNT(MENU_ID)
-		  FROM IBIMS007B
+		SELECT COUNT(T1.MENU_ID)
+		  FROM IBIMS007B T1
+	 LEFT JOIN IBIMS005B T2
+	        ON T1.MENU_ID = T2.MENU_ID
 		 WHERE 1=1
-		   AND MENU_ID = #{menuId}
-		   AND ATH_CD = (
+		   AND T1.MENU_ID = #{menuId}
+		   AND T2.APLY_YN = 'Y'
+		   AND T2.DEL_YN = 'N'
+		   AND T1.ATH_CD = (
 							SELECT ATH_CD
 							  FROM IBIMS003B
 							 WHERE 1=1
