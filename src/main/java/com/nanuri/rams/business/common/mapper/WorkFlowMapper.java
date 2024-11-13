@@ -35,17 +35,19 @@ public interface WorkFlowMapper {
 
     public String getWfMapId(WorkFlowDTO workFlowDTO);          //해당 테이블 작업 WF_ID 찾기
 
-    public List<WorkFlowDTO> workFlowInq(WorkFlowDTO wfAuthId);      //WF목록 조회(오늘의 할 일)
+    public List<WorkFlowDTO> workFlowInq(WorkFlowDTO wfAuthId); //WF목록 조회(오늘의 할 일)
 
     public int wfAuthIdCheck(WorkFlowDTO wfAuthId);             //WF_STEP 권한 체크
 
-    public List<WFMapDTO> getWfMapInfo(String wfMapNm);              //Map 조회
+    public List<WFMapDTO> getWfMapInfo(String wfMapNm);         //WF_MAP 조회
 
-    public int deleteWfMapInfo(List<String> deleteInfo);                 //Map 삭제
+    public int deleteWfMapInfo(List<String> deleteInfo);        //WF_MAP 삭제
 
-    public int updateWfMapInfo(List<WfMapVo> updateInfo); //수정
+    public int updateWfMapInfo(List<WfMapVo> WfMapVo);          //WF_MAP수정
 
-    public List<WorkFlowDTO> getWfStepInfo(String wfMapId);      //step조회   
+    public List<WorkFlowDTO> getWfStepInfo(String wfMapId);     //WF_STEP 조회
+    
+    public int deleteWfStepInfo(List<WFStepDTO> WFStepDTOs);    //WF_STEP 삭제
 
-    public List<WorkFlowDTO> wfCntInq(WorkFlowDTO workFlowDTO);     //WF 건수 조회
+    public int updateWStepInfo(List<WFStepDTO> WFStepDTOs);     //WF_STEP 수정
 }
