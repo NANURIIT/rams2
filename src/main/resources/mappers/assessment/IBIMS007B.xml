@@ -37,7 +37,7 @@
 		   AND MENU_ID = #{menuId}
 	</update>
 
-	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BVO" resultType="int">
+	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.vo.IBIMS007BVO" resultType="int">
 		SELECT COUNT(T1.MENU_ID)
 		  FROM IBIMS007B T1
 	 LEFT JOIN IBIMS005B T2
