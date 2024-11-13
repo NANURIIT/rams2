@@ -6504,14 +6504,16 @@ const TB09090Sjs = (function() {
 		// setDatePicker();
 		// stdDtSelect();
 		fnSelectBox();
-		$('#TB09090S_selDt').val(getToday());
-		$('#TB09090S_stdDt').val(getToday().substr(0, 7));
-		// $('#TB09090S_stdDt_in_detail').val(getToday().slice(8));
+		$('#TB09090S_stdDt').val(getToday());
 		chkboxFunction();
 		pqGrid();
 		$("#TB09090S_colCpc1").hide();
 		$("#TB09090S_colCpc2").hide();
 		$("#TB09090S_colCpc3").hide();
+
+		// 클릭해서 체크!
+		$('#TB09090S_chkF1').trigger('click');
+
 	});
 	
 	
@@ -7035,8 +7037,8 @@ const TB09090Sjs = (function() {
 	 */
 	const dcsnCheck = () => {
 	
-		/*
-		 *	확정 처리는 각 부서 부서장만 가능
+		/**
+		 * 확정 처리는 각 부서 부서장만 가능
 		 */
 		// if(){
 	
@@ -8316,24 +8318,24 @@ const TB09090Sjs = (function() {
 		// 그리드 옵션 생성
 		let pqGridObjs = [
 			{
-				height: 340
-				, maxHeight: 340
+				height: 500
+				, maxHeight: 500
 				, id: 'TB09090S_colCpc1'
 				, colModel: selectColModel("01")
 				, scrollModel: { autoFit: false }
 				, editable: true
 			},
 			{
-				height: 340
-				, maxHeight: 340
+				height: 500
+				, maxHeight: 500
 				, id: 'TB09090S_colCpc2'
 				, colModel: selectColModel("02")
 				, scrollModel: { autoFit: false }
 				, editable: true
 			},
 			{
-				height: 340
-				, maxHeight: 340
+				height: 500
+				, maxHeight: 500
 				, id: 'TB09090S_colCpc3'
 				, colModel: selectColModel("03")
 				, scrollModel: { autoFit: false }

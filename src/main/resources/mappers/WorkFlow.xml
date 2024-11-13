@@ -195,7 +195,7 @@
     <!--다음 스텝 ID 찾기-->
     <select id="getNxtStepId" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="String">
         SELECT 
-            CASE WHEN A.RTN_YN = 'Y' THEN B.RTN_STEP_ID 
+            CASE WHEN #{rtnYn} = 'Y' THEN B.RTN_STEP_ID 
                     ELSE B.NEXT_STEP_ID 
                     END AS NEXT_STEP_ID         /*  다음 스텝ID  */
         FROM  WF A
