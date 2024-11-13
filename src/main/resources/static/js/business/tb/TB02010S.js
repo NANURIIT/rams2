@@ -150,12 +150,16 @@ const TB02010Sjs = (function(){
 				if(workFlowList.length > 0){
 					$("#wfGrid_TB02010S").pqGrid("setData", workFlowList);
 
+					var $ulElement = $("#TB02010S_appvPrgrsCnt");
+					$ulElement.text(workFlowList.length + "건");
+
 					pqGridObj_TB02010S.option("rowDblClick", function(event, ui) {
 						moveToJobPage(ui.rowData);
 					});
 				}
 
 				if(wfCntList.length > 0){
+					
 					setWfCntList(wfCntList);
 				}
 				
