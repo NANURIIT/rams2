@@ -1,5 +1,5 @@
 const TB02030Sjs = (() => {
-    let lastClickedRowId = null;
+    //let lastClickedRowId = null;
     let lastWfMapId;
     const GRID_MAP_ID = "#gridWfMapList";
     const GRID_STEP_ID = "#gridWfStepList";
@@ -15,22 +15,51 @@ const TB02030Sjs = (() => {
         INSERT_WF_STEP : "/TB02030S/insertWfStepInfo",
     };
 
-    $(document).ready(() => setGrid_TB20230S([]));
+    //$(document).ready(() => setGrid_TB20230S([]));
+    $(document).ready(() => {
+        getAthCodeInfo();
+        setGrid_TB20230S();
+    });
+
 
     const getAthCodeInfo = () => {
         ajaxCall({
             url: URLS.MENU_AUTH,
             success: (data) => {
-                const dropdownData = data.map(item => ({
+                const stepNmOptions = data.map(item => ({
+                    label: item.athCdNm ,
+                    value: item.athCdNm
+                }));
+
+                const wfAuthIdOptions = data.map(item => ({
                     label: `${item.athCd} ${item.athCdNm}`,
                     value: item.athCd
                 }));
-                setGrid_TB20230S(dropdownData);
+
+                //colWfStepList에 select 박스에 옵션을 설정
+                colWfStepList.forEach(col => {
+                    if(col.dataIndx === "stepNm"){ //스텝명
+                        col.editor.options = stepNmOptions;
+                        // onChange 이벤트 추가
+                        col.editor.change = function(evt, ui) {
+                            const selectedStep = ui.newValue;
+                            console.log("Selected Step: ", selectedStep);
+                            // 연관된 값을 변경하거나 다른 로직을 추가할 수 있습니다.
+                        };
+                    }
+
+                    if (col.dataIndx === "wfAuthId") { //권한id
+                        col.editor.options = wfAuthIdOptions;
+                    }
+
+                });
+
+                //setGrid_TB20230S();
             }
         });
     };
-
-    const setGrid_TB20230S = (dropdownData) => {
+    
+    const setGrid_TB20230S = () => {
         const obj_WfMap = {
             height: 220,
             width: "100%",
@@ -191,7 +220,7 @@ const TB02030Sjs = (() => {
     const getWfMapList = (wfMapNm) => {
         const _url = wfMapNm ? `${URLS.GET_WF_MAP}?wfMapNm=${wfMapNm}` : URLS.GET_WF_MAP;
      
-        ajaxCall({
+        $.ajax({
             url: _url,
             beforeSend: () => {
                 clearGridData(GRID_MAP_ID);   // GRID_MAP_ID 비우기
@@ -226,7 +255,7 @@ const TB02030Sjs = (() => {
             originalWfMapId: value.wfMapId
         }));
         updateGridData(GRID_MAP_ID, rowList);
-        lastClickedRowId = null;
+        //lastClickedRowId = null;
     };
 
     const updateGridData = (gridId, data) => {
@@ -411,6 +440,13 @@ const TB02030Sjs = (() => {
 			halign   : "center",
 			align    : "center",
 			width    : "14%",
+            formatter: 'listItemText', // 선택된 항목의 label을 표시
+            editor: {
+                type: "select",
+                options: [],
+                valueIndx: "value",
+                labelIndx: "label",
+            },
             editable : true,
 		},
 		{ 	
@@ -436,7 +472,7 @@ const TB02030Sjs = (() => {
 			dataIndx : "wfAuthId",
 			align    : "center", 
 			width    : "14%",
-            formatter: 'listItemText', // 선택된 항목의 label을 표시
+            formatter: 'listItemText', 
             editor: {
                 type: "select",
                 options: [],
@@ -479,7 +515,7 @@ const TB02030Sjs = (() => {
         //     console.log("같은 행이 이미 선택되었습니다. 서비스 호출을 생략합니다.");
         //     return;
         // }
-        lastClickedRowId = wfMapId;
+        //lastClickedRowId = wfMapId;
         const url = wfMapId ? `${URLS.GET_WF_STEP}?wfMapId=${wfMapId}` : URLS.GET_WF_STEP;
 
         ajaxCall({
