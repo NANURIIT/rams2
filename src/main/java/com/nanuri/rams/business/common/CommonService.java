@@ -16,6 +16,7 @@ import com.nanuri.rams.business.common.dto.RAA20BDTO;
 import com.nanuri.rams.business.common.dto.RAA98ADTO;
 import com.nanuri.rams.business.common.dto.RAB98BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.RAA20BVO;
 import com.nanuri.rams.com.code.AthCd;
 
@@ -81,5 +82,5 @@ public interface CommonService {
 	public List<IBIMS993BDTO> getFndList(IBIMS993BDTO param);
 
 	// 권한확인
-	public int chkAthCd(IBIMS007BDTO param);
+	public String chkAthCd(IBIMS007BVO param);
 }

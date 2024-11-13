@@ -350,7 +350,6 @@ const TB10310Sjs = (function () {
   }
 
   return {
-
     // 함수
     selectMenuListFromTB10310S: selectMenuListFromTB10310S   // 메뉴조회
     , selectAthCdListFromMenu: selectAthCdListFromMenu   // 메뉴별권한조회
