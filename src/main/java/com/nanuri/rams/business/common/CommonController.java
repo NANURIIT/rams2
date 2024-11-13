@@ -31,6 +31,10 @@ public class CommonController {
     @GetMapping(value = "/{urlNm}")
     public String getPath(Model model, @PathVariable String urlNm, HttpSession session) {
 
+        if(facade.getDetails() == null){
+            return "redirect:/login";
+        }
+
         String path = lv1Path + urlNm.substring(0,2).toLowerCase() + "/" + urlNm;
         log.debug("call html path : " + path);
         IBIMS005BVO.TitleVo vo = commonService.getTitle(urlNm);
@@ -56,7 +60,7 @@ public class CommonController {
         model.addAttribute("bzDd", bzDd);
 
         if(commonService.chkAthCd(ibims007bdto) == 0){
-            return "/TB02010S";
+            return "redirect:/TB02010S";
         }else {
             return path;
         }
