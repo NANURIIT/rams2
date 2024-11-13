@@ -75,8 +75,8 @@ const TB10720Sjs = function () {
     function setGrid_TB10720S() {
 
         var gridObj = {
-            height: 70,
-            maxHeight: 70,
+            height: 500,
+            maxHeight: 500,
             showTitle: false,
             showToolbar: false,
             collapsible: false,
