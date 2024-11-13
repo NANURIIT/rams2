@@ -50,4 +50,6 @@ public interface WorkFlowMapper {
     public int deleteWfStepInfo(List<WFStepDTO> WFStepDTOs);    //WF_STEP 삭제
 
     public int updateWStepInfo(List<WFStepDTO> WFStepDTOs);     //WF_STEP 수정
+
+    public List<WorkFlowDTO> wfCntInq(WorkFlowDTO param);       //WF 건수 조회 
 }
