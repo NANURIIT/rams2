@@ -249,14 +249,16 @@ public class TB03020ServiceImpl implements TB03020Service {
 		WorkFlowDTO paramDto = new WorkFlowDTO();
 
 		String wfId = dealInfo.getWfId();				//워크플로우 ID
+		String rtnYn = dealInfo.getRtnYn();				//반송여부
+
 		paramDto.setWfId(wfId);
+		paramDto.setRtnYn(rtnYn);					
 
 		String nextStepId = workFlowMapper.getNxtStepId(paramDto);
 
 		log.debug("nextStepId ::: " + nextStepId);
 
 		paramDto.setNextStepId(nextStepId);				//다음 STEP_ID
-		paramDto.setRtnYn("");					//반송여부
 		paramDto.setRtnCnts("");				//반송사유
 		paramDto.setMemoCnts("");				//결재사유
 

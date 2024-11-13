@@ -952,7 +952,7 @@ const TB03020Sjs = (function(){
 	}
 
 	// 결재승인 (심사요청)
-	function cnfmDeal() {
+	function cnfmDeal(rtnYn) {
 
 		if( validateDealInfo() ){
 
@@ -963,6 +963,7 @@ const TB03020Sjs = (function(){
 			var paramData = JSON.parse(jsonParam);
 
 			paramData["wfId"] = wfId;
+			paramData["rtnYn"] = rtnYn;
 
 			console.log(paramData);
 
