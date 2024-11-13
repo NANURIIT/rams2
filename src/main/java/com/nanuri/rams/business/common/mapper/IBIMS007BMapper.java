@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.common.mapper;
 
+import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.selectUseMenuVO;
@@ -33,7 +34,7 @@ public interface IBIMS007BMapper {
 	 * @param menuId
 	 * @return
 	 */
-	public int chkAthCd(IBIMS007BDTO param);
+	public int chkAthCd(IBIMS007BVO param);
 
 	/**
 	 * 메뉴코드내 권한 업데이트

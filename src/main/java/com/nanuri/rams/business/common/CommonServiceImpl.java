@@ -9,6 +9,8 @@ import java.util.Map;
 
 import com.nanuri.rams.business.common.mapper.*;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -322,7 +324,7 @@ public class CommonServiceImpl implements CommonService {
 
 	// 권한확인
 	@Override
-	public int chkAthCd(IBIMS007BDTO param){
+	public int chkAthCd(IBIMS007BVO param){
 		return ibims007bMapper.chkAthCd(param);
 	};
 

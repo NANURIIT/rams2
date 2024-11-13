@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +46,9 @@ public class CommonController {
         List<Map<String, Object>> menuList = commonService.getMenuList(facade.getDetails().getRghtCd());
         Map<String, Object> userAuth = commonService.getUserAuth();
         
-        IBIMS007BDTO ibims007bdto = new IBIMS007BDTO();
-        ibims007bdto.setMenuId(urlNm);
-        ibims007bdto.setAthCd(facade.getDetails().getEno());
+        IBIMS007BVO ibims007bvo = new IBIMS007BVO();
+        ibims007bvo.setMenuId(urlNm);
+        ibims007bvo.setEmpno(facade.getDetails().getEno());
 
         log.debug("체크########", facade.getDetails().getEno());
 
@@ -59,7 +61,7 @@ public class CommonController {
         String bzDd = (String) session.getAttribute("bzDd");
         model.addAttribute("bzDd", bzDd);
 
-        if(commonService.chkAthCd(ibims007bdto) == 0){
+        if(commonService.chkAthCd(ibims007bvo) == 0){
             return "redirect:/TB02010S";
         }else {
             return path;

@@ -50,7 +50,7 @@
 							SELECT ATH_CD
 							  FROM IBIMS003B
 							 WHERE 1=1
-							   AND EMPNO = #{athCd}
+							   AND EMPNO = #{empno}
 						)
 	</select>
 
