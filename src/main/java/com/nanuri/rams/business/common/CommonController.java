@@ -61,7 +61,7 @@ public class CommonController {
         String bzDd = (String) session.getAttribute("bzDd");
         model.addAttribute("bzDd", bzDd);
 
-        if(commonService.chkAthCd(ibims007bvo) == 0){
+        if("NO".equals(commonService.chkAthCd(ibims007bvo))){
             return "redirect:/TB02010S";
         }else {
             return path;

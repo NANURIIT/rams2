@@ -82,5 +82,5 @@ public interface CommonService {
 	public List<IBIMS993BDTO> getFndList(IBIMS993BDTO param);
 
 	// 권한확인
-	public int chkAthCd(IBIMS007BVO param);
+	public String chkAthCd(IBIMS007BVO param);
 }

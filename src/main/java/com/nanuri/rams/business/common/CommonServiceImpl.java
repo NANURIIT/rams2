@@ -324,7 +324,7 @@ public class CommonServiceImpl implements CommonService {
 
 	// 권한확인
 	@Override
-	public int chkAthCd(IBIMS007BVO param){
+	public String chkAthCd(IBIMS007BVO param){
 		return ibims007bMapper.chkAthCd(param);
 	};
 

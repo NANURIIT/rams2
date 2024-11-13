@@ -34,7 +34,7 @@ public interface IBIMS007BMapper {
 	 * @param menuId
 	 * @return
 	 */
-	public int chkAthCd(IBIMS007BVO param);
+	public String chkAthCd(IBIMS007BVO param);
 
 	/**
 	 * 메뉴코드내 권한 업데이트
