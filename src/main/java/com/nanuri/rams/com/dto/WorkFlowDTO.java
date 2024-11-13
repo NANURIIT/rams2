@@ -43,6 +43,8 @@ public class WorkFlowDTO {
     private String empno;               //로그인 사원번호
     private String aprvEmpNm;           //신청자명
 
+    private int wfMapCnt;               //WF 건수
+
     private List<String> pkList;        //pk값 
 
 

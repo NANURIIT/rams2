@@ -3,6 +3,7 @@ package com.nanuri.rams.business.common.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.hibernate.jdbc.Work;
 
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.vo.WfMapVo;
@@ -45,4 +46,6 @@ public interface WorkFlowMapper {
     public int updateWfMapInfo(List<WfMapVo> updateInfo); //수정
 
     public List<WorkFlowDTO> getWfStepInfo(String wfMapId);      //step조회   
+
+    public List<WorkFlowDTO> wfCntInq(WorkFlowDTO workFlowDTO);     //WF 건수 조회
 }
