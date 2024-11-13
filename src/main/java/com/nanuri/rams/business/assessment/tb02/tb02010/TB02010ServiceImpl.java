@@ -12,6 +12,7 @@ import com.nanuri.rams.business.common.mapper.IBIMS003BMapper;
 import com.nanuri.rams.business.common.mapper.IBIMS100BMapper;
 import com.nanuri.rams.business.common.mapper.WorkFlowMapper;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
+import com.nanuri.rams.business.common.vo.TB02010SVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
 import com.nanuri.rams.com.WF.WorkFlow;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
@@ -92,7 +93,7 @@ public class TB02010ServiceImpl implements TB02010Service {
 
 	//오늘의 할일(워크플로우) 조회
 	@Override
-	public List<WorkFlowDTO> workFlowInq(WorkFlowDTO param){
+	public TB02010SVO workFlowInq(WorkFlowDTO param){
 
 		WorkFlowDTO paramDto = new WorkFlowDTO();
 		String empno = param.getEmpno();
@@ -100,7 +101,15 @@ public class TB02010ServiceImpl implements TB02010Service {
 
 		paramDto.setWfAuthId(athCd);
 
-		return workFlowMapper.workFlowInq(paramDto);
+		List<WorkFlowDTO> workFlowList = workFlowMapper.workFlowInq(paramDto);		//WF 리스트
+		List<WorkFlowDTO> wfCntList = workFlowMapper.wfCntInq(paramDto);			//WF 건수 리스트
+
+		TB02010SVO rsltVO = new TB02010SVO();
+
+		rsltVO.setWfCntList(wfCntList);
+		rsltVO.setWorkFlowList(workFlowList);
+
+		return rsltVO;
 	}
 
 }

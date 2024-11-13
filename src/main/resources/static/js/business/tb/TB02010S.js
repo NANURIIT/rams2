@@ -140,20 +140,51 @@ const TB02010Sjs = (function(){
 			success: function(data) {
 				// console.log(JSON.stringify(data));
 
+				var workFlowList = data.workFlowList;
+				var wfCntList = data.wfCntList;
+
+				console.log(JSON.stringify(wfCntList));
+
 				$("#wfGrid_TB02010S").pqGrid("option", "strNoRows", "조회된 데이터가 없습니다.");
 
-				if(data.length > 0){
-					$("#wfGrid_TB02010S").pqGrid("setData", data);
+				if(workFlowList.length > 0){
+					$("#wfGrid_TB02010S").pqGrid("setData", workFlowList);
+
+					pqGridObj_TB02010S.option("rowDblClick", function(event, ui) {
+						moveToJobPage(ui.rowData);
+					});
 				}
 
-				pqGridObj_TB02010S.option("rowDblClick", function(event, ui) {
-					moveToJobPage(ui.rowData);
-				});
+				if(wfCntList.length > 0){
+					setWfCntList(wfCntList);
+				}
+				
 			}
 			
 		});
 		
 	}
+
+	function setWfCntList(wfCntList){
+		var $ulElement = $("#TB02010S_wfCnt");
+
+		// data 배열의 각 항목을 기반으로 li 요소 생성 및 추가
+		$.each(wfCntList, function(index, item) {
+			// li 요소 생성 및 추가할 HTML
+			var $liElement = $(`
+				<li>
+					<div class="list-title">${item.wfMapNm}</div>
+					<div>
+						<span class="num-pd">${item.wfMapCnt}</span>건
+					</div>
+				</li>
+			`);
+
+			// ul에 li 요소 추가
+			$ulElement.append($liElement);
+		});
+	}
+
 
 	function moveToJobPage(rowData){
 		//alert(rowData.wfMapId);

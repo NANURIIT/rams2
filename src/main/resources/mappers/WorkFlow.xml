@@ -362,4 +362,18 @@
             (WF_MAP_ID = #{item.wfMapId} AND STEP_ID = #{item.stepId})
           </foreach>
 	</delete>
+
+    <!--WF 건수 조회-->
+    <select id="wfCntInq" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="com.nanuri.rams.com.dto.WorkFlowDTO">
+        SELECT 
+            COUNT(*) AS WF_MAP_CNT,
+            wf.WF_MAP_ID,
+            m.WF_MAP_NM
+            FROM WF wf
+        JOIN WF_MAP m ON wf.WF_MAP_ID = m.WF_MAP_ID
+        JOIN WF_STEP s1 ON m.WF_MAP_ID = s1.WF_MAP_ID AND wf.WF_STEP_ID = s1.STEP_ID
+        JOIN WF_STEP s2 ON s1.NEXT_STEP_ID = s2.STEP_ID
+        WHERE s2.WF_AUTH_ID = #{wfAuthId}
+        GROUP BY wf.WF_MAP_ID, m.WF_MAP_NM
+    </select>
 </mapper>
