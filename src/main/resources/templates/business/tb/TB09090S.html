@@ -24,7 +24,7 @@
 					<div class="ibox-content mb-2">
 						<div class="form-group form-inline row">
 							<div class="col-sm-12 form-group">
-								<label class="col-sm-1 control-label">보고기준날짜</label>
+								<label class="col-sm-1 control-label">보고기준일자</label>
 								<div class="col-sm-2 input-group">
 									<span class="input-group date"> 
 										<input type="text" class="form-control" id="TB09090S_stdDt" name="start" value="" onchange="TB09090Sjs.getStdDtDate(event.target.value);" readonly>
@@ -55,7 +55,7 @@
 								</div>
 								<div class="col-sm-5 text-right">
 									<button class="btn btn-primary" onclick="TB09090Sjs.getCpcList();"><i class="fa fa-search"></i>&nbsp;조회</button>
-									<button class="btn btn-default" onclick="resetParam()">
+									<button class="btn btn-default" onclick="TB09090Sjs.resetParam()">
 										<i class="fa fa-undo"></i>&nbsp;초기화
 									</button>
 								</div>
@@ -72,7 +72,7 @@
 										</div>
 									</div>
 									<div class="ibox-content">
-										<div class="tableFixHeader2" style="height: 300px;">
+										<div class="tableFixHeader2" style="height: 456px;">
 											<table class="table table-bordered table-hover">
 												<colgroup>
 													<col style="width: 2%;">
@@ -213,7 +213,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="table-responsive" style="height: 344px;">
+										<div class="table-responsive" style="height: 504px;">
 											<div id="TB09090S_colCpc1" ></div>
 											<div id="TB09090S_colCpc2" ></div>
 											<div id="TB09090S_colCpc3" ></div>
