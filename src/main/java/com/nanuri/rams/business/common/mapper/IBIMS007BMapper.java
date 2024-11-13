@@ -32,7 +32,8 @@ public interface IBIMS007BMapper {
 	/**
 	 * 권한확인
 	 * @param menuId
-	 * @return
+	 * @param empno
+	 * @return 'YES' OR 'NO'
 	 */
 	public String chkAthCd(IBIMS007BVO param);
 
