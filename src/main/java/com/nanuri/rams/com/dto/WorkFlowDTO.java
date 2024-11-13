@@ -27,7 +27,7 @@ public class WorkFlowDTO {
     private String stepNm;              //스텝명
     private String wfAuthId;            //워크플로우 권한ID
     private String excAuthEmp;          //예외권한 사원번호
-    private String exAuthDept;          //예외권한 부서코드
+    private String excAuthDept;         //예외권한 부서코드
 
     private String wfMapNm;             //워크플로우 맵명
     private String jobTable;            //작업테이블명
