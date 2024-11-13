@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nanuri.rams.business.common.vo.WfMapVo;
 import com.nanuri.rams.com.dto.WFMapDTO;
+import com.nanuri.rams.com.dto.WFStepDTO;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class TB02030APIController {
     
     private final TB02030Service tb02030Service;
 
-    //===== WFMap 관련 ===== 
+    //========== WFMap 관련 ==========
     @GetMapping("/getWfMapInfo")
     public List<WFMapDTO> getWfMapInfo(String wfMapNm) {
         return tb02030Service.getWfMapInfo(wfMapNm);
@@ -49,7 +50,7 @@ public class TB02030APIController {
         return tb02030Service.updateWfMapInfo(updateInfo);
     }
 
-    //===== WF STEP 관련 ===== 
+    //========== WF STEP 관련 ========== 
     @GetMapping("/getWfStepInfo")
     public List<WorkFlowDTO> getWfStepInfo(String wfMapId) {
         return tb02030Service.getWfStepInfo(wfMapId);
@@ -58,6 +59,16 @@ public class TB02030APIController {
     @PostMapping("/insertWfStepInfo")
     public int insertWfStepInfo(@RequestBody List<WorkFlowDTO> insertInfo){
         return tb02030Service.wfStepRgst(insertInfo);
+    }
+
+    @DeleteMapping("/deleteWfStepInfo")
+    public int deleteWfStepInfo(@RequestBody List<WFStepDTO>deleteInfo){
+        return tb02030Service.deleteWfStepInfo(deleteInfo);
+    }
+
+    @PutMapping("/updateWfStepInfo")
+    public int updateWStepInfo(@RequestBody List<WFStepDTO>  updateInfo){
+        return tb02030Service.updateWStepInfo(updateInfo);
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.nanuri.rams.business.common.vo.WfMapVo;
 import com.nanuri.rams.com.dto.WFMapDTO;
+import com.nanuri.rams.com.dto.WFStepDTO;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
 
 @Service
@@ -28,4 +29,10 @@ public interface TB02030Service {
 
     //WF STEP 저장
     public int wfStepRgst(List<WorkFlowDTO> insertInfo);
+
+    //WF STEP 삭제
+    public int deleteWfStepInfo(List<WFStepDTO> deleteInfo);
+
+    //WF_STEP 수정
+    public int updateWStepInfo(List<WFStepDTO> updateInfo);
 }
