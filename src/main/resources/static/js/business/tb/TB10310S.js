@@ -2,6 +2,7 @@ const TB10310Sjs = (function () {
   $(document).ready(function () {
 
     pqGrid();
+    selectMenuListFromTB10310S();
 
     // keyDownEnter();
   });
@@ -232,9 +233,11 @@ const TB10310Sjs = (function () {
       contentType: "application/json; charset=UTF-8",
       data: param,
       success: function (data) {
+
+        let grid = $('#TB10310S_GroupCodeColModel').pqGrid('instance');
+
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
-          let grid = $('#TB10310S_GroupCodeColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
         }
@@ -244,6 +247,7 @@ const TB10310Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          grid.setData([]);
         }
       },
       error: function (response) {
@@ -273,9 +277,11 @@ const TB10310Sjs = (function () {
       contentType: "application/json; charset=UTF-8",
       data: param,
       success: function (data) {
+
+        let grid = $('#TB10310S_athCodeColModel').pqGrid('instance');
+
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
-          let grid = $('#TB10310S_athCodeColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
         }
@@ -285,6 +291,7 @@ const TB10310Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          grid.setData([]);
         }
       },
       error: function (response) {

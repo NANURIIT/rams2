@@ -253,7 +253,7 @@
                           FROM IBIMS820B X  /* 기업여신월별결산내역 */
                          WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                            AND X.PRDT_CD = Y.PRDT_CD
-                      ) + ROWNUM())              AS RGST_SN                   /* 등록일련번호         */
+                      ) + ROWNUM)              AS RGST_SN                   /* 등록일련번호         */
                     , Y.BDCD                     AS BDCD                      /* 부점코드            */
                     , ''                         AS ACCT_SYNS_CD              /* 회계적용코드         */
                     , ''                         AS STTM_NO                   /* 전표번호            */
@@ -356,7 +356,7 @@
                         FROM IBIMS820B X  /* 기업여신월별결산내역 */
                         WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                           AND X.PRDT_CD = Y.PRDT_CD
-                     ) + ROWNUM())              AS RGST_SN                   /* 등록일련번호         */
+                     ) + ROWNUM)              AS RGST_SN                   /* 등록일련번호         */
                    , Y.BDCD                     AS BDCD                      /* 부점코드            */
                    , ''                         AS ACCT_SYNS_CD              /* 회계적용코드         */
                    , ''                         AS STTM_NO                   /* 전표번호            */
@@ -454,7 +454,7 @@
                           FROM IBIMS820B X  /* 기업여신월별결산내역 */
                          WHERE X.STDR_YM = SUBSTR(#{stdrDt},1,6)
                            AND X.PRDT_CD = A.PRDT_CD
-                     ) + ROWNUM())               AS RGST_SN                   /* 등록일련번호         */
+                     ) + ROWNUM)               AS RGST_SN                   /* 등록일련번호         */
                     , A.MNGM_BDCD                AS BDCD                      /* 부점코드            */
                     , ''                         AS ACCT_SYNS_CD              /* 회계적용코드         */
                     , ''                         AS STTM_NO                   /* 전표번호            */

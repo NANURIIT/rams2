@@ -143,6 +143,9 @@ const TB02010Sjs = (function(){
 				var workFlowList = data.workFlowList;
 				var wfCntList = data.wfCntList;
 
+				var $ulElement = $("#TB02010S_appvPrgrsCnt");
+				$ulElement.text(workFlowList.length + "건");
+
 				console.log(JSON.stringify(wfCntList));
 
 				$("#wfGrid_TB02010S").pqGrid("option", "strNoRows", "조회된 데이터가 없습니다.");
@@ -150,8 +153,7 @@ const TB02010Sjs = (function(){
 				if(workFlowList.length > 0){
 					$("#wfGrid_TB02010S").pqGrid("setData", workFlowList);
 
-					var $ulElement = $("#TB02010S_appvPrgrsCnt");
-					$ulElement.text(workFlowList.length + "건");
+					
 
 					pqGridObj_TB02010S.option("rowDblClick", function(event, ui) {
 						moveToJobPage(ui.rowData);
@@ -198,15 +200,24 @@ const TB02010Sjs = (function(){
 		// var pageName;
 
 		//todo: 권환관리 추가 후 수정해야함
+
+		var menuId;
+		var menuNm;
+
 		if(wfMapNm == "딜기본정보등록"){
-
-			sessionStorage.setItem("ibDealNo_TB02010S", rowData.etc);
-			sessionStorage.setItem("wfID_TB02010S", rowData.wfId);
-
-			callPage("TB03020S", "Deal정보 등록");
+			menuId = "TB03020S";
+			menuNm = "Deal정보 등록";
 		}else{
 
 		}
+
+
+		sessionStorage.setItem("ibDealNo_TB02010S", rowData.etc);
+		sessionStorage.setItem("wfID_TB02010S", rowData.wfId);
+
+
+
+		callPage(menuId, menuNm);
 	}
 	
 	/**
