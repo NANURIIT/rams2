@@ -25,6 +25,44 @@ $(function () {
 	});
 	$('.input-group.clockpicker').clockpicker({
 	});
+
+
+	/**
+	 * 심심해서 만들어봄 (폐기)
+	 */
+	// $(document).on('keydown', function(event) {
+	// 	if (event.shiftKey && event.code === "Digit1") {
+	// 		moveTab($($('#myTab li')[0]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit2") {
+	// 		moveTab($($('#myTab li')[1]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit3") {
+	// 		moveTab($($('#myTab li')[2]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit4") {
+	// 		moveTab($($('#myTab li')[3]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit5") {
+	// 		moveTab($($('#myTab li')[4]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit6") {
+	// 		moveTab($($('#myTab li')[5]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit7") {
+	// 		moveTab($($('#myTab li')[6]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit8") {
+	// 		moveTab($($('#myTab li')[7]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit9") {
+	// 		moveTab($($('#myTab li')[8]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// 	else if (event.shiftKey && event.code === "Digit0") {
+	// 		moveTab($($('#myTab li')[9]).attr('data-tabid').split('/')[1]);
+	// 	}
+	// });
+
 });
 
 /**

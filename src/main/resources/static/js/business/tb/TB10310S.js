@@ -250,6 +250,9 @@ const TB10310Sjs = (function () {
 
       },
     });
+
+    $('#TB10310S_athCodeColModel').pqGrid('instance').setData([]);
+
   }
 
 

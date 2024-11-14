@@ -508,6 +508,9 @@ const TB10210Sjs = (function () {
         }
       },
     });
+
+    $('#authCodeMenuTable').pqGrid('instance').setData([]);
+
   }
 
   /**
