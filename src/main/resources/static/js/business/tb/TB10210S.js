@@ -503,6 +503,7 @@ const TB10210Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          $('#authCodeTable').pqGrid('instance').setData([]);
           // authCdTbObj.option("strNoRows", "조회된 데이터가 없습니다.");
           // authCdTbObj.refreshDataAndView();
         }
@@ -612,6 +613,7 @@ const TB10210Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          $('#authCodeMenuTable').pqGrid('instance').setData([]);
           // authCdMenuTbObj.option("strNoRows", "조회된 데이터가 없습니다.");
           // authCdMenuTbObj.refreshDataAndView();
         }

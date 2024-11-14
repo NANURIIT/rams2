@@ -3,6 +3,8 @@ const TB10410Sjs = (function () {
 
     pqGrid();
 
+    hgrkMenuInq();
+
     // //상위메뉴 조회
     // menuSearch();
     // //상위메뉴 상세버튼 클릭
@@ -435,10 +437,12 @@ const TB10410Sjs = (function () {
       contentType: "application/json; charset=UTF-8",
       data: param,
       success: function (data) {
+
+        let grid = $('#TB10410S_hgrkMenuColModel').pqGrid('instance');
+
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
 
-          let grid = $('#TB10410S_hgrkMenuColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
 
@@ -451,6 +455,7 @@ const TB10410Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          grid.setData([]);
         }
       },
       error: function (response) {
@@ -485,10 +490,12 @@ const TB10410Sjs = (function () {
       contentType: "application/json; charset=UTF-8",
       data: param,
       success: function (data) {
+
+        let grid = $('#TB10410S_menuColModel').pqGrid('instance');
+
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
           
-          let grid = $('#TB10410S_menuColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
 
@@ -501,6 +508,7 @@ const TB10410Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          grid.setData([]);
         }
       },
       error: function (response) {
