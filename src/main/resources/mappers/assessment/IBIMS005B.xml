@@ -36,6 +36,7 @@
              , A.URL_NM                                                                         /* URL명 */
              , A.APLY_YN																		/* 적용여부 */
              , A.DEL_YN																		    /* 삭제여부 */
+             , A.HGRK_MENU_ID                                                                   /* 상위메뉴ID */
              , NVL(TO_CHAR(A.HND_DETL_DTM, 'YYYY-MM-DD HH24:MI:SS'), '') AS HND_DETL_DTM		/* 조작상세일시 */
              , NVL((SELECT EMP_NM
                       FROM IBIMS003B

@@ -309,27 +309,27 @@ function selectorNumberFormater(selector) {
 			cursorIndex = 0;
 		}
 
-		
+
 		if (deleteType === 8 && prevCommaCheck.length < nextCommaCheck.length) {
 			str = str.slice(0, cursorIndex - 2) + str.slice(cursorIndex - 1);
 			str = locale((removeComma(str)));
 			$this.val(str);
-			if(prevCommaCheck[0].length === 1){
+			if (prevCommaCheck[0].length === 1) {
 				$this.prop('selectionEnd', cursorIndex - 3).focus();
-			}else if (prevCommaCheck[0].length === 4){
+			} else if (prevCommaCheck[0].length === 4) {
 				$this.prop('selectionEnd', cursorIndex - 2).focus();
-			}else{
+			} else {
 				$this.prop('selectionEnd', cursorIndex - 1).focus();
 			}
 		} else if (deleteType === 46 && prevCommaCheck.length < nextCommaCheck.length) {
 			str = str.slice(0, cursorIndex) + str.slice(cursorIndex + 1);
 			str = locale((removeComma(str)));
 			$this.val(str);
-			if(prevCommaCheck[0].length === 1){
+			if (prevCommaCheck[0].length === 1) {
 				$this.prop('selectionEnd', cursorIndex - 2).focus();
-			}else if (prevCommaCheck[0].length === 4){
+			} else if (prevCommaCheck[0].length === 4) {
 				$this.prop('selectionEnd', cursorIndex - 1).focus();
-			}else {
+			} else {
 				$this.prop('selectionEnd', cursorIndex).focus();
 			}
 		} else {
@@ -354,7 +354,7 @@ function selectorNumberFormater(selector) {
 function inputNumberFormater(target) {
 
 	const $this = $(target);
-	
+
 	let str = $this.val();
 	// 마지막에 입력된 문자의 인덱스 찾기
 	let cursorIndex = $this.prop('selectionEnd');;
@@ -644,8 +644,8 @@ function getToday2() {
  */
 function getSomeDaysAgo(n) {
 	var today = new Date();
-		today.setDate(today.getDate()-n);
-		
+	today.setDate(today.getDate() - n);
+
 	var year = today.getFullYear();
 	var month = ('0' + (today.getMonth() + 1)).slice(-2);
 	var day = ('0' + today.getDate()).slice(-2);
@@ -1130,7 +1130,7 @@ function getSelectBoxList(prefix, item, async = true) {
 					}
 				}
 
-				if(prefix == 'TB07150S'){
+				if (prefix == 'TB07150S') {
 					if (value.cmnsGrpCd == 'R023') {
 						if (value.cdValue != '01' && value.cdValue != '07') {
 							var html = '';
@@ -1341,33 +1341,33 @@ function setPqGrid(pqGridObjs) {
  * @param {objects} options.data    조회한 데이터 
  * @returns 
  */
-function pqGridSetData(options){
+function pqGridSetData(options) {
 
-    var isExist = false;
+	var isExist = false;
 
-    for(var i = 0; i < options.length; i++){
+	for (var i = 0; i < options.length; i++) {
 
-        var gridNm = options[i].gridNm;				// 그리드ID
-        var data = options[i].data;					
+		var gridNm = options[i].gridNm;				// 그리드ID
+		var data = options[i].data;
 
-        if(data.length < 1){
+		if (data.length < 1) {
 
-            $("#" + gridNm).pqGrid("option", "strNoRows", "조회된 데이터가 없습니다.");
-            $("#" + gridNm).pqGrid("setData", []);
-        }else{
-            isExist = true;
-            $("#" + gridNm).pqGrid("setData", data);
-        }
-    }
+			$("#" + gridNm).pqGrid("option", "strNoRows", "조회된 데이터가 없습니다.");
+			$("#" + gridNm).pqGrid("setData", []);
+		} else {
+			isExist = true;
+			$("#" + gridNm).pqGrid("setData", data);
+		}
+	}
 
-    if(!isExist){
-        var option = {}
-        option.title = "Error";
-        option.type = "error";
+	if (!isExist) {
+		var option = {}
+		option.title = "Error";
+		option.type = "error";
 
-        option.text = "조회된 데이터가 없습니다.";
-        openPopup(option);
-    }
+		option.text = "조회된 데이터가 없습니다.";
+		openPopup(option);
+	}
 
 }
 
@@ -1470,10 +1470,10 @@ function getBasicValues(id) {
  * @param {$selector} selector 제이쿼리던 자바스크립트던 상관없음
  * div ibox로 잡혀있을텐데 원하는 태그에 id값을 주고 셀렉터로 받아서 인풋값 초기화
  */
-function resetInputValue (selector) {
-    selector.find(`select`).val('');
-    selector.find(`input`).val('');
-    selector.find(`input[id*='Amt']
+function resetInputValue(selector) {
+	selector.find(`select`).val('');
+	selector.find(`input`).val('');
+	selector.find(`input[id*='Amt']
 				 , input[id*='Blce']
 				 , input[id*='Exrt']
 				 , input[id*='Mnum']
@@ -1488,11 +1488,11 @@ function resetInputValue (selector) {
  * @param ui	pqgrid ui 요소
  * @param { String } menuId
  */
-function setInputboxFromPdata (ui, menuId){
+function setInputboxFromPdata(ui, menuId) {
 	const keys = Object.keys(ui.rowData);
-    for(let i = 0; i < keys.length; i++){
-    	$(`#${menuId}_${keys[i]}`).val(ui.rowData[keys[i]]);
-    }
+	for (let i = 0; i < keys.length; i++) {
+		$(`#${menuId}_${keys[i]}`).val(ui.rowData[keys[i]]);
+	}
 }
 
 /**
@@ -1500,15 +1500,15 @@ function setInputboxFromPdata (ui, menuId){
  * @param data	ajax 셀렉트 데이터
  * @param { String } menuId
  */
-function setInputDataFromSelectData (data, menuId) {
+function setInputDataFromSelectData(data, menuId) {
 	const keys = Object.keys(data);
-	for(let i = 0; i < keys.length; i++){
+	for (let i = 0; i < keys.length; i++) {
 		// 날짜 포맷
-		if(keys[i].includes('Dt')){
+		if (keys[i].includes('Dt')) {
 			$(`#${menuId}_${keys[i]}`).val(formatDate(data[keys[i]]));
 		}
 		// 숫자 포맷
-		else if(
+		else if (
 			//	조건 시작
 			keys[i].includes('Amt')
 			|| keys[i].includes('Blce')
@@ -1516,11 +1516,11 @@ function setInputDataFromSelectData (data, menuId) {
 			|| keys[i].includes('Mnum')
 			|| keys[i].includes('Tmrd')
 			//	조건 끝
-		){
+		) {
 			$(`#${menuId}_${keys[i]}`).val(comma(data[keys[i]]));
 		}
 		// 나머지
-		else{
+		else {
 			$(`#${menuId}_${keys[i]}`).val(data[keys[i]]);
 		}
 	}
@@ -1530,27 +1530,27 @@ function setInputDataFromSelectData (data, menuId) {
  * @param {String} menuId  화면명
  * @param {Object} gridFunctionObj	함수를담은 오브젝트
  */
-function ramsTabHandler (menuId){
+function ramsTabHandler(menuId) {
 	// 화면 공통 탭들 선택
 	const $tabs = $(`#${menuId}_ramsTab li`);
 	// 각 탭에 이벤트 부여
-    $tabs.each(function (i) {
-		if(i == 0){
+	$tabs.each(function (i) {
+		if (i == 0) {
 			$(this).find('a').addClass('active');
 			$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
 		}
 		// 이벤트 겹치지않도록 마우스 업 이벤트로 처리
 		$(this).on('mouseup', function (e) {
-			if(e.which === 1){
+			if (e.which === 1) {
 				$tabs.find('a').removeClass('active');
 				$(this).find('a').addClass('active');
 				$(`.tab-content div[id*="${menuId}_tab"]`).removeClass('active');
 				$(`.tab-content div[id="${menuId}_tab-${i + 1}"]`).addClass('active');
-			}else {
+			} else {
 				return;
 			}
-        });
-    });
+		});
+	});
 }
 
 // function setGridFromRamstab () {
@@ -1561,16 +1561,16 @@ function ramsTabHandler (menuId){
 /**
  * 날짜 인풋태그 유효성체크
  */
-function vldDateVal (){
-	$('.input-group.date input[class="form-control"]').on("change", function(){
+function vldDateVal() {
+	$('.input-group.date input[class="form-control"]').on("change", function () {
 		//	태그의 날짜 불러오기
 		const date = $(this).val();
 		let test = new Date(formatDate(date));
 		let resultDate;
 
-		if(test === "InvalidDate"){
+		if (test === "InvalidDate") {
 			return $(this).val(0);
-		}else{
+		} else {
 			//	날짜 변환
 			resultDate = formatDate(date);
 
@@ -1586,7 +1586,7 @@ function vldDateVal (){
  * 마지막에 부른 모달 최상위 index로 올리기
  * @param {String} prefix 화면명
  */
-function indexChangeHandler (prefix) {
+function indexChangeHandler(prefix) {
 	// console.log("");
 	$(`div[id*="modal-"]`).css('z-index', '');
 	$('div[id*="modal-"][style*="z-index: 4000 !important;"]').attr('style', 'display: block;');
@@ -1598,18 +1598,29 @@ function indexChangeHandler (prefix) {
  * @param {selector} colModelSelector	// 쿼리 셀렉터 아이디
  */
 function pqGridAddNewRow(colModelSelector) {
-    let row = [];
-    let newRow = {};
-    const data = colModelSelector.pqGrid("instance");
-    const rowColumnsData = data.colModel;
-    const length = rowColumnsData.length;
-    for (let i = 0; i < length; i++) {
-      const title = rowColumnsData[i].title;
-      row.push(title);
-    }
+	let row = [];
+	let newRow = {};
+	const data = colModelSelector.pqGrid("instance");
+	const rowColumnsData = data.colModel;
+	const length = rowColumnsData.length;
+	for (let i = 0; i < length; i++) {
+		const title = rowColumnsData[i].title;
+		row.push(title);
+	}
 
-    colModelSelector.pqGrid("addRow", {
-      rowData: newRow,
-      checkEditable: false,
-    });
+	colModelSelector.pqGrid("addRow", {
+		rowData: newRow,
+		checkEditable: false,
+	});
+}
+
+/**
+ * PQGRID 줄삭제
+ * @param {selector} colModelSelector 
+ * @param {ui.rowIndx} rowIndx 
+ */
+function pqGridDeleteRow(colModelSelector, rowIndx) {
+	colModelSelector.pqGrid("deleteRow", {
+		rowIndx: rowIndx
+	});
 }

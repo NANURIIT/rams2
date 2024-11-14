@@ -14,6 +14,7 @@ const TB10310Sjs = (function () {
    * 전역변수
    */
   let prevParam;  // 저장이후 재조회시 필요한 param 전역변수
+  let prevRowIndx;
 
   /**
    * PQGRID
@@ -70,7 +71,7 @@ const TB10310Sjs = (function () {
             return "";
           } else {
             return (
-              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10310Sjs.selectAthCdListFromMenu('${ui.rowData.menuId}');"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
+              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10310Sjs.selectAthCdListFromMenu('${ui.rowData.menuId}', ${ui.rowIndx});"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
             );
           }
         },
@@ -255,9 +256,13 @@ const TB10310Sjs = (function () {
   /**
    * 권한코드 조회
    */
-  function selectAthCdListFromMenu(param) {
+  function selectAthCdListFromMenu(param ,rowIndx) {
+
+    $('#TB10310S_GroupCodeColModel').pqGrid('removeClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: prevRowIndx });
+    $('#TB10310S_GroupCodeColModel').pqGrid('addClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: rowIndx});
 
     prevParam = param;
+    prevRowIndx = rowIndx;
 
     $.ajax({
       method: "POST",
