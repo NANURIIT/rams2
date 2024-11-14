@@ -1,5 +1,5 @@
 const TB02030Sjs = (() => {
-    let lastClickedRowId = null;
+    //let lastClickedRowId = null;
     let lastWfMapId;
     const GRID_MAP_ID = "#gridWfMapList";
     const GRID_STEP_ID = "#gridWfStepList";
@@ -15,22 +15,51 @@ const TB02030Sjs = (() => {
         INSERT_WF_STEP : "/TB02030S/insertWfStepInfo",
     };
 
-    $(document).ready(() => setGrid_TB20230S([]));
+    //$(document).ready(() => setGrid_TB20230S([]));
+    $(document).ready(() => {
+        getAthCodeInfo();
+        setGrid_TB20230S();
+    });
+
 
     const getAthCodeInfo = () => {
         ajaxCall({
             url: URLS.MENU_AUTH,
             success: (data) => {
-                const dropdownData = data.map(item => ({
+                const stepNmOptions = data.map(item => ({
+                    label: item.athCdNm ,
+                    value: item.athCdNm
+                }));
+
+                const wfAuthIdOptions = data.map(item => ({
                     label: `${item.athCd} ${item.athCdNm}`,
                     value: item.athCd
                 }));
-                setGrid_TB20230S(dropdownData);
+
+                //colWfStepList에 select 박스에 옵션을 설정
+                colWfStepList.forEach(col => {
+                    if(col.dataIndx === "stepNm"){ //스텝명
+                        col.editor.options = stepNmOptions;
+                        // onChange 이벤트 추가
+                        col.editor.change = function(evt, ui) {
+                            const selectedStep = ui.newValue;
+                            console.log("Selected Step: ", selectedStep);
+                            // 연관된 값을 변경하거나 다른 로직을 추가할 수 있습니다.
+                        };
+                    }
+
+                    if (col.dataIndx === "wfAuthId") { //권한id
+                        col.editor.options = wfAuthIdOptions;
+                    }
+
+                });
+
+                //setGrid_TB20230S();
             }
         });
     };
-
-    const setGrid_TB20230S = (dropdownData) => {
+    
+    const setGrid_TB20230S = () => {
         const obj_WfMap = {
             height: 220,
             width: "100%",
@@ -61,6 +90,12 @@ const TB02030Sjs = (() => {
             showTitle: false,
             numberCell: { show: false },
             //cellClick: onCheckboxClick,
+            cellChanged: function(event, ui) {
+                if (ui.cellData) {
+                  console.log("변경된 값: " + ui.cellData);
+                  // 셀렉트박스가 있는 셀의 값을 처리하는 로직 추가
+                }
+            },
             strNoRows: '조회된 데이터가 없습니다.'
         };
     
@@ -160,9 +195,9 @@ const TB02030Sjs = (() => {
 		},
 	];
 
-    const toggleEditable = (isEditable, gridId) => {
-        $(gridId).pqGrid("option", "editable", isEditable);
-    };
+    // const toggleEditable = (isEditable, gridId) => {
+    //     $(gridId).pqGrid("option", "editable", isEditable);
+    // };
 
     const initializeGrid = (gridId, options) => {
         if ($(gridId).pqGrid("instance") === undefined) {
@@ -191,7 +226,7 @@ const TB02030Sjs = (() => {
     const getWfMapList = (wfMapNm) => {
         const _url = wfMapNm ? `${URLS.GET_WF_MAP}?wfMapNm=${wfMapNm}` : URLS.GET_WF_MAP;
      
-        ajaxCall({
+        $.ajax({
             url: _url,
             beforeSend: () => {
                 clearGridData(GRID_MAP_ID);   // GRID_MAP_ID 비우기
@@ -226,7 +261,7 @@ const TB02030Sjs = (() => {
             originalWfMapId: value.wfMapId
         }));
         updateGridData(GRID_MAP_ID, rowList);
-        lastClickedRowId = null;
+        //lastClickedRowId = null;
     };
 
     const updateGridData = (gridId, data) => {
@@ -248,7 +283,7 @@ const TB02030Sjs = (() => {
             originalWfMapId: false
         };
         $(GRID_MAP_ID).pqGrid("addRow", { rowData: newRow, checkEditable: true });
-        toggleEditable(true, GRID_MAP_ID);
+        //toggleEditable(true, GRID_MAP_ID);
     };
 
     const deleteWfMapRow = () => {
@@ -296,7 +331,7 @@ const TB02030Sjs = (() => {
             for (const row of allData) {
                 if (row.rowCheck) {
                     checkRows.push(row);
-                    if (!row.wfMapId || row.wfMapId.length !== 4) {
+                    if (!(row.wfMapId && row.wfMapId.length === 4)) {
                         openPopup({
                             type: "info",
                             text: `${row.pq_ri + 1}번째 행의 워크플로우 맵ID를 입력해주세요.`,
@@ -312,33 +347,47 @@ const TB02030Sjs = (() => {
     
         if (filterCheckedRows()) {
             if (checkRows.length > 0) {
-                let saveSuccess = false;
-                let updateSuccess = false;
     
                 try {
-                    if (saveRows.length) {
-                        saveSuccess = await saveWfMapData(saveRows);
+                    let saveSuccess = saveRows.length ? await saveWfMapData(saveRows) : false;
+                    let updateSuccess = updateRows.length ? await updateWfMapData(updateRows) : false;
+                    let popupText = "";
+                
+                    if (saveSuccess && updateSuccess) {
+                        popupText = "WF맵 저장 및 수정이 완료되었습니다.";
+                    } else if (saveSuccess) {
+                        popupText = "WF맵 저장이 완료되었습니다.";
+                    } else if (updateSuccess) {
+                        popupText = "WF맵 수정이 완료되었습니다.";
                     }
-                    if (updateRows.length) {
-                        updateSuccess = await updateWfMapData(updateRows);
-                    }
-    
-                    if (saveSuccess || updateSuccess) {
+                
+                    if (popupText) {
                         openPopup({
                             title: "성공",
                             type: "success",
-                            text: "WF맵 저장이 완료되었습니다",
+                            text: popupText,
                         });
                         searchButtonClick();
                     }
                 } catch (error) {
-                    console.error("저장 또는 수정 중 오류가 발생했습니다:", error);
+                    let errorText = "저장 또는 수정 중 오류가 발생했습니다.";
+                
+                    if (saveRows.length && !updateRows.length) {
+                        errorText = "WF맵 저장 중 오류가 발생했습니다.";
+                    } else if (!saveRows.length && updateRows.length) {
+                        errorText = "WF맵 수정 중 오류가 발생했습니다.";
+                    } else if (saveRows.length && updateRows.length) {
+                        errorText = "WF맵 저장 및 수정 중 오류가 발생했습니다.";
+                    }
+                
+                    console.error(errorText, error);
                     openPopup({
                         title: "실패",
                         type: "error",
-                        text: "저장 또는 수정 중 오류가 발생했습니다.",
+                        text: errorText,
                     });
                 }
+                
             } else {
                 openPopup({ type: "info", text: "저장하려면 체크박스를 먼저 선택하세요." });
             }
@@ -411,6 +460,13 @@ const TB02030Sjs = (() => {
 			halign   : "center",
 			align    : "center",
 			width    : "14%",
+            formatter: 'listItemText', // 선택된 항목의 label을 표시
+            editor: {
+                type: "select",
+                options: [],
+                valueIndx: "value",
+                labelIndx: "label",
+            },
             editable : true,
 		},
 		{ 	
@@ -436,7 +492,7 @@ const TB02030Sjs = (() => {
 			dataIndx : "wfAuthId",
 			align    : "center", 
 			width    : "14%",
-            formatter: 'listItemText', // 선택된 항목의 label을 표시
+            formatter: 'listItemText', 
             editor: {
                 type: "select",
                 options: [],
@@ -479,7 +535,7 @@ const TB02030Sjs = (() => {
         //     console.log("같은 행이 이미 선택되었습니다. 서비스 호출을 생략합니다.");
         //     return;
         // }
-        lastClickedRowId = wfMapId;
+        //lastClickedRowId = wfMapId;
         const url = wfMapId ? `${URLS.GET_WF_STEP}?wfMapId=${wfMapId}` : URLS.GET_WF_STEP;
 
         ajaxCall({
@@ -507,7 +563,7 @@ const TB02030Sjs = (() => {
     // WF 스텝 행 추가
     function addWfStepRow() {
         const newRow = {
-            rowCheck: true,
+            rowCheck: false,
             wfMapId: lastWfMapId || "",
             stepId: "",
             stepNm: "",
@@ -574,37 +630,85 @@ const TB02030Sjs = (() => {
         $(GRID_STEP_ID).pqGrid("refreshDataAndView");
     }
 
-    // WF 스텝 저장 버튼 클릭
-    function clickSaveWfStepButton() {
+    async function clickSaveWfStepButton() {
         const allData = $(GRID_STEP_ID).pqGrid("option", "dataModel").data;
         const saveWfStepRows = [];
         const updateWfStepRows = [];
-        const checkRows = [];
     
-        const filterCheckedRows = () => {
-            for (const row of allData) {
-                if (row.rowCheck) {
-                    checkRows.push(row);
-                    if (!row.stepId) {
-                        openPopup({
-                            type: "info",
-                            text: `${row.pq_ri + 1}번째 행의 스탭 ID를 입력해주세요.`,
-                        });
-                        $(GRID_STEP_ID).pqGrid("setSelection", { rowIndx: row.pq_ri, dataIndx: "stepId" });
-                        return false;  // stepId가 없으면 더 이상 진행하지 않음
-                    }
-                    (row.state === "N" ? saveWfStepRows : updateWfStepRows).push(row);
+        const getCheckedRows = (data) => data.filter(row => row.rowCheck);
+    
+        const validateRows = (rows) => {
+            for (const row of rows) {
+                if (!row.stepId) {
+                    openPopup({
+                        type: "info",
+                        text: `${row.pq_ri + 1}번째 행의 스탭 ID를 입력해주세요.`,
+                    });
+                    $(GRID_STEP_ID).pqGrid("setSelection", { rowIndx: row.pq_ri, dataIndx: "stepId" });
+                    return false;
                 }
             }
             return true;
         };
     
-        if (filterCheckedRows()) {
-            if (checkRows.length > 0) {
-                if (saveWfStepRows.length) saveWfStepData(saveWfStepRows);
-                if (updateWfStepRows.length) updateWfStepData(updateWfStepRows);
-            } else {
-                openPopup({ type: "info", text: "저장하려면 체크박스를 먼저 선택하세요." });
+        const classifyRows = (rows) => {
+            rows.forEach(row => {
+                (row.state === "N" ? saveWfStepRows : updateWfStepRows).push(row);
+            });
+        };
+    
+        const checkedRows = getCheckedRows(allData);
+    
+        if (checkedRows.length === 0) {
+            openPopup({ type: "info", text: "저장하려면 체크박스를 먼저 선택하세요." });
+            return;
+        }
+    
+        if (!validateRows(checkedRows)) return;
+    
+        classifyRows(checkedRows);
+    
+        try {
+            let saveSuccess = saveWfStepRows.length ? await saveWfStepData(saveWfStepRows) : false;
+            let updateSuccess = updateWfStepRows.length ? await updateWfStepData(updateWfStepRows) : false;
+    
+            // 결과 메시지 생성
+            let resultMessage = "";
+            if (saveSuccess && updateSuccess) {
+                resultMessage = "WF스텝 저장 및 수정이 완료되었습니다.";
+            } else if (saveSuccess) {
+                resultMessage = "WF스텝 저장이 완료되었습니다.";
+            } else if (updateSuccess) {
+                resultMessage = "WF스텝 수정이 완료되었습니다.";
+            }
+    
+            if (resultMessage) {
+                openPopup({
+                    title: "성공",
+                    type: "success",
+                    text: resultMessage,
+                });
+                searchButtonClick();
+            }
+        } catch (error) {
+            console.error("WF STEP 저장 또는 수정 중 오류가 발생했습니다:", error);
+    
+            // 오류 메시지 생성
+            let errorMessage = "";
+            if (saveWfStepRows.length && updateWfStepRows.length) {
+                errorMessage = "저장과 수정 중 오류가 발생했습니다.";
+            } else if (saveWfStepRows.length) {
+                errorMessage = "저장 중 오류가 발생했습니다.";
+            } else if (updateWfStepRows.length) {
+                errorMessage = "수정 중 오류가 발생했습니다.";
+            }
+    
+            if (errorMessage) {
+                openPopup({
+                    title: "실패",
+                    type: "error",
+                    text: errorMessage,
+                });
             }
         }
     }

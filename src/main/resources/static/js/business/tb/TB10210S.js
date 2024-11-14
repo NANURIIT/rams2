@@ -6,6 +6,8 @@ const TB10210Sjs = (function () {
   let setAthCd;
   let searchParam;
 
+  let prevRowIndx;
+
 
   /**
    * PQGRID SELECTBOX
@@ -506,12 +508,21 @@ const TB10210Sjs = (function () {
         }
       },
     });
+
+    $('#authCodeMenuTable').pqGrid('instance').setData([]);
+
   }
 
   /**
    * 권한코드 상세버튼 클릭
    */
   function clickDetailButton(rowIndx) {
+
+    $('#authCodeTable').pqGrid('removeClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: prevRowIndx });
+    $('#authCodeTable').pqGrid('addClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: rowIndx});
+
+    prevRowIndx = rowIndx;
+
       let rowData = authCdTbObj.getRowData({ rowIndx: rowIndx });
       let rghtCd = rowData.athCd;
       getAuthCodeMenu(rghtCd);

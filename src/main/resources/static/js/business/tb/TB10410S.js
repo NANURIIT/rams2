@@ -21,6 +21,7 @@ const TB10410Sjs = (function () {
   let hgrkMenuDbData;
   let hgrkGroupMenuDbData;
   let prevParam;
+  let prevRowIndx;
 
 
   /**
@@ -124,7 +125,7 @@ const TB10410Sjs = (function () {
             return "";
           } else {
             return (
-              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.hgrkGroupMenuInq('${ui.rowData.menuId}')"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
+              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.hgrkGroupMenuInq('${ui.rowData.menuId}', '${ui.rowIndx}')"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
             );
           }
         },
@@ -171,6 +172,11 @@ const TB10410Sjs = (function () {
      * 하위메뉴
      */
     const menuColModel = [
+      {
+        title: "상위메뉴ID",
+        dataIndx: "hgrkMenuId",
+        hidden: true,
+      },
       {
         title: "",
         width: "3%",
@@ -366,6 +372,7 @@ const TB10410Sjs = (function () {
     const length = rowColumnsData.length;
     for (let i = 0; i < length; i++) {
       const title = rowColumnsData[i].title;
+      const labelIndx = rowColumnsData[i].labelIndx;
       const dataIndx = rowColumnsData[i].dataIndx;
       row.push(title);
       if (title === "") {
@@ -377,6 +384,9 @@ const TB10410Sjs = (function () {
       else if (title === "삭제여부" || title === "적용여부") {
         newRow[dataIndx] = "Y";
       }
+      else if (title === "상위메뉴ID"){
+        newRow[dataIndx] = prevParam;
+      }
       else {
         newRow[dataIndx] = "";
       }
@@ -386,6 +396,9 @@ const TB10410Sjs = (function () {
       rowData: newRow,
       checkEditable: false,
     });
+
+    console.log(colModelSelector.pqGrid('instance').pdata);
+    
   }
 
   /**
@@ -445,15 +458,26 @@ const TB10410Sjs = (function () {
       },
     });
 
+    // 하위메뉴 초기화
+    prevParam = "";
+    $('#TB10410S_menuColModel').pqGrid('instance').setData([]);
+
   }
 
   /**
    * 하위메뉴조회   버튼클릭메소드
    * @param {String} param 
+   * @param {String} rowIndx
    */
-  function hgrkGroupMenuInq(param) {
+  function hgrkGroupMenuInq(param, rowIndx) {
 
-    prevParam = param
+    $('#TB10410S_hgrkMenuColModel').pqGrid('removeClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: prevRowIndx });
+    $('#TB10410S_hgrkMenuColModel').pqGrid('addClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: rowIndx});
+
+    // $('#TB10410S_hgrkMenuColModel').pqGrid('click', { rowIndx: rowIndx })
+
+    prevParam = param;
+    prevRowIndx = rowIndx;
 
     $.ajax({
       method: "POST",
@@ -519,6 +543,8 @@ const TB10410Sjs = (function () {
         wait(500);
         continue;
       }else{
+        console.log(updateResult);
+        console.log(insertResult);
         successChk(updateResult, insertResult);
         // 저장 후 조회
         hgrkGroupMenuDbData = []
@@ -561,6 +587,8 @@ const TB10410Sjs = (function () {
         wait(500);
         continue;
       }else{
+        console.log(updateResult);
+        console.log(insertResult);
         successChk(updateResult, insertResult);
         // 저장 후 조회
         hgrkGroupMenuDbData = [];

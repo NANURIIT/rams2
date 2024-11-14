@@ -10080,6 +10080,11 @@ div.pq-theme .pq-toolbar .btn{ font-size: 0.7rem; height: inherit; margin: 0 2px
   color: red;
 }
 
+/* 2024-11-14 */
+.pq-blue .pq-state-select.pq-grid-row{
+  color: blue;
+}
+
 .tabs-container .flow-box {padding: 15px 12px; background: #F7F7F7;}
 .flow_wrap{display: flex; gap: 30px; margin-bottom: 25px;}
 .flow_wrap.-arrow {margin-bottom: 0;}
