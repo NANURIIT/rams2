@@ -37,8 +37,11 @@
 		   AND MENU_ID = #{menuId}
 	</update>
 
-	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.dto.IBIMS007BDTO" resultType="int">
-		SELECT COUNT(T1.MENU_ID)
+	<select id="chkAthCd" parameterType="com.nanuri.rams.business.common.vo.IBIMS007BVO" resultType="String">
+		SELECT CASE
+				WHEN COUNT(T1.MENU_ID) = 0 THEN 'NO'
+				ELSE 'YES'
+			     END
 		  FROM IBIMS007B T1
 	 LEFT JOIN IBIMS005B T2
 	        ON T1.MENU_ID = T2.MENU_ID
@@ -50,7 +53,7 @@
 							SELECT ATH_CD
 							  FROM IBIMS003B
 							 WHERE 1=1
-							   AND EMPNO = #{athCd}
+							   AND EMPNO = #{empno}
 						)
 	</select>
 

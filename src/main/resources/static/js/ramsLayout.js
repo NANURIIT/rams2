@@ -11,8 +11,8 @@ function createNav(empNo) {
 
     let param = empNo
 
-    console.log("네비게이션 만들기");
-    console.log("empNo: " + empNo);
+    // console.log("네비게이션 만들기");
+    // console.log("empNo: " + empNo);
 
     $.ajax({
         type: "POST",

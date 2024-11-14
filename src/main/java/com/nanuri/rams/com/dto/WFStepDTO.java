@@ -14,6 +14,6 @@ public class WFStepDTO {
     private String stepNm;              //스텝명
     private String wfAuthId;            //워크플로우 권한ID
     private String excAuthEmp;          //예외권한 사원번호
-    private String exAuthDept;          //예외권한 부서코드
+    private String excAuthDept;         //예외권한 부서코드
 
 }
