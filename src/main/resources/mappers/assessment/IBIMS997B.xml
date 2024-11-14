@@ -173,7 +173,7 @@
                 , #{startTime}                            /* 시작시간 */
                 , #{endTime}                              /* 종료시간 */
                 , #{jobStatus}                            /* 작업상태 */
-                , SYSDATE                                   /* 조작상세일시 */
+                , SYSDATE                                 /* 조작상세일시 */
                 , #{hndEmpno}                             /* 조작사원번호 */
                 , #{hndTmnlNo}                            /* 조작단말기번호 */
                 , #{hndTrId}                              /* 조작거래ID */
@@ -200,9 +200,9 @@
                                                FROM IBIMS997B
                                               WHERE JOB_ID = #{jobId}
                                                 AND CUR_DATE = #{curDate}
-                                            ), TO_CHAR(SYSDATE, 'YYYY-MM-DD hh:mm:ss')
+                                            ), TO_CHAR(SYSDATE, 'YYYYMMDDhh24mmss')
                                            )            /* 최초 시작시간 */
-              , START_TIME         = NVL(TO_CHAR(SYSDATE, 'YYYY-MM-DD hh:mm:ss'), 
+              , START_TIME         = NVL(TO_CHAR(SYSDATE, 'YYYYMMDDhh24mmss'), 
                                             (
                                              SELECT NULLIF(START_TIME, '')
                                                FROM IBIMS997B
@@ -271,7 +271,7 @@
     <update id="batchUpdate" parameterType="com.nanuri.rams.business.common.dto.IBIMS997BDTO">
       UPDATE IBIMS997B
          SET JOB_STATUS = #{jobStatus} /* 2:Complete, 3:Error */
-           , END_TIME = TO_CHAR(SYSDATE, 'YYYY-MM-DD hh:mm:ss')
+           , END_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDhh24mmss')
            , RUN_COUNT = (SELECT (A.RUN_COUNT + 1)
                             FROM IBIMS997B A
                            WHERE A.CUR_DATE = #{curDate}
@@ -292,8 +292,9 @@
                         ))
          AND JOB_ID = (
                         SELECT JOB_ID
-                        FROM IBIMS996B
-                        WHERE PRE_JOB_ID = #{jobId}
+                          FROM IBIMS996B
+                         WHERE PRE_JOB_ID = #{jobId}
+                           AND ROWNUM = 1
                       )
     </update>
 
@@ -316,7 +317,7 @@
                                           FROM IBIMS995B
                                          WHERE JOB_ID = #{jobId}
                                      )
-              , HND_DETL_DTM       = SYSDATE                  /* 조작상세일시 */
+              , HND_DETL_DTM       = SYSDATE                /* 조작상세일시 */
               , HND_EMPNO          = #{hndEmpno}            /* 조작사원번호 */
               , HND_TMNL_NO        = #{hndTmnlNo}           /* 조작단말기번호 */
               , HND_TR_ID          = #{hndTrId}             /* 조작거래ID */
@@ -330,7 +331,7 @@
     <update id="updateConfirm" parameterType="com.nanuri.rams.business.common.dto.IBIMS997BDTO">
          UPDATE IBIMS997B
             SET CONFIRM_JOB_COUNT  = #{confirmJobCount}     /* CONFIRM JOB 건수 */
-              , HND_DETL_DTM       = SYSDATE                  /* 조작상세일시 */
+              , HND_DETL_DTM       = SYSDATE                /* 조작상세일시 */
               , HND_EMPNO          = #{hndEmpno}            /* 조작사원번호 */
               , HND_TMNL_NO        = #{hndTmnlNo}           /* 조작단말기번호 */
               , HND_TR_ID          = #{hndTrId}             /* 조작거래ID */
