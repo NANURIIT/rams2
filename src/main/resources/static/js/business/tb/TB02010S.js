@@ -198,15 +198,21 @@ const TB02010Sjs = (function(){
 		// var pageName;
 
 		//todo: 권환관리 추가 후 수정해야함
+
+		var menuId;
+		var menuNm;
+
 		if(wfMapNm == "딜기본정보등록"){
-
-			sessionStorage.setItem("ibDealNo_TB02010S", rowData.etc);
-			sessionStorage.setItem("wfID_TB02010S", rowData.wfId);
-
-			callPage("TB03020S", "Deal정보 등록");
+			menuId = "TB03020S";
+			menuNm = "Deal정보 등록";
 		}else{
 
 		}
+
+		sessionStorage.setItem("ibDealNo_TB02010S", rowData.etc);
+		sessionStorage.setItem("wfID_TB02010S", rowData.wfId);
+
+		callPage(menuId, menuNm);
 	}
 	
 	/**
