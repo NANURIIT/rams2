@@ -94,7 +94,7 @@
                 , #{item.stepNm}
                 , #{item.wfAuthId}
                 , #{item.excAuthEmp}
-                , #{item.exAuthDept}
+                , #{item.excAuthDept}
             )
         </foreach>
     </insert>
