@@ -258,14 +258,13 @@
             JOIN WF_MAP m ON m.WF_MAP_ID = wf.WF_MAP_ID
             JOIN IBIMS003B u ON u.EMPNO = wf.APRV_EMP_NO
             JOIN WF_STEP s1 ON wf.WF_MAP_ID = s1.WF_MAP_ID AND wf.WF_STEP_ID = s1.STEP_ID
-            JOIN WF_STEP s2 ON s1.NEXT_STEP_ID = s2.STEP_ID
-            WHERE s2.WF_AUTH_ID = #{wfAuthId}
+            WHERE s1.WF_AUTH_ID = #{wfAuthId}
             ORDER BY wf.APRV_DTTM
     </select>
 
     <!--권한 체크-->
     <select id="wfAuthIdCheck" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="int">
-        SELECT COUNT(*)  
+        <!-- SELECT COUNT(*)  
         FROM WF_STEP 
         WHERE WF_MAP_ID = (
             SELECT WF_MAP_ID 
@@ -280,7 +279,13 @@
             ON wf.WF_MAP_ID = s.WF_MAP_ID 
             AND wf.WF_STEP_ID = s.STEP_ID 
             WHERE wf.WF_ID = #{wfId}
-        );
+        ); -->
+        SELECT COUNT(*)
+        FROM WF wf
+        JOIN WF_STEP s
+        ON (s.WF_MAP_ID = wf.WF_MAP_ID AND s.STEP_ID = wf.WF_STEP_ID)
+        WHERE 1=1
+        AND s.WF_AUTH_ID = #{wfAuthId}
     </select>
 
     <!-- WF MAP 조회 -->
@@ -312,33 +317,31 @@
 
     <!-- WF MAP 수정 -->
     <update id="updateWfMapInfo" parameterType="java.util.List">
-        <foreach collection="list" item="item" separator=",">
-        UPDATE WF_MAP	
-           SET CHG_DTTM				 = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS') 
-            <if test="item.wfMapId != null">
-              , WF_MAP_ID			 = #{item.wfMapId}
-            </if>
-            <if test="item.wfMapNm != null">
-              , WF_MAP_NM			 = #{item.wfMapNm}
-            </if>
-            <if test="item.jobTable != null">
-              , JOB_TABLE			 = #{item.jobTable}
-            </if>
-            <if test="item.jobTableKey != null">
-              , JOB_TABLE_KEY		 = #{item.jobTableKey}
-            </if>
-            <if test="item.regDttm != null">
-              , REG_DTTM			 = #{item.regDttm}
-            </if>
-            <if test="item.regUserId != null">
-              , REG_USER_ID			 = #{item.regUserId}
-            </if>
-            <if test="item.chgUserId != null">
-               , CHG_USER_ID		 = #{item.chgUserId}
-             </if>						
-		 WHERE WF_MAP_ID = #{item.originalWfMapId}								
-		</foreach>  							
+        BEGIN
+        <foreach collection="list" item="item" separator=";" close=";">
+            UPDATE WF_MAP
+            SET CHG_USER_ID = #{item.chgUserId}
+              , CHG_DTTM = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISSSSS')  
+                <if test="item.wfMapId != null and item.wfMapId != ''">
+                , WF_MAP_ID = #{item.wfMapId}
+                </if>
+                <if test="item.wfMapNm != null and item.wfMapNm != ''">
+                , WF_MAP_NM = #{item.wfMapNm}
+                </if>
+                <if test="item.jobTable != null and item.jobTable != ''">
+                , JOB_TABLE = #{item.jobTable}
+                </if>
+                <if test="item.jobTableKey != null and item.jobTableKey != ''">
+                , JOB_TABLE_KEY = #{item.jobTableKey}
+                </if>
+                <if test="item.regUserId != null and item.regUserId != ''">
+                , REG_USER_ID = #{item.regUserId}
+                </if>
+            WHERE WF_MAP_ID = #{item.originalWfMapId}
+        </foreach>
+        END;
     </update>
+
 
     <!-- WF STEP 조회 -->
     <select id="getWfStepInfo" parameterType="String" resultType="com.nanuri.rams.com.dto.WorkFlowDTO">
@@ -365,7 +368,8 @@
 
     <!-- WF STEP 수정 -->
     <update id="updateWStepInfo" parameterType="java.util.List">
-        <foreach collection="list" item="item" separator=",">
+        BEGIN
+        <foreach collection="list" item="item" separator=";" close=";">
         UPDATE WF_STEP	
         <set>
             <if test="item.stepId != null">
@@ -392,7 +396,8 @@
         </set>				
 		 WHERE WF_MAP_ID = #{item.wfMapId}	
            AND STEP_ID   = #{item.stepId}							
-		</foreach>  							
+		</foreach>  
+        END;							
     </update>
 
     <!--WF 건수 조회-->
@@ -404,8 +409,7 @@
             FROM WF wf
         JOIN WF_MAP m ON wf.WF_MAP_ID = m.WF_MAP_ID
         JOIN WF_STEP s1 ON m.WF_MAP_ID = s1.WF_MAP_ID AND wf.WF_STEP_ID = s1.STEP_ID
-        JOIN WF_STEP s2 ON s1.NEXT_STEP_ID = s2.STEP_ID
-        WHERE s2.WF_AUTH_ID = #{wfAuthId}
+        WHERE s1.WF_AUTH_ID = #{wfAuthId}
         GROUP BY wf.WF_MAP_ID, m.WF_MAP_NM
     </select>
 </mapper>
