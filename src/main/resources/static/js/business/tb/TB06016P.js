@@ -42,11 +42,17 @@ function TB06016P_getMdwyRdmpFeeRto() {
 		data: JSON.stringify(paramData),
 		dataType: "json",
 		success: function (data) {
-			if (data) {
-				TB06016P_pqGridLength = data.length
+			if (data.length > 0) {
 				let detail = $('#TB06016P_colModel').pqGrid('instance')
 				detail.setData(data);
 				detail.getData();
+			}else {
+				Swal.fire({
+					icon: 'warning'
+					, text: "조회된 데이터가 없습니다!"
+					, confirmButtonText: "확인"
+				});
+				detail.setData([]);
 			}
 		}, error: function () {
 			Swal.fire({
