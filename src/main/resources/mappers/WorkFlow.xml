@@ -258,14 +258,13 @@
             JOIN WF_MAP m ON m.WF_MAP_ID = wf.WF_MAP_ID
             JOIN IBIMS003B u ON u.EMPNO = wf.APRV_EMP_NO
             JOIN WF_STEP s1 ON wf.WF_MAP_ID = s1.WF_MAP_ID AND wf.WF_STEP_ID = s1.STEP_ID
-            JOIN WF_STEP s2 ON s1.NEXT_STEP_ID = s2.STEP_ID
-            WHERE s2.WF_AUTH_ID = #{wfAuthId}
+            WHERE s1.WF_AUTH_ID = #{wfAuthId}
             ORDER BY wf.APRV_DTTM
     </select>
 
     <!--권한 체크-->
     <select id="wfAuthIdCheck" parameterType="com.nanuri.rams.com.dto.WorkFlowDTO" resultType="int">
-        SELECT COUNT(*)  
+        <!-- SELECT COUNT(*)  
         FROM WF_STEP 
         WHERE WF_MAP_ID = (
             SELECT WF_MAP_ID 
@@ -280,7 +279,13 @@
             ON wf.WF_MAP_ID = s.WF_MAP_ID 
             AND wf.WF_STEP_ID = s.STEP_ID 
             WHERE wf.WF_ID = #{wfId}
-        );
+        ); -->
+        SELECT COUNT(*)
+        FROM WF wf
+        JOIN WF_STEP s
+        ON (s.WF_MAP_ID = wf.WF_MAP_ID AND s.STEP_ID = wf.WF_STEP_ID)
+        WHERE 1=1
+        AND s.WF_AUTH_ID = #{wfAuthId}
     </select>
 
     <!-- WF MAP 조회 -->
@@ -404,8 +409,7 @@
             FROM WF wf
         JOIN WF_MAP m ON wf.WF_MAP_ID = m.WF_MAP_ID
         JOIN WF_STEP s1 ON m.WF_MAP_ID = s1.WF_MAP_ID AND wf.WF_STEP_ID = s1.STEP_ID
-        JOIN WF_STEP s2 ON s1.NEXT_STEP_ID = s2.STEP_ID
-        WHERE s2.WF_AUTH_ID = #{wfAuthId}
+        WHERE s1.WF_AUTH_ID = #{wfAuthId}
         GROUP BY wf.WF_MAP_ID, m.WF_MAP_NM
     </select>
 </mapper>
