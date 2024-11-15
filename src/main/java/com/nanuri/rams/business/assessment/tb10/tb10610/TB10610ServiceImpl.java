@@ -44,6 +44,7 @@ public class TB10610ServiceImpl implements TB10610Service {
 	// 배치 스케줄러 모니터링 실행
 	@Override
     public int excBatch(IBIMS997BVO input) {
+
 		int result = 0;
 		
 		// 현재 날짜와 시간 가져오기
