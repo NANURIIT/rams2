@@ -77,33 +77,20 @@ const TB10410Sjs = (function () {
      * 상위메뉴
      */
     const hgrkMenuColModel = [
-      {
-        title: "",
-        width: "3%",
-        editable: false,
-        render: function (ui) {
-          if (ui.cellData === "del") {
-            return (
-              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.pqGridDeleteRow($('#TB10410S_hgrkMenuColModel'), '${ui.rowIndx}')">&nbsp;삭제</button>`
-            );
-          } else {
-            return;
-          }
-        },
-      },
-      {
-        title: "삭제여부",
-        dataIndx: "delYn",
-        align: "center",
-        halign: "center",
-        type: "string",
-        editable: true,
-        width: "5%",
-        editor: {
-          type: "select",
-          options: Yn
-        },
-      },
+      // {
+      //   title: "",
+      //   width: "3%",
+      //   editable: false,
+      //   render: function (ui) {
+      //     if (ui.cellData === "del") {
+      //       return (
+      //         `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.pqGridDeleteRow($('#TB10410S_hgrkMenuColModel'), '${ui.rowIndx}')">&nbsp;삭제</button>`
+      //       );
+      //     } else {
+      //       return;
+      //     }
+      //   },
+      // },
       {
         title: "메뉴ID",
         halign: "center",
@@ -229,35 +216,12 @@ const TB10410Sjs = (function () {
         //   // console.log(hgrkMenuDbData);
         // },
       },
-    ]
-
-    /**
-     * 하위메뉴
-     */
-    const menuColModel = [
-      {
-        title: "",
-        width: "3%",
-        editable: false,
-        render: function (ui) {
-          if (ui.cellData === "del") {
-            return (
-              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.pqGridDeleteRow($('#TB10410S_menuColModel'), '${ui.rowIndx}')">&nbsp;삭제</button>`
-            );
-          } else {
-            return;
-          }
-        },
-      },
       {
         title: "삭제여부",
         dataIndx: "delYn",
         align: "center",
         halign: "center",
-        menuIcon: false,
         type: "string",
-        editor: false,
-        dataType: "string",
         editable: true,
         width: "5%",
         editor: {
@@ -265,6 +229,26 @@ const TB10410Sjs = (function () {
           options: Yn
         },
       },
+    ]
+
+    /**
+     * 하위메뉴
+     */
+    const menuColModel = [
+      // {
+      //   title: "",
+      //   width: "3%",
+      //   editable: false,
+      //   render: function (ui) {
+      //     if (ui.cellData === "del") {
+      //       return (
+      //         `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10410Sjs.pqGridDeleteRow($('#TB10410S_menuColModel'), '${ui.rowIndx}')">&nbsp;삭제</button>`
+      //       );
+      //     } else {
+      //       return;
+      //     }
+      //   },
+      // },
       {
         title: "메뉴ID",
         align: "center",
@@ -355,6 +339,22 @@ const TB10410Sjs = (function () {
         menuIcon: false,
         editor: true,
         editable: "true",
+        width: "5%",
+        editor: {
+          type: "select",
+          options: Yn
+        },
+      },
+      {
+        title: "삭제여부",
+        dataIndx: "delYn",
+        align: "center",
+        halign: "center",
+        menuIcon: false,
+        type: "string",
+        editor: false,
+        dataType: "string",
+        editable: true,
         width: "5%",
         editor: {
           type: "select",
@@ -491,10 +491,20 @@ const TB10410Sjs = (function () {
   /**
    * pqgrid deleteRow
    */
-  function pqGridDeleteRow(colModelSelector, rowIndx) {
-    colModelSelector.pqGrid("deleteRow", {
-      rowIndx: rowIndx
-    });
+  function pqGridDeleteRow(colModelSelector) {
+
+    const rowIndx = colModelSelector.pqGrid('instance').pdata.length
+
+    if(colModelSelector.pqGrid('instance').pdata[rowIndx-1].inqBtn === "new" || ( colModelSelector.pqGrid('instance').pdata[rowIndx-1].hndDetlDtm === "" && colModelSelector.pqGrid('instance').pdata[rowIndx-1].hndEmpno === "")){
+      colModelSelector.pqGrid("deleteRow", {
+        rowIndx: rowIndx - 1
+      });
+      return;
+    }
+    else{
+      return;
+    }
+    
   }
 
 
