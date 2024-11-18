@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
+import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS114BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS992BDTO;
@@ -15,6 +16,7 @@ import com.nanuri.rams.business.common.dto.RAA20BDTO;
 import com.nanuri.rams.business.common.dto.RAA98ADTO;
 import com.nanuri.rams.business.common.dto.RAB98BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.RAA20BVO;
 import com.nanuri.rams.com.code.AthCd;
 
@@ -78,4 +80,7 @@ public interface CommonService {
 	
 	// 펀드정보
 	public List<IBIMS993BDTO> getFndList(IBIMS993BDTO param);
+
+	// 권한확인
+	public String chkAthCd(IBIMS007BVO param);
 }

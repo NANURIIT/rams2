@@ -206,6 +206,7 @@ const TB03030Sjs = (function(){
 			title    : "업체명", 
 			dataType : "string",
 			dataIndx : "entpHnglNm", 
+			halign   : "center",  
 			align    : "left", 
 			filter   : { crules: [{ condition: 'range' }] },
 		},
@@ -281,6 +282,7 @@ const TB03030Sjs = (function(){
 			title    : "미팅제목", 
 			dataType : "string", 
 			dataIndx : "metTitl",
+			halign   : "center",  
 			align    : "left", 
 			filter   : { crules: [{ condition: 'range' }] }
 		},

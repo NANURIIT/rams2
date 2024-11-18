@@ -97,11 +97,11 @@ public class WorkFlow {
 	 */
     public int wfRgst(WorkFlowDTO workFlowDTO){
 
-        UUID wfId = UUID.randomUUID();
+        // UUID wfId = UUID.randomUUID();
 
-        log.debug("wfId.toString(): " + wfId.toString());
+        // log.debug("wfId.toString(): " + wfId.toString());
 
-        workFlowDTO.setWfId(wfId.toString());
+        // workFlowDTO.setWfId(wfId.toString());
 
         int wfRgstRslt = workFlowMapper.wfRgst(workFlowDTO);
 
@@ -115,4 +115,9 @@ public class WorkFlow {
 
         return wfHisRgstRslt;
     }
+
+    public int wfAuthIdCheck(WorkFlowDTO param){
+        return workFlowMapper.wfAuthIdCheck(param);
+    }
+
 }

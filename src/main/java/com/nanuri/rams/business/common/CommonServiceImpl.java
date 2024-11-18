@@ -9,11 +9,14 @@ import java.util.Map;
 
 import com.nanuri.rams.business.common.mapper.*;
 import com.nanuri.rams.business.common.vo.IBIMS005BVO;
+import com.nanuri.rams.business.common.vo.IBIMS007BVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
+import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS114BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS992BDTO;
@@ -77,6 +80,8 @@ public class CommonServiceImpl implements CommonService {
 	private final IBIMS992BMapper ibims992bMapper;
 
 	private final IBIMS993BMapper ibims993bMapper;
+
+	private final IBIMS007BMapper ibims007bMapper;
 	
 	/**
 	 * 셀렉트박스 코드, 밸류 취득
@@ -110,6 +115,7 @@ public class CommonServiceImpl implements CommonService {
 		user.put("HdqtNm", facade.getDetails().getBdNm());
 		user.put("rghtCd", facade.getDetails().getRghtCd());
 		user.put("pstn", facade.getDetails().getOpstDcd());
+		user.put("athCd", facade.getDetails().getRghtCd());
 
 		return user;
 	}
@@ -315,4 +321,11 @@ public class CommonServiceImpl implements CommonService {
 		}
 		
 	}
+
+	// 권한확인
+	@Override
+	public String chkAthCd(IBIMS007BVO param){
+		return ibims007bMapper.chkAthCd(param);
+	};
+
 }

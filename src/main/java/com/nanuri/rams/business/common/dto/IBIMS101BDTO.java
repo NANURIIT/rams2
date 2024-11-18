@@ -122,6 +122,7 @@ public class IBIMS101BDTO {
 
     private String         wfId;              // 워크플로우ID
     private String         wfState;           // 워크플로우 상태
+    private String         rtnYn;             // 반송여부
 
     /* 공동영업관리자/협업부서 정보 */
     private List<IBIMS116BVO> enoPList;      // 공동영업관리자 목록

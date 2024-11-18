@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
+import com.nanuri.rams.business.common.vo.TB02010SVO;
 import com.nanuri.rams.com.WF.WorkFlow;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
 
@@ -43,7 +45,7 @@ public class TB02010APIController {
 	// 	return tb02010Service.selectIBIMS100BInfo(selInfo);
 	// }
 	@GetMapping(value = "/selInfo")
-	public List<WorkFlowDTO> selInfo(WorkFlowDTO param){
+	public TB02010SVO selInfo(WorkFlowDTO param){
 		return tb02010Service.workFlowInq(param);
 	}
 	
@@ -64,6 +66,9 @@ public class TB02010APIController {
 	public int deleteInfo(IBIMS100BDTO deleteInfo) {
 		return tb02010Service.deleteIBIMS100BInfo(deleteInfo);
 	}
+
+	// @GetMapping(value = "/atcCdInq")
+	// public IBIMS003BDTO
 	
 
 	

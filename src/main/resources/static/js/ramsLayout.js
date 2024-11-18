@@ -1,42 +1,42 @@
-$(function() {
-	const userEno = $('#userEno').val();
-	createNav(userEno);
+$(function () {
+    const userEno = $('#userEno').val();
+    createNav(userEno);
 });
 
 /**
  * 왼쪽 네비게이션 메뉴 생성
  * @param {String} empNo
  */
-function createNav (empNo) {
+function createNav(empNo) {
 
-	let param = empNo
+    let param = empNo
 
-	console.log("네비게이션 만들기");
-	console.log("empNo: "+empNo);
+    // console.log("네비게이션 만들기");
+    // console.log("empNo: " + empNo);
 
-	$.ajax({
-		type: "POST",
-		url: "/createRamsNav",
-		contentType: "application/json; charset=UTF-8", // 수정된 contentType
-    	data: param,
-		success: function (data) {
-			let navHtml;
-			if(data.length > 0){
-				for(let i = 0; i < data.length; i++) {
+    $.ajax({
+        type: "POST",
+        url: "/createRamsNav",
+        contentType: "application/json; charset=UTF-8", // 수정된 contentType
+        data: param,
+        success: function (data) {
+            let navHtml;
+            if (data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
 
-					/**
-					 * @param {String} menuId 메뉴ID
-					 * @param {String} menuNm 메뉴명
-					 * @param {String} hgrkMenuId 상위메뉴ID
-					 * @param {String} scrnAplyShpCd 화면적용형태코드
-					 * @param {String} menuLvl 메뉴레벨
-					 */
+                    /**
+                     * @param {String} menuId 메뉴ID
+                     * @param {String} menuNm 메뉴명
+                     * @param {String} hgrkMenuId 상위메뉴ID
+                     * @param {String} scrnAplyShpCd 화면적용형태코드
+                     * @param {String} menuLvl 메뉴레벨
+                     */
 
-					/**
-					 * 최상위 메뉴일 경우
-					 */
-					if(data[i].menuLvl === 1 && !data[i].hgrkMenuId){
-						const menuHtmlLv1 = `
+                    /**
+                     * 최상위 메뉴일 경우
+                     */
+                    if (data[i].menuLvl === 1 && !data[i].hgrkMenuId) {
+                        const menuHtmlLv1 = `
 							<li>
 								<a href="#" aria-expanded="false">
 									<i class="fa fa-folder-open-o"></i>
@@ -47,99 +47,98 @@ function createNav (empNo) {
 								</ul>
 							</li>
 						`
-						$(`#side-menu`).append(menuHtmlLv1);
-					} 
-					/**
-					 * 메뉴레벨 2인 경우
-					 */
-					else if (data[i].menuLvl === 2){
-						let menuHtmlLv2;
-						/**
-						 * 형태가 메뉴일 경우
-						 */
-						if(data[i].scrnAplyShpCd === 'M'){
-							menuHtmlLv2 = `
+                        $(`#side-menu`).append(menuHtmlLv1);
+                    }
+                    /**
+                     * 메뉴레벨 2인 경우
+                     */
+                    else if (data[i].menuLvl === 2) {
+                        let menuHtmlLv2;
+                        /**
+                         * 형태가 메뉴일 경우
+                         */
+                        if (data[i].scrnAplyShpCd === 'M') {
+                            menuHtmlLv2 = `
 								<li>
 									<a class="left-ex" aria-expanded="false">${data[i].menuNm}<span class="fa arrow"></span></a>
 									<ul class="nav nav-third-level collapse" aria-expanded="false" style="height: 0px;" data-hgrk="${data[i].menuId}">
 									</ul>
 								</li>
 							`;
-						}
-						/**
-						 * 형태가 화면일 경우
-						 */
-						else if(data[i].scrnAplyShpCd === 'S'){
-							menuHtmlLv2 = `
+                        }
+                        /**
+                         * 형태가 화면일 경우
+                         */
+                        else if (data[i].scrnAplyShpCd === 'S') {
+                            menuHtmlLv2 = `
 								<li data-sidetabid="${data[i].menuId}">
 									<a onclick="callPage('${data[i].menuId}', '${data[i].menuNm}')">${data[i].menuNm}</a>
 								</li>
 							`;
-						}
-						$(`#side-menu ul[data-hgrk="${data[i].hgrkMenuId}"]`).append(menuHtmlLv2);
-					}
-					/**
-					 * 메뉴 3레벨일 경우
-					 */
-					else if(data[i].menuLvl === 3){
-						const menuHtmlLv3 = `
+                        }
+                        $(`#side-menu ul[data-hgrk="${data[i].hgrkMenuId}"]`).append(menuHtmlLv2);
+                    }
+                    /**
+                     * 메뉴 3레벨일 경우
+                     */
+                    else if (data[i].menuLvl === 3) {
+                        const menuHtmlLv3 = `
 							<li data-sidetabid="${data[i].menuId}">
 								<a onclick="callPage('${data[i].menuId}', '${data[i].menuNm}')">&nbsp;&nbsp;${data[i].menuNm}</a>
 							</li>
 						`;
-						$(`#side-menu ul ul[data-hgrk="${data[i].hgrkMenuId}"]`).append(menuHtmlLv3);
-					}
-				}
-				/**
-				 * 사이드 메뉴에 이벤트부여
-				 */
-				$('#side-menu').metisMenu();
+                        $(`#side-menu ul ul[data-hgrk="${data[i].hgrkMenuId}"]`).append(menuHtmlLv3);
+                    }
+                }
+                /**
+                 * 사이드 메뉴에 이벤트부여
+                 */
+                $('#side-menu').metisMenu();
 
-				/**
-				 * 이전 페이지 체크
-				 */
-				chkPrevPage();
-			} else {
-				Swal.fire({
-					icon: 'warning'
-					, title: '권한이 없습니다!'
-				}).then(function(){
-					window.location.href = "/login"
-				})
-			}
-		}, error: function () {
-			
-		}
-	});
+                /**
+                 * 이전 페이지 체크
+                 */
+                chkPrevPage();
+            } else {
+                Swal.fire({
+                    icon: 'warning'
+                    , title: '권한이 없습니다!'
+                }).then(function () {
+                    window.location.href = "/login"
+                })
+            }
+        }, error: function () {
+
+        }
+    });
 }
 
 
 /**
  * 이전 페이지 체크 함수
  */
-function chkPrevPage () {
+function chkPrevPage() {
 
-	const url = window.location.pathname;
-	const chk_menu = $(`div[data-menuid="/TB02010S"`).attr('data-menuid')
+    const url = window.location.pathname;
+    const chk_menu = $(`div[data-menuid="/TB02010S"`).attr('data-menuid')
+    
+    let url_ref = document.referrer
+    let result_id = url_ref.split("/");
 
-	let url_ref = document.referrer
-	let result_id = url_ref.split("/");
-
-	if(chk_menu === undefined){
-		window.location.href = "/TB02010S"
-	}else if(chk_menu != undefined && url_ref.indexOf("/TB") != -1 && url_ref.indexOf("TB02010S") === -1 && url === "/TB02010S"){
-		const titleNm = $(`li[data-sidetabid="${result_id[result_id.length - 1]}"] a`).html();
-		callPage(result_id[result_id.length - 1], titleNm);
-	}
+    if (chk_menu === undefined) {
+        window.location.href = "/TB02010S"
+    } else if (chk_menu != undefined && url_ref.indexOf("/TB") != -1 && url_ref.indexOf("TB02010S") === -1 && url === "/TB02010S") {
+        const titleNm = $(`li[data-sidetabid="${result_id[result_id.length - 1]}"] a`).html();
+        callPage(result_id[result_id.length - 1], titleNm);
+    }
 }
-
 
 /**
  * 탭에 화면 추가하기
  * @param {String} menuId 
  * @param {String} pageName 
  */
-function callPage(menuId, pageName) {
+async function callPage(menuId, pageName) {
 
     const url = window.location.pathname;
 

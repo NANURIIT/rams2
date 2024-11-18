@@ -29,6 +29,10 @@ public interface IBIMS006BMapper {
 
 	public List<Map<String, Object>> getMenuListM(AthCd rghtCd);
 
+	public int athCdvldChk(String param);
+
+	public int mergeAthCd(IBIMS006BDTO param);
+
 }
 
 

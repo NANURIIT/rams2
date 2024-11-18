@@ -19,7 +19,7 @@
          ORDER BY A.APLY_MNUM ASC;
     </select>
 
-    <insert id="insertIBIMS204B">
+    <insert id="insertIBIMS204B" parameterType="com.nanuri.rams.business.common.vo.IBIMS204BVO">
         <foreach collection="mdwyRdmpFeeRtoList" item="item" separator=";">
             <if test="item.aplyMnum != null">
                 INSERT INTO IBIMS204B (
@@ -40,11 +40,11 @@
                     #{item.mdwyRdmpFeeRto},
                     SYSDATE,
                     #{hndEmpno},
-                    #{hndTmnlNo},
+                    ' ' AS HND_TMNL_NO,
                     #{hndTrId},
                     #{guid}
-                FROM dualZ
-                WHERE NOT EXISTS (
+                  FROM dual
+                 WHERE NOT EXISTS (
                     SELECT 1
                     FROM IBIMS204B B
                     WHERE 1=1

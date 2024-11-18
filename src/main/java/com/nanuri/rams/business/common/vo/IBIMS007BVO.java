@@ -13,8 +13,14 @@ import lombok.ToString;
  * */
 public class IBIMS007BVO extends IBIMS007BDTO {
 
+	private String empno;
 	private String athCdNm;
 	private String athCdExpl;
+	private String menuNm;
+	private String menuLvl;
+	private String hndDt;
+	private String hndTm;
+	
     
 	@Getter
 	@Setter

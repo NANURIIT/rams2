@@ -1,5 +1,6 @@
 package com.nanuri.rams.business.common.mapper;
 
+import com.nanuri.rams.business.common.dto.IBIMS003BDTO;
 import com.nanuri.rams.business.common.dto.IBIMS007BDTO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO;
 import com.nanuri.rams.business.common.vo.IBIMS007BVO.selectUseMenuVO;
@@ -26,7 +27,22 @@ public interface IBIMS007BMapper {
 	 * TB10310S
 	 * 메뉴별권한페이지 권한수정
 	 */
-	public int updateAth(List<IBIMS007BDTO> param);
+	public int updateAth(IBIMS007BDTO param);
+
+	/**
+	 * 권한확인
+	 * @param menuId
+	 * @param empno
+	 * @return 'YES' OR 'NO'
+	 */
+	public String chkAthCd(IBIMS007BVO param);
+
+	/**
+	 * 메뉴코드내 권한 업데이트
+	 */
+	public int updateMdfyRghtCcd(IBIMS007BDTO param);
+
+	public int ibims007bCreateSq();		// 일련번호 생성
 
 	/**
 	 * 2024-11-07 김건우 끝

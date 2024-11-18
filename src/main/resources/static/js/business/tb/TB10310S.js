@@ -2,6 +2,7 @@ const TB10310Sjs = (function () {
   $(document).ready(function () {
 
     pqGrid();
+    selectMenuListFromTB10310S();
 
     // keyDownEnter();
   });
@@ -14,6 +15,7 @@ const TB10310Sjs = (function () {
    * 전역변수
    */
   let prevParam;  // 저장이후 재조회시 필요한 param 전역변수
+  let prevRowIndx;
 
   /**
    * PQGRID
@@ -40,10 +42,15 @@ const TB10310Sjs = (function () {
       {
         title: "메뉴명",
         halign: "center",
-        align: "center",
+        align: "left",
         dataType: "string",
         dataIndx: "menuNm",
         editable: false,
+        render: function(ui) {
+          let result = ui.cellData;
+          const blank = "ㅤㅤ";
+          return blank + result;
+        }
       },
       {
         title: "메뉴화면ID",
@@ -65,7 +72,7 @@ const TB10310Sjs = (function () {
             return "";
           } else {
             return (
-              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10310Sjs.selectAthCdListFromMenu('${ui.rowData.menuId}')"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
+              `<button class='ui-button ui-corner-all ui-widget' name='detail_btn' onclick="TB10310Sjs.selectAthCdListFromMenu('${ui.rowData.menuId}', ${ui.rowIndx});"><i class='fa fa-arrow-down'></i>&nbsp;상세</button>`
             );
           }
         },
@@ -226,9 +233,11 @@ const TB10310Sjs = (function () {
       contentType: "application/json; charset=UTF-8",
       data: param,
       success: function (data) {
+
+        let grid = $('#TB10310S_GroupCodeColModel').pqGrid('instance');
+
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
-          let grid = $('#TB10310S_GroupCodeColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
         }
@@ -238,21 +247,29 @@ const TB10310Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          grid.setData([]);
         }
       },
       error: function (response) {
 
       },
     });
+
+    $('#TB10310S_athCodeColModel').pqGrid('instance').setData([]);
+
   }
 
 
   /**
    * 권한코드 조회
    */
-  function selectAthCdListFromMenu(param) {
+  function selectAthCdListFromMenu(param ,rowIndx) {
+
+    $('#TB10310S_GroupCodeColModel').pqGrid('removeClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: prevRowIndx });
+    $('#TB10310S_GroupCodeColModel').pqGrid('addClass', { cls: 'pq-state-select ui-state-highlight', rowIndx: rowIndx});
 
     prevParam = param;
+    prevRowIndx = rowIndx;
 
     $.ajax({
       method: "POST",
@@ -260,9 +277,11 @@ const TB10310Sjs = (function () {
       contentType: "application/json; charset=UTF-8",
       data: param,
       success: function (data) {
+
+        let grid = $('#TB10310S_athCodeColModel').pqGrid('instance');
+
         // 데이터 존재시 pqgrid적용
         if (data.length > 0) {
-          let grid = $('#TB10310S_athCodeColModel').pqGrid('instance');
           grid.setData(data);
           grid.getData();
         }
@@ -272,6 +291,7 @@ const TB10310Sjs = (function () {
             icon: 'warning'
             , title: '조회된 정보가 없습니다!'
           })
+          grid.setData([]);
         }
       },
       error: function (response) {
@@ -296,7 +316,7 @@ const TB10310Sjs = (function () {
     // 수정된 로우 모으기
     for (let i = 0; i < saveData.length; i++) {
       if (saveData[i].pq_cellcls != undefined) {
-        updateData.push(paramData[i]);
+        updateData.push(saveData[i]);
       }
     }
 
@@ -312,7 +332,7 @@ const TB10310Sjs = (function () {
       method: "POST",
       url: "/TB10310S/updateAth",
       contentType: "application/json; charset=UTF-8",
-      data: updateData,
+      data: JSON.stringify(updateData),
       success: function (data) {
         // 업데이트 성공시
         if (data > 0) {
@@ -336,14 +356,15 @@ const TB10310Sjs = (function () {
           , title: '저장실패!@!!!!@!@!!!!'
         })
       },
+      beforeSend: function() {
+        selectAthCdListFromMenu(prevParam);
+      }
     });
 
-    selectAthCdListFromMenu(prevParam);
 
   }
 
   return {
-
     // 함수
     selectMenuListFromTB10310S: selectMenuListFromTB10310S   // 메뉴조회
     , selectAthCdListFromMenu: selectAthCdListFromMenu   // 메뉴별권한조회

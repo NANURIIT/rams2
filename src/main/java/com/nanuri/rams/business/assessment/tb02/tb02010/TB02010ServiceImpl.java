@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nanuri.rams.business.common.dto.IBIMS100BDTO;
+import com.nanuri.rams.business.common.mapper.IBIMS003BMapper;
 import com.nanuri.rams.business.common.mapper.IBIMS100BMapper;
 import com.nanuri.rams.business.common.mapper.WorkFlowMapper;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO;
+import com.nanuri.rams.business.common.vo.TB02010SVO;
 import com.nanuri.rams.business.common.vo.IBIMS100BVO.selectVO;
 import com.nanuri.rams.com.WF.WorkFlow;
 import com.nanuri.rams.com.dto.WorkFlowDTO;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class TB02010ServiceImpl implements TB02010Service {
 	
 	private final IBIMS100BMapper ibims100BMapper;
+
+	private final IBIMS003BMapper ibims003bMapper;
 
 	private final WorkFlowMapper workFlowMapper;
 	
@@ -87,9 +91,25 @@ public class TB02010ServiceImpl implements TB02010Service {
 		return ibims100BMapper.deleteIBIMS100BInfo(deleteInfo);
 	}
 
+	//오늘의 할일(워크플로우) 조회
 	@Override
-	public List<WorkFlowDTO> workFlowInq(WorkFlowDTO param){
-		return workFlowMapper.workFlowInq(param);
+	public TB02010SVO workFlowInq(WorkFlowDTO param){
+
+		WorkFlowDTO paramDto = new WorkFlowDTO();
+		String empno = param.getEmpno();
+		String athCd = ibims003bMapper.atcCdInq(empno);
+
+		paramDto.setWfAuthId(athCd);
+
+		List<WorkFlowDTO> workFlowList = workFlowMapper.workFlowInq(paramDto);		//WF 리스트
+		List<WorkFlowDTO> wfCntList = workFlowMapper.wfCntInq(paramDto);			//WF 건수 리스트
+
+		TB02010SVO rsltVO = new TB02010SVO();
+
+		rsltVO.setWfCntList(wfCntList);
+		rsltVO.setWorkFlowList(workFlowList);
+
+		return rsltVO;
 	}
 
 }

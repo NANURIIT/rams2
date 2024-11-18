@@ -57,18 +57,18 @@
 	
 	<!-- 로그인 -->
 	<select id="findByEno" parameterType="String" resultType="com.nanuri.rams.business.common.dto.IBIMS003BDTO">
-		SELECT A.EMPNO							<!-- 사원번호 -->
-			 , A.PWD							<!-- 비밀번호 -->
-		     , A.EMP_NM							<!-- 직원명 -->
-		     , A.DPRT_CD						<!-- 부서코드 -->
-		     , A.DPRT_NM						<!-- 부서명 -->
-		     , A.BD_CD							<!-- 소속부점코드 -->
-		     , A.BD_NM							<!-- 소속부점코드명 -->
-		     , A.ATH_CD							<!-- 권한코드 -->
-		     , A.OPST_DCD						<!-- 직책 -->
+		SELECT A.EMPNO							/* 사원번호 */
+			   , A.PWD							  /* 비밀번호 */
+		     , A.EMP_NM							/* 직원명 */
+		     , A.DPRT_CD						/* 부서코드 */
+		     , A.DPRT_NM						/* 부서명 */
+		     , A.BD_CD							/* 소속부점코드 */
+		     , A.BD_NM							/* 소속부점코드명 */
+		     , A.ATH_CD							/* 권한코드 */
+		     , A.OPST_DCD						/* 직책 */
 		  FROM IBIMS003B A
 		 WHERE A.EMPNO = #{eno}
-		<!-- TODO: 로그인 권한 부여기간 검증하는 로직 추가 필요 2023. 12. 21 KHJ -->
+		/* TODO: 로그인 권한 부여기간 검증하는 로직 추가 필요 2023. 12. 21 KHJ */
 	</select>
 	
 	<!-- 직원검색 -->
@@ -224,5 +224,12 @@
          WHERE 1 = 1
            AND EMPNO = #{empno}									  <!-- 사원번호 -->
     </update>
+
+    <!--권한코드 조회-->
+    <select id="atcCdInq" parameterType="string" resultType="string">
+      SELECT ATH_CD 
+      FROM IBIMS003B 
+      WHERE EMPNO = #{empno}
+    </select>
 
 </mapper>
